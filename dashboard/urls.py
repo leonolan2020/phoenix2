@@ -13,4 +13,5 @@ path('calendar/',views.BasicView().calendar,name='calendar'),
 path('wizard/',views.BasicView().wizard,name='wizard'),
 path('widgets/',views.BasicView().widgets,name='widgets'),
 path('charts/',views.BasicView().charts,name='charts'),
+path('login/',views.AuthenticationView().login,name='login'),
 ]

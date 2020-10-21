@@ -8,6 +8,14 @@ def getContext(request):
     context['dasboard_title']="دشبورد فونیکس"
     return context
 
+class AuthenticationView(View):
+    def login(self,request,*args,**kwargs):
+        context=getContext(request)
+        return render(request,'auth/login.html',context)
+
+
+
+
 class BasicView(View):
     def home(self,request,*args,**kwargs):
         context=getContext(request)
