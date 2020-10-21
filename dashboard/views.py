@@ -12,6 +12,9 @@ class BasicView(View):
     def home(self,request,*args,**kwargs):
         context=getContext(request)
         return render(request,TEMPLATE_ROOT+'dashboard.html',context)
+    def charts(self,request,*args,**kwargs):
+        context=getContext(request)
+        return render(request,TEMPLATE_ROOT+'charts.html',context)
     def wizard(self,request,*args,**kwargs):
         context=getContext(request)
         return render(request,TEMPLATE_ROOT+'wizard.html',context)

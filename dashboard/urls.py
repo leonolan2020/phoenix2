@@ -12,4 +12,5 @@ path('components/alerts/',views.ComponentsView().alerts,name='alerts'),
 path('calendar/',views.BasicView().calendar,name='calendar'),
 path('wizard/',views.BasicView().wizard,name='wizard'),
 path('widgets/',views.BasicView().widgets,name='widgets'),
+path('charts/',views.BasicView().charts,name='charts'),
 ]
