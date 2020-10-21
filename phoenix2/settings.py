@@ -16,7 +16,7 @@ SECRET_KEY = '-+(&pe9ld9unwos@077r(cg#_)1$^l0c##+%gpy@&95da$=_hp'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1']
+ALLOWED_HOSTS = ['127.0.0.1','khafonline.com','www.khafonline.com']
 
 
 # Application definition
@@ -114,3 +114,5 @@ STATIC_ROOT=os.path.join(BASE_DIR,'staticfiles')
 MEDIA_URL = '/media/'
 MEDIA_ROOT=os.path.join(BASE_DIR,'media')
 STATICFILES_DIRS=[os.path.join(BASE_DIR,'static')]
+
+# source /home2/khafonli/virtualenv/phoenix2/3.7/bin/activate && cd /home2/khafonli/phoenix2 &&git pull && python manage.py migrate && python manage.py collectstatic 

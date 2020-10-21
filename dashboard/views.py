@@ -25,3 +25,6 @@ class ComponentsView(View):
     def panels(self,request,*args,**kwargs):
         context=getContext(request)
         return render(request,TEMPLATE_ROOT+'components/panels.html',context)
+    def alerts(self,request,*args,**kwargs):
+        context=getContext(request)
+        return render(request,TEMPLATE_ROOT+'components/alerts.html',context)
