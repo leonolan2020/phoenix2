@@ -119,7 +119,7 @@
         <li class="nav-item ">
           <a class="nav-link" data-toggle="collapse"  href="#componentsExamples">
             <i class="material-icons">apps</i>
-            <p>المكونات
+            <p>اجزای صفحه
               <b class="caret"></b>
             </p>
           </a>
@@ -191,7 +191,7 @@
         <li class="nav-item ">
           <a class="nav-link" data-toggle="collapse" href="#formsExamples">
             <i class="material-icons">content_paste</i>
-            <p>إستمارات
+            <p>فرم ها
               <b class="caret"></b>
             </p>
           </a>
@@ -215,10 +215,10 @@
                   <span class="sidebar-normal">نماذج التحقق</span>
                 </a>
               </li>
-              <li class="nav-item ">
-                <a class="nav-link" href="https://demos.creative-tim.com/material-dashboard-pro/examples/forms/wizard.html">
+              <li class="nav-item " id="nav-item-wizard">
+                <a class="nav-link" href="{% url 'dashboard:wizard' %}">
                   <span class="sidebar-mini">ث</span>
-                  <span class="sidebar-normal">ساحر</span>
+                  <span class="sidebar-normal">ثبت نام</span>
                 </a>
               </li>
             </ul>
@@ -284,10 +284,10 @@
             </ul>
           </div>
         </li>
-        <li class="nav-item ">
-          <a class="nav-link" href="https://demos.creative-tim.com/material-dashboard-pro/examples/widgets.html">
+        <li class="nav-item " id="nav-item-widgets">
+          <a class="nav-link" href="{% url 'dashboard:widgets' %}">
             <i class="material-icons">widgets</i>
-            <p>الحاجيات</p>
+            <p>ابزارک ها</p>
           </a>
         </li>
         <li class="nav-item ">

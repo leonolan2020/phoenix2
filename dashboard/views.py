@@ -12,6 +12,12 @@ class BasicView(View):
     def home(self,request,*args,**kwargs):
         context=getContext(request)
         return render(request,TEMPLATE_ROOT+'dashboard.html',context)
+    def wizard(self,request,*args,**kwargs):
+        context=getContext(request)
+        return render(request,TEMPLATE_ROOT+'wizard.html',context)
+    def widgets(self,request,*args,**kwargs):
+        context=getContext(request)
+        return render(request,TEMPLATE_ROOT+'widgets.html',context)
     def calendar(self,request,*args,**kwargs):
         context=getContext(request)
         return render(request,TEMPLATE_ROOT+'calendar.html',context)
