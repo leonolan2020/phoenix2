@@ -1,10 +1,12 @@
 from django.shortcuts import render
 from django.views import View
+from .settings import ADMIN_URL
 TEMPLATE_ROOT='dashboard/'
 
 def getContext(request):
     context={}
     context['title']="فونیکس"
+    context['ADMIN_URL']=ADMIN_URL
     context['dasboard_title']="دشبورد فونیکس"
     return context
 

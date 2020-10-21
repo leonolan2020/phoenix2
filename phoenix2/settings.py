@@ -141,3 +141,4 @@ STATIC_ROOT=server_settings.STATIC_ROOT
 MEDIA_ROOT=server_settings.MEDIA_ROOT
 STATIC_URL = server_settings.STATIC_URL
 MEDIA_URL = server_settings.MEDIA_URL
+SITE_URL = server_settings.SITE_URL
