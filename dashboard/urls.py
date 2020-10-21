@@ -9,4 +9,5 @@ path('pages/timeline/',views.PagesView().timeline,name='timeline'),
 path('components/buttons/',views.ComponentsView().buttons,name='buttons'),
 path('components/panels/',views.ComponentsView().panels,name='panels'),
 path('components/alerts/',views.ComponentsView().alerts,name='alerts'),
+path('calendar/',views.BasicView().calendar,name='calendar'),
 ]

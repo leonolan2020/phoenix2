@@ -12,6 +12,9 @@ class BasicView(View):
     def home(self,request,*args,**kwargs):
         context=getContext(request)
         return render(request,TEMPLATE_ROOT+'dashboard.html',context)
+    def calendar(self,request,*args,**kwargs):
+        context=getContext(request)
+        return render(request,TEMPLATE_ROOT+'calendar.html',context)
 
 class PagesView(View):
     def timeline(self,request,*args,**kwargs):
