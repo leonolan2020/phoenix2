@@ -1,6 +1,6 @@
 
 import os
-
+import sys
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -120,6 +120,15 @@ STATIC_ROOT=os.path.join(BASE_DIR,'staticfiles')
 MEDIA_URL = '/media/'
 MEDIA_ROOT=os.path.join(BASE_DIR,'media')
 STATICFILES_DIRS=[os.path.join(BASE_DIR,'static')]
+
+
+
+
+if '--no-color' in sys.argv or ON_SERVER_LOCAL:
+    ON_SERVER_LOCAL=True  
+    ON_SERVER_HEROKU=False
+    ON_SERVER_PARS=False
+
 
 if ON_SERVER_PARS:
     from . import settings_pars as server_settings
