@@ -53,14 +53,14 @@
             <p>دشبورد</p>
           </a>
         </li>
-        <li class="nav-item  active">
-          <a class="nav-link" data-toggle="collapse" href="#pagesExamples" aria-expanded="true">
+        <li class="nav-item">
+          <a class="nav-link" data-toggle="collapse" href="#pagesExamples"  aria-expanded="true" >
             <i class="material-icons">image</i>
             <p>صفحات
               <b class="caret"></b>
             </p>
           </a>
-          <div class="collapse show" id="pagesExamples">
+          <div class="collapse" id="pagesExamples">
             <ul class="nav">
               <li class="nav-item ">
                 <a class="nav-link" href="https://demos.creative-tim.com/material-dashboard-pro/examples/pages/pricing.html">
@@ -68,16 +68,16 @@
                   <span class="sidebar-normal">التسعير</span>
                 </a>
               </li>
-              <li class="nav-item active ">
+              <li class="nav-item ">
                 <a class="nav-link" href="https://demos.creative-tim.com/material-dashboard-pro/examples/pages/rtl.html">
                   <span class="sidebar-mini">صو</span>
                   <span class="sidebar-normal">دعم رتل</span>
                 </a>
               </li>
-              <li class="nav-item ">
+              <li class="nav-item " id="nav-item-timeline">
                 <a class="nav-link" href="{% url 'dashboard:timeline' %}">
                   <span class="sidebar-mini">
-                    <i class="material-icons">widgets</i>  
+                    <i class="material-icons">timeline</i>  
 
                   </span>
                   <span class="sidebar-normal">خط زمانی</span>
@@ -117,7 +117,7 @@
           </div>
         </li>
         <li class="nav-item ">
-          <a class="nav-link" data-toggle="collapse" href="#componentsExamples">
+          <a class="nav-link" data-toggle="collapse"  href="#componentsExamples">
             <i class="material-icons">apps</i>
             <p>المكونات
               <b class="caret"></b>
@@ -143,10 +143,10 @@
                   </ul>
                 </div>
               </li>
-              <li class="nav-item ">
-                <a class="nav-link" href="https://demos.creative-tim.com/material-dashboard-pro/examples/components/buttons.html">
-                  <span class="sidebar-mini">بت</span>
-                  <span class="sidebar-normal">وصفتت</span>
+              <li class="nav-item " id="nav-item-buttons">
+                <a class="nav-link" href="{% url 'dashboard:buttons' %}">
+                  <span class="sidebar-mini">د</span>
+                  <span class="sidebar-normal">دکمه ها</span>
                 </a>
               </li>
               <li class="nav-item ">

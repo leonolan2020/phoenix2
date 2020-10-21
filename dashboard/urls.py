@@ -6,4 +6,5 @@ app_name=APP_NAME
 urlpatterns=[
 path('',views.BasicView().home,name='home'),
 path('timeline/',views.BasicView().timeline,name='timeline'),
+path('components/buttons/',views.ComponentsView().buttons,name='buttons'),
 ]

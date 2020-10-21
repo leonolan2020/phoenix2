@@ -14,5 +14,9 @@ class BasicView(View):
         return render(request,TEMPLATE_ROOT+'dashboard.html',context)
     def timeline(self,request,*args,**kwargs):
         context=getContext(request)
-        return render(request,TEMPLATE_ROOT+'timeline.html',context)
-# Create your views here.
+        return render(request,TEMPLATE_ROOT+'pages/timeline.html',context)
+
+class ComponentsView(View):
+    def buttons(self,request,*args,**kwargs):
+        context=getContext(request)
+        return render(request,TEMPLATE_ROOT+'components/buttons.html',context)
