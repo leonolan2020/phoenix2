@@ -12,6 +12,8 @@ class BasicView(View):
     def home(self,request,*args,**kwargs):
         context=getContext(request)
         return render(request,TEMPLATE_ROOT+'dashboard.html',context)
+
+class PagesView(View):
     def timeline(self,request,*args,**kwargs):
         context=getContext(request)
         return render(request,TEMPLATE_ROOT+'pages/timeline.html',context)
@@ -20,3 +22,6 @@ class ComponentsView(View):
     def buttons(self,request,*args,**kwargs):
         context=getContext(request)
         return render(request,TEMPLATE_ROOT+'components/buttons.html',context)
+    def panels(self,request,*args,**kwargs):
+        context=getContext(request)
+        return render(request,TEMPLATE_ROOT+'components/panels.html',context)
