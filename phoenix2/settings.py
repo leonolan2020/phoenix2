@@ -14,7 +14,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = '-+(&pe9ld9unwos@077r(cg#_)1$^l0c##+%gpy@&95da$=_hp'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
+ON_SERVER_LOCAL=False
+ON_SERVER_PARS=False
+
+
+ON_SERVER_LOCAL=True
+# ON_SERVER_PARS=True
 
 ALLOWED_HOSTS = ['127.0.0.1','khafonline.com','www.khafonline.com']
 
@@ -115,4 +121,14 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT=os.path.join(BASE_DIR,'media')
 STATICFILES_DIRS=[os.path.join(BASE_DIR,'static')]
 
-# source /home2/khafonli/virtualenv/phoenix2/3.7/bin/activate && cd /home2/khafonli/phoenix2 &&git pull && python manage.py migrate && python manage.py collectstatic 
+if ON_SERVER_PARS:
+    from . import settings_pars as server_settings
+
+if ON_SERVER_LOCAL:
+    from . import settings_local as server_settings
+
+DEBUG=server_settings.DEBUG
+STATIC_ROOT=server_settings.STATIC_ROOT
+MEDIA_ROOT=server_settings.MEDIA_ROOT
+STATIC_URL = server_settings.STATIC_URL
+MEDIA_URL = server_settings.MEDIA_URL
