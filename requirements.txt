@@ -18,6 +18,3 @@ qrcode
 requests
 sqlparse
 toml
-gunicorn
-django_heroku
-whitenoise
