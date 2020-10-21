@@ -19,8 +19,8 @@ ON_SERVER_LOCAL=False
 ON_SERVER_PARS=False
 
 
-ON_SERVER_LOCAL=True
-# ON_SERVER_PARS=True
+# ON_SERVER_LOCAL=True
+ON_SERVER_PARS=True
 
 ALLOWED_HOSTS = ['127.0.0.1','khafonline.com','www.khafonline.com']
 
