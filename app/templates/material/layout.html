@@ -53,6 +53,7 @@
     <link href="{% static 'material/css/material-kit.min.css' %}" rel="stylesheet" />
     <!-- CSS Just for demo purpose, don't include it in your project -->
     <link href="{% static 'material/css/demo.css' %}" rel="stylesheet" />
+    <link href="{% static 'material/css/leo.css' %}" rel="stylesheet" />
     <link href="{% static 'material/css/vertical-nav.css' %}" rel="stylesheet" />
     <!-- Google Tag Manager -->
     <script>
@@ -80,7 +81,32 @@
     {% endblock  %}
 
     <style>
+        a {
+            direction: rtl;
+        }
 
+        .dropdown-menu.dropdown-with-icons .dropdown-item .material-icons {
+
+            margin-left: 12px !important;
+            margin-right: 0px !important;
+        }
+
+        .bmd-label-floating {
+            right: 0 !important;
+            left: unset !important;
+
+
+        }
+        .form-control-feedback {
+            right: unset !important;
+        }
+        .input-group{
+            direction: rtl;
+        }
+        input{
+            text-align: right;
+            direction: rtl;
+        }
     </style>
 </head>
 
@@ -95,19 +121,9 @@
     <nav class="navbar navbar-color-on-scroll navbar-transparent    fixed-top  navbar-expand-lg " color-on-scroll="100"
         id="sectionsNav">
         <div class="container">
-            <div class="navbar-translate">
-                <a class="navbar-brand" href="https://demos.creative-tim.com/material-kit-pro/index.html">
-                    Material Kit PRO </a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" aria-expanded="false"
-                    aria-label="Toggle navigation">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="navbar-toggler-icon"></span>
-                    <span class="navbar-toggler-icon"></span>
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-            </div>
+
             <div class="collapse navbar-collapse">
-                <ul class="navbar-nav ml-auto">
+                <ul class="navbar-nav mr-auto leo-rtl">
                     <li class="dropdown nav-item">
                         <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
                             <i class="material-icons">apps</i> Components
@@ -122,6 +138,9 @@
                             <a href="http://demos.creative-tim.com/material-kit-pro/docs/2.1/getting-started/introduction.html"
                                 class="dropdown-item">
                                 <i class="material-icons">content_paste</i> Documentation
+                            </a>
+                            <a href="{% url 'dashboard:home' %}" class="dropdown-item">
+                                <i class="material-icons">dashboard</i> دشبورد
                             </a>
                         </div>
                     </li>
@@ -207,15 +226,27 @@
                     </li>
                 </ul>
             </div>
+
+            <div class="navbar-translate">
+                <a class="navbar-brand" href="https://demos.creative-tim.com/material-kit-pro/index.html">
+                    Material Kit PRO </a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="navbar-toggler-icon"></span>
+                    <span class="navbar-toggler-icon"></span>
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+            </div>
+
         </div>
     </nav>
-    <div class="page-header header-filter clear-filter" data-parallax="true"
-        style="background-image: url('{% static 'material/img/bg0.jpg');">
+    <div class="page-header header-filter clear-filter" data-parallax="true" style="background-image: url('{% static 'material/img/bg0.jpg' %}');">
         <div class="container">
             <div class="row">
                 <div class="col-md-8 ml-auto mr-auto">
                     <div class="brand">
-                        <h1>Material Kit
+                        <h1>{{title}}
 
                             <span class="pro-badge">
                                 Pro
@@ -241,7 +272,7 @@
     {% endblock  %}
 
     <!-- Classic Modal -->
-    <div class="modal fade" id="myModal2" tabindex="-1" role="dialog">
+    <div class=" modal fade" id="myModal2" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -290,7 +321,8 @@
                             </div>
                             <div class="col-md-4">
                                 <div class="picture">
-                                    <img src="{% static 'material/img/dg1.jpg' %}" alt="Thumbnail Image" class="rounded img-fluid">
+                                    <img src="{% static 'material/img/dg1.jpg' %}" alt="Thumbnail Image"
+                                        class="rounded img-fluid">
 
                                 </div>
                             </div>
@@ -307,7 +339,8 @@
                             </div>
                             <div class="col-md-4">
                                 <div class="picture">
-                                    <img src="{% static 'material/img/dg2.jpg' %}" alt="Thumbnail Image" class="rounded img-fluid">
+                                    <img src="{% static 'material/img/dg2.jpg' %}" alt="Thumbnail Image"
+                                        class="rounded img-fluid">
 
                                 </div>
                             </div>
