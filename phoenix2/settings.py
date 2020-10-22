@@ -29,6 +29,8 @@ ALLOWED_HOSTS = ['127.0.0.1','khafonline.com','www.khafonline.com']
 
 INSTALLED_APPS = [
     'dashboard',
+    'authentication',
+    'website',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
