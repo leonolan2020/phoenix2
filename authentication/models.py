@@ -24,7 +24,7 @@ class Profile(models.Model):
     image_header_origin= models.ImageField(_("تصویر سربرگ"), upload_to=IMAGE_FOLDER+'Profile/header/', height_field=None, width_field=None, max_length=1200,blank=True,null=True)
     address=models.CharField(_('آدرس'),max_length=100,null=True,blank=True)
     postal_code=models.CharField(_('کد پستی'),max_length=50,null=True,blank=True)
-    social_links=many
+    # social_links=many
     
     def name(self):
         return self.first_name+' '+self.last_name
