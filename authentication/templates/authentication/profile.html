@@ -22,8 +22,8 @@
                         <div class="card-icon">
                             <i class="material-icons">perm_identity</i>
                         </div>
-                        <h4 class="card-title">Edit Profile -
-                            <small class="category">Complete your profile</small>
+                        <h4 class="card-title text-right">ویرایش پروفایل
+                            <small class="category">داده های جدید را وارد کنید</small>
                         </h4>
                     </div>
                     <div class="card-body">
@@ -119,7 +119,7 @@
                         <p class="card-description">
                             {{selected_profile.bio}}
                         </p>
-                        <a href="#pablo" class="btn btn-rose btn-round">Follow</a>
+                        <a href="{{selected_profile.get_edit_url_admin}}" class="btn btn-rose btn-round">ویرایش </a>
                     </div>
                 </div>
             </div>

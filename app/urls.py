@@ -7,6 +7,7 @@ urlpatterns=[
     path('examples/all_components/',views.ExampleViews().all_components,name='all_components'),
     path('examples/sections/',views.ExampleViews().sections,name='sections'),
     path('pages/profile/',views.ProfileViews().profile,name='profile'),
+    path('pages/profile/<int:profile_id>/',views.ProfileViews().profile,name='selected_profile'),
     path('features/',views.BasicViews().features,name='features'),
 ]
 

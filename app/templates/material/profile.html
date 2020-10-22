@@ -22,7 +22,7 @@
 {% block content %}
   
 <div class="page-header header-filter" data-parallax="true"
-    style="background-image: url(&quot;../assets/img/city-profile.jpg&quot;); transform: translate3d(0px, 0px, 0px);">
+    style="background-image: url('{{selected_profile.header_image}}'); transform: translate3d(0px, 0px, 0px);">
 </div>
 
 
@@ -33,12 +33,12 @@
                 <div class="col-md-6 ml-auto mr-auto">
                     <div class="profile">
                         <div class="avatar">
-                            <img src="{% static 'material/img/christian.jpg' %}" alt="Circle Image"
+                            <img src="{{selected_profile.image}}" alt="Circle Image"
                                 class="img-raised rounded-circle img-fluid">
                         </div>
                         <div class="name">
-                            <h3 class="title">Christian Louboutin</h3>
-                            <h6>Designer</h6>
+                            <h3 class="title">{{selected_profile.name}}</h3>
+                            <h6>{{selected_profile.slogan}}</h6>
                             <a href="#pablo" class="btn btn-just-icon btn-link btn-dribbble"><i
                                     class="fa fa-dribbble"></i></a>
                             <a href="#pablo" class="btn btn-just-icon btn-link btn-twitter"><i
@@ -48,17 +48,20 @@
                         </div>
                     </div>
                     <div class="follow">
+                        <a href="{{selected_profile.get_edit_url}}">
                         <button class="btn btn-fab btn-primary btn-round" rel="tooltip" title=""
                             data-original-title="Follow this user">
                             <i class="material-icons">add</i>
-                        </button>
+                        </button></a>
                     </div>
                 </div>
             </div>
             <div class="description text-center">
-                <p>An artist of considerable range, Chet Faker — the name taken by Melbourne-raised, Brooklyn-based Nick
-                    Murphy — writes, performs and records all of his own music, giving it a warm, intimate feel with a
-                    solid groove structure. </p>
+             {% if profile.bio %}
+                <p class="text-center">
+                    {{profile.bio}}
+                </p>
+             {% endif %}  
             </div>
             <div class="row">
                 <div class="col-md-6 ml-auto mr-auto">
@@ -71,20 +74,20 @@
                                 <a class="nav-link active show" href="#work" role="tab" data-toggle="tab"
                                     aria-selected="true">
                                     <i class="material-icons">palette</i>
-                                    Work
+                                    پروژه ها
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="#connections" role="tab" data-toggle="tab"
                                     aria-selected="false">
                                     <i class="material-icons">people</i>
-                                    Connections
+                                    موقعیت
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="#media" role="tab" data-toggle="tab" aria-selected="false">
                                     <i class="material-icons">camera</i>
-                                    Media
+                                    اسناد
                                 </a>
                             </li>
                         </ul>
@@ -99,7 +102,7 @@
                             <div class="row collections">
                                 <div class="col-md-6">
                                     <div class="card card-background"
-                                        style="background-image: url('../assets/img/examples/mariya-georgieva.jpg')">
+                                        style="background-image: url('{% static 'material/img/mariya-georgieva.jpg' %}')">
                                         <a href="#pablo"></a>
                                         <div class="card-body">
                                             <label class="badge badge-warning">Spring 2016</label>
@@ -111,7 +114,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="card card-background"
-                                        style="background-image: url('../assets/img/examples/clem-onojeghuo.jpg')">
+                                        style="background-image: url('{% static 'material/img/clem-onojeghuo.jpg' %}')">
                                         <a href="#pablo"></a>
                                         <div class="card-body">
                                             <label class="badge badge-info">Spring 2016</label>
@@ -123,7 +126,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="card card-background"
-                                        style="background-image: url('../assets/img/examples/olu-eletu.jpg')">
+                                        style="background-image: url('{% static 'material/img/olu-eletu.jpg' %}')">
                                         <a href="#pablo"></a>
                                         <div class="card-body">
                                             <label class="badge badge-danger">Summer 2016</label>
@@ -135,7 +138,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="card card-background"
-                                        style="background-image: url('../assets/img/examples/darren-coleshill.jpg')">
+                                        style="background-image: url('{% static 'material/img/darren-coleshill.jpg' %}')">
                                         <a href="#pablo"></a>
                                         <div class="card-body">
                                             <label class="badge badge-success">Winter 2015</label>
@@ -174,10 +177,10 @@
                                     <div class="col-md-5">
                                         <div class="card-header card-header-image">
                                             <a href="#pablo">
-                                                <img class="img" src="../assets/img/faces/avatar.jpg">
+                                                <img class="img" src="{% static 'material/img/avatar.jpg' %}">
                                             </a>
                                             <div class="colored-shadow"
-                                                style="background-image: url(&quot;../assets/img/faces/avatar.jpg&quot;); opacity: 1;">
+                                                style="background-image: url(&quot;{% static 'material/img/avatar.jpg' %}&quot;); opacity: 1;">
                                             </div>
                                         </div>
                                     </div>
@@ -200,10 +203,10 @@
                                     <div class="col-md-5">
                                         <div class="card-header card-header-image">
                                             <a href="#pablo">
-                                                <img class="img" src="../assets/img/faces/marc.jpg">
+                                                <img class="img" src="{% static 'material/img/marc.jpg' %}">
                                             </a>
                                             <div class="colored-shadow"
-                                                style="background-image: url(&quot;../assets/img/faces/marc.jpg&quot;); opacity: 1;">
+                                                style="background-image: url(&quot;{% static 'material/img/marc.jpg' %}&quot;); opacity: 1;">
                                             </div>
                                         </div>
                                     </div>
@@ -228,10 +231,10 @@
                                     <div class="col-md-5">
                                         <div class="card-header card-header-image">
                                             <a href="#pablo">
-                                                <img class="img" src="../assets/img/faces/kendall.jpg">
+                                                <img class="img" src="{% static 'material/img/kendall.jpg' %}">
                                             </a>
                                             <div class="colored-shadow"
-                                                style="background-image: url(&quot;../assets/img/faces/kendall.jpg&quot;); opacity: 1;">
+                                                style="background-image: url(&quot;{% static 'material/img/kendall.jpg' %}&quot;); opacity: 1;">
                                             </div>
                                         </div>
                                     </div>
@@ -253,10 +256,10 @@
                                     <div class="col-md-5">
                                         <div class="card-header card-header-image">
                                             <a href="#pablo">
-                                                <img class="img" src="../assets/img/faces/card-profile2-square.jpg">
+                                                <img class="img" src="{% static 'material/img/card-profile2-square.jpg' %}">
                                             </a>
                                             <div class="colored-shadow"
-                                                style="background-image: url(&quot;../assets/img/faces/card-profile2-square.jpg&quot;); opacity: 1;">
+                                                style="background-image: url(&quot;{% static 'material/img/card-profile2-square.jpg' %}&quot;); opacity: 1;">
                                             </div>
                                         </div>
                                     </div>
@@ -277,13 +280,13 @@
                 <div class="tab-pane text-center gallery" id="media">
                     <div class="row">
                         <div class="col-md-3 ml-auto">
-                            <img src="../assets/img/examples/mariya-georgieva.jpg" class="rounded">
-                            <img src="../assets/img/examples/clem-onojegaw.jpg" class="rounded">
+                            <img src="{% static 'material/img/mariya-georgieva.jpg' %}" class="rounded">
+                            <img src="{% static 'material/img/clem-onojegaw.jpg' %}" class="rounded">
                         </div>
                         <div class="col-md-3 mr-auto">
-                            <img src="../assets/img/examples/clem-onojeghuo.jpg" class="rounded">
-                            <img src="../assets/img/examples/olu-eletu.jpg" class="rounded">
-                            <img src="../assets/img/examples/cynthia-del-rio.jpg" class="rounded">
+                            <img src="{% static 'material/img/clem-onojeghuo.jpg' %}" class="rounded">
+                            <img src="{% static 'material/img/olu-eletu.jpg' %}" class="rounded">
+                            <img src="{% static 'material/img/cynthia-del-rio.jpg' %}" class="rounded">
                         </div>
                     </div>
                 </div>
@@ -303,5 +306,53 @@
 
 
 {% block script %}
-  
+
+<nav id="cd-vertical-nav">
+    <ul>
+        <li>
+            <a href="#buttons" data-number="1">
+                <span class="cd-dot"></span>
+                <span class="cd-label">{{selected_profile.name}}</span>
+            </a>
+        </li>
+        <li>
+            <a href="#navigation" data-number="2">
+                <span class="cd-dot"></span>
+                <span class="cd-label">موقعیت ها</span>
+            </a>
+        </li>
+        <li>
+            <a href="#notifications" data-number="3">
+                <span class="cd-dot"></span>
+                <span class="cd-label">پروژه ها</span>
+            </a>
+        </li>
+        <li>
+            <a href="#footers" data-number="4">
+                <span class="cd-dot"></span>
+                <span class="cd-label">وضعیت مالی</span>
+            </a>
+        </li>
+       
+        <li>
+            <a href="#cards" data-number="5">
+                <span class="cd-dot"></span>
+                <span class="cd-label">Cards</span>
+            </a>
+        </li>
+        <li>
+            <a href="#morphingCards" data-number="8">
+                <span class="cd-dot"></span>
+                <span class="cd-label">Morphing Cards</span>
+            </a>
+        </li>
+        <li>
+            <a href="#javascriptComponents" data-number="9">
+                <span class="cd-dot"></span>
+                <span class="cd-label">Javascript</span>
+            </a>
+        </li>
+    </ul>
+</nav>
+
 {% endblock  %}

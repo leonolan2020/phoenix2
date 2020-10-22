@@ -196,7 +196,12 @@ class Parameter(models.Model):
     name=models.CharField(_("نام"), max_length=50,choices=ParametersEnum.choices)
     value=models.CharField(_("مقدار"), max_length=10000)
     
-
+    def get_edit_btn(self):
+        return f"""
+         <a target="_blank" title="ویرایش {self.name}" class="btn btn-info btn-link" href="{self.get_edit_url()}">
+                            <i class="material-icons">settings</i>
+                        </a>
+        """
     class Meta:
         verbose_name = _("Parameter")
         verbose_name_plural = _("پارامتر ها")

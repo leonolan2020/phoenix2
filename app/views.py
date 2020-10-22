@@ -5,6 +5,7 @@ from dashboard.settings import ADMIN_URL,MEDIA_URL
 from .repo import *
 from .forms import *
 from authentication.repo import ProfileRepo
+from dashboard.views import getContext as DashboardContext
 
 TEMPLATE_ROOT='material/'
 
@@ -12,15 +13,7 @@ TEMPLATE_ROOT='material/'
 
 
 def getContext(request):
-    context={}
-    context['title']="فونیکس"
-    context['ADMIN_URL']=ADMIN_URL
-    context['MEDIA_URL']=MEDIA_URL
-    context['dashboard']={
-        'pretitle':'دشبورد',
-        'title':'آموزشگاه'
-    }
-    context['profile']=ProfileRepo(user=request.user).me
+    context=DashboardContext(request)
     return context
 
 class BasicViews(View):
@@ -32,8 +25,14 @@ class BasicViews(View):
         return render(request,TEMPLATE_ROOT+'features.html',context)
 
 class ProfileViews(View):
-    def profile(self,request,*args,**kwargs):
+    def profile(self,request,profile_id=0,*args,**kwargs):
+        if profile_id==0:
+            selected_profile=ProfileRepo(user=request.user).me
+        else:
+            selected_profile=ProfileRepo(user=request.user).get(profile_id=profile_id)
         context=getContext(request)
+        context['body_class']='profile-page'
+        context['selected_profile']=selected_profile
         return render(request,TEMPLATE_ROOT+'profile.html',context)
 
 class ExampleViews(View):
