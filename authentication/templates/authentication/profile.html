@@ -1,0 +1,142 @@
+{% extends "dashboard/layout.html" %}
+{% load static %}
+
+
+{% block head %}
+
+{% endblock  %}
+
+
+{% block ofbar %}
+
+{% endblock  %}
+
+
+{% block content %}
+<div class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header card-header-icon card-header-rose">
+                        <div class="card-icon">
+                            <i class="material-icons">perm_identity</i>
+                        </div>
+                        <h4 class="card-title">Edit Profile -
+                            <small class="category">Complete your profile</small>
+                        </h4>
+                    </div>
+                    <div class="card-body">
+                        <form>
+                            <div class="row">
+                              
+                                <div class="col-md-4">
+                                    <div class="form-group bmd-form-group">
+                                        <label class="bmd-label-floating">نام کاربری</label>
+                                        <input type="text" class="form-control" value="{{selected_profile.user.username}}">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group bmd-form-group">
+                                        <label class="bmd-label-floating">پست الکترونیک</label>
+                                        <input type="email" class="form-control" value="{{selected_profile.user.email}}" >
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group bmd-form-group">
+                                        <label class="bmd-label-floating">Fist Name</label>
+                                        <input type="text" class="form-control" value="{{selected_profile.first_name}}">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group bmd-form-group">
+                                        <label class="bmd-label-floating">Last Name</label>
+                                        <input type="text" class="form-control" value="{{selected_profile.last_name}}">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group bmd-form-group">
+                                        <label class="bmd-label-floating">Adress</label>
+                                        <input type="text" class="form-control" value="{{selected_profile.address}}">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group bmd-form-group">
+                                        <label class="bmd-label-floating">City</label>
+                                        <input type="text" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group bmd-form-group">
+                                        <label class="bmd-label-floating">Country</label>
+                                        <input type="text" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group bmd-form-group">
+                                        <label class="bmd-label-floating">Postal Code</label>
+                                        <input type="text" class="form-control"
+                                            value="{{selected_profile.postal_code}}">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                            <p>
+                                        <label>About Me</label></p>
+                                        <div class="form-group bmd-form-group">
+                                            <label class="bmd-label-floating"> 
+                                                bio
+                                            </label>
+                                            <textarea class="form-control" rows="5" value="{{selected_profile.bio}}"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-rose pull-right">Update Profile</button>
+                            <div class="clearfix"></div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card card-profile">
+                    <div class="card-avatar">
+                        <a href="#pablo">
+                            <img class="img" src="{{selected_profile.image}}">
+                        </a>
+                    </div>
+                    <div class="card-body">
+                        <h6 class="card-category text-gray">{{selected_profile.slogan}}</h6>
+                        <h4 class="card-title">{{selected_profile.name}}</h4>
+                        <p class="card-description">
+                            {{selected_profile.bio}}
+                        </p>
+                        <a href="#pablo" class="btn btn-rose btn-round">Follow</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock  %}
+
+
+
+{% block modal %}
+
+{% endblock  %}
+
+
+
+{% block script %}
+
+{% endblock  %}

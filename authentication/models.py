@@ -18,6 +18,7 @@ class Profile(models.Model):
     last_name = models.CharField(_("نام خانوادگی"), max_length=200)
     status = models.CharField(_("وضعیت"), max_length=50,choices=ProfileStatusEnum.choices,default=ProfileStatusEnum.ENABLED)
     mobile = models.CharField(_("موبایل"), max_length=50,null=True,blank=True)
+    slogan=models.CharField(_('جمله کوتاه'),max_length=200,null=True,blank=True)
     bio = models.CharField(_("درباره"), max_length=500,null=True,blank=True)
     image_origin = models.ImageField(_("تصویر"), upload_to=IMAGE_FOLDER+'Profile/', height_field=None, width_field=None, max_length=1200,blank=True,null=True)
     address=models.CharField(_('آدرس'),max_length=100,null=True,blank=True)
@@ -96,9 +97,7 @@ class Profile(models.Model):
         return f'{self.name()} : {self.user.username if self.user else None}'
 
     def get_absolute_url(self):
-        return reverse("app:profile", kwargs={"profile_id": self.pk})
-    def get_transactions_url(self):
-        return reverse("app:transactions", kwargs={"profile_id": self.pk})
+        return reverse("authentication:profile", kwargs={"profile_id": self.pk})
     def get_edit_url(self):
         return f'{ADMIN_URL}{APP_NAME}/profile/{self.pk}/change/'
 

@@ -19,6 +19,16 @@ def getContext(request):
     return context
 
 class AuthenticationView(View):
+    def profile(self,request,profile_id=0,*args,**kwargs):
+        if profile_id==0:
+            selected_profile=ProfileRepo(user=request.user).me
+        else:
+            selected_profile=ProfileRepo(user=request.user).get(profile_id=profile_id)
+
+        context=getContext(request)
+        context['login_form']=LoginForm()
+        context['selected_profile']=selected_profile
+        return render(request,TEMPLATE_ROOT+'profile.html',context)
     def login(self,request,*args,**kwargs):
         if request.method=='POST':
             return self.login_post(request)
