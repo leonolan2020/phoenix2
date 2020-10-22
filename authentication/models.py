@@ -1,9 +1,12 @@
 from django.db import models
 from django.conf import settings
 from .enums import ProfileStatusEnum
+from dashboard.constants import FORCE_RESIZE_IMAGE
 from .apps import APP_NAME
 from dashboard.settings import ADMIN_URL
 from django.utils.translation import gettext as _
+from django.shortcuts import reverse
+from dashboard.settings import MEDIA_URL,STATIC_URL
 IMAGE_FOLDER=APP_NAME+'/images/'
 class Profile(models.Model):
     # region = models.ForeignKey("Region", verbose_name=_("region"), on_delete=models.CASCADE)
@@ -21,22 +24,22 @@ class Profile(models.Model):
     postal_code=models.CharField(_('کد پستی'),max_length=50,null=True,blank=True)
     def name(self):
         return self.first_name+' '+self.last_name
-    def get_my_qrcode(self):
-        self.save_qrcode()
-        return f'{APP_NAME}/images/Profile/{self.pk}.svg'
+    # def get_my_qrcode(self):
+    #     self.save_qrcode()
+    #     return f'{APP_NAME}/images/Profile/{self.pk}.svg'
 
-    def save_qrcode(self):
-        try:
-            data={
-                'profile_id':self.pk,
-                'name':self.name,
-                'image':SITE_DOMAIN+self.image(),
-            }
-            img=get_qrcode(data=data)
-            file_name=os.path.join(os.path.join(os.path.join(os.path.join(MEDIA_ROOT,APP_NAME),'images'),'Profile'),str(self.pk)+".svg")
-            img.save(file_name)
-        except :
-            pass
+    # def save_qrcode(self):
+    #     try:
+    #         data={
+    #             'profile_id':self.pk,
+    #             'name':self.name,
+    #             'image':SITE_DOMAIN+self.image(),
+    #         }
+    #         img=get_qrcode(data=data)
+    #         file_name=os.path.join(os.path.join(os.path.join(os.path.join(MEDIA_ROOT,APP_NAME),'images'),'Profile'),str(self.pk)+".svg")
+    #         img.save(file_name)
+    #     except :
+    #         pass
         
 
     def image(self):
@@ -44,38 +47,45 @@ class Profile(models.Model):
             return MEDIA_URL+str(self.image_origin)
         else:
             return STATIC_URL+'dashboard/img/default_avatar.png'
-    def save(self):  
+    # def save(self):  
         
-        old_image=None      
-        try:
-            old_image=Profile.objects.get(pk=self.pk).image_origin
-        except:
-            pass
-        if not self.image_origin :
-             super(Profile,self).save()
-        elif old_image is not None and str(self.image_origin)==str(Profile.objects.get(pk=self.pk).image_origin):
-            super(Profile,self).save()
-        elif self.image_origin and FORCE_RESIZE_IMAGE:
-            #Opening the uploaded image
-            image = Image.open(self.image_origin)       
-            output = BytesIO()     
-            #Resize/modify the image
-            image = image.resize( (PROFILE_IMAGE_WIDTH, PROFILE_IMAGE_HEIGHT), Image.ANTIALIAS )
+    #     old_image=None      
+    #     try:
+    #         old_image=Profile.objects.get(pk=self.pk).image_origin
+    #     except:
+    #         pass
+    #     if not self.image_origin :
+    #          super(Profile,self).save()
+    #     elif old_image is not None and str(self.image_origin)==str(Profile.objects.get(pk=self.pk).image_origin):
+    #         super(Profile,self).save()
+    #     elif self.image_origin and FORCE_RESIZE_IMAGE:
+    #         #Opening the uploaded image
+    #         image = Image.open(self.image_origin)       
+    #         output = BytesIO()     
+    #         #Resize/modify the image
+    #         image = image.resize( (PROFILE_IMAGE_WIDTH, PROFILE_IMAGE_HEIGHT), Image.ANTIALIAS )
             
-            #after modifications, save it to the output
-            image.save(output, format='JPEG', quality=95)
+    #         #after modifications, save it to the output
+    #         image.save(output, format='JPEG', quality=95)
            
-            output.seek(0)  
-            #change the imagefield value to be the newley modifed image value
-            self.image_origin = InMemoryUploadedFile(output,'ImageField', "%s.jpg" %self.image_origin.name.split('.')[0], IMAGE_FOLDER+'Profile/image/jpeg', sys.getsizeof(output), None)
+    #         output.seek(0)  
+    #         #change the imagefield value to be the newley modifed image value
+    #         self.image_origin = InMemoryUploadedFile(output,'ImageField', "%s.jpg" %self.image_origin.name.split('.')[0], IMAGE_FOLDER+'Profile/image/jpeg', sys.getsizeof(output), None)
             
-        super(Profile,self).save()
+    #     super(Profile,self).save()
         
     def get_link(self):
         return f"""
         <a href="{self.get_absolute_url()}">
         <i class="fa fa-user"></i>
         {self.name()}
+        </a>
+        """
+
+    def get_image_link(self):
+        return f"""
+        <a title="{self.name()}" href="{self.get_absolute_url()}">
+        <img src="{self.image()}" width="34px" height="34px" class="rounded-circle">
         </a>
         """
     class Meta:

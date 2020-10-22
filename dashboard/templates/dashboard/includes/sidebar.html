@@ -5,20 +5,21 @@
       Tip 2: you can also add an image using data-image tag
   -->
     <div class="logo"><a href="http://www.creative-tim.com" class="simple-text logo-mini">
-        ط م
+      {{dashboard.pretitle}}
       </a>
       <a href="http://www.creative-tim.com" class="simple-text logo-normal">
-        توقيت الإبداعية
+      {{dashboard.title}}
       </a></div>
     <div class="sidebar-wrapper">
-      <div class="user">
+      {% if profile %}
+         <div class="user">
         <div class="photo">
-          <img src="https://demos.creative-tim.com/material-dashboard-pro/assets/img/faces/avatar.jpg" />
+          <img src="{{profile.image}}" height="34px" width="34px" />
         </div>
         <div class="user-info">
           <a data-toggle="collapse" href="#collapseExample" class="username">
             <span>
-              تانيا أندرو
+             {{profile.name}}
               <b class="caret"></b>
             </span>
           </a>
@@ -37,15 +38,26 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">
+                <!-- <form action="{% url 'authentication:logout' %}" method="POST">
+                  {% csrf_token %}
+
+                </form> -->
+                <!-- <button type="submit" class="nav-link" href="#">
                   <span class="sidebar-mini">و</span>
-                  <span class="sidebar-normal">إعدادات</span>
+                  <span class="sidebar-normal">خروج</span>
+                </button> -->
+
+                <a  class="nav-link" href="{% url 'authentication:logout' %}">
+                  <span class="sidebar-mini">و</span>
+                  <span class="sidebar-normal">خروج</span>
                 </a>
               </li>
             </ul>
           </div>
         </div>
       </div>
+      {% endif %}
+     
       <ul class="nav">
         <li class="nav-item ">
           <a class="nav-link" href="{% url 'dashboard:home' %}">
@@ -84,7 +96,7 @@
                 </a>
               </li>
               <li class="nav-item ">
-                <a class="nav-link" href="{% url 'dashboard:login' %}">
+                <a class="nav-link" href="{% url 'authentication:login' %}">
                   <span class="sidebar-mini">و</span>
                   <span class="sidebar-normal">ورود</span>
                 </a>

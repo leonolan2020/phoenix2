@@ -1,22 +1,23 @@
 from django.shortcuts import render
 from django.views import View
-from .settings import ADMIN_URL
+from .settings import ADMIN_URL,MEDIA_URL
 from .repo import *
 from .forms import *
+
+from authentication.repo import ProfileRepo
 TEMPLATE_ROOT='dashboard/'
 
 def getContext(request):
     context={}
     context['title']="فونیکس"
     context['ADMIN_URL']=ADMIN_URL
-    context['dasboard_title']="دشبورد فونیکس"
+    context['MEDIA_URL']=MEDIA_URL
+    context['dashboard']={
+        'pretitle':'دشبورد',
+        'title':'آموزشگاه'
+    }
+    context['profile']=ProfileRepo(user=request.user).me
     return context
-
-class AuthenticationView(View):
-    def login(self,request,*args,**kwargs):
-        context=getContext(request)
-        return render(request,'auth/login.html',context)
-
 
 
 

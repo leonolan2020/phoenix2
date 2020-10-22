@@ -10,6 +10,11 @@ from django.conf.urls import url
 
 urlpatterns = [
     path('',include('dashboard.urls')),
+    path('',include('authentication.urls')),
+
+    path('authentication/',include('authentication.urls')),
+    path('dashboard/',include('dashboard.urls')),
+    
     path('admin/', admin.site.urls),
 
 
