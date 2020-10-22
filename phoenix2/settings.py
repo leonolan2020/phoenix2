@@ -32,6 +32,11 @@ INSTALLED_APPS = [
     'authentication',
     'app',
     'app_en',
+    'django_cleanup',
+    'django_social_share',
+    'rest_framework',
+    'djecrety',
+    'tinymce',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -55,10 +60,11 @@ ROOT_URLCONF = 'phoenix2.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ['templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
+                'dashboard.views.getContext',
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
