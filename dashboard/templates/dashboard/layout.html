@@ -91,15 +91,37 @@ The above copyright notice and this permission notice shall be included in all c
 
   {% endblock  %}
 
+  <style>
+    .card [class*=card-header-] .card-icon,
+    .card [class*=card-header-] .card-text {
+      border-radius: 3px;
+      background-color: #999;
+      padding: 15px;
+      margin-top: -20px;
+      margin-left: 15px;
+      float: right;
+    }
+    td,th{
+      text-align: right;
+    }
+
+    .modal-dialog .modal-header .close {
+    position: absolute;
+    top: 15px;
+    left: 0px !important;
+    right: unset !important;
+}
+
+  </style>
 </head>
 
 <body class="rtl">
-  
-{% block ofBar %}
 
-{% endblock ofBar %}
+  {% block ofBar %}
 
- 
+  {% endblock ofBar %}
+
+
   <!-- Google Tag Manager (noscript) -->
   <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NKDMSK6" height="0" width="0"
       style="display:none;visibility:hidden"></iframe></noscript>
@@ -207,7 +229,7 @@ The above copyright notice and this permission notice shall be included in all c
 
       <footer class="footer">
         <div class="container-fluid">
- <nav class="float-right">
+          <nav class="float-right">
             <ul>
               <li>
                 <a href="https://www.creative-tim.com/">
@@ -240,13 +262,13 @@ The above copyright notice and this permission notice shall be included in all c
             <a href="https://www.creative-tim.com/" target="_blank">صفرویک</a>
           </div>
 
-         
+
         </div>
       </footer>
 
 
       {% block modal %}
-        
+
       {% endblock %}
 
     </div>

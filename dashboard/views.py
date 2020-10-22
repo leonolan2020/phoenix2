@@ -39,7 +39,11 @@ class PagesView(View):
     def timeline(self,request,*args,**kwargs):
         context=getContext(request)
         return render(request,TEMPLATE_ROOT+'pages/timeline.html',context)
-
+class TablesView(View):
+    def regular(self,request,*args,**kwargs):
+        context=getContext(request)
+        return render(request,TEMPLATE_ROOT+'tables/regular.html',context)
+    
 class ComponentsView(View):
     def buttons(self,request,*args,**kwargs):
         context=getContext(request)
@@ -47,6 +51,9 @@ class ComponentsView(View):
     def panels(self,request,*args,**kwargs):
         context=getContext(request)
         return render(request,TEMPLATE_ROOT+'components/panels.html',context)
+    def notifications(self,request,*args,**kwargs):
+        context=getContext(request)
+        return render(request,TEMPLATE_ROOT+'components/notifications.html',context)
     def alerts(self,request,*args,**kwargs):
         context=getContext(request)
         return render(request,TEMPLATE_ROOT+'components/alerts.html',context)

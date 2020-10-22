@@ -75,7 +75,7 @@
                 </a>
               </li>
               <li class="nav-item " id="nav-item-timeline">
-                <a class="nav-link" href="{% url 'dashboard:timeline' %}">
+                <a class="nav-link" href="{% url 'dashboard:pages_timeline' %}">
                   <span class="sidebar-mini">
                     <i class="material-icons">timeline</i>  
 
@@ -144,7 +144,7 @@
                 </div>
               </li>
               <li class="nav-item " id="nav-item-buttons">
-                <a class="nav-link" href="{% url 'dashboard:buttons' %}">
+                <a class="nav-link" href="{% url 'dashboard:components_buttons' %}">
                   <span class="sidebar-mini">د</span>
                   <span class="sidebar-normal">دکمه ها</span>
                 </a>
@@ -156,21 +156,21 @@
                 </a>
               </li>
               <li class="nav-item " id="nav-item-panels">
-                <a class="nav-link" href="{% url 'dashboard:panels' %}">
+                <a class="nav-link" href="{% url 'dashboard:components_panels' %}">
                   <span class="sidebar-mini">ع</span>
                   <span class="sidebar-normal">پنل ها</span>
                 </a>
               </li>
               <li class="nav-item " id="nav-item-alerts">
-                <a class="nav-link" href="{% url 'dashboard:alerts' %}">
+                <a class="nav-link" href="{% url 'dashboard:components_alerts' %}">
                   <span class="sidebar-mini">پ</span>
                   <span class="sidebar-normal">پیام</span>
                 </a>
               </li>
-              <li class="nav-item ">
-                <a class="nav-link" href="https://demos.creative-tim.com/material-dashboard-pro/examples/components/notifications.html">
+              <li class="nav-item " id="nav-item-notifications">
+                <a class="nav-link" href="{% url 'dashboard:components_notifications' %}">
                   <span class="sidebar-mini">ن</span>
-                  <span class="sidebar-normal">إخطارات</span>
+                  <span class="sidebar-normal">اعلان ها</span>
                 </a>
               </li>
               <li class="nav-item ">
@@ -227,16 +227,16 @@
         <li class="nav-item ">
           <a class="nav-link" data-toggle="collapse" href="#tablesExamples">
             <i class="material-icons">grid_on</i>
-            <p>الجداول
+            <p>جداول
               <b class="caret"></b>
             </p>
           </a>
           <div class="collapse" id="tablesExamples">
             <ul class="nav">
-              <li class="nav-item ">
-                <a class="nav-link" href="https://demos.creative-tim.com/material-dashboard-pro/examples/tables/regular.html">
+              <li class="nav-item " id="nav-item-tables-regular">
+                <a class="nav-link" href="{% url 'dashboard:tables_regular' %}">
                   <span class="sidebar-mini">صر</span>
-                  <span class="sidebar-normal">الجداول العادية</span>
+                  <span class="sidebar-normal">جداول معمولی</span>
                 </a>
               </li>
               <li class="nav-item ">
