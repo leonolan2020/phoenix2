@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from django.views import View
 from .settings import ADMIN_URL
+from .repo import *
+from .forms import *
 TEMPLATE_ROOT='dashboard/'
 
 def getContext(request):
@@ -42,6 +44,8 @@ class PagesView(View):
 class TablesView(View):
     def regular(self,request,*args,**kwargs):
         context=getContext(request)
+        notifications=NotificationRepo(user=request.user).list()
+        context['notifications']=notifications
         return render(request,TEMPLATE_ROOT+'tables/regular.html',context)
     
 class ComponentsView(View):
