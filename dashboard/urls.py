@@ -4,15 +4,15 @@ from .apps import APP_NAME
 
 app_name=APP_NAME
 urlpatterns=[
-path('',views.BasicView().home,name='home'),
-path('pages/timeline/',views.PagesView().timeline,name='pages_timeline'),
-path('components/notifications/',views.ComponentsView().notifications,name='components_notifications'),
-path('components/buttons/',views.ComponentsView().buttons,name='components_buttons'),
-path('components/panels/',views.ComponentsView().panels,name='components_panels'),
-path('components/alerts/',views.ComponentsView().alerts,name='components_alerts'),
-path('calendar/',views.BasicView().calendar,name='calendar'),
-path('wizard/',views.BasicView().wizard,name='wizard'),
-path('widgets/',views.BasicView().widgets,name='widgets'),
-path('charts/',views.BasicView().charts,name='charts'),
-path('tables/regular/',views.TablesView().regular,name='tables_regular'),
+path('',views.BasicViews().home,name='home'),
+path('pages/timeline/',views.PagesViews().timeline,name='pages_timeline'),
+path('components/notifications/',views.ComponentsViews().notifications,name='components_notifications'),
+path('components/buttons/',views.ComponentsViews().buttons,name='components_buttons'),
+path('components/panels/',views.ComponentsViews().panels,name='components_panels'),
+path('components/alerts/',views.ComponentsViews().alerts,name='components_alerts'),
+path('calendar/',views.BasicViews().calendar,name='calendar'),
+path('wizard/',views.BasicViews().wizard,name='wizard'),
+path('widgets/',views.BasicViews().widgets,name='widgets'),
+path('charts/',views.BasicViews().charts,name='charts'),
+path('tables/regular/',views.TablesViews().regular,name='tables_regular'),
 ]

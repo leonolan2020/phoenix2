@@ -21,7 +21,7 @@ def getContext(request):
 
 
 
-class BasicView(View):
+class BasicViews(View):
     def home(self,request,*args,**kwargs):
         context=getContext(request)
         return render(request,TEMPLATE_ROOT+'dashboard.html',context)
@@ -38,18 +38,18 @@ class BasicView(View):
         context=getContext(request)
         return render(request,TEMPLATE_ROOT+'calendar.html',context)
 
-class PagesView(View):
+class PagesViews(View):
     def timeline(self,request,*args,**kwargs):
         context=getContext(request)
         return render(request,TEMPLATE_ROOT+'pages/timeline.html',context)
-class TablesView(View):
+class TablesViews(View):
     def regular(self,request,*args,**kwargs):
         context=getContext(request)
         notifications=NotificationRepo(user=request.user).list()
         context['notifications']=notifications
         return render(request,TEMPLATE_ROOT+'tables/regular.html',context)
     
-class ComponentsView(View):
+class ComponentsViews(View):
     def buttons(self,request,*args,**kwargs):
         context=getContext(request)
         return render(request,TEMPLATE_ROOT+'components/buttons.html',context)

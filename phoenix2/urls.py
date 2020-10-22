@@ -9,12 +9,15 @@ from django.conf.urls import url
 
 
 urlpatterns = [
-    path('',include('dashboard.urls')),
-    path('',include('authentication.urls')),
+    path('',include('app.urls')),
 
+
+    path('',include('authentication.urls')),
     path('authentication/',include('authentication.urls')),
     path('dashboard/',include('dashboard.urls')),
-    
+    path('app/fa/',include('app.urls')),
+    path('app/en/',include('app_en.urls')),
+
     path('admin/', admin.site.urls),
 
 
