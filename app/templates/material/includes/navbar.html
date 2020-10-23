@@ -57,26 +57,26 @@ id="sectionsNav">
             </li>
             <li class="dropdown nav-item">
                 <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
-                    <i class="material-icons">view_carousel</i> Examples
+                    <i class="material-icons">view_carousel</i> همه مثال ها
                 </a>
                 <div class="dropdown-menu dropdown-with-icons">
                     <a href="./examples/about-us.html" class="dropdown-item">
-                        <i class="material-icons">account_balance</i> About Us
+                        <i class="material-icons">account_balance</i> درباره ما
                     </a>
                     <a href="./examples/blog-post.html" class="dropdown-item">
                         <i class="material-icons">art_track</i> Blog Post
                     </a>
                     <a href="./examples/blog-posts.html" class="dropdown-item">
-                        <i class="material-icons">view_quilt</i> Blog Posts
+                        <i class="material-icons">view_quilt</i> مقالات
                     </a>
                     <a href="./examples/contact-us.html" class="dropdown-item">
-                        <i class="material-icons">location_on</i> Contact Us
+                        <i class="material-icons">location_on</i> ارتباط با ما
                     </a>
                     <a href="./examples/landing-page.html" class="dropdown-item">
                         <i class="material-icons">view_day</i> Landing Page
                     </a>
-                    <a href="./examples/login-page.html" class="dropdown-item">
-                        <i class="material-icons">fingerprint</i> Login Page
+                    <a href="{% url 'authentication:login' %}" class="dropdown-item">
+                        <i class="material-icons">fingerprint</i> ورود
                     </a>
                     <a href="./examples/pricing.html" class="dropdown-item">
                         <i class="material-icons">attach_money</i> Pricing Page
@@ -95,10 +95,10 @@ id="sectionsNav">
                     </a>
                     
                     <a href="{% url 'app:features' %}" class="dropdown-item">
-                        <i class="material-icons">account_circle</i> features
+                        <i class="material-icons">account_circle</i> خدمات ما
                     </a>
                     <a href="./examples/signup-page.html" class="dropdown-item">
-                        <i class="material-icons">person_add</i> Signup Page
+                        <i class="material-icons">person_add</i> ثبت نام
                     </a>
                 </div>
             </li>

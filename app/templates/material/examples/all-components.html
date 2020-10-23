@@ -1,4 +1,4 @@
-{% extends "material/layout.html" %}
+{% extends "material/base-layout.html" %}
 {% load static %}
 
 
@@ -13,6 +13,27 @@
 
 
 {% block content %}
+
+<div class="page-header header-filter clear-filter" data-parallax="true"
+        style="background-image: url('{% static 'material/img/bg0.jpg' %}');">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 ml-auto mr-auto">
+                    <div class="brand">
+                        <h1>{{title}}
+
+                            <span class="pro-badge">
+                                نسخه ۲
+                            </span>
+                        </h1>
+                        <h3 class="title">مدیریت و منترل پروژه</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="main main-raised mb-5">
 <div class="section section-basic">
     <div class="container">
         <div class="title">
@@ -2610,12 +2631,12 @@
                                         <td class="td-number">
               1
               
-                                            <div class="btn-group">
-                                                <button class="btn btn-round btn-info btn-sm">
-                                                    <i class="material-icons">remove</i>
-                                                </button>
+                                            <div class="btn-group ltr">
                                                 <button class="btn btn-round btn-info btn-sm">
                                                     <i class="material-icons">add</i>
+                                                </button>
+                                                <button class="btn btn-round btn-info btn-sm">
+                                                    <i class="material-icons">remove</i>
                                                 </button>
                                             </div>
                                         </td>
@@ -2652,12 +2673,12 @@
                                         <td class="td-number">
               2
               
-                                            <div class="btn-group">
-                                                <button class="btn btn-round btn-info btn-sm">
-                                                    <i class="material-icons">remove</i>
-                                                </button>
+                                            <div class="btn-group ltr">
                                                 <button class="btn btn-round btn-info btn-sm">
                                                     <i class="material-icons">add</i>
+                                                </button>
+                                                <button class="btn btn-round btn-info btn-sm">
+                                                    <i class="material-icons">remove</i>
                                                 </button>
                                             </div>
                                         </td>
@@ -4207,7 +4228,7 @@
     </div>
 </div>
 <!--         end carousel -->
-
+</div>
 {% endblock  %}
 
 
