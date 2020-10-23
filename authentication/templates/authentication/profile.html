@@ -13,7 +13,7 @@
 
 
 {% block content %}
-<div class="content">
+<div class="content" id="profile-app">
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-8">
@@ -27,82 +27,91 @@
                         </h4>
                     </div>
                     <div class="card-body">
-                        <form>
+                        <div>
+                            {% csrf_token %}
                             <div class="row">
-                              
                                 <div class="col-md-4">
                                     <div class="form-group bmd-form-group">
                                         <label class="bmd-label-floating">نام کاربری</label>
-                                        <input type="text" class="form-control" value="{{selected_profile.user.username}}">
+                                        <input type="text" class="form-control"
+                                            value="{{selected_profile.user.username}}">
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group bmd-form-group">
                                         <label class="bmd-label-floating">پست الکترونیک</label>
-                                        <input type="email" class="form-control" value="{{selected_profile.user.email}}" >
+                                        <input type="email" class="form-control"
+                                            value="{{selected_profile.user.email}}">
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-md-6">
+                                <div class="col-md-4">
                                     <div class="form-group bmd-form-group">
-                                        <label class="bmd-label-floating">Fist Name</label>
-                                        <input type="text" class="form-control" value="{{selected_profile.first_name}}">
+                                        <label class="bmd-label-floating">نام</label>
+                                        <input type="text" class="form-control" v-model="first_name">
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-4">
                                     <div class="form-group bmd-form-group">
-                                        <label class="bmd-label-floating">Last Name</label>
-                                        <input type="text" class="form-control" value="{{selected_profile.last_name}}">
+                                        <label class="bmd-label-floating">نام خانوادگی</label>
+                                        <input type="text" class="form-control" v-model="last_name">
                                     </div>
                                 </div>
+
+                                <div class="col-md-4">
+                                    <div class="form-group bmd-form-group">
+                                        <label class="bmd-label-floating">عنوان</label>
+                                        <input type="text" class="form-control" v-model="slogan"
+                                            value="{{selected_profile.slogan}}">
+                                    </div>
+                                </div>
+
                             </div>
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group bmd-form-group">
-                                        <label class="bmd-label-floating">Adress</label>
-                                        <input type="text" class="form-control" value="{{selected_profile.address}}">
+                                        <label class="bmd-label-floating">آدرس</label>
+                                        <input type="text" class="form-control" v-model="address"
+                                            value="{{selected_profile.address}}">
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-4">
                                     <div class="form-group bmd-form-group">
-                                        <label class="bmd-label-floating">City</label>
-                                        <input type="text" class="form-control">
+                                        <label class="bmd-label-floating">موبایل</label>
+                                        <input type="phone" class="form-control" v-model="mobile"
+                                            value="{{selected_profile.mobile}}">
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group bmd-form-group">
-                                        <label class="bmd-label-floating">Country</label>
-                                        <input type="text" class="form-control">
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-group bmd-form-group">
-                                        <label class="bmd-label-floating">Postal Code</label>
-                                        <input type="text" class="form-control"
+                                        <label class="bmd-label-floating">کد پستی</label>
+                                        <input type="text" class="form-control" v-model="postal_code"
                                             value="{{selected_profile.postal_code}}">
                                     </div>
                                 </div>
+
                             </div>
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                            <p>
-                                        <label>About Me</label></p>
+                                        <p>
+
                                         <div class="form-group bmd-form-group">
-                                            <label class="bmd-label-floating"> 
-                                                bio
+                                            <label class="bmd-label-floating">
+                                                درباره ...
                                             </label>
-                                            <textarea class="form-control" rows="5" value="{{selected_profile.bio}}"></textarea>
+                                            <textarea class="form-control" rows="5" v-model="bio"
+                                                value="{{selected_profile.bio}}"></textarea>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <button type="submit" class="btn btn-rose pull-right">Update Profile</button>
+                            <button @click="submit" class="btn btn-rose pull-right">تایید</button>
                             <div class="clearfix"></div>
-                        </form>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -138,5 +147,66 @@
 
 
 {% block script %}
+<script src="{% static 'vendor/js/vue.min.js' %}"></script>
+<script>
+    let csrfmiddlewaretoken = ''
+    $(document).ready(function () {
+        // Javascript method's body can be found in assets/js/demos.js
+        csrfmiddlewaretoken = $("input[name='csrfmiddlewaretoken']").val()
+    })
+    let profile_app = new Vue({
+        el: "#profile-app",
+        data: {
+            profile_id: JSON.parse("{{selected_profile.id}}"),
+            first_name: "{{selected_profile.first_name}}",
+            last_name: "{{selected_profile.last_name}}",
+            bio: "{{selected_profile.bio}}",
+            mobile: "{{selected_profile.mobile}}",
+            slogan: "{{selected_profile.slogan}}",
+            address: "{{selected_profile.address}}",
+            postal_code: "{{selected_profile.postal_code}}",
+        },
+        methods: {
+            submit: function () {
 
+                url = '{% url "authentication:edit_profile" %}'
+                // Send the data using post
+                // var getting = $.get(url);
+                var posting = $.post(url, {
+                    first_name: profile_app.first_name,
+                    last_name: profile_app.last_name,
+                    bio: profile_app.bio,
+                    slogan: profile_app.slogan,
+                    postal_code: profile_app.postal_code,
+                    mobile: profile_app.mobile,
+                    address: profile_app.address,
+                    profile_id: profile_app.profile_id,
+                    csrfmiddlewaretoken: csrfmiddlewaretoken
+                });
+
+                // Put the results in a div
+                posting.done(function (data) {
+                    if (data.result == 'SUCCEED')
+                        swal({
+                            title: "ویرایش پروفایل",
+                            text: "پروفایل با موفقیت اصلاح شدید.",
+                            buttonsStyling: false,
+                            confirmButtonClass: "btn btn-success",
+                            type: "success"
+                        }).catch(swal.noop)
+                    else
+                        swal({
+                            title: "خطا !",
+                            text:"ویرایش پروفایل با خطا مواجه گردید!"+"\n"+"دوباره تلاش کنید.",
+                            buttonsStyling: false,
+                            confirmButtonClass: "btn btn-danger",
+                            type: "error"
+                        }).catch(swal.noop)
+
+                })
+            }
+
+        }
+    })
+</script>
 {% endblock  %}

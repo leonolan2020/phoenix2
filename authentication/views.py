@@ -1,8 +1,10 @@
 from django.shortcuts import render,redirect,reverse
 from django.views import View
+from django.http import JsonResponse,Http404
 from dashboard.settings import ADMIN_URL,MEDIA_URL
 from .repo import *
 from .forms import *
+from dashboard.constants import SUCCEED,FAILED
 from .repo import ProfileRepo
 from dashboard.views import getContext as DashboardContext
 
@@ -14,6 +16,31 @@ def getContext(request):
     return context
 
 class AuthenticationView(View):
+    def edit_profile(self,request,*args,**kwargs):
+        if request.method=='POST':
+            edit_profile_form=EditProfileForm(request.POST)
+            if edit_profile_form.is_valid():
+                profile_id=edit_profile_form.cleaned_data['profile_id']
+                first_name=edit_profile_form.cleaned_data['first_name']
+                last_name=edit_profile_form.cleaned_data['last_name']
+                mobile=edit_profile_form.cleaned_data['mobile']
+                slogan=edit_profile_form.cleaned_data['slogan']
+                bio=edit_profile_form.cleaned_data['bio']
+                address=edit_profile_form.cleaned_data['address']
+                postal_code=edit_profile_form.cleaned_data['postal_code']
+                edited_profile=ProfileRepo(user=request.user).edit_profile(
+                    profile_id=profile_id,
+                    first_name=first_name,
+                    last_name=last_name,
+                    mobile=mobile,
+                    slogan=slogan,
+                    bio=bio,
+                    address=address,
+                    postal_code=postal_code
+                    )
+                if edited_profile is not None:
+                    return JsonResponse({'result':SUCCEED})
+        return JsonResponse({'result':FAILED})
     def profile(self,request,profile_id=0,*args,**kwargs):
         if profile_id==0:
             selected_profile=ProfileRepo(user=request.user).me

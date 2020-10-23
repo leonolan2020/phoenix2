@@ -14,3 +14,14 @@ class RegisterForm(forms.Form):
     password=forms.CharField(max_length=150, required=True)
     first_name=forms.CharField(max_length=50, required=True)
     last_name=forms.CharField(max_length=50, required=True)
+
+class EditProfileForm(forms.Form):
+    profile_id=forms.IntegerField(required=True)
+    first_name=forms.CharField(max_length=50, required=True)
+    last_name=forms.CharField(max_length=50, required=True)
+    mobile=forms.CharField(max_length=50, required=False)
+    address=forms.CharField(max_length=50, required=False)
+    slogan=forms.CharField(max_length=50, required=False)
+    bio=forms.CharField(max_length=500, required=False)
+    address=forms.CharField(max_length=100, required=False)
+    postal_code=forms.CharField(max_length=50, required=False)
