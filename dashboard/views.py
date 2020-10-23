@@ -15,10 +15,7 @@ def getContext(request):
     context['ADMIN_URL']=ADMIN_URL
     context['MEDIA_URL']=MEDIA_URL
     context['SITE_URL']=SITE_URL
-    context['dashboard']={
-        'pretitle':'دشبورد',
-        'title':'آموزشگاه'
-    }
+    
     parameter_repo=ParameterRepo(user=request.user)
     main_pic_repo=MainPicRepo(user=request.user)
     link_repo=LinkRepo(user=request.user)

@@ -4,11 +4,11 @@
 
       Tip 2: you can also add an image using data-image tag
   -->
-    <div class="logo"><a href="http://www.creative-tim.com" class="simple-text logo-mini">
-      {{dashboard.pretitle}}
+    <div class="logo"><a href="{% url 'app:home' %}" class="simple-text logo-mini">
+      {{app.pretitle}}
       </a>
-      <a href="http://www.creative-tim.com" class="simple-text logo-normal">
-      {{dashboard.title}}
+      <a href="{% url 'app:home' %}" class="simple-text logo-normal">
+      {{app.title}}
       </a></div>
     <div class="sidebar-wrapper">
       {% if profile %}
