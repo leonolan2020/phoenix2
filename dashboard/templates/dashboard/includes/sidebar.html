@@ -4,8 +4,9 @@
 
       Tip 2: you can also add an image using data-image tag
   -->
-    <div class="logo"><a href="{% url 'app:home' %}" class="simple-text logo-mini">
-      {{app.pretitle.value}}
+    <div class="logo">
+      <a href="{% url 'app:home' %}" class="simple-text logo-mini">
+      <i class="material-icons">language</i>
       </a>
       <a href="{% url 'app:home' %}" class="simple-text logo-normal">
       {{app.title.value}}
