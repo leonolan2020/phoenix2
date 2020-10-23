@@ -16,10 +16,10 @@ The above copyright notice and this permission notice shall be included in all c
 <head>
   {% include "dashboard/includes/head.html" %}
   <style>
-    .fixed-plugin{
+    .fixed-plugin {
       /* left: 0px!important; */
       /* right: unset!important; */
-      top: 120px!important;
+      top: 120px !important;
       border-radius: 0 8px 8px 0 !important;
     }
   </style>
@@ -50,12 +50,13 @@ The above copyright notice and this permission notice shall be included in all c
   {% endblock  %}
 
   <style>
-    .bmd-label-floating{
+    .bmd-label-floating {
       right: 0 !important;
       left: unset !important;
-      
-      
+
+
     }
+
     .card [class*=card-header-] .card-icon,
     .card [class*=card-header-] .card-text {
       border-radius: 3px;
@@ -65,17 +66,24 @@ The above copyright notice and this permission notice shall be included in all c
       margin-left: 15px;
       float: right;
     }
-    td,th{
+
+    td,
+    th {
       text-align: right;
     }
 
     .modal-dialog .modal-header .close {
-    position: absolute;
-    top: 15px;
-    left: 0px !important;
-    right: unset !important;
-}
+      position: absolute;
+      top: 15px;
+      left: 0px !important;
+      right: unset !important;
+    }
 
+    .main-panel>.content {
+      margin-top: 70px;
+      padding: 30px 15px;
+      min-height: calc(100vh - 158px);
+    }
   </style>
 </head>
 
@@ -97,15 +105,20 @@ The above copyright notice and this permission notice shall be included in all c
 
     <div class="main-panel">
       <!-- Navbar -->
-    
+
       {% include "dashboard/includes/navbar.html" %}
 
 
       <!-- End Navbar -->
-      {% block content %}
 
-      {% endblock %}
+      <div class="content">
 
+        <div class="container-fluid">
+          {% block content %}
+
+          {% endblock %}
+        </div>
+      </div>
 
       {% include "dashboard/includes/footer.html" %}
 
@@ -117,8 +130,8 @@ The above copyright notice and this permission notice shall be included in all c
 
     </div>
   </div>
- 
-  
+
+
   {% include "dashboard/includes/fixed-plugin.html" %}
 
 

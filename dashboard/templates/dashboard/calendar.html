@@ -1,7 +1,7 @@
 {% extends "dashboard/layout.html" %}
 
 {% block head %}
-  
+
 {% endblock  %}
 
 
@@ -11,33 +11,33 @@
 {% endblock ofBar %}
 
 {% block content %}
-  
-<div class="content">
-    <div class="container-fluid">
-        <div class="header text-center">
-            <h3 class="title text-center">FullCalendar.io</h3>
-            <p class="category text-center">Handcrafted by our friends from
-                <a target="_blank" href="https://fullcalendar.io/" rel="nofollow">FullCalendar.io</a>. Please checkout their
-                <a href="https://fullcalendar.io/docs/" target="_blank" rel="nofollow">full documentation.</a>
-            </p>
-        </div>
-        <div class="row">
-            <div class="col-md-10 ml-auto mr-auto">
-                <div class="card card-calendar">
-                    <div class="card-body ">
-                        <div id="fullCalendar"></div>
-                    </div>
-                </div>
+
+
+
+<div class="header text-center">
+    <h3 class="title text-center">FullCalendar.io</h3>
+    <p class="category text-center">Handcrafted by our friends from
+        <a target="_blank" href="https://fullcalendar.io/" rel="nofollow">FullCalendar.io</a>. Please checkout their
+        <a href="https://fullcalendar.io/docs/" target="_blank" rel="nofollow">full documentation.</a>
+    </p>
+</div>
+<div class="row">
+    <div class="col-md-10 ml-auto mr-auto">
+        <div class="card card-calendar">
+            <div class="card-body ">
+                <div id="fullCalendar"></div>
             </div>
         </div>
     </div>
 </div>
+
+
 {% endblock  %}
 
 
 
 {% block modal %}
-  
+
 {% endblock  %}
 
 
@@ -45,8 +45,8 @@
 {% block script %}
 <script>
     $("#nav-item-calendar").addClass("active")
-    $(document).ready(function() {
-      md.initFullCalendar();
+    $(document).ready(function () {
+        md.initFullCalendar();
     });
 </script>
 {% endblock  %}

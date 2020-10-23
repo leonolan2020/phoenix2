@@ -13,54 +13,68 @@
 
 
 {% block content %}
-{% if a %}
+
+
 
 <div class="row">
   <div class="col-lg-2"></div>
   <div class="col-lg-8">
     <div class="page-categories">
-      <h3 class="title text-center">Page Subcategories</h3>
+      <h3 class="title text-center">مدیریت پروژه ها</h3>
       <br>
       <ul class="nav nav-pills nav-pills-warning nav-pills-icons justify-content-center" role="tablist">
         <li class="nav-item">
-          <a class="nav-link" data-toggle="tab" href="#link7" role="tablist">
-            <i class="material-icons">info</i> Description
+          <a class="nav-link active" data-toggle="tab" href="#link7" role="tablist">
+            <i class="material-icons">info</i> پروژه ها
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" data-toggle="tab" href="#link8" role="tablist">
-            <i class="material-icons">location_on</i> Location
+          <a class="nav-link" data-toggle="tab" href="#link8" role="tablist">
+            <i class="material-icons">location_on</i> پیمانکار ها
           </a>
         </li>
         <li class="nav-item">
           <a class="nav-link" data-toggle="tab" href="#link9" role="tablist">
-            <i class="material-icons">gavel</i> Legal Info
+            <i class="material-icons">gavel</i>متریال ها
           </a>
         </li>
         <li class="nav-item">
           <a class="nav-link" data-toggle="tab" href="#link10" role="tablist">
-            <i class="material-icons">help_outline</i> Help Center
+            <i class="material-icons">help_outline</i> چارت سازمانی
           </a>
         </li>
       </ul>
       <div class="tab-content tab-space tab-subcategories">
-        <div class="tab-pane" id="link7">
+        <div class="tab-pane  active" id="link7">
           <div class="card">
             <div class="card-header">
-              <h4 class="card-title">Description about product</h4>
+              <h4 class="card-title text-right">پروژه های شما</h4>
               <p class="card-category">
-                More information here
+                اطلاعات بیشتر
               </p>
             </div>
             <div class="card-body">
-              Collaboratively administrate empowered markets via plug-and-play networks. Dynamically procrastinate B2C
-              users after installed base benefits.
-              <br>
-              <br> Dramatically visualize customer directed convergence without revolutionary ROI.
+
+              <p>
+                ریشه‌ی مدیریت پروژه به روش‌ها و فرآیندهایی برمی‌گردد که حدود صد سال پیش در کسب‌و‌کار توسعه پیدا کردند.
+                با این حال، در سال‌های اخیر، مدیریت پروژه رشد چشمگیری داشته و به عنوان یک عملیات مجزا و جدی در تجارت
+                ظهور کرده است و در صحنه‌ی تجارت جهانی، یعنی جایی که شرکت‌ها دائما به دنبال رسیدن به مزیت رقابتی هستند،
+                به یک عامل کلیدی تبدیل شده است. در مقاله زیر با مفهوم مدیریت پروژه بیشتر آشنا خواهید شد.
+
+
+                <br>
+              </p>
+              <div>
+                {% for project in projects %}
+                {{project.get_link|safe}}
+                {% endfor %}
+              </div>
+
+
             </div>
           </div>
         </div>
-        <div class="tab-pane active" id="link8">
+        <div class="tab-pane" id="link8">
           <div class="card">
             <div class="card-header">
               <h4 class="card-title">Location of the product</h4>
@@ -116,7 +130,7 @@
   <div class="col-lg-2"></div>
 </div>
 
-{% endif %}
+
 {% endblock  %}
 
 
