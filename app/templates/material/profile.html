@@ -40,7 +40,7 @@
                             <h3 class="title">{{selected_profile.name}}</h3>
                             <h6>{{selected_profile.slogan}}</h6>
                             {% for social_link in selected_profile.sociallink_set.all %}
-                           {{social_link.get_link|safe}}
+                            {{social_link.get_link|safe}}
                             {% endfor %}
 
                         </div>
@@ -50,7 +50,16 @@
                             <button class="btn btn-fab btn-primary btn-round" rel="tooltip" title=""
                                 data-original-title="Follow this user">
                                 <i class="material-icons">add</i>
-                            </button></a>
+                            </button>
+                        </a>
+
+                        <a href="{{selected_profile.get_edit_url}}">
+                            <button class="btn btn-fab btn-danger btn-round" rel="tooltip" title=""
+                                data-original-title="ویرایش پروفایل">
+                                <i class="material-icons">construction</i>
+                            </button>
+                        </a>
+
                     </div>
                 </div>
             </div>

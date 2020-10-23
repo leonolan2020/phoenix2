@@ -38,7 +38,7 @@ class ProfileViews(View):
 class ExampleViews(View):
     def all_components(self,request,*args,**kwargs):
         context=getContext(request)
-        return render(request,TEMPLATE_ROOT+'examples/all_components.html',context)
+        return render(request,TEMPLATE_ROOT+'examples/all-components.html',context)
     def sections(self,request,*args,**kwargs):
         context=getContext(request)
         return render(request,TEMPLATE_ROOT+'examples/sections.html',context)
