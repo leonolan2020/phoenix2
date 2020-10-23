@@ -87,6 +87,14 @@ class ProfileRepo:
             return True
         return False
     
+    def change_profile_header_image(self,profile_id,header_image):
+        profile=ProfileRepo(user=self.user).get(profile_id=profile_id)
+        if profile is not None:
+            profile.image_header_origin = header_image
+            profile.save()
+            return True
+        return False
+    
     def edit_profile(self,profile_id,first_name,last_name,mobile,slogan,address,bio,postal_code):
         user=self.user
         if user.is_authenticated:

@@ -15,6 +15,16 @@ class RegisterForm(forms.Form):
     first_name=forms.CharField(max_length=50, required=True)
     last_name=forms.CharField(max_length=50, required=True)
 
+class UploadProfileImageForm(forms.Form):
+    profile_id=forms.IntegerField(required=True)
+    image=forms.ImageField(required=True)
+  
+
+class UploadProfileHeaderForm(forms.Form):
+    profile_id=forms.IntegerField(required=True)
+    header_image=forms.ImageField(required=True)
+  
+  
 class EditProfileForm(forms.Form):
     profile_id=forms.IntegerField(required=True)
     first_name=forms.CharField(max_length=50, required=True)
