@@ -9,7 +9,7 @@ from django.conf.urls import url
 
 
 urlpatterns = [
-    path('',include('app.urls')),
+    path('',include('projectmanager.urls')),
 
 
     path('',include('authentication.urls')),
@@ -17,6 +17,7 @@ urlpatterns = [
     path('dashboard/',include('dashboard.urls')),
     path('app/fa/',include('app.urls')),
     path('app/en/',include('app_en.urls')),
+    path('projectmanager/',include('projectmanager.urls')),
 
     path('admin/', admin.site.urls),
 
