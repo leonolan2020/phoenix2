@@ -280,28 +280,31 @@
         </div>
       </li>
       <li class="nav-item ">
-        <a class="nav-link" data-toggle="collapse" href="#mapsExamples">
+        <a class="nav-link" data-toggle="collapse" href="#projectmanagerPages">
           <i class="material-icons">place</i>
-          <p>خرائط
+          <p>مدیریت پروژه
             <b class="caret"></b>
           </p>
         </a>
-        <div class="collapse" id="mapsExamples">
+        <div class="collapse" id="projectmanagerPages">
           <ul class="nav">
+            <li class="nav-item " id="nav-item-projectmanager-home">
+              <a class="nav-link"
+                href="{% url 'projectmanager:home' %}">
+                <span class="sidebar-mini">
+                  <i class="material-icons">table_view</i>
+                </span>
+                <span class="sidebar-normal">لیست پروژه ها</span>
+              </a>
+            </li>
             <li class="nav-item ">
               <a class="nav-link"
                 href="https://demos.creative-tim.com/material-dashboard-pro/examples/maps/google.html">
                 <span class="sidebar-mini">زم</span>
-                <span class="sidebar-normal">خرائط جوجل</span>
+                <span class="sidebar-normal">چارت سازمانی</span>
               </a>
             </li>
-            <li class="nav-item ">
-              <a class="nav-link"
-                href="https://demos.creative-tim.com/material-dashboard-pro/examples/maps/fullscreen.html">
-                <span class="sidebar-mini">ووم</span>
-                <span class="sidebar-normal">خريطة كاملة الشاشة</span>
-              </a>
-            </li>
+            
             <li class="nav-item ">
               <a class="nav-link"
                 href="https://demos.creative-tim.com/material-dashboard-pro/examples/maps/vector.html">
