@@ -15,56 +15,36 @@
 <h3 class="title text-center">{{page.title}}</h3>
 
 
-<div class="row">
+<div class="row leo-rtl">
     <div class="col-md-6">
         <div class="card ">
             <div class="card-header ">
-                <h4 class="card-title ">Navigation Pills -
-                    <small class="description">Horizontal Tabs</small>
+                <h4 class="card-title text-right">توضیحات
+                    <small class="description px-2 text-secondary">درباره {{page.title}}</small>
                 </h4>
             </div>
             <div class="card-body ">
                 <ul class="nav nav-pills nav-pills-warning" role="tablist">
                     <li class="nav-item">
-                        <a class="nav-link" data-toggle="tab" href="#link1" role="tablist">
-                            Profile
+                        <a class="nav-link active show" data-toggle="tab" href="#link1" role="tablist">
+                            شرح کوتاه
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" data-toggle="tab" href="#link2" role="tablist">
-                            Settings
+                            شرح کامل
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link active show" data-toggle="tab" href="#link3" role="tablist">
-                            Options
-                        </a>
-                    </li>
+                   
                 </ul>
                 <div class="tab-content tab-space">
-                    <div class="tab-pane" id="link1">
-                        Collaboratively administrate empowered markets via plug-and-play networks. Dynamically
-                        procrastinate B2C users after installed base benefits.
-                        <br>
-                        <br> Dramatically visualize customer directed convergence without revolutionary ROI.
-                        Collaboratively administrate empowered markets via plug-and-play networks. Dynamically
-                        procrastinate B2C users after installed base benefits.
-                        <br>
-                        <br> This is very nice.
+                    <div class="tab-pane farsi active show text-right px-3 pt-3" id="link1">
+                        {{page.short_description|safe}}           
                     </div>
-                    <div class="tab-pane" id="link2">
-                        Efficiently unleash cross-media information without cross-media value. Quickly maximize timely
-                        deliverables for real-time schemas.
-                        <br>
-                        <br>Dramatically maintain clicks-and-mortar solutions without functional solutions.
+                    <div class="tab-pane farsi text-right px-3 pt-3" id="link2">
+                        {{page.description|safe}}                     
                     </div>
-                    <div class="tab-pane active show" id="link3">
-                        Completely synergize resource taxing relationships via premier niche markets. Professionally
-                        cultivate one-to-one customer service with robust ideas.
-                        <br>
-                        <br>Dynamically innovate resource-leveling customer service for state of the art customer
-                        service.
-                    </div>
+                    
                 </div>
             </div>
         </div>
@@ -77,53 +57,10 @@
                 </h4>
             </div>
             <div class="card-body ">
-                <div class="row">
-                    <div class="col-md-4">
-                        <ul class="nav nav-pills nav-pills-rose flex-column" role="tablist">
-                            <li class="nav-item">
-                                <a class="nav-link active" data-toggle="tab" href="#link4" role="tablist">
-                                    Profile
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" data-toggle="tab" href="#link5" role="tablist">
-                                    Settings
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" data-toggle="tab" href="#link6" role="tablist">
-                                    Options
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="col-md-8">
-                        <div class="tab-content">
-                            <div class="tab-pane active" id="link4">
-                                Collaboratively administrate empowered markets via plug-and-play networks. Dynamically
-                                procrastinate B2C users after installed base benefits.
-                                <br>
-                                <br> Dramatically maintain clicks-and-mortar solutions without functional solutions.
-                                Dramatically visualize customer directed convergence without revolutionary ROI.
-                                Collaboratively administrate empowered markets via plug-and-play networks. Dynamically
-                                procrastinate B2C users after installed base benefits. This is very nice.
-                            </div>
-                            <div class="tab-pane" id="link5">
-                                Efficiently unleash cross-media information without cross-media value. Quickly maximize
-                                timely deliverables for real-time schemas.
-                                <br>
-                                <br>Dramatically maintain clicks-and-mortar solutions without functional solutions.
-                            </div>
-                            <div class="tab-pane" id="link6">
-                                Completely synergize resource taxing relationships via premier niche markets.
-                                Professionally cultivate one-to-one customer service with robust ideas.
-                                <br>
-                                <br>Dynamically innovate resource-leveling customer service for state of the art
-                                customer service.
-                            </div>
-                        </div>
-                    </div>
-                </div>
+              
+                <a class="btn btn-link btn-warning" href="{{page.get_edit_url}}">
+                    <i class="material-icons">settings</i>
+                </a>
             </div>
         </div>
     </div>
