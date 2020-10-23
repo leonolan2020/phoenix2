@@ -37,15 +37,25 @@ class Page(models.Model):
     def __str__(self):
         return self.title
 
+    def get_edit_url(self):
+        return f'{ADMIN_URL}{APP_NAME}/{self.child_class}/{self.pk}/change/'
+
     def get_absolute_url(self):
-        return f'{self.pk}'
+        return reverse(f'{APP_NAME}:{self.child_class}',kwargs={'pk':self.pk})
 
-
+    def save(self):
+        self.app_name=APP_NAME
+        super(Page,self).save()
 
 
 class Project(Page):
     priority=models.IntegerField(_("priority"))
     
+    def save(self):
+        self.child_class='project'
+        super(Project,self).save()
+
+
 
     class Meta:
         verbose_name = _("Project")

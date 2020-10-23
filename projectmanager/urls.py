@@ -5,5 +5,6 @@ from . import views
 app_name=APP_NAME
 urlpatterns = [
     path('',views.BasicViews().home,name='home'),
+    path('project/<int:pk>/',views.PageViews().project,name='project'),
     
 ]

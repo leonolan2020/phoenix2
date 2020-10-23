@@ -21,4 +21,14 @@ class BasicViews(View):
         return render(request,TEMPLATE_ROOT+'index.html',context)
 
 
-# Create your views here.
+class PageViews(View):
+    def project(self,request,pk,*args, **kwargs):
+        project_id=pk
+        user=request.user
+        context=getContext(request)
+        project=ProjectRepo(user=user).project(project_id=project_id)
+        context['project']=project
+        context['page']=project
+        return render(request,TEMPLATE_ROOT+'project.html',context)
+
+
