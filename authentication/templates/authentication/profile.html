@@ -33,14 +33,14 @@
                                 <div class="col-md-4">
                                     <div class="form-group bmd-form-group">
                                         <label class="bmd-label-floating">نام کاربری</label>
-                                        <input type="text" class="form-control"
+                                        <input disabled type="text" class="form-control"
                                             value="{{selected_profile.user.username}}">
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group bmd-form-group">
                                         <label class="bmd-label-floating">پست الکترونیک</label>
-                                        <input type="email" class="form-control"
+                                        <input disabled type="email" class="form-control"
                                             value="{{selected_profile.user.email}}">
                                     </div>
                                 </div>
@@ -116,12 +116,31 @@
                 </div>
             </div>
             <div class="col-md-4">
-                <div class="card card-profile">
+                <div v-if="!show_edit_image" class="card card-profile">
                     <div class="card-avatar">
                         <a href="#pablo">
                             <img class="img" src="{{selected_profile.image}}">
                         </a>
                     </div>
+                    <div class="card-body">
+                     
+                        
+
+                        <h6 class="card-category text-gray" v-text="slogan"></h6>
+                        <h4 class="card-title" v-text="first_name+' '+last_name"></h4>
+                        <p class="card-description text-center" v-text="bio">
+                           
+                        </p>
+                        <a href="{{selected_profile.get_edit_url_admin}}" class="btn btn-rose btn-round farsi">ویرایش </a>
+                         <button @click="show_edit_image=!show_edit_image" class="btn btn-warning btn-round farsi">تصویر ها  </button>
+                   </div>
+                </div>
+
+
+
+
+                <div v-if="show_edit_image" class="card card-profile">
+                   
                     <div class="card-body">
                         {% if upload_profile_image_form %}
 
@@ -140,7 +159,7 @@
                                 <div>
                                     <span class="btn btn-raised btn-round btn-default btn-file">
                                         <span class="fileinput-new farsi">انتخاب تصویر جدید</span>
-                                        <span class="fileinput-exists">انتخاب تصویر جدید</span>
+                                        <span class="fileinput-exists farsi">انتخاب تصویر جدید</span>
                                         <input type="hidden" name="profile_id" value="{{selected_profile.id}}">
                                         <input type="file" name="image">
                                         <div class="ripple-container"></div>
@@ -153,7 +172,7 @@
                                     </a>
                                 </div>
                                 {% csrf_token %}
-                                <button type="submit" class="fileinput-exists btn btn-success btn-round">آپلود
+                                <button type="submit" class="fileinput-exists btn btn-success btn-round farsi">آپلود
                                     تصویر</button>
                             </div>
                         </form>
@@ -177,7 +196,7 @@
                                 <div>
                                     <span class="btn btn-raised btn-round btn-default btn-file">
                                         <span class="fileinput-new farsi">انتخاب تصویر سربرگ جدید</span>
-                                        <span class="fileinput-exists">انتخاب تصویر سربرگ جدید</span>
+                                        <span class="fileinput-exists farsi">انتخاب تصویر سربرگ جدید</span>
                                         <input type="hidden" name="profile_id" value="{{selected_profile.id}}">
                                         <input type="file" name="header_image">
                                         <div class="ripple-container"></div>
@@ -190,20 +209,19 @@
                                     </a>
                                 </div>
                                 {% csrf_token %}
-                                <button type="submit" class="fileinput-exists btn btn-success btn-round">آپلود
+                                <button type="submit" class="fileinput-exists btn btn-success btn-round farsi">آپلود
                                     تصویر سربرگ</button>
                             </div>
                         </form>
                         {% endif %}
 
-                        <h6 class="card-category text-gray">{{selected_profile.slogan}}</h6>
-                        <h4 class="card-title">{{selected_profile.name}}</h4>
-                        <p class="card-description">
-                            {{selected_profile.bio}}
-                        </p>
-                        <a href="{{selected_profile.get_edit_url_admin}}" class="btn btn-rose btn-round">ویرایش </a>
+                       
+                        
+                        <button @click="show_edit_image=!show_edit_image" class="btn btn-secondary btn-round farsi">انصراف</button>
+
                     </div>
                 </div>
+                
             </div>
         </div>
     </div>
@@ -230,6 +248,7 @@
     let profile_app = new Vue({
         el: "#profile-app",
         data: {
+            show_edit_image:false,
             profile_id: JSON.parse("{{selected_profile.id}}"),
             first_name: "{{selected_profile.first_name}}",
             last_name: "{{selected_profile.last_name}}",
