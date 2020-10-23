@@ -36,13 +36,14 @@ class NotificationTemp(models.Model):
 
 class Icon(models.Model):
     icon_title=models.CharField(_("عنوان"), max_length=50)    
+    icon_class=models.CharField(_("کلاس آیکون"), max_length=50 ,null=True,blank=True)    
     image_origin=models.ImageField(_("تصویر"), upload_to=IMAGE_FOLDER+'OurService/', height_field=None,null=True,blank=True, width_field=None, max_length=None)
     icon_fa=models.CharField(_("آیکون فونت آسوم"),max_length=50,null=True,blank=True)
     icon_material=models.CharField(_("آیکون متریال"),choices=IconsEnum.choices,null=True,blank=True, max_length=100)
     icon_svg=models.TextField(_("آیکون svg"),null=True,blank=True)
-    color=models.CharField(_("رنگ"),choices=ColorEnum.choices,default=ColorEnum.PRIMARY, max_length=50)
-    width=models.IntegerField(_("عرض"),default=128)
-    height=models.IntegerField(_("ارتفاع"),default=128)
+    color=models.CharField(_("رنگ"),choices=ColorEnum.choices,default=ColorEnum.UNSET, max_length=50)
+    width=models.IntegerField(_("عرض"),null=True,blank=True)
+    height=models.IntegerField(_("ارتفاع"),null=True,blank=True)
     def get_icon_tag(self):
         if self.image_origin is not None and self.image_origin:
             return f'<img src="{MEDIA_URL}{str(self.image_origin)}" alt="{self.title}" height="{self.height}" width="{self.width}">'
@@ -52,6 +53,7 @@ class Icon(models.Model):
             return f'<i   style="position:inherit !important;" class="text-{self.color} {self.icon_fa}"></i>'
         if self.icon_svg is not None and len(self.icon_svg)>0:
             return f'<span class="text-{self.color}">{self.icon_svg}</span>'
+    
     
       
     class Meta:
@@ -290,7 +292,6 @@ class Link(Icon):
     for_home=models.BooleanField(_("نمایش در پایین صفحه سایت"),default=False)
     for_nav=models.BooleanField(_("نمایش در منوی بالای سایت"),default=False)
     priority=models.IntegerField(_("ترتیب"),default=100)
-    profile=models.ForeignKey("authentication.Profile",null=True,blank=True, verbose_name=_("profile"), on_delete=models.PROTECT)
     url=models.CharField(_("لینک"), max_length=2000,default="#")    
     
     def get_link_icon_tag(self):
@@ -323,14 +324,21 @@ class Link(Icon):
 
 
 class SocialLink(Link):
+    profile=models.ForeignKey("authentication.Profile",null=True,blank=True, verbose_name=_("profile"), on_delete=models.PROTECT)
     
+    def get_link(self):
+        return f"""
+                <a href="{self.url}" class="btn btn-just-icon btn-link {self.icon_class}">
+                {self.get_icon_tag()}
+                </a>
+        """
     
     class Meta:
         verbose_name = _("SocialLink")
         verbose_name_plural = _("شبکه اجتماعی")
 
     def __str__(self):
-        return self.title
+        return self.icon_title
 
     def get_absolute_url(self):
         return self.link
