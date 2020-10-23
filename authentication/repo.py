@@ -141,7 +141,7 @@ class ProfileRepo:
         try:
 
             profile=self.objects.get(pk=profile_id)
-            return profile
+            # return profile
         except:
             return None
         
@@ -149,11 +149,9 @@ class ProfileRepo:
         if current_profile is None:
             return None
         if user.has_perm('app.view_profile'):
-            profile=self.objects.filter(pk=profile_id)
-            if len(profile)==1:
-                return profile[0]
+            return profile
         if current_profile.id==profile_id:
-            return current_profile
+            return profile
     
     def check_availabe_username(self,username):
 
