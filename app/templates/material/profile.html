@@ -37,7 +37,7 @@
                                 class="img-raised rounded-circle img-fluid">
                         </div>
                         <div class="name">
-                            <h3 class="title">{{selected_profile.name}}</h3>
+                            <h3 class="title farsi">{{selected_profile.name}}</h3>
                             <h6>{{selected_profile.slogan}}</h6>
                             {% for social_link in selected_profile.sociallink_set.all %}
                             {{social_link.get_link|safe}}
