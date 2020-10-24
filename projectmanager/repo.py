@@ -20,6 +20,8 @@ class ProjectRepo:
             return self.me_contractor.project_set.all()
         if self.me_employee is not None:
             return self.me_employee.work_unit.project_set.all()
+    def list_roots(self):
+        return self.objects.filter(parent=None).order_by('-priority')
     def list(self):
         return self.objects.order_by('-priority')
     def get_roots(self):
@@ -61,8 +63,11 @@ class ProjectRepo:
             up_object.save()
 
     def add(self,title,parent_id):
-        parent=self.project(project_id=parent_id)
-        project=Project(color='primary',parent=parent,icon='construction',title=title)
+        if parent_id==0:
+            parent=None
+        else:
+            parent=self.project(project_id=parent_id)
+        project=Project(parent=parent,title=title,short_description='',description='')
         project.save()
         if project is not None:
             return project

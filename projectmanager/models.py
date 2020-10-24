@@ -21,16 +21,29 @@ class ManagerPage(DashboardPage):
             return f"""<div class="d-inline"><a href="{self.get_absolute_url()}">&nbsp;{self.title}&nbsp;</a></div>"""
         else:
             return self.parent.get_breadcrumb_url()+f"""<span class="text-secondary">&nbsp;/&nbsp;</span><div class="d-inline"><a  href="{self.get_absolute_url()}">&nbsp;{self.title}&nbsp;</a></div>"""
-    
+    def childs(self):
+      return ManagerPage.objects.filter(parent=self)
     
     def get_link(self):
-        return f"""
+      icon=self.icon
+      if self.icon is None:
+        icon="""
+        <div class="em15 text-primary">
+            <i class="material-icons " style="font-size:1.5em;">settings</i>
+        </div>
+        """
+      else:
+        icon=f"""
+         <div class="em15 {self.icon.icon_class}"  style="font-size:1.5em;">
+                      {self.icon.get_icon_tag(icon_style='font-size: 1.5em')}
+          </div>
+        """
+      return f"""
 
 
-         <div class="media">
+         <div class="media mb-2">
                   <div class="icon icon-rose">
-                    <div class="em25 {self.icon.icon_class}">
-                      {self.icon.get_icon_tag()}</div>
+                    {icon}
                   </div>
                   <div class="media-body mr-3">
                     <a href="{self.get_absolute_url()}">

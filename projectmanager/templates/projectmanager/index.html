@@ -20,7 +20,7 @@
 
 
 
-<div class="row">
+<div class="row" id="app">
   <div class="col-lg-2"></div>
   <div class="col-lg-8">
     <div class="page-categories">
@@ -71,13 +71,35 @@
               <div>
                 {% for project in projects %}
 
-                      {{project.get_link|safe}}
-                   
+                {{project.get_link|safe}}
+
 
 
 
                 {% endfor %}
+
+                <template v-for="project in projects">
+<div v-html="project.get_link"></div>
+
+
+                </template>
               </div>
+              {% if add_project_form %}
+              <div class="mt-3 mx-5">
+                <div class="form-group bmd-form-group">
+                  <label for="exampleInput1" class="bmd-label-floating">نام پروژه جدید</label>
+                  {% csrf_token %}
+                  <input type="hidden" name="parent_id" value="0">
+                  <input v-model="title" type="text" class="form-control" id="exampleInput1" name="title" required=""
+                    aria-required="true">
+
+
+                </div>
+                <input type="button" @click="add_project" class="btn btn-next btn-fill btn-rose btn-wd" name="next"
+                  value="افزودن">
+
+              </div>
+              {% endif %}
 
 
             </div>
@@ -151,8 +173,53 @@
 
 
 {% block script %}
+
 <script>
   $("#nav-item-projectmanager-home").addClass('active')
   $("#projectmanagerPages").addClass('show')
+</script>
+<script>
+  var app = new Vue({
+    el: "#app",
+    data: {
+      projects: [],
+      title:'aa',
+
+    },
+    methods: {
+      add_project: function () {
+        let url = "{% url 'projectmanager:add_project' %}"
+
+        var posting = $.post(url,
+          {
+            parent_id: 0,
+            title: app.title,
+            csrfmiddlewaretoken: csrfmiddlewaretoken
+          }
+        );
+
+        // Put the results in a div
+        posting.done(function (data) {
+          // word_app.word = (data.word);
+          // word_app.definitions = (data.definitions);
+          console.log(data)
+          app.projects.push(data)
+        })
+
+
+
+
+
+
+
+
+
+
+
+
+
+      },
+    },
+  })
 </script>
 {% endblock  %}

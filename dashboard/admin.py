@@ -1,10 +1,8 @@
 from django.contrib import admin
-from .models import Notification,Card,Jumbotron,Color,Icon
 from .models import *
 admin.site.register(Notification)
 admin.site.register(Card)
 admin.site.register(Jumbotron)
-admin.site.register(Color)
 admin.site.register(Icon)
 admin.site.register(Technology)
 admin.site.register(Blog)

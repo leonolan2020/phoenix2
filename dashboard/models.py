@@ -44,15 +44,15 @@ class Icon(models.Model):
     color=models.CharField(_("رنگ"),choices=ColorEnum.choices,default=ColorEnum.UNSET, max_length=50)
     width=models.IntegerField(_("عرض"),null=True,blank=True)
     height=models.IntegerField(_("ارتفاع"),null=True,blank=True)
-    def get_icon_tag(self):
+    def get_icon_tag(self,icon_style=''):
         if self.image_origin is not None and self.image_origin:
             return f'<img src="{MEDIA_URL}{str(self.image_origin)}" alt="{self.title}" height="{self.height}" width="{self.width}">'
         if self.icon_material is not None and len(self.icon_material)>0:
-            return f'<i class="text-{self.color} material-icons">{self.icon_material}</i>'
+            return f'<i style="{icon_style}" class="text-{self.color} material-icons">{self.icon_material}</i>'
         if self.icon_fa is not None and len(self.icon_fa)>0:
-            return f'<i   style="position:inherit !important;" class="text-{self.color} {self.icon_fa}"></i>'
+            return f'<i   style="{icon_style}" style="position:inherit !important;" class="text-{self.color} {self.icon_fa}"></i>'
         if self.icon_svg is not None and len(self.icon_svg)>0:
-            return f'<span class="text-{self.color}">{self.icon_svg}</span>'
+            return f'<span  style="{icon_style}" class="text-{self.color}">{self.icon_svg}</span>'
     
     
       
@@ -76,19 +76,6 @@ class Icon(models.Model):
     #     return reverse("OurService_detail", kwargs={"pk": self.pk})
 
 
-
-
-
-class Color(models.Model):
-    color_name=models.CharField(_("color name"),max_length=50)
-    color_code=models.CharField(_("color code"),blank=True,null=True,max_length=50)
-    color_class=models.CharField(_("color class"),blank=True,null=True,choices=ColorEnum.choices,default=ColorEnum.DEFAULT,max_length=50)
-    def __str__(self):
-        return f'color({self.color_name})'
-
-    class Meta:
-        verbose_name = 'Color'
-        verbose_name_plural = 'Colors'
 class Jumbotron(models.Model):
     title=models.CharField(_("عنوان"), max_length=500,blank=True,null=True)
     pretitle=models.CharField(_("پیش عنوان"), max_length=500,blank=True,null=True)
@@ -104,7 +91,7 @@ class Jumbotron(models.Model):
         verbose_name_plural = 'Jumbotrons'
 
 class Card(models.Model):
-    color=models.ForeignKey("Color",null=True,blank=True,on_delete=models.SET_NULL)
+    color=models.CharField(_("رنگ"),choices=ColorEnum.choices,default=ColorEnum.UNSET, max_length=50)
     icon=models.ForeignKey("icon",null=True,blank=True,on_delete=models.SET_NULL)
     jumbotron=models.ForeignKey("Jumbotron",null=True,blank=True,on_delete=models.SET_NULL)
     
@@ -216,7 +203,8 @@ class Parameter(models.Model):
 
 class FAQ(models.Model):
     for_home=models.BooleanField(_("نمایش در صفحه خانه"),default=False)
-    color=models.ForeignKey("Color",null=True,blank=True,on_delete=models.SET_NULL)
+    color=models.CharField(_("رنگ"),choices=ColorEnum.choices,default=ColorEnum.UNSET, max_length=50)
+    
     icon=models.ForeignKey("icon",null=True,blank=True,on_delete=models.SET_NULL)
     priority=models.IntegerField(_("ترتیب"))
     question=models.CharField(_("سوال"), max_length=200)
@@ -237,8 +225,8 @@ class FAQ(models.Model):
 
 class Page(models.Model):
     title=models.CharField(_('title'),max_length=200)
-    color=models.ForeignKey("Color",null=True,blank=True,on_delete=models.SET_NULL)
     icon=models.ForeignKey("icon",null=True,blank=True,on_delete=models.SET_NULL)
+    color=models.CharField(_("color class"),blank=True,null=True,choices=ColorEnum.choices,default=ColorEnum.DEFAULT,max_length=50)
     
     short_description=tinymce_models.HTMLField(_("شرح کوتاه"),max_length=200,blank=True,null=True)
     description=tinymce_models.HTMLField(_("شرح کامل"),max_length=2000,null=True,blank=True)
@@ -477,7 +465,8 @@ class Notification(models.Model):
     date_added=models.DateTimeField(_('تاریخ ایجاد'),auto_now_add=True,auto_now=False)
     date_seen=models.DateTimeField(_('تاریخ دیده شده'),auto_now_add=False,auto_now=False,null=True,blank=True)
     
-    color=models.ForeignKey("Color",null=True,blank=True,on_delete=models.SET_NULL)
+    color=models.CharField(_("رنگ"),choices=ColorEnum.choices,default=ColorEnum.UNSET, max_length=50)
+    
     icon=models.ForeignKey("icon",null=True,blank=True,on_delete=models.SET_NULL)
     
     # def send(self,user,channel_name,event_name):

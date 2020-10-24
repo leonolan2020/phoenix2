@@ -22,9 +22,10 @@ The above copyright notice and this permission notice shall be included in all c
       top: 120px !important;
       /* border-radius: 0 8px 8px 0 !important; */
     }
-    .fixed-plugin-profile{
-      width: 100px!important;
-      height: 100px!important;
+
+    .fixed-plugin-profile {
+      width: 100px !important;
+      height: 100px !important;
     }
   </style>
   <!-- Google Tag Manager -->
@@ -188,6 +189,8 @@ The above copyright notice and this permission notice shall be included in all c
   <script src="{% static 'dashboard/js/material-dashboard.min.js' %}" type="text/javascript"></script>
   <!-- Material Dashboard DEMO methods, don't include it in your project! -->
   <script src="{% static 'dashboard/js/demo.js' %}"></script>
+  <script src="{% static 'vendor/js/vue.min.js' %}"></script>
+
   <script>
     $(document).ready(function () {
       $().ready(function () {
@@ -480,8 +483,14 @@ The above copyright notice and this permission notice shall be included in all c
       src="https://www.facebook.com/tr?id=111649226022273&ev=PageView&noscript=1" />
   </noscript> -->
   <script>
+    var csrfmiddlewaretoken=''
     $(document).ready(function () {
       md.checkFullPageBackgroundImage();
+
+
+      // Javascript method's body can be found in assets/js/demos.js
+      csrfmiddlewaretoken = $("input[name='csrfmiddlewaretoken']").val()
+
 
       // $('.sidebar .sidebar-wrapper, .main-panel').perfectScrollbar();
     });
