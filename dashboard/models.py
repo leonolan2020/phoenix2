@@ -242,7 +242,7 @@ class Page(models.Model):
     
     short_description=tinymce_models.HTMLField(_("شرح کوتاه"),max_length=200,blank=True,null=True)
     description=tinymce_models.HTMLField(_("شرح کامل"),max_length=2000,null=True,blank=True)
-    child_class=models.CharField(_('child_class'),max_length=50)
+    child_class=models.CharField(_('child_class'),null=True,blank=True,max_length=50)
     app_name=models.CharField(_('app_name'),null=True,blank=True,max_length=50)
     date_added=models.DateTimeField(_('date_added'),null=True,blank=True,auto_now=False,auto_now_add=True)
 
@@ -257,7 +257,7 @@ class Page(models.Model):
         return f'{ADMIN_URL}{APP_NAME}/{self.child_class}/{self.pk}/change/'
 
     def get_absolute_url(self):
-        return reverse(f'{APP_NAME}:{self.child_class}',kwargs={'pk':self.pk})
+        return reverse(f'{self.app_name}:{self.child_class}',kwargs={'pk':self.pk})
     
 class Blog(Page):
 

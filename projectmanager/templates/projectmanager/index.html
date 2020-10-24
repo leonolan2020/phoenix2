@@ -71,25 +71,8 @@
               <div>
                 {% for project in projects %}
 
-
-
-                <div class="media">
-                  <div class="icon icon-rose">
-                    <div class="em25 {{project.icon.icon_class}}">
-                      {{project.icon.get_icon_tag|safe}}</div>
-                  </div>
-                  <div class="media-body mr-3">
-                    <a href="{{project.get_absolute_url}}">
-                      <h4 class="info-title text-primary text-right">
-                        {{project.title}}
-
-                      </h4>
-                    </a>
-                    <div class="description text-secondary">
-                      {{project.short_description|safe}}
-                   </div>
-                  </div>
-                </div>
+                      {{project.get_link|safe}}
+                   
 
 
 

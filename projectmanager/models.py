@@ -17,10 +17,27 @@ class ManagerPage(DashboardPage):
     
     def get_link(self):
         return f"""
-        <a class="" href="{self.get_absolute_url()}">
-            {self.icon.get_icon_tag()}  
-            {self.title}
-        </a>
+
+
+         <div class="media">
+                  <div class="icon icon-rose">
+                    <div class="em25 {self.icon.icon_class}">
+                      {self.icon.get_icon_tag()}</div>
+                  </div>
+                  <div class="media-body mr-3">
+                    <a href="{self.get_absolute_url()}">
+                      <h4 class="info-title text-primary text-right">
+                        {self.title}
+
+                      </h4>
+                    </a>
+                    <div class="description text-secondary">
+                      {self.short_description}
+                   </div>
+                  </div>
+                </div>
+
+       
         """
     class Meta:
         verbose_name = _("Page")
