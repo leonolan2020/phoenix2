@@ -12,6 +12,12 @@
 
 
 {% block content %}
+{% if page.parent %}
+<div class="text-center">
+    {{page.parent.get_breadcrumb_url|safe}}
+</div>
+  
+{% endif %}
 <h3 class="title text-center">{{page.title}}</h3>
 
 

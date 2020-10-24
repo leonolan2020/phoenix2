@@ -254,7 +254,7 @@ class Page(models.Model):
         verbose_name_plural = 'Pages'
         
     def get_edit_url(self):
-        return f'{ADMIN_URL}{APP_NAME}/{self.child_class}/{self.pk}/change/'
+        return f'{ADMIN_URL}{self.app_name}/{self.child_class}/{self.pk}/change/'
 
     def get_absolute_url(self):
         return reverse(f'{self.app_name}:{self.child_class}',kwargs={'pk':self.pk})

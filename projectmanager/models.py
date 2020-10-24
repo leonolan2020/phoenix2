@@ -14,6 +14,14 @@ from .constants import *
 from dashboard.models import Page as DashboardPage
 
 class ManagerPage(DashboardPage):
+    parent=models.ForeignKey("ManagerPage", verbose_name=_("parent"),null=True,blank=True, on_delete=models.SET_NULL)
+ 
+    def get_breadcrumb_url(self):
+        if self.parent is None:
+            return f"""<div class="d-inline"><a href="{self.get_absolute_url()}">&nbsp;{self.title}&nbsp;</a></div>"""
+        else:
+            return self.parent.get_breadcrumb_url()+f"""<span class="text-secondary">&nbsp;/&nbsp;</span><div class="d-inline"><a  href="{self.get_absolute_url()}">&nbsp;{self.title}&nbsp;</a></div>"""
+    
     
     def get_link(self):
         return f"""
