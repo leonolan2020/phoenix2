@@ -20,7 +20,8 @@ class BasicViews(View):
         context=getContext(request)
         projects=ProjectRepo(user=user).list_roots()
         context['projects']=projects
-        context['add_project_form']=AddProjectForm()
+        if user.has_perm(APP_NAME+'.add_project'):
+            context['add_project_form']=AddProjectForm()
         return render(request,TEMPLATE_ROOT+'index.html',context)
 
 class ApiViews(View):
