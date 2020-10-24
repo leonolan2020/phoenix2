@@ -51,13 +51,13 @@ class Profile(models.Model):
         if self.image_header_origin:
             return MEDIA_URL+str(self.image_header_origin)
         else:
-            return STATIC_URL+'material/img/city-profile.jpg'
+            return STATIC_URL+'authentication/img/city-profile.jpg'
 
     def image(self):
         if self.image_origin:
             return MEDIA_URL+str(self.image_origin)
         else:
-            return STATIC_URL+'dashboard/img/default_avatar.png'
+            return STATIC_URL+'authentication/img/avatar.jpg'
     # def save(self):  
         
     #     old_image=None      

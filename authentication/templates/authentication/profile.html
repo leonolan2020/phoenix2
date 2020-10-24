@@ -23,13 +23,13 @@
                             <i class="material-icons">perm_identity</i>
                         </div>
                         <h4 class="card-title text-right">ویرایش پروفایل
-                            <small class="category">داده های جدید را وارد کنید</small>
+                            <!-- <small class="category">داده های جدید را وارد کنید</small> -->
                         </h4>
                     </div>
                     <div class="card-body">
                         <div>
                             {% csrf_token %}
-                            <div class="row">
+                            <div class="row mt-3">
                                 <div class="col-md-4">
                                     <div class="form-group bmd-form-group">
                                         <label class="bmd-label-floating">نام کاربری</label>
@@ -109,7 +109,9 @@
                                     </div>
                                 </div>
                             </div>
-                            <button @click="submit" class="btn btn-rose pull-right">تایید</button>
+                            <button @click="submit" class="btn btn-success pull-right">
+                                <i class="material-icons">publish</i>
+                                تایید</button>
                             <div class="clearfix"></div>
                         </div>
                     </div>
@@ -131,15 +133,17 @@
                         <p class="card-description text-center" v-text="bio">
                            
                         </p>
-                        <a href="{{selected_profile.get_edit_url_admin}}" class="btn btn-rose btn-round farsi">ویرایش </a>
-                         <button @click="show_edit_image=!show_edit_image" class="btn btn-warning btn-round farsi">تصویر ها  </button>
+                        <!-- <a href="{{selected_profile.get_edit_url_admin}}" class="btn btn-rose btn-round farsi">ویرایش </a> -->
+                         <button @click="show_edit_image=!show_edit_image" class="btn btn-warning btn-round farsi">
+                            <i class="material-icons">add_a_photo</i> 
+                             انتخاب تصویر   </button>
                    </div>
                 </div>
 
 
 
 
-                <div v-if="show_edit_image" class="card card-profile">
+                <div v-if="show_edit_image" v-cloak class="card card-profile">
                    
                     <div class="card-body">
                         {% if upload_profile_image_form %}
@@ -157,23 +161,32 @@
                                 <div class="fileinput-preview fileinput-exists thumbnail img-circle img-raised"
                                     style=""></div>
                                 <div>
-                                    <span class="btn btn-raised btn-round btn-default btn-file">
-                                        <span class="fileinput-new farsi">انتخاب تصویر جدید</span>
-                                        <span class="fileinput-exists farsi">انتخاب تصویر جدید</span>
+                                    <button type="submit" class="fileinput-exists btn btn-success btn-round farsi">
+                                        <i class="material-icons mx-2">backup</i>
+                                        آپلود
+                                        </button>
+                                     
+                                        <a href="#pablo" class="btn btn-danger btn-round fileinput-exists"
+                                        data-dismiss="fileinput">
+                                        <i class="fa fa-times"></i>
+                                        <span class="farsi">انصراف</span>
+                                    </a>   <br>
+                                    <span class="btn btn-raised btn-round btn-info btn-file">
+                                        <span class="fileinput-new farsi">
+                                            <i class="material-icons">add_a_photo</i>
+                                            انتخاب تصویر جدید</span>
+                                        <span class="fileinput-exists farsi">
+                                            <i class="material-icons">add_a_photo</i>
+                                            انتخاب تصویر جدید</span>
                                         <input type="hidden" name="profile_id" value="{{selected_profile.id}}">
                                         <input type="file" name="image">
                                         <div class="ripple-container"></div>
                                     </span>
                                     <br>
-                                    <a href="#pablo" class="btn btn-danger btn-round fileinput-exists"
-                                        data-dismiss="fileinput">
-                                        <i class="fa fa-times"></i>
-                                        <span class="farsi">انصراف</span>
-                                    </a>
+                                 
                                 </div>
                                 {% csrf_token %}
-                                <button type="submit" class="fileinput-exists btn btn-success btn-round farsi">آپلود
-                                    تصویر</button>
+                               
                             </div>
                         </form>
                         {% endif %}
@@ -194,30 +207,42 @@
                                 <div class="fileinput-preview fileinput-exists thumbnail img-raised"
                                     style=""></div>
                                 <div>
-                                    <span class="btn btn-raised btn-round btn-default btn-file">
-                                        <span class="fileinput-new farsi">انتخاب تصویر سربرگ جدید</span>
-                                        <span class="fileinput-exists farsi">انتخاب تصویر سربرگ جدید</span>
+                                    <button type="submit" class="fileinput-exists btn btn-success btn-round farsi">
+                                        <i class="material-icons">backup</i>
+                                        آپلود
+                                        </button>
+
+                                    <a href="#pablo" class="btn btn-danger btn-round fileinput-exists"
+                                    data-dismiss="fileinput">
+                                    <i class="fa fa-times"></i>
+                                    <span class="farsi">انصراف</span>
+                                </a>
+                                <br>
+                                    <span class="btn btn-raised btn-round btn-primary btn-file">
+                                        <span class="fileinput-new farsi">
+                                            <i class="material-icons">add_a_photo</i>
+                                            انتخاب تصویر سربرگ جدید</span>
+                                        <span class="fileinput-exists farsi">
+                                            <i class="material-icons">add_a_photo</i>
+                                            انتخاب تصویر سربرگ جدید</span>
                                         <input type="hidden" name="profile_id" value="{{selected_profile.id}}">
                                         <input type="file" name="header_image">
                                         <div class="ripple-container"></div>
                                     </span>
                                     <br>
-                                    <a href="#pablo" class="btn btn-danger btn-round fileinput-exists"
-                                        data-dismiss="fileinput">
-                                        <i class="fa fa-times"></i>
-                                        <span class="farsi">انصراف</span>
-                                    </a>
+                                   
                                 </div>
                                 {% csrf_token %}
-                                <button type="submit" class="fileinput-exists btn btn-success btn-round farsi">آپلود
-                                    تصویر سربرگ</button>
+                               
                             </div>
                         </form>
                         {% endif %}
 
                        
                         
-                        <button @click="show_edit_image=!show_edit_image" class="btn btn-secondary btn-round farsi">انصراف</button>
+                        <button @click="show_edit_image=!show_edit_image" class="btn btn-secondary btn-round farsi">
+                            <i class="fa fa-times"></i>
+                            انصراف</button>
 
                     </div>
                 </div>
@@ -281,7 +306,7 @@
                     if (data.result == 'SUCCEED')
                         swal({
                             title: "ویرایش پروفایل",
-                            text: "پروفایل با موفقیت اصلاح شدید.",
+                            text: "پروفایل با موفقیت اصلاح شد.",
                             buttonsStyling: false,
                             confirmButtonClass: "btn btn-success",
                             type: "success"

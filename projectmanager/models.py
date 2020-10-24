@@ -13,7 +13,7 @@ from dashboard.constants import *
 from .constants import *
 from dashboard.models import Page as DashboardPage
 
-class Page(DashboardPage):
+class ManagerPage(DashboardPage):
     
     def get_link(self):
         return f"""
@@ -30,10 +30,10 @@ class Page(DashboardPage):
     
     def save(self):
         self.app_name=APP_NAME
-        super(Page,self).save()
+        super(ManagerPage,self).save()
 
 
-class Project(Page):
+class Project(ManagerPage):
     priority=models.IntegerField(_("priority"),default=100)
     
     def save(self):
