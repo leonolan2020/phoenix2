@@ -15,6 +15,11 @@ id="sectionsNav">
                     <a href="{% url 'app:all_components' %}" class="dropdown-item">
                         <i class="material-icons">layers</i> همه مثال ها
                     </a>
+
+                    <a href="{{ADMIN_URL}}" class="dropdown-item">
+                        <i class="material-icons">settings</i> ادمین 
+                    </a>
+
                     <a href="http://demos.creative-tim.com/material-kit-pro/docs/2.1/getting-started/introduction.html"
                         class="dropdown-item">
                         <i class="material-icons">content_paste</i> Documentation
@@ -60,9 +65,13 @@ id="sectionsNav">
                     <i class="material-icons">view_carousel</i> همه مثال ها
                 </a>
                 <div class="dropdown-menu dropdown-with-icons">
+                  
+                    
+
                     <a href="./examples/about-us.html" class="dropdown-item">
                         <i class="material-icons">account_balance</i> درباره ما
                     </a>
+
                     <a href="./examples/blog-post.html" class="dropdown-item">
                         <i class="material-icons">art_track</i> Blog Post
                     </a>
@@ -102,12 +111,49 @@ id="sectionsNav">
                     </a>
                 </div>
             </li>
+
+{% if profile %}
+    <li class="dropdown nav-item">
+                <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
+                    <i class="material-icons">assignment_ind</i> {{profile.name}}
+                </a>
+                <div class="dropdown-menu dropdown-with-icons">
+                  
+                    
+
+                    <a href="{{profile.get_absolute_url}}" class="dropdown-item">
+                        <i class="material-icons">account_balance</i> پروفایل
+                    </a>
+
+                 
+
+                    <a href="./examples/blog-post.html" class="dropdown-item">
+                        <i class="material-icons">art_track</i> تنظیمات
+                    </a>
+                    <a href="{% url 'authentication:logout' %}" class="dropdown-item">
+                        <i class="material-icons">exit_to_app</i> خروج
+                    </a>
+                   
+                    <button onclick="signout()" class="dropdown-item text-danger">
+                        <i class="material-icons">exit_to_app</i> خروج
+                    </button>
+                </div>
+            </li>
+{% endif %}
+          
+
             <li class="button-container nav-item iframe-extern">
-                <a href="https://www.creative-tim.com/product/material-kit-pro?ref=presentation" target="_blank"
+                <a href="{% url 'dashboard:home' %}" target="_blank"
                     class="btn  btn-rose   btn-round btn-block">
-                    <i class="material-icons">shopping_cart</i> Buy Now
+                    <i class="material-icons">dashboard</i> دشبورد
                 </a>
             </li>
+            <!-- <li class="button-container nav-item iframe-extern">
+                <a href="{{ADMIN_URL}}" target="_blank"
+                    class="btn  btn-danger   btn-round btn-block">
+                    <i class="material-icons">settings</i> مدیریت سایت
+                </a>
+            </li> -->
         </ul>
     </div>
 

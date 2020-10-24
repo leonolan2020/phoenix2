@@ -97,6 +97,10 @@
     <script src="{% static 'material/demo.js' %}" type="text/javascript"></script>
     <!-- Control Center for Material Kit: parallax effects, scripts for the example pages etc -->
     <script src="{% static 'material/js/material-kit.min.js' %}" type="text/javascript"></script>
+    
+    <!--  Plugin for Sweet Alert -->
+  <script src="{% static 'vendor/js/sweetalert2.js' %}"></script>
+  
     <script>
         $(document).ready(function () {
             //init DateTimePickers
@@ -107,6 +111,41 @@
         });
     </script>
 
+<script>
+    var signout=function(){
+        swal({
+                title: 'خارج میشوید ?',
+                text: 'You will not be able to recover this imaginary file!',
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, delete it!',
+                cancelButtonText: 'No, keep it',
+                confirmButtonClass: "btn btn-success",
+                cancelButtonClass: "btn btn-danger",
+                buttonsStyling: false
+            }).then(function() {
+                swal({
+                    title: 'Deleted!',
+                    text: 'Your imaginary file has been deleted.',
+                    type: 'success',
+                    confirmButtonClass: "btn btn-success",
+                    buttonsStyling: false
+                }).catch(swal.noop)
+            }, function(dismiss) {
+                // dismiss can be 'overlay', 'cancel', 'close', 'esc', 'timer'
+                if (dismiss === 'cancel') {
+                    swal({
+                        title: 'Cancelled',
+                        text: 'Your imaginary file is safe :)',
+                        type: 'error',
+                        confirmButtonClass: "btn btn-info",
+                        buttonsStyling: false
+                    }).catch(swal.noop)
+                }
+            })
+    }
+
+</script>
     {% block script %}
 
     {% endblock  %}
