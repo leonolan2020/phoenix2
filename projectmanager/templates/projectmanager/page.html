@@ -1,5 +1,5 @@
 {% extends "dashboard/layout.html" %}
-
+{% load static %}
 {% block head %}
 
 {% endblock  %}
@@ -60,7 +60,7 @@
         </div>
     </div>
     <div class="col-md-6">
-        <div class="card ">
+        <div class="card " id="app">
             <div class="card-header ">
                 <h4 class="card-title farsi text-right">زیرمجموعه ها -
                     <small class="description">صفحه ای جزیی</small>
@@ -77,6 +77,29 @@
                 {% for child_page in page.childs.all %}
                   {{child_page.get_link|safe}}
                 {% endfor %}
+                <template v-for="project in projects">
+                    <div v-html="project.get_link"></div>
+  
+  
+                  </template>
+                {% if add_project_form %}
+                <div class="mt-5 mx-5">
+                  <div class="form-group bmd-form-group">
+                    <label for="exampleInput1" class="bmd-label-floating">نام پروژه جدید</label>
+                    {% csrf_token %}
+                    <input type="hidden" name="parent_id" value="{{page.id}}">
+                    <input v-model="title" type="text" class="form-control" id="exampleInput1" name="title" required=""
+                      aria-required="true">
+  
+  
+                  </div>
+                  <input type="button" @click="add_project" class="btn btn-next btn-fill btn-rose btn-wd" name="next"
+                    value="افزودن">
+  
+                </div>
+                {% endif %}
+
+
             </div>
         </div>
     </div>
@@ -336,4 +359,37 @@
 
     $("#projectmanagerPages").addClass("show")
 </script>
+<script src="{% static 'vendor/js/vue.min.js' %}"></script>
+
+<script>
+    var app = new Vue({
+      el: "#app",
+      data: {
+        projects: [],
+        title: '',
+  
+      },
+      methods: {
+        add_project: function () {
+          let url = "{% url 'projectmanager:add_project' %}"
+  
+          var posting = $.post(url,
+            {
+              parent_id: JSON.parse("{{page.id}}"),
+              title: app.title,
+              csrfmiddlewaretoken: csrfmiddlewaretoken
+            }
+          );
+  
+          // Put the results in a div
+          posting.done(function (data) {
+            // word_app.word = (data.word);
+            // word_app.definitions = (data.definitions);
+            app.title=""
+            app.projects.push(data)
+          })
+        },
+      },
+    })
+  </script>
 {% endblock  %}

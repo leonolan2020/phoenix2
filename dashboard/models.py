@@ -41,7 +41,7 @@ class Icon(models.Model):
     icon_fa=models.CharField(_("آیکون فونت آسوم"),max_length=50,null=True,blank=True)
     icon_material=models.CharField(_("آیکون متریال"),choices=IconsEnum.choices,null=True,blank=True, max_length=100)
     icon_svg=models.TextField(_("آیکون svg"),null=True,blank=True)
-    color=models.CharField(_("رنگ"),choices=ColorEnum.choices,default=ColorEnum.UNSET, max_length=50)
+    color=models.CharField(_("رنگ"),choices=ColorEnum.choices,default=ColorEnum.SECONDARY, max_length=50)
     width=models.IntegerField(_("عرض"),null=True,blank=True)
     height=models.IntegerField(_("ارتفاع"),null=True,blank=True)
     

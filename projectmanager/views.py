@@ -44,6 +44,8 @@ class PageViews(View):
         project=ProjectRepo(user=user).project(project_id=project_id)
         context['project']=project
         context['page']=project
+        if user.has_perm(APP_NAME+'.add_project'):
+            context['add_project_form']=AddProjectForm()
         return render(request,TEMPLATE_ROOT+'project.html',context)
 
 

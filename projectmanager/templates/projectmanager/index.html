@@ -79,7 +79,7 @@
                 {% endfor %}
 
                 <template v-for="project in projects">
-<div v-html="project.get_link"></div>
+                  <div v-html="project.get_link"></div>
 
 
                 </template>
@@ -183,7 +183,7 @@
     el: "#app",
     data: {
       projects: [],
-      title:'aa',
+      title: '',
 
     },
     methods: {
@@ -202,22 +202,9 @@
         posting.done(function (data) {
           // word_app.word = (data.word);
           // word_app.definitions = (data.definitions);
-          console.log(data)
+          app.title=""
           app.projects.push(data)
         })
-
-
-
-
-
-
-
-
-
-
-
-
-
       },
     },
   })

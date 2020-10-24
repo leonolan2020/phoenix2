@@ -1,6 +1,6 @@
 from .models import Project
 from authentication.repo import ProfileRepo
-
+from dashboard.models import Icon
 
 
 class ProjectRepo:
@@ -67,7 +67,9 @@ class ProjectRepo:
             parent=None
         else:
             parent=self.project(project_id=parent_id)
-        project=Project(parent=parent,title=title,short_description='',description='')
+        icon=Icon(icon_material='dashboard',icon_title='آیکون '+title)
+        icon.save()
+        project=Project(parent=parent,icon=icon,title=title,short_description='',description='')
         project.save()
         if project is not None:
             return project
