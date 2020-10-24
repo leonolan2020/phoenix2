@@ -28,8 +28,8 @@ class ManagerPage(DashboardPage):
       icon=self.icon
       if self.icon is None:
         icon="""
-        <div class="em15 text-primary">
-            <i class="material-icons " style="font-size:1.5em;">settings</i>
+        <div class="em15 text-primary" style="font-size:1.5em;">
+            <i class="material-icons text-primary" style="font-size:1.5em;">settings</i>
         </div>
         """
       else:
@@ -53,7 +53,7 @@ class ManagerPage(DashboardPage):
                       </h4>
                     </a>
                     <div class="description text-secondary">
-                      {self.short_description}
+                      {self.short_description if self.short_description else '&nbsp;'}
                    </div>
                   </div>
                 </div>

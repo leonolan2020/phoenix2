@@ -44,6 +44,8 @@ class Icon(models.Model):
     color=models.CharField(_("رنگ"),choices=ColorEnum.choices,default=ColorEnum.UNSET, max_length=50)
     width=models.IntegerField(_("عرض"),null=True,blank=True)
     height=models.IntegerField(_("ارتفاع"),null=True,blank=True)
+    
+    
     def get_icon_tag(self,icon_style=''):
         if self.image_origin is not None and self.image_origin:
             return f'<img src="{MEDIA_URL}{str(self.image_origin)}" alt="{self.title}" height="{self.height}" width="{self.width}">'
