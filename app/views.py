@@ -56,7 +56,7 @@ class PageViews(View):
     def blog(self,request,pk,*args, **kwargs):
         user=request.user
         context=getContext(request)
-        return render(request,TEMPLATE_ROOT+'index.html',context)
+        return render(request,TEMPLATE_ROOT+'blog.html',context)
     def feature(self,request,pk,*args, **kwargs):
         user=request.user
         context=getContext(request)
