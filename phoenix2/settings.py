@@ -81,13 +81,6 @@ WSGI_APPLICATION = 'phoenix2.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
@@ -152,3 +145,4 @@ MEDIA_ROOT=server_settings.MEDIA_ROOT
 STATIC_URL = server_settings.STATIC_URL
 MEDIA_URL = server_settings.MEDIA_URL
 SITE_URL = server_settings.SITE_URL
+DATABASES = server_settings.DATABASES
