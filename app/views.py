@@ -24,8 +24,10 @@ class BasicViews(View):
         context['homesliders']=homesliders
         features=FeatureRepo(user=user).list_for_home()
         context['features']=features
+        blogs=BlogRepo(user=user).list_for_home()
+        context['blogs']=blogs
         return render(request,TEMPLATE_ROOT+'index.html',context)
-        
+
     def features(self,request,*args,**kwargs):
         context=getContext(request)
         return render(request,TEMPLATE_ROOT+'features.html',context)
@@ -50,6 +52,18 @@ class ExampleViews(View):
         return render(request,TEMPLATE_ROOT+'examples/sections.html',context)
 
 
-
+class PageViews(View):
+    def blog(self,request,pk,*args, **kwargs):
+        user=request.user
+        context=getContext(request)
+        return render(request,TEMPLATE_ROOT+'index.html',context)
+    def feature(self,request,pk,*args, **kwargs):
+        user=request.user
+        context=getContext(request)
+        return render(request,TEMPLATE_ROOT+'index.html',context)
+    def ourwork(self,request,pk,*args, **kwargs):
+        user=request.user
+        context=getContext(request)
+        return render(request,TEMPLATE_ROOT+'index.html',context)
 
 # Create your views here.

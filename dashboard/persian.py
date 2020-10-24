@@ -1,6 +1,6 @@
 from persiantools.jdatetime import JalaliDateTime
 from django.utils import timezone
-from .settings import SERVER_ON_PARS,SERVER_ON_HEROKU
+from .settings import SERVER_ON_PARS as SERVER_ON_PARS,SERVER_ON_HEROKU
 import datetime
 class PersianCalendar:
     def tag(self,value):

@@ -16,11 +16,11 @@ SECRET_KEY = '-+(&pe9ld9unwos@077r(cg#_)1$^l0c##+%gpy@&95da$=_hp'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 ON_SERVER_LOCAL=False
-ON_SERVER_PARS=False
+SERVER_ON_PARS=False
 
 
 # ON_SERVER_LOCAL=True
-ON_SERVER_PARS=True
+SERVER_ON_PARS=True
 
 ALLOWED_HOSTS = ['127.0.0.1','khafonline.com','www.khafonline.com']
 
@@ -129,11 +129,11 @@ STATICFILES_DIRS=[os.path.join(BASE_DIR,'static')]
 
 if '--no-color' in sys.argv or ON_SERVER_LOCAL:
     ON_SERVER_LOCAL=True  
-    ON_SERVER_HEROKU=False
-    ON_SERVER_PARS=False
+    SERVER_ON_HEROKU=False
+    SERVER_ON_PARS=False
 
 
-if ON_SERVER_PARS:
+if SERVER_ON_PARS:
     from . import settings_pars as server_settings
 
 if ON_SERVER_LOCAL:

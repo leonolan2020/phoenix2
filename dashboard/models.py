@@ -225,6 +225,10 @@ class FAQ(models.Model):
 
 
 class Page(models.Model):
+    image_origin=models.ImageField(_("تصویر"),null=True,blank=True, upload_to=IMAGE_FOLDER+'Page/Main/', height_field=None, width_field=None, max_length=None)
+    header_image_origin=models.ImageField(_("تصویر سربرگ"),null=True,blank=True, upload_to=IMAGE_FOLDER+'Page/Header/', height_field=None, width_field=None, max_length=None)
+    thumbnail_origin=models.ImageField(_("تصویر کوچک"),null=True,blank=True, upload_to=IMAGE_FOLDER+'Page/Thumbnail/', height_field=None, width_field=None, max_length=None)
+
     title=models.CharField(_('title'),max_length=200)
     icon=models.ForeignKey("icon",null=True,blank=True,on_delete=models.SET_NULL)
     color=models.CharField(_("color class"),blank=True,null=True,choices=ColorEnum.choices,default=ColorEnum.DEFAULT,max_length=50)
@@ -238,6 +242,20 @@ class Page(models.Model):
     for_home=models.BooleanField(_("در صفحه اصلی نمایش داده شود؟"),default=False)
     priority=models.IntegerField(_('ترتیب'),default=100)
     
+    profile=models.ForeignKey("authentication.profile", verbose_name=_("profile"),null=True,blank=True, on_delete=models.SET_NULL)
+
+    def image(self):
+        if self.image_origin:
+            return MEDIA_URL+str(self.image_origin)
+    def thumbnail(self):
+        if self.thumbnail_origin:
+            return MEDIA_URL+str(self.thumbnail_origin)
+    def header_image(self):
+        if self.header_image_origin:
+            return MEDIA_URL+str(self.header_image_origin)
+
+
+
     def __str__(self):
         return f'page({self.pk}) - {self.title}'
 

@@ -1,7 +1,7 @@
 from django.urls import path
 from . import views
 from .apps import APP_NAME
-
+from app import views as app_views
 app_name=APP_NAME
 urlpatterns=[
 path('',views.BasicViews().home,name='home'),
@@ -15,4 +15,7 @@ path('wizard/',views.BasicViews().wizard,name='wizard'),
 path('widgets/',views.BasicViews().widgets,name='widgets'),
 path('charts/',views.BasicViews().charts,name='charts'),
 path('tables/regular/',views.TablesViews().regular,name='tables_regular'),
+path('blog/<int:pk>',app_views.PageViews().blog,name='blog'),
+path('ourwork/<int:pk>',app_views.PageViews().ourwork,name='ourwork'),
+path('feature/<int:pk>',app_views.PageViews().feature,name='feature'),
 ]

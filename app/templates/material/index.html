@@ -1,6 +1,6 @@
 {% extends "material/base-layout.html" %}
 {% load static %}
-
+{% load to_persian_date %}
 
 {% block head %}
 
@@ -25,16 +25,16 @@
         <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
             <ol class="carousel-indicators">
                 {% for homeslider in homesliders %}
-                <li data-target="#carouselExampleIndicators" id="carousel-indicator{{forloop.counter0}}" data-slide-to="{{forloop.counter0}}" class=""></li>
-                  
+                <li data-target="#carouselExampleIndicators" id="carousel-indicator{{forloop.counter0}}"
+                    data-slide-to="{{forloop.counter0}}" class=""></li>
+
                 {% endfor %}
-                
+
             </ol>
             <div class="carousel-inner">
-             {% for homeslider in homesliders %}
-                  <div id="carousel-item{{forloop.counter0}}" class="carousel-item">
-                    <div class="page-header header-filter"
-                        style="background-image: url('{{homeslider.image}}');">
+                {% for homeslider in homesliders %}
+                <div id="carousel-item{{forloop.counter0}}" class="carousel-item">
+                    <div class="page-header header-filter" style="background-image: url('{{homeslider.image}}');">
                         <div class="container">
                             <div class="row">
                                 <div class="col-md-8 ml-auto mr-auto text-center">
@@ -61,9 +61,9 @@
                         </div>
                     </div>
                 </div>
-             {% endfor %}
-             
-               
+                {% endfor %}
+
+
             </div>
             <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
                 <i class="material-icons">keyboard_arrow_left</i>
@@ -87,7 +87,11 @@
                     <h2 class="title farsi">آشنایی با سرویس های ما</h2>
                     <h5 class="description">
 
-                        ریشه‌ی مدیریت پروژه به روش‌ها و فرآیندهایی برمی‌گردد که حدود صد سال پیش در کسب‌و‌کار توسعه پیدا کردند. با این حال، در سال‌های اخیر، مدیریت پروژه رشد چشمگیری داشته و به عنوان یک عملیات مجزا و جدی در تجارت ظهور کرده است و در صحنه‌ی تجارت جهانی، یعنی جایی که شرکت‌ها دائما به دنبال رسیدن به مزیت رقابتی هستند، به یک عامل کلیدی تبدیل شده است. در مقاله زیر با مفهوم مدیریت پروژه بیشتر آشنا خواهید شد.
+                        ریشه‌ی مدیریت پروژه به روش‌ها و فرآیندهایی برمی‌گردد که حدود صد سال پیش در کسب‌و‌کار توسعه پیدا
+                        کردند. با این حال، در سال‌های اخیر، مدیریت پروژه رشد چشمگیری داشته و به عنوان یک عملیات مجزا و
+                        جدی در تجارت ظهور کرده است و در صحنه‌ی تجارت جهانی، یعنی جایی که شرکت‌ها دائما به دنبال رسیدن به
+                        مزیت رقابتی هستند، به یک عامل کلیدی تبدیل شده است. در مقاله زیر با مفهوم مدیریت پروژه بیشتر آشنا
+                        خواهید شد.
 
 
 
@@ -97,28 +101,28 @@
             </div>
             <div class="row leo-rtl">
                 {% for feature in features %}
-                   <div class="col-md-4">
+                <div class="col-md-4">
                     <div class="info">
                         <div class="icon icon-info">
                             {{feature.icon.get_icon_tag|safe}}
                         </div>
-                        <a href="{{feature.get_absolute_urla}}">
-                        <h4 class="info-title farsi">{{feature.title}}</h4>
-                       </a>
+                        <a href="{{feature.get_absolute_url}}">
+                            <h4 class="info-title farsi">{{feature.title}}</h4>
+                        </a>
                         <div>
                             {{feature.short_description|safe}}
                         </div>
                     </div>
                 </div>
                 {% endfor %}
-               
-                
+
+
             </div>
         </div>
         <!--     *********    END FEATURES 1      *********      -->
-       
+
     </div>
-   
+
 </div>
 <div class="cd-section" id="blogs">
     <!--     *********     BLOGS 1      *********      -->
@@ -130,85 +134,108 @@
                     <br>
 
 
+                    {% for blog in blogs %}
+                    {% if forloop.counter0|divisibleby:2 %}
+                    <div class="card card-plain card-blog">
+                        <div class="row">
+                            <div class="col-md-7">
+                                <h4 class="card-category text-info text-right">
+                                    {{blog.icon.get_icon_tag|safe}}
+                                </h4>
+                                <h3 class="card-title text-right">
+                                    <a href="{{blog.get_absolute_url}}">{{blog.title}}</a>
+                                </h3>
+                                <div class="card-description text-right">
+                                    {{blog.short_description|safe}}
+                                </div>
+                                <div class="text-right text-secondary">
+                                    <small>
+                                        {{blog.date_added|to_persian_date|safe}}
+                                    </small>
+                                </div>
+                                <p class="author">
 
+                                    <a href="{{blog.profile.get_absolute_url}}">
+                                        <b>{{blog.profile.name}}</b>
+                                    </a>
+                                </p>
+                                <div class="text-right">
+                                    <a href="{{blog.get_absolute_url}" class="my-3 mx-3 text-right"> ادامه مطلب  </a>
+                                <a href="{{blog.get_edit_url}}" class="my-3 mx-3 text-right"> ویرایش </a>
 
+                                </div>
+                            </div>
+                            <div class="col-md-5">
+                                <div class="card-header card-header-image">
+                                    <img class="img img-raised" src="{{blog.image}}">
+                                    <div class="colored-shadow"
+                                        style="background-image: url('{{blog.image}}'); opacity: 1;">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
+                    {% else %}
 
-                    
                     <div class="card card-plain card-blog">
                         <div class="row">
                             <div class="col-md-5">
                                 <div class="card-header card-header-image">
-                                    <a href="#pablito">
-                                        <img class="img" src="{% static 'material/img/card-blog4.jpg' %}">
+                                    <a href="{{blog.get_absolute_url}}">
+                                        <img class="img" src="{{blog.image}}">
                                     </a>
                                     <div class="colored-shadow"
-                                        style="background-image: url(&quot;{% static 'material/img/card-blog4.jpg' %}&quot;); opacity: 1;">
+                                        style="background-image: url(&quot;{{blog.image}}&quot;); opacity: 1;">
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-7">
-                                <h6 class="card-category text-info">Enterprise</h6>
-                                <h3 class="card-title">
-                                    <a href="#pablo">Autodesk looks to future of 3D printing with Project Escher</a>
+                                <h4 class="card-category text-info text-right">
+                                    {{blog.icon.get_icon_tag|safe}}
+                                </h4>
+                                <h3 class="card-title text-right">
+                                    <a href="{{blog.get_absolute_url}}">{{blog.title}}</a>
                                 </h3>
-                                <p class="card-description">
-                                    Like so many organizations these days, Autodesk is a company in transition. It was
-                                    until recently a traditional
-                                    boxed software company selling licenses. Today, it’s moving to a subscription model.
-                                    Yet its own business model
-                                    disruption is only part of the story — and…
-                                    <a href="#pablo"> Read More </a>
-                                </p>
+                                <div class="card-description   text-right">
+                                    {{blog.short_description|safe}}
+
+
+                                </div>
+                                <div class="text-right text-secondary">
+                                    <small>
+                                        {{blog.date_added|to_persian_date|safe}}
+                                    </small>
+                                </div>
                                 <p class="author">
-                                    by
-                                    <a href="#pablo">
-                                        <b>Mike Butcher</b>
-                                    </a>, 2 days ago
+
+                                    <a href="{{blog.profile.get_absolute_url}}">
+                                        <b>{{blog.profile.name}}</b>
+                                    </a>
                                 </p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card card-plain card-blog">
-                        <div class="row">
-                            <div class="col-md-7">
-                                <h6 class="card-category text-danger">
-                                    <i class="material-icons">trending_up</i> Trending
-                                </h6>
-                                <h3 class="card-title">
-                                    <a href="#pablo">6 insights into the French Fashion landscape</a>
-                                </h3>
-                                <p class="card-description">
-                                    Like so many organizations these days, Autodesk is a company in transition. It was
-                                    until recently a
-                                    traditional boxed software company selling licenses. Today, it’s moving to a
-                                    subscription model. Yet its
-                                    own business model disruption is only part of the story — and…
-                                    <a href="#pablo"> Read More </a>
-                                </p>
-                                <p class="author">
-                                    by
-                                    <a href="#pablo">
-                                        <b>Mike Butcher</b>
-                                    </a>, 2 days ago
-                                </p>
-                            </div>
-                            <div class="col-md-5">
-                                <div class="card-header card-header-image">
-                                    <img class="img img-raised" src="{% static 'material/img/office2.jpg' %}">
-                                    <div class="colored-shadow"
-                                        style="background-image: url('{% static 'material/img/office2.jpg' %}'); opacity: 1;">
-                                    </div>
+                                <div class="text-right">
+                                    <a href="{{blog.get_absolute_url}" class="my-3 mx-3 text-right"> ادامه مطلب  </a>
+                                    <a href="{{blog.get_edit_url}}" class="my-3 mx-3 text-right"> ویرایش </a>
+
                                 </div>
                             </div>
                         </div>
                     </div>
+                    {% endif %}
+
+                    {% endfor %}
+
+
+
+
+
+
                 </div>
             </div>
         </div>
     </div>
     <!--     *********    END BLOGS 1      *********      -->
-  
+
 </div>
 <div class="cd-section" id="teams">
     <!--     *********    TEAM 1     *********      -->
@@ -217,7 +244,8 @@
             <div class="row">
                 <div class="col-md-8 ml-auto mr-auto text-center">
                     <h2 class="title">Our Awesome Team 1</h2>
-                    <h5 class="description">This is the paragraph where you can write more details about your team. Keep
+                    <h5 class="description">This is the paragraph where you can write more details about your
+                        team. Keep
                         you user engaged by providing meaningful information.</h5>
                 </div>
             </div>
@@ -257,7 +285,8 @@
                             <h4 class="card-title">Tania Andrew</h4>
                             <h6 class="card-category text-muted">Designer</h6>
                             <p class="card-description">
-                                Don't be scared of the truth because we need to restart the human foundation. And I love
+                                Don't be scared of the truth because we need to restart the human foundation.
+                                And I love
                                 you like Kanye loves Kanye.
                             </p>
                         </div>
@@ -282,7 +311,8 @@
                             <h4 class="card-title">Christian Mike</h4>
                             <h6 class="card-category text-muted">Web Developer</h6>
                             <p class="card-description">
-                                I love you like Kanye loves Kanye. Don't be scared of the truth because we need to
+                                I love you like Kanye loves Kanye. Don't be scared of the truth because we need
+                                to
                                 restart the human foundation.
                             </p>
                         </div>
@@ -328,7 +358,8 @@
             <div class="row">
                 <div class="col-md-8 ml-auto mr-auto text-center">
                     <h2 class="title">The Executive Team 2</h2>
-                    <h5 class="description">This is the paragraph where you can write more details about your team. Keep
+                    <h5 class="description">This is the paragraph where you can write more details about your
+                        team. Keep
                         you user engaged by providing meaningful information.</h5>
                 </div>
             </div>
@@ -413,7 +444,8 @@
             <div class="row">
                 <div class="col-md-8 ml-auto mr-auto text-center">
                     <h2 class="title">The Executive Team 3</h2>
-                    <h5 class="description">This is the paragraph where you can write more details about your team. Keep
+                    <h5 class="description">This is the paragraph where you can write more details about your
+                        team. Keep
                         you user engaged by providing meaningful information.</h5>
                 </div>
             </div>
@@ -436,7 +468,8 @@
                                     <h4 class="card-title">Alec Thompson</h4>
                                     <h6 class="card-category text-muted">Founder</h6>
                                     <p class="card-description">
-                                        Don't be scared of the truth because we need to restart the human foundation in
+                                        Don't be scared of the truth because we need to restart the human
+                                        foundation in
                                         truth...
                                     </p>
                                 </div>
@@ -470,7 +503,8 @@
                                     <h4 class="card-title">Kendall Andrew</h4>
                                     <h6 class="card-category text-muted">Graphic Designer</h6>
                                     <p class="card-description">
-                                        Don't be scared of the truth because we need to restart the human foundation in
+                                        Don't be scared of the truth because we need to restart the human
+                                        foundation in
                                         truth...
                                     </p>
                                 </div>
@@ -579,7 +613,8 @@
         <h4 class="card-title">Alec Thompson</h4>
         <h6 class="card-category text-muted">CEO / Co-Founder</h6>
         <p class="card-description">
-            Don't be scared of the truth because we need to restart the human foundation in truth And I love you like
+            Don't be scared of the truth because we need to restart the human foundation in truth And I love you
+            like
             Kanye loves Kanye I love Rick Owens’ bed design but the back is...
         </p>
     </div>
@@ -1153,20 +1188,20 @@
     <!--     *********    END PROJECTS 4      *********      -->
 </div>
 
-  
+
 {% endblock  %}
 
 
 
 {% block modal %}
-  
+
 {% endblock  %}
 
 
 
 {% block script %}
-  <script>
-      $("#carousel-item0").addClass("active")
-      $("#carousel-indicator0").addClass("active")
-  </script>
+<script>
+    $("#carousel-item0").addClass("active")
+    $("#carousel-indicator0").addClass("active")
+</script>
 {% endblock  %}
