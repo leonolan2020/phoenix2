@@ -382,9 +382,9 @@ class SocialLinkRepo:
         return self.objects.filter(for_home=True).order_by('priority')
 
 
-class OurServiceRepo:
+class FeatureRepo:
     def __init__(self,user=None):
-        self.objects=OurService.objects.filter(archive=False).order_by('priority')
+        self.objects=Feature.objects.filter(archive=False).order_by('priority')
     def list(self):
         return self.objects.all()
     def ourservice(self,ourservice_id):

@@ -2,7 +2,7 @@ from django.shortcuts import render,redirect,reverse
 from django.views import View
 from .apps import APP_NAME
 from dashboard.settings import ADMIN_URL,MEDIA_URL
-from .repo import *
+from dashboard.repo import *
 from .forms import *
 from authentication.repo import ProfileRepo
 from dashboard.views import getContext as DashboardContext
@@ -18,7 +18,12 @@ def getContext(request):
 
 class BasicViews(View):
     def home(self,request,*args,**kwargs):
+        user=request.user
         context=getContext(request)
+        homesliders=HomeSliderRepo(user=user).list()
+        context['homesliders']=homesliders
+        features=FeatureRepo(user=user).list_for_home()
+        context['features']=features
         return render(request,TEMPLATE_ROOT+'index.html',context)
     def features(self,request,*args,**kwargs):
         context=getContext(request)
