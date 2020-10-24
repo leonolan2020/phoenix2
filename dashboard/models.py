@@ -434,13 +434,14 @@ class Document(Icon):
         return f'{ADMIN_URL}{APP_NAME}/document/{self.pk}/change/'
 
 
-class HomeSlider(Jumbotron):
+class HomeSlider(models.Model):
     image_banner=models.ImageField(_("تصویر اسلایدر  1333*2000 "), upload_to=IMAGE_FOLDER+'Banner/', height_field=None, width_field=None, max_length=None)
-    archive=models.BooleanField(_("بایگانی شود؟"),default=False)
-    priority=models.IntegerField(_("ترتیب"),default=100)
+    title=models.CharField(_("عنوان"),null=True,blank=True,max_length=500)
+    body=models.TextField(_("بدنه"),null=True,blank=True,max_length=2000)
     text_color=models.CharField(_("رنگ متن"),default="#fff",max_length=20)
     
-    
+    priority=models.IntegerField(_("ترتیب"),default=100)
+    archive=models.BooleanField(_("بایگانی شود؟"),default=False)
     tag_number=models.IntegerField(_("عدد برچسب"),default=100)
     tag_text=models.CharField(_("متن برچسب"), max_length=100,blank=True,null=True)
     

@@ -38,24 +38,9 @@
                         <div class="container">
                             <div class="row">
                                 <div class="col-md-8 ml-auto mr-auto text-center">
-                                    <h1 class="title farsi">{{homeslider.title}}</h1>
-                                    <h4 class="farsi">{{homeslider.short_description|safe}}</h4>
-                                    <br>
-                                    <h6 class="farsi">با ما در ارتباط باشید</h6>
-                                    <div class="buttons">
-                                        <a href="#pablo" class="btn btn-just-icon btn-white btn-link btn-lg">
-                                            <i class="fa fa-twitter"></i>
-                                        </a>
-                                        <a href="#pablo" class="btn btn-just-icon btn-white btn-link btn-lg">
-                                            <i class="fa fa-facebook-square"></i>
-                                        </a>
-                                        <a href="#pablo" class="btn btn-just-icon btn-white btn-link btn-lg">
-                                            <i class="fa fa-google-plus"></i>
-                                        </a>
-                                        <a href="#pablo" class="btn btn-just-icon btn-white btn-link btn-lg">
-                                            <i class="fa fa-instagram"></i>
-                                        </a>
-                                    </div>
+                                    <h1 class="title farsi" style="color: {{homeslider.text_color}};">{{homeslider.title}}</h1>
+                                    <div style="color: {{homeslider.text_color}};">{{homeslider.body|safe}}</div>
+                                   
                                 </div>
                             </div>
                         </div>
