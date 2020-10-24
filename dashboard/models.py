@@ -77,7 +77,6 @@ class Icon(models.Model):
     # def get_absolute_url(self):
     #     return reverse("OurService_detail", kwargs={"pk": self.pk})
 
-
 class Jumbotron(models.Model):
     title=models.CharField(_("عنوان"), max_length=500,blank=True,null=True)
     pretitle=models.CharField(_("پیش عنوان"), max_length=500,blank=True,null=True)
@@ -235,7 +234,10 @@ class Page(models.Model):
     child_class=models.CharField(_('child_class'),null=True,blank=True,max_length=50)
     app_name=models.CharField(_('app_name'),null=True,blank=True,max_length=50)
     date_added=models.DateTimeField(_('date_added'),null=True,blank=True,auto_now=False,auto_now_add=True)
-
+    archive=models.BooleanField(_("بایگانی شود؟"),default=False)
+    for_home=models.BooleanField(_("در صفحه اصلی نمایش داده شود؟"),default=False)
+    priority=models.IntegerField(_('ترتیب'),default=100)
+    
     def __str__(self):
         return f'page({self.pk}) - {self.title}'
 

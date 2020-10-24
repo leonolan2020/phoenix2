@@ -387,15 +387,15 @@ class FeatureRepo:
         self.objects=Feature.objects.filter(archive=False).order_by('priority')
     def list(self):
         return self.objects.all()
-    def ourservice(self,ourservice_id):
+    def feature(self,feature_id):
         try:
-            return self.objects.get(pk=ourservice_id)
+            return self.objects.get(pk=feature_id)
         except:
             return None
 
     
     def list_for_home(self):
-        return self.objects.filter(for_home=True).order_by('priority')
+        return self.objects.filter(for_home=True)
 
 
 class ContactMessageRepo:

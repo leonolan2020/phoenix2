@@ -9,7 +9,7 @@ from django.conf.urls import url
 
 
 urlpatterns = [
-    path('',include('projectmanager.urls')),
+    path('',include('app.urls')),
 
 
     path('',include('authentication.urls')),

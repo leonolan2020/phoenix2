@@ -25,6 +25,7 @@ class BasicViews(View):
         features=FeatureRepo(user=user).list_for_home()
         context['features']=features
         return render(request,TEMPLATE_ROOT+'index.html',context)
+        
     def features(self,request,*args,**kwargs):
         context=getContext(request)
         return render(request,TEMPLATE_ROOT+'features.html',context)

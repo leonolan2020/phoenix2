@@ -74,6 +74,14 @@ class TextDirectionEnum(TextChoices):
     Ltr='ltr',_('ltr')
 
 class IconsEnum(TextChoices):
+    # aaaaaaa='aaaaaaaaaa',_('aaaaaaaaaaa')
+    # aaaaaaa='aaaaaaaaaa',_('aaaaaaaaaaa')
+    # aaaaaaa='aaaaaaaaaa',_('aaaaaaaaaaa')
+    # aaaaaaa='aaaaaaaaaa',_('aaaaaaaaaaa')
+    # aaaaaaa='aaaaaaaaaa',_('aaaaaaaaaaa')
+    # aaaaaaa='aaaaaaaaaa',_('aaaaaaaaaaa')
+    verified_user='verified_user',_('verified_user')
+    fingerprint='fingerprint',_('fingerprint')
     place='place',_('place')
     construction='construction',_('construction')
     extension='extension',_('extension')

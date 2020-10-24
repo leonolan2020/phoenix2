@@ -72,7 +72,7 @@ class ManagerPage(DashboardPage):
 
 
 class Project(ManagerPage):
-    priority=models.IntegerField(_("priority"),default=100)
+    # priority2=models.IntegerField(_("priority"),default=100)
     
     def save(self):
         self.child_class='project'

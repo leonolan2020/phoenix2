@@ -84,7 +84,7 @@
         <div class="features-1">
             <div class="row">
                 <div class="col-md-8 ml-auto mr-auto">
-                    <h2 class="title">Why our product is the best</h2>
+                    <h2 class="title farsi">آشنایی با سرویس های ما</h2>
                     <h5 class="description">
 
                         ریشه‌ی مدیریت پروژه به روش‌ها و فرآیندهایی برمی‌گردد که حدود صد سال پیش در کسب‌و‌کار توسعه پیدا کردند. با این حال، در سال‌های اخیر، مدیریت پروژه رشد چشمگیری داشته و به عنوان یک عملیات مجزا و جدی در تجارت ظهور کرده است و در صحنه‌ی تجارت جهانی، یعنی جایی که شرکت‌ها دائما به دنبال رسیدن به مزیت رقابتی هستند، به یک عامل کلیدی تبدیل شده است. در مقاله زیر با مفهوم مدیریت پروژه بیشتر آشنا خواهید شد.
@@ -95,281 +95,30 @@
                     </h5>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-md-4">
+            <div class="row leo-rtl">
+                {% for feature in features %}
+                   <div class="col-md-4">
                     <div class="info">
                         <div class="icon icon-info">
-                            <i class="material-icons">chat</i>
+                            {{feature.icon.get_icon_tag|safe}}
                         </div>
-                        <h4 class="info-title">Free Chat</h4>
-                        <p>Divide details about your product or agency work into parts. Write a few lines about each
-                            one. A paragraph describing a feature will be enough.</p>
+                        <a href="{{feature.get_absolute_urla}}">
+                        <h4 class="info-title farsi">{{feature.title}}</h4>
+                       </a>
+                        <div>
+                            {{feature.short_description|safe}}
+                        </div>
                     </div>
                 </div>
-                <div class="col-md-4">
-                    <div class="info">
-                        <div class="icon icon-success">
-                            <i class="material-icons">verified_user</i>
-                        </div>
-                        <h4 class="info-title">Verified Users</h4>
-                        <p>Divide details about your product or agency work into parts. Write a few lines about each
-                            one. A paragraph describing a feature will be enough.</p>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="info">
-                        <div class="icon icon-danger">
-                            <i class="material-icons">fingerprint</i>
-                        </div>
-                        <h4 class="info-title">Fingerprint</h4>
-                        <p>Divide details about your product or agency work into parts. Write a few lines about each
-                            one. A paragraph describing a feature will be enough.</p>
-                    </div>
-                </div>
+                {% endfor %}
+               
+                
             </div>
         </div>
         <!--     *********    END FEATURES 1      *********      -->
-        <!--     *********     FEATURES 2      *********      -->
-        <div class="features-2">
-            <div class="row">
-                <div class="col-md-8 ml-auto mr-auto text-center">
-                    <h2 class="title">Why our product is the best</h2>
-                    <h5 class="description">This is the paragraph where you can write more details about your product.
-                        Keep you user engaged by providing meaningful information.</h5>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-4">
-                    <div class="info info-horizontal">
-                        <div class="icon icon-info">
-                            <i class="material-icons">group_work</i>
-                        </div>
-                        <div class="description">
-                            <h4 class="info-title">Collaborate</h4>
-                            <p>The moment you use Material Kit, you know you’ve never felt anything like it. With a
-                                single use, this powerfull UI Kit lets you do more than ever before. </p>
-                            <a href="#pablo">Find more...</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="info info-horizontal">
-                        <div class="icon icon-danger">
-                            <i class="material-icons">airplay</i>
-                        </div>
-                        <div class="description">
-                            <h4 class="info-title">Airplay</h4>
-                            <p>Divide details about your product or agency work into parts. Write a few lines about each
-                                one. A paragraph describing a feature will be enough.</p>
-                            <a href="#pablo">Find more...</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="info info-horizontal">
-                        <div class="icon icon-success">
-                            <i class="material-icons">location_on</i>
-                        </div>
-                        <div class="description">
-                            <h4 class="info-title">Location Integrated</h4>
-                            <p>Divide details about your product or agency work into parts. Write a few lines about each
-                                one. A paragraph describing a feature will be enough.</p>
-                            <a href="#pablo">Find more...</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!--     *********    END FEATURES 2      *********      -->
-        <!--     *********     FEATURES 3      *********      -->
-        <div class="features-3">
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="phone-container">
-                        <img src="{% static 'material/img/iphone.png' %}">
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <!-- Some <br /> tags to push the text to align with the image, you can remove it if you have more text on the right side :-) -->
-                    <h2 class="title">Your life will be much easier</h2>
-                    <div class="info info-horizontal">
-                        <div class="icon icon-primary">
-                            <i class="material-icons">extension</i>
-                        </div>
-                        <div class="description">
-                            <h4 class="info-title">Hundreds of Components</h4>
-                            <p>The moment you use Material Kit, you know you’ve never felt anything like it. With a
-                                single use, this
-                                powerfull UI Kit lets you do more than ever before. </p>
-                        </div>
-                    </div>
-                    <div class="info info-horizontal">
-                        <div class="icon icon-primary">
-                            <i class="material-icons">child_friendly</i>
-                        </div>
-                        <div class="description">
-                            <h4 class="info-title">Easy to Use</h4>
-                            <p>Divide details about your product or agency work into parts. Write a few lines about each
-                                one. A
-                                paragraph describing a feature will be enough.</p>
-                        </div>
-                    </div>
-                    <div class="info info-horizontal">
-                        <div class="icon icon-primary">
-                            <i class="material-icons">watch_later</i>
-                        </div>
-                        <div class="description">
-                            <h4 class="info-title">Fast Prototyping</h4>
-                            <p>Divide details about your product or agency work into parts. Write a few lines about each
-                                one. A
-                                paragraph describing a feature will be enough.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!--     *********    END FEATURES 3      *********      -->
-        <!--     *********     FEATURES 4      *********      -->
-        <div class="features-4">
-            <div class="row">
-                <div class="col-md-8 ml-auto mr-auto text-center">
-                    <h2 class="title">Your life will be much easier</h2>
-                    <h5 class="description">This is the paragraph where you can write more details about your product.
-                        Keep you
-                        user engaged by providing meaningful information.</h5>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-3 col-md-12 ml-auto">
-                    <div class="info info-horizontal">
-                        <div class="icon icon-info">
-                            <i class="material-icons">code</i>
-                        </div>
-                        <div class="description">
-                            <h4 class="info-title">For Developers</h4>
-                            <p>The moment you use Material Kit, you know you’ve never felt anything like it. With a
-                                single use,
-                                this powerfull UI Kit lets you do more than ever before. </p>
-                        </div>
-                    </div>
-                    <div class="info info-horizontal">
-                        <div class="icon icon-danger">
-                            <i class="material-icons">format_paint</i>
-                        </div>
-                        <div class="description">
-                            <h4 class="info-title">For Designers</h4>
-                            <p>Divide details about your product or agency work into parts. Write a few lines about each
-                                one. A
-                                paragraph describing a feature will be enough.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-12">
-                    <div class="phone-container">
-                        <img src="{% static 'material/img/iphone2.png' %}">
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-12 mr-auto">
-                    <div class="info info-horizontal">
-                        <div class="icon icon-primary">
-                            <i class="material-icons">dashboard</i>
-                        </div>
-                        <div class="description">
-                            <h4 class="info-title">Bootstrap Grid</h4>
-                            <p>Divide details about your product or agency work into parts. Write a few lines about each
-                                one. A
-                                paragraph describing a feature will be enough.</p>
-                        </div>
-                    </div>
-                    <div class="info info-horizontal">
-                        <div class="icon icon-success">
-                            <i class="material-icons">view_carousel</i>
-                        </div>
-                        <div class="description">
-                            <h4 class="info-title">Example Pages Included</h4>
-                            <p>Divide details about your product or agency work into parts. Write a few lines about each
-                                one. A
-                                paragraph describing a feature will be enough.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!--     *********    END FEATURES 4      *********      -->
+       
     </div>
-    <!--     *********     FEATURES 5      *********      -->
-    <div class="features-5" style="background-image: url('{% static 'material/img/bg9.jpg' %}')">
-        <div class="col-md-8 ml-auto mr-auto text-center">
-            <h2 class="title">Your life will be much easier</h2>
-        </div>
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-4">
-                    <div class="info">
-                        <div class="icon">
-                            <i class="material-icons">code</i>
-                        </div>
-                        <h4 class="info-title">For Developers</h4>
-                        <p>The moment you use Material Kit, you know you’ve never felt anything like it. With a single
-                            use, this powerfull UI Kit lets you do more than ever before. </p>
-                    </div>
-                </div>
-                <div class="col-sm-4">
-                    <div class="info">
-                        <div class="icon">
-                            <i class="material-icons">format_paint</i>
-                        </div>
-                        <h4 class="info-title">For Designers</h4>
-                        <p>The moment you use Material Kit, you know you’ve never felt anything like it. With a single
-                            use, this powerfull UI Kit lets you do more than ever before. </p>
-                    </div>
-                </div>
-                <div class="col-sm-4">
-                    <div class="info">
-                        <div class="icon">
-                            <i class="material-icons">dashboard</i>
-                        </div>
-                        <h4 class="info-title">Bootstrap Grid</h4>
-                        <p>The moment you use Material Kit, you know you’ve never felt anything like it. With a single
-                            use, this powerfull UI Kit lets you do more than ever before. </p>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-sm-4">
-                    <div class="info">
-                        <div class="icon">
-                            <i class="material-icons">view_carousel</i>
-                        </div>
-                        <h4 class="info-title">Example Pages Included</h4>
-                        <p>The moment you use Material Kit, you know you’ve never felt anything like it. With a single
-                            use, this powerfull UI Kit lets you do more than ever before. </p>
-                    </div>
-                </div>
-                <div class="col-sm-4">
-                    <div class="info">
-                        <div class="icon">
-                            <i class="material-icons">access_time</i>
-                        </div>
-                        <h4 class="info-title">Save Time</h4>
-                        <p>The moment you use Material Kit, you know you’ve never felt anything like it. With a single
-                            use, this powerfull UI Kit lets you do more than ever before. </p>
-                    </div>
-                </div>
-                <div class="col-sm-4">
-                    <div class="info">
-                        <div class="icon">
-                            <i class="material-icons">attach_money</i>
-                        </div>
-                        <h4 class="info-title">Save Money</h4>
-                        <p>The moment you use Material Kit, you know you’ve never felt anything like it. With a single
-                            use, this powerfull UI Kit lets you do more than ever before. </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!--     *********    END FEATURES 5      *********      -->
+   
 </div>
 <div class="cd-section" id="blogs">
     <!--     *********     BLOGS 1      *********      -->
@@ -377,8 +126,15 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-10 ml-auto mr-auto">
-                    <h2 class="title">Latest Blogposts</h2>
+                    <h2 class="title text-right farsi">مقالات برگزیده</h2>
                     <br>
+
+
+
+
+
+
+                    
                     <div class="card card-plain card-blog">
                         <div class="row">
                             <div class="col-md-5">
@@ -452,273 +208,7 @@
         </div>
     </div>
     <!--     *********    END BLOGS 1      *********      -->
-    <!--     *********     BLOGS 2      *********      -->
-    <div class="blogs-2" id="blogs-2">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-10 ml-auto mr-auto">
-                    <h2 class="title">Latest Blogposts 2</h2>
-                    <br>
-                    <div class="row">
-                        <div class="col-md-4">
-                            <div class="card card-plain card-blog">
-                                <div class="card-header card-header-image">
-                                    <a href="#pablo">
-                                        <img class="img img-raised" src="{% static 'material/img/card-blog4.jpg' %}">
-                                    </a>
-                                    <div class="colored-shadow"
-                                        style="background-image: url('{% static 'material/img/card-blog4.jpg' %}'); opacity: 1;">
-                                    </div>
-                                </div>
-                                <div class="card-body">
-                                    <h6 class="card-category text-info">Enterprise</h6>
-                                    <h4 class="card-title">
-                                        <a href="#pablo">Autodesk looks to future of 3D printing with Project Escher</a>
-                                    </h4>
-                                    <p class="card-description">
-                                        Like so many organizations these days, Autodesk is a company in transition. It
-                                        was
-                                        until recently a traditional boxed software company selling licenses.
-                                        <a href="#pablo"> Read More </a>
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="card card-plain card-blog">
-                                <div class="card-header card-header-image">
-                                    <a href="#pablo">
-                                        <img class="img img-raised" src="{% static 'material/img/blog5.jpg' %}">
-                                    </a>
-                                    <div class="colored-shadow"
-                                        style="background-image: url('{% static 'material/img/blog5.jpg' %}'); opacity: 1;">
-                                    </div>
-                                </div>
-                                <div class="card-body ">
-                                    <h6 class="card-category text-success">
-                                        Startups
-                                    </h6>
-                                    <h4 class="card-title">
-                                        <a href="#pablo">Lyft launching cross-platform service this week</a>
-                                    </h4>
-                                    <p class="card-description">
-                                        Like so many organizations these days, Autodesk is a company in transition. It
-                                        was
-                                        until recently a traditional boxed software company selling licenses.
-                                        <a href="#pablo"> Read More </a>
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="card card-plain card-blog">
-                                <div class="card-header card-header-image">
-                                    <a href="#pablo">
-                                        <img class="img img-raised" src="{% static 'material/img/blog7.jpg' %}">
-                                    </a>
-                                    <div class="colored-shadow"
-                                        style="background-image: url('{% static 'material/img/blog7.jpg' %}'); opacity: 1;">
-                                    </div>
-                                </div>
-                                <div class="card-body ">
-                                    <h6 class="card-category text-danger">
-                                        <i class="material-icons">trending_up</i> Enterprise
-                                    </h6>
-                                    <h4 class="card-title">
-                                        <a href="#pablo">6 insights into the French Fashion landscape</a>
-                                    </h4>
-                                    <p class="card-description">
-                                        Like so many organizations these days, Autodesk is a company in transition. It
-                                        was
-                                        until recently a traditional boxed software company selling licenses.
-                                        <a href="#pablo"> Read More </a>
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!--     *********    END BLOGS 2      *********      -->
-    <!--     *********     BLOGS 3      *********      -->
-    <div class="blogs-3">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-10 ml-auto mr-auto">
-                    <h2 class="title">Latest Blogposts 3</h2>
-                    <br>
-                    <div class="card card-plain card-blog">
-                        <div class="row">
-                            <div class="col-md-4">
-                                <div class="card-header card-header-image">
-                                    <img class="img img-raised" src="{% static 'material/img/card-blog4.jpg' %}">
-                                    <div class="colored-shadow"
-                                        style="background-image: url('{% static 'material/img/card-blog4.jpg' %}'); opacity: 1;">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-8">
-                                <h6 class="card-category text-info">Enterprise</h6>
-                                <h3 class="card-title">
-                                    <a href="#pablo">Autodesk looks to future of 3D printing with Project Escher</a>
-                                </h3>
-                                <p class="card-description">
-                                    Like so many organizations these days, Autodesk is a company in transition. It was
-                                    until
-                                    recently a traditional boxed software company selling licenses. Yet its own business
-                                    model disruption is only part of the story — and…
-                                    <a href="#pablo"> Read More </a>
-                                </p>
-                                <p class="author">
-                                    by
-                                    <a href="#pablo">
-                                        <b>Mike Butcher</b>
-                                    </a>, 2 days ago
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card card-plain card-blog">
-                        <div class="row">
-                            <div class="col-md-4">
-                                <div class="card-header card-header-image">
-                                    <a href="#pablo">
-                                        <img class="img img-raised" src="{% static 'material/img/office2.jpg' %}">
-                                    </a>
-                                    <div class="colored-shadow"
-                                        style="background-image: url('{% static 'material/img/office2.jpg' %}'); opacity: 1;">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-8">
-                                <h6 class="card-category text-danger">
-                                    <i class="material-icons">trending_up</i> Trending
-                                </h6>
-                                <h3 class="card-title">
-                                    <a href="#pablo">6 insights into the French Fashion landscape</a>
-                                </h3>
-                                <p class="card-description">
-                                    Like so many organizations these days, Autodesk is a company in transition. It was
-                                    until
-                                    recently a traditional boxed software company selling licenses. Yet its own business
-                                    model disruption is only part of the story — and…
-                                    <a href="#pablo"> Read More </a>
-                                </p>
-                                <p class="author">
-                                    by
-                                    <a href="#pablo">
-                                        <b>Mike Butcher</b>
-                                    </a>, 2 days ago
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card card-plain card-blog">
-                        <div class="row">
-                            <div class="col-md-4">
-                                <div class="card-header card-header-image">
-                                    <a href="#pablo">
-                                        <img class="img img-raised" src="{% static 'material/img/blog8.jpg' %}">
-                                    </a>
-                                    <div class="colored-shadow"
-                                        style="background-image: url('{% static 'material/img/blog8.jpg')"></div>
-                    <div class="colored-shadow" style="background-image: url(&quot;{% static 'material/img/blog8.jpg' %}&quot;); opacity: 1;">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-8">
-                                <h6 class="card-category text-success">
-                                    Startups
-                                </h6>
-                                <h3 class="card-title">
-                                    <a href="#pablo">Lyft launching cross-platform service this week</a>
-                                </h3>
-                                <p class="card-description">
-                                    Like so many organizations these days, Autodesk is a company in transition. It was
-                                    until
-                                    recently a traditional boxed software company selling licenses. Yet its own business
-                                    model disruption is only part of the story — and…
-                                    <a href="#pablo"> Read More </a>
-                                </p>
-                                <p class="author">
-                                    by
-                                    <a href="#pablo">
-                                        <b>Megan Rose</b>
-                                    </a>, 2 days ago
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!--     *********    END BLOGS 4      *********      -->
-    <div class="blogs-4" id="blogs-4">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-8 ml-auto mr-auto">
-                    <h2 class="title">Latest Blogposts 4</h2>
-                    <br>
-                    <div class="card card-plain card-blog">
-                        <div class="card-header card-header-image">
-                            <a href="#pablo">
-                                <img class="img img-raised" src="{% static 'material/img/bg5.jpg' %}">
-                            </a>
-                            <div class="colored-shadow colored-shadow-big"
-                                style="background-image: url(&quot;{% static 'material/img/bg5.jpg' %}&quot;); opacity: 1;">
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            <h6 class="card-category text-info">Fashion</h6>
-                            <h3 class="card-title">
-                                <a href="#pablo">Autodesk looks to future of 3D</a>
-                            </h3>
-                            <h5 class="card-description">
-                                Don't be scared of the truth because we need to restart the human foundation in truth
-                                And I
-                                love you like Kanye loves Kanye I love Rick Owens’ bed design but the back is too high
-                                for
-                                the beams and angle of the ceiling I also wanted to point out that it’s the first album
-                                to
-                                go number 1 off of streaming...
-                            </h5>
-                            <a href="#pablo" class="btn btn-primary btn-round"> Read More</a>
-                        </div>
-                    </div>
-                    <div class="card card-plain card-blog">
-                        <div class="card-header card-header-image">
-                            <a href="#pablo">
-                                <img class="img img-raised" src="{% static 'material/img/blog6.jpg' %}">
-                            </a>
-                            <div class="colored-shadow colored-shadow-big"
-                                style="background-image: url(&quot;{% static 'material/img/blog6.jpg' %}&quot;); opacity: 1;">
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            <h6 class="card-category text-success">Lifestyle</h6>
-                            <h3 class="card-title">
-                                <a href="#pablo">We will breathe clean air and exercise</a>
-                            </h3>
-                            <h5 class="card-description">
-                                Don't be scared of the truth because we need to restart the human foundation in truth
-                                And I
-                                love you like Kanye loves Kanye I love Rick Owens’ bed design but the back is too high
-                                for
-                                the beams and angle of the ceiling I also wanted to point out that it’s the first album
-                                to
-                                go number 1 off of streaming...
-                            </h5>
-                            <a href="#pablo" class="btn btn-primary btn-round"> Read More</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!--     *********    END BLOGS 4      *********      -->
+  
 </div>
 <div class="cd-section" id="teams">
     <!--     *********    TEAM 1     *********      -->
