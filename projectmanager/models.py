@@ -11,18 +11,9 @@ IMAGE_FOLDER=APP_NAME+'/images/'
 from dashboard.enums import *
 from dashboard.constants import *
 from .constants import *
+from dashboard.models import Page as DashboardPage
 
-
-class Page(models.Model):
-    title=models.CharField(_("title"), max_length=50)
-    short_description=tinymce_models.HTMLField(_("شرح کوتاه"),max_length=1000,blank=True,null=True)
-    description=tinymce_models.HTMLField(_("شرح کامل"),max_length=2000,null=True,blank=True)
-    icon=models.ForeignKey("dashboard.icon",related_name="projectpages", verbose_name=_("icon"),null=True,blank=True, on_delete=models.SET_NULL)
-    color=models.ForeignKey("dashboard.color",related_name="projectpages", verbose_name=_("color"),null=True,blank=True, on_delete=models.SET_NULL)
-    color_class=models.CharField(_("color class"),blank=True,null=True,choices=ColorEnum.choices,default=ColorEnum.DEFAULT,max_length=50)
-    child_class=models.CharField(_('child_class'),null=True,blank=True,max_length=50)
-    app_name=models.CharField(_('app_name'),null=True,blank=True,max_length=50)
-    date_added=models.DateTimeField(_('date_added'),null=True,blank=True,auto_now=False,auto_now_add=True)
+class Page(DashboardPage):
     
     def get_link(self):
         return f"""
@@ -35,15 +26,8 @@ class Page(models.Model):
         verbose_name = _("Page")
         verbose_name_plural = _("Pages")
 
-    def __str__(self):
-        return self.title
-
-    def get_edit_url(self):
-        return f'{ADMIN_URL}{APP_NAME}/{self.child_class}/{self.pk}/change/'
-
-    def get_absolute_url(self):
-        return reverse(f'{APP_NAME}:{self.child_class}',kwargs={'pk':self.pk})
-
+    
+    
     def save(self):
         self.app_name=APP_NAME
         super(Page,self).save()
