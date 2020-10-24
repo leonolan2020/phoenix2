@@ -125,7 +125,7 @@ MEDIA_ROOT=os.path.join(BASE_DIR,'media')
 STATICFILES_DIRS=[os.path.join(BASE_DIR,'static')]
 
 
-
+SERVER_ON_HEROKU=False
 
 if '--no-color' in sys.argv or ON_SERVER_LOCAL:
     ON_SERVER_LOCAL=True  
