@@ -29,14 +29,21 @@
           <ul class="nav">
             <li class="nav-item">
               <a class="nav-link" href="{{profile.get_absolute_url}}">
-                <span class="sidebar-mini">مع</span>
+                <span class="sidebar-mini">
+                  <i class="material-icons">account_box</i>
+
+                </span>
                 <span class="sidebar-normal">پروفایل</span>
               </a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="#">
-                <span class="sidebar-mini">هوع</span>
-                <span class="sidebar-normal">تعديل الملف الشخصي</span>
+                <span class="sidebar-mini">
+              <i class="material-icons">vpn_key</i>
+                  
+
+                </span>
+                <span class="sidebar-normal">تغییر کلمه عبور</span>
               </a>
             </li>
             <li class="nav-item">
@@ -50,7 +57,10 @@
                 </button> -->
 
               <a class="nav-link" href="{% url 'authentication:logout' %}">
-                <span class="sidebar-mini">و</span>
+                <span class="sidebar-mini">
+              <i class="material-icons">exit_to_app</i>
+                  
+                </span>
                 <span class="sidebar-normal">خروج</span>
               </a>
             </li>
