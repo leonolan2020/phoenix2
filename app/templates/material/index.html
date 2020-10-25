@@ -361,6 +361,7 @@
                                 <p class="author">
 
                                     <a href="{{blog.profile.get_absolute_url}}">
+                                       <i class="fa fa-user"></i>
                                         <b>{{blog.profile.name}}</b>
                                     </a>
                                 </p>
@@ -415,6 +416,7 @@
                                 <p class="author">
 
                                     <a href="{{blog.profile.get_absolute_url}}">
+                                        <i class="fa fa-user"></i>
                                         <b>{{blog.profile.name}}</b>
                                     </a>
                                 </p>
@@ -449,111 +451,42 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-8 ml-auto mr-auto text-center">
-                    <h2 class="title">Our Awesome Team 1</h2>
-                    <h5 class="description">This is the paragraph where you can write more details about your
-                        team. Keep
-                        you user engaged by providing meaningful information.</h5>
+                    <h2 class="farsi title">متخصصین ما</h2>
+                    <h5 class="farsi description">متشکل از بهترین ها در زمینه طراحی وبسایت</h5>
                 </div>
             </div>
-            <div class="row">
+            <div class="row rtl">
+                {% for ourteam in ourteams %}
                 <div class="col-md-3">
                     <div class="card card-profile card-plain">
                         <div class="card-header card-avatar">
-                            <a href="#pablo">
-                                <img class="img" src="{% static 'material/img/marc.jpg' %}">
+                            <a href="{{ourteam.get_absolute_url}}">
+                                <img class="img" src="{{ourteam.image}}">
                             </a>
                         </div>
                         <div class="card-body ">
-                            <h4 class="card-title">Alec Thompson</h4>
-                            <h6 class="card-category text-muted">CEO / Co-Founder</h6>
+                            <h4 class="card-title farsi">{{ourteam.profile.name}}</h4>
+                            <h6 class="card-category farsi text-muted">{{ourteam.job}}</h6>
                             <p class="card-description">
-                                And I love you like Kanye loves Kanye. We need to restart the human foundation.
+                                {{ourteam.short_description}}
                             </p>
                         </div>
                         <div class="card-footer justify-content-center">
-                            <a href="#pablo" class="btn btn-just-icon btn-link btn-twitter"><i
-                                    class="fa fa-twitter"></i></a>
-                            <a href="#pablo" class="btn btn-just-icon btn-link btn-facebook"><i
-                                    class="fa fa-facebook-square"></i></a>
-                            <a href="#pablo" class="btn btn-just-icon btn-link btn-google"><i
-                                    class="fa fa-google"></i></a>
+                            {% for social_link in ourteam.social_links.all %}
+
+                            {{social_link.get_link|safe}}
+
+                            {% endfor %}
+
+
                         </div>
                     </div>
                 </div>
-                <div class="col-md-3">
-                    <div class="card card-profile card-plain">
-                        <div class="card-header card-avatar">
-                            <a href="#pablo">
-                                <img class="img" src="{% static 'material/img/kendall.jpg' %}">
-                            </a>
-                        </div>
-                        <div class="card-body ">
-                            <h4 class="card-title">Tania Andrew</h4>
-                            <h6 class="card-category text-muted">Designer</h6>
-                            <p class="card-description">
-                                Don't be scared of the truth because we need to restart the human foundation.
-                                And I love
-                                you like Kanye loves Kanye.
-                            </p>
-                        </div>
-                        <div class="card-footer justify-content-center">
-                            <a href="#pablo" class="btn btn-just-icon btn-link btn-twitter"><i
-                                    class="fa fa-twitter"></i></a>
-                            <a href="#pablo" class="btn btn-just-icon btn-link btn-dribbble"><i
-                                    class="fa fa-dribbble"></i></a>
-                            <a href="#pablo" class="btn btn-just-icon btn-link btn-linkedin"><i
-                                    class="fa fa-linkedin"></i></a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="card card-profile card-plain">
-                        <div class="card-header card-avatar">
-                            <a href="#pablo">
-                                <img class="img" src="{% static 'material/img/christian.jpg' %}">
-                            </a>
-                        </div>
-                        <div class="card-body ">
-                            <h4 class="card-title">Christian Mike</h4>
-                            <h6 class="card-category text-muted">Web Developer</h6>
-                            <p class="card-description">
-                                I love you like Kanye loves Kanye. Don't be scared of the truth because we need
-                                to
-                                restart the human foundation.
-                            </p>
-                        </div>
-                        <div class="card-footer justify-content-center">
-                            <a href="#pablo" class="btn btn-just-icon btn-link btn-facebook"><i
-                                    class="fa fa-facebook-square"></i></a>
-                            <a href="#pablo" class="btn btn-just-icon btn-link btn-dribbble"><i
-                                    class="fa fa-dribbble"></i></a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="card card-profile card-plain">
-                        <div class="card-header card-avatar">
-                            <a href="#pablo">
-                                <img class="img" src="{% static 'material/img/avatar.jpg' %}">
-                            </a>
-                        </div>
-                        <div class="card-body ">
-                            <h4 class="card-title">Rebecca Stormvile</h4>
-                            <h6 class="card-category text-muted">Web Developer</h6>
-                            <p class="card-description">
-                                Don't be scared of the truth because we need to restart the human foundation.
-                            </p>
-                        </div>
-                        <div class="card-footer justify-content-center">
-                            <a href="#pablo" class="btn btn-just-icon btn-link btn-google"><i
-                                    class="fa fa-google"></i></a>
-                            <a href="#pablo" class="btn btn-just-icon btn-link btn-twitter"><i
-                                    class="fa fa-twitter"></i></a>
-                            <a href="#pablo" class="btn btn-just-icon btn-link btn-dribbble"><i
-                                    class="fa fa-dribbble"></i></a>
-                        </div>
-                    </div>
-                </div>
+                {% endfor %}
+
+
+
+
             </div>
         </div>
     </div>

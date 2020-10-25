@@ -28,6 +28,8 @@ class BasicViews(View):
         context['blogs']=blogs
         ourworks=OurWorkRepo(user=user).list_for_home()
         context['ourworks']=ourworks
+        ourteams=OurTeamRepo(user=user).list()
+        context['ourteams']=ourteams
         return render(request,TEMPLATE_ROOT+'index.html',context)
 
     def features(self,request,*args,**kwargs):

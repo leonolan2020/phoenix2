@@ -6,7 +6,7 @@ from .apps import APP_NAME
 from django.utils.translation import gettext as _
 from .enums import *
 from tinymce import models as tinymce_models
-from .settings import MEDIA_URL
+from .settings import MEDIA_URL,STATIC_URL
 IMAGE_FOLDER=APP_NAME+'/images/'
 from django.shortcuts import reverse
 class NotificationTemp(models.Model):
@@ -349,7 +349,7 @@ class SocialLink(Link):
                 {self.get_icon_tag()}
                 </a>
         """
-    
+   
     class Meta:
         verbose_name = _("SocialLink")
         verbose_name_plural = _("شبکه اجتماعی")
@@ -372,7 +372,7 @@ class OurTeam(models.Model):
     header_image_origin=models.ImageField(_("تصویر سربرگ"),null=True,blank=True, upload_to=IMAGE_FOLDER+'OurTeam/Header/', height_field=None, width_field=None, max_length=None)
     
     def __str__(self):
-        return self.name
+        return self.profile.name()
     def get_resume_url(self):
         return reverse('app:resume',kwargs={'ourteam_id':self.pk})
     def image(self):
@@ -389,7 +389,7 @@ class OurTeam(models.Model):
     def get_edit_url(self):
         return f'{ADMIN_URL}{APP_NAME}/ourteam/{self.pk}/change/'
     def get_absolute_url(self):
-        return reverse('app:ourteam',kwargs={'ourteam_id':self.pk})
+        return reverse('app:ourteam',kwargs={'pk':self.pk})
 
     def __unicode__(self):
         return self.name
