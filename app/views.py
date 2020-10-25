@@ -60,14 +60,23 @@ class PageViews(View):
     def blog(self,request,pk,*args, **kwargs):
         user=request.user
         context=getContext(request)
+        blog=BlogRepo(user=user).blog(blog_id=pk)
+        context['page']=blog
+        context['blog']=blog
         return render(request,TEMPLATE_ROOT+'blog.html',context)
     def feature(self,request,pk,*args, **kwargs):
         user=request.user
         context=getContext(request)
-        return render(request,TEMPLATE_ROOT+'index.html',context)
+        feature=FeatureRepo(user=user).feature(feature_id=pk)
+        context['page']=feature
+        context['feature']=feature
+        return render(request,TEMPLATE_ROOT+'feature.html',context)
     def ourwork(self,request,pk,*args, **kwargs):
         user=request.user
         context=getContext(request)
-        return render(request,TEMPLATE_ROOT+'index.html',context)
+        ourwork=OurWorkRepo(user=user).ourwork(ourwork_id=pk)
+        context['page']=ourwork
+        context['ourwork']=ourwork
+        return render(request,TEMPLATE_ROOT+'ourwork.html',context)
 
 # Create your views here.

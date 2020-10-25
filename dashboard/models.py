@@ -35,15 +35,15 @@ class NotificationTemp(models.Model):
 
 
 class Icon(models.Model):
-    icon_title=models.CharField(_("عنوان"), max_length=50)    
+    icon_title=models.CharField(_("عنوان آیکون"), max_length=50)    
     icon_class=models.CharField(_("کلاس آیکون"), max_length=50 ,null=True,blank=True)    
-    image_origin=models.ImageField(_("تصویر"), upload_to=IMAGE_FOLDER+'OurService/', height_field=None,null=True,blank=True, width_field=None, max_length=None)
+    image_origin=models.ImageField(_("تصویر آیکون"), upload_to=IMAGE_FOLDER+'OurService/', height_field=None,null=True,blank=True, width_field=None, max_length=None)
     icon_fa=models.CharField(_("آیکون فونت آسوم"),max_length=50,null=True,blank=True)
     icon_material=models.CharField(_("آیکون متریال"),choices=IconsEnum.choices,null=True,blank=True, max_length=100)
     icon_svg=models.TextField(_("آیکون svg"),null=True,blank=True)
-    color=models.CharField(_("رنگ"),choices=ColorEnum.choices,default=ColorEnum.SECONDARY, max_length=50)
-    width=models.IntegerField(_("عرض"),null=True,blank=True)
-    height=models.IntegerField(_("ارتفاع"),null=True,blank=True)
+    color=models.CharField(_("رنگ آیکون"),choices=ColorEnum.choices,default=ColorEnum.SECONDARY, max_length=50)
+    width=models.IntegerField(_("عرض آیکون"),null=True,blank=True)
+    height=models.IntegerField(_("ارتفاع آیکون"),null=True,blank=True)
     
     
     def get_icon_tag(self,icon_style=''):
@@ -246,6 +246,10 @@ class Page(models.Model):
     
     profile=models.ForeignKey("authentication.profile", verbose_name=_("profile"),null=True,blank=True, on_delete=models.SET_NULL)
 
+    links=models.ManyToManyField("Link",related_name="pages", verbose_name=_("لینک ها"),blank=True)
+    tags=models.ManyToManyField("Tag",related_name="pages", verbose_name=_("برچسب ها"),blank=True)
+    documents=models.ManyToManyField("Document",related_name="pages", verbose_name=_("پاسخ ها"),blank=True)
+
     def image(self):
         if self.image_origin:
             return MEDIA_URL+str(self.image_origin)
@@ -306,6 +310,7 @@ class Technology(Page):
         
 
 class Link(Icon):
+    title=models.CharField(_("عنوان"), max_length=200)    
     for_home=models.BooleanField(_("نمایش در پایین صفحه سایت"),default=False)
     for_nav=models.BooleanField(_("نمایش در منوی بالای سایت"),default=False)
     priority=models.IntegerField(_("ترتیب"),default=100)
