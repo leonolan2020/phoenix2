@@ -252,6 +252,7 @@ class Page(models.Model):
 
 
     images=models.ManyToManyField("GalleryPhoto",related_name="pages", verbose_name=_("تصویر ها"),blank=True)
+    related_pages=models.ManyToManyField("Page", verbose_name=_("صفحه های مرتبط"),blank=True)
     
 
     def image(self):

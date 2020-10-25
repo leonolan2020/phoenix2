@@ -3,7 +3,7 @@
 {% load static %}
 {% block content %}
 <div class="page-header header-filter" data-parallax="true"
-    style="background-image: url(&quot;{{page.header_image}}&quot;); transform: translate3d(0px, 1301.67px, 0px);">
+    style="background-image: url(&quot;{{page.header_image}}&quot;); transform: translate3d(0px, 0px, 0px);">
     <div class="container">
         <div class="row">
             <div class="col-md-8 ml-auto mr-auto text-center">
@@ -20,7 +20,7 @@
                     <i class="material-icons">rate_review</i> ویرایش
                 </a>
                 {% endif %}
-                <a href="#pablo" class="btn btn-rose btn-round btn-lg">
+                <a href="{{page.get_absolute_url}}" class="btn btn-rose btn-round btn-lg">
                     <i class="material-icons">format_align_left</i> توضیحات بیشتر
                 </a>
 
@@ -233,90 +233,47 @@
         </div>
     </div>
 </div>
-
+{% if page.related_pages.all %}
+  
 <div class="section">
     <div class="container">
-        <div class="row">
+        <div class="row rtl">
             <div class="col-md-12">
-                <h2 class="title text-center">Similar Stories</h2>
+                <h2 class="title text-center farsi">صفحه های مرتبط</h2>
                 <br>
                 <div class="row">
-                    <div class="col-md-4">
+                    {% for related_page in page.related_pages.all %}
+                         <div class="col-md-4">
                         <div class="card card-blog">
                             <div class="card-header card-header-image">
-                                <a href="#pablo">
-                                    <img class="img img-raised" src="../assets/img/examples/blog6.jpg">
+                                <a href="{{related_page.get_absolute_url}}">
+                                    <img class="img img-raised" src="{{related_page.thumbnail}}">
                                 </a>
                                 <div class="colored-shadow"
-                                    style="background-image: url(&quot;../assets/img/examples/blog6.jpg&quot;); opacity: 1;">
+                                    style="background-image: url(&quot;{{related_page.thumbnail}}&quot;); opacity: 1;">
                                 </div>
                             </div>
                             <div class="card-body">
-                                <h6 class="category text-info">Enterprise</h6>
-                                <h4 class="card-title">
-                                    <a href="#pablo">Autodesk looks to future of 3D printing with Project Escher</a>
+                                <h6 class="category farsi text-info">{{related_page.category}}</h6>
+                                <h4 class="card-titlefarsi ">
+                                    <a href="{{related_page.get_absolute_url}}">{{related_page.title}}</a>
                                 </h4>
-                                <p class="card-description">
-                                    Like so many organizations these days, Autodesk is a company in transition. It was
-                                    until recently a traditional boxed software company selling licenses.<a
-                                        href="#pablo"> Read More </a>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="card card-blog">
-                            <div class="card-header card-header-image">
-                                <a href="#pablo">
-                                    <img class="img img-raised" src="../assets/img/examples/blog8.jpg">
-                                </a>
-                                <div class="colored-shadow"
-                                    style="background-image: url(&quot;../assets/img/examples/blog8.jpg&quot;); opacity: 1;">
+                                <div class="card-description">
+                                    {{related_page.short_description|safe}}
+                                    
+                                    <a
+                                        href="{{related_page.get_absolute_url}}">بیشتر ...</a>
                                 </div>
                             </div>
-                            <div class="card-body">
-                                <h6 class="category text-success">
-                                    Startups
-                                </h6>
-                                <h4 class="card-title">
-                                    <a href="#pablo">Lyft launching cross-platform service this week</a>
-                                </h4>
-                                <p class="card-description">
-                                    Like so many organizations these days, Autodesk is a company in transition. It was
-                                    until recently a traditional boxed software company selling licenses.<a
-                                        href="#pablo"> Read More </a>
-                                </p>
-                            </div>
                         </div>
                     </div>
-                    <div class="col-md-4">
-                        <div class="card card-blog">
-                            <div class="card-header card-header-image">
-                                <a href="#pablo">
-                                    <img class="img img-raised" src="../assets/img/examples/blog7.jpg">
-                                </a>
-                                <div class="colored-shadow"
-                                    style="background-image: url(&quot;../assets/img/examples/blog7.jpg&quot;); opacity: 1;">
-                                </div>
-                            </div>
-                            <div class="card-body">
-                                <h6 class="category text-danger">
-                                    <i class="material-icons">trending_up</i> Enterprise
-                                </h6>
-                                <h4 class="card-title">
-                                    <a href="#pablo">6 insights into the French Fashion landscape</a>
-                                </h4>
-                                <p class="card-description">
-                                    Like so many organizations these days, Autodesk is a company in transition. It was
-                                    until recently a traditional boxed software company selling licenses.<a
-                                        href="#pablo"> Read More </a>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
+                    {% endfor %}
+                 
+                    
                 </div>
             </div>
         </div>
     </div>
 </div>
+{% endif %}
 {% endblock %}
