@@ -235,8 +235,8 @@ class Page(models.Model):
     
     # category=models.CharField(_("دسته بندی"),null=True,blank=True,max_length=100)
 
-    short_description=tinymce_models.HTMLField(_("شرح کوتاه"),max_length=200,blank=True,null=True)
-    description=tinymce_models.HTMLField(_("شرح کامل"),max_length=2000,null=True,blank=True)
+    short_description=tinymce_models.HTMLField(_("شرح کوتاه"),max_length=1000,blank=True,null=True)
+    description=tinymce_models.HTMLField(_("شرح کامل"),max_length=10000,null=True,blank=True)
     child_class=models.CharField(_('child_class'),null=True,blank=True,max_length=50)
     app_name=models.CharField(_('app_name'),null=True,blank=True,max_length=50)
     date_added=models.DateTimeField(_('date_added'),null=True,blank=True,auto_now=False,auto_now_add=True)
