@@ -39,8 +39,8 @@
             <li class="nav-item">
               <a class="nav-link" href="#">
                 <span class="sidebar-mini">
-              <i class="material-icons">vpn_key</i>
-                  
+                  <i class="material-icons">vpn_key</i>
+
 
                 </span>
                 <span class="sidebar-normal">تغییر کلمه عبور</span>
@@ -58,8 +58,8 @@
 
               <a class="nav-link" href="{% url 'authentication:logout' %}">
                 <span class="sidebar-mini">
-              <i class="material-icons">exit_to_app</i>
-                  
+                  <i class="material-icons">exit_to_app</i>
+
                 </span>
                 <span class="sidebar-normal">خروج</span>
               </a>
@@ -299,8 +299,7 @@
         <div class="collapse" id="projectmanagerPages">
           <ul class="nav">
             <li class="nav-item " id="nav-item-projectmanager-home">
-              <a class="nav-link"
-                href="{% url 'projectmanager:home' %}">
+              <a class="nav-link" href="{% url 'projectmanager:home' %}">
                 <span class="sidebar-mini">
                   <i class="material-icons">table_view</i>
                 </span>
@@ -308,16 +307,15 @@
               </a>
             </li>
             <li class="nav-item ">
-              <a class="nav-link"
-                href="{% url 'projectmanager:home' %}">
+              <a class="nav-link" href="{% url 'projectmanager:home' %}">
                 <span class="sidebar-mini">
-                  
+
                   <i class="material-icons">apartment</i>
                 </span>
                 <span class="sidebar-normal">چارت سازمانی</span>
               </a>
             </li>
-            
+
             <li class="nav-item ">
               <a class="nav-link"
                 href="https://demos.creative-tim.com/material-dashboard-pro/examples/maps/vector.html">
@@ -347,6 +345,7 @@
         </a>
       </li>
 
+      {% if PUSHER_IS_ENABLE %}
 
       <li class="nav-item " id="nav-item-pusher">
         <a class="nav-link" href="{% url 'pusher:home' %}">
@@ -354,6 +353,7 @@
           <p>پیام</p>
         </a>
       </li>
+      {% endif %}
 
     </ul>
   </div>
