@@ -1,5 +1,51 @@
 {% extends "projectmanager/page.html" %}
 {% block child_content %}
+<div class="row rtl">
+    <div class="col-md-6">
+        <div class="card " id="app">
+            <div class="card-header ">
+                <h4 class="card-title farsi text-right">زیرمجموعه ها -
+                    <small class="description">صفحه ای جزیی</small>
+                </h4>
+            </div>
+            <div class="card-body ">
+              
+                <a class="btn btn-link btn-warning" href="{{page.get_edit_url}}">
+                    <i class="material-icons">settings</i>
+                    ویرایش
+                </a>
 
+
+                {% for child_page in page.childs.all %}
+                  {{child_page.get_link|safe}}
+                {% endfor %}
+                <template v-for="project in projects">
+                    <div v-html="project.get_link"></div>
+  
+  
+                  </template>
+                {% if add_project_form %}
+                <div class="mt-5 mx-5">
+                  <div class="form-group bmd-form-group">
+                    <label for="exampleInput1" class="bmd-label-floating">نام پروژه جدید</label>
+                    {% csrf_token %}
+                    <input type="hidden" name="parent_id" value="{{page.id}}">
+                    <input v-model="title" type="text" class="form-control" id="exampleInput1" name="title" required=""
+                      aria-required="true">
+  
+  
+                  </div>
+                  <input type="button" @click="add_project" class="btn btn-next btn-fill btn-rose btn-wd" name="next"
+                    value="افزودن">
+  
+                </div>
+                {% endif %}
+
+
+            </div>
+        </div>
+    </div>
+
+</div>
 
 {% endblock  %}

@@ -18,7 +18,7 @@
 <div class="text-center" style="font-size: 0.8em;">
     {{page.parent.get_breadcrumb_url|safe}}
 </div>
-  
+
 {% endif %}
 <h3 class="title text-center">
     <span class="mx-2 text-{{page.color}}">{{page.icon.get_icon_tag|safe}}</span>
@@ -27,97 +27,18 @@
 
 <div class="row leo-rtl">
     <div class="col-md-6">
-        <div class="card ">
-            <div class="card-header ">
-                <h4 class="card-title text-right">توضیحات
-                    <small class="description px-2 text-secondary">درباره {{page.title}}</small>
-                </h4>
-            </div>
-            <div class="card-body ">
-                <ul class="nav nav-pills nav-pills-warning" role="tablist">
-                    <li class="nav-item">
-                        <a class="nav-link active show" data-toggle="tab" href="#link1" role="tablist">
-                            شرح کوتاه
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-toggle="tab" href="#link2" role="tablist">
-                            شرح کامل
-                        </a>
-                    </li>
-                   
-                </ul>
-                <div class="tab-content tab-space">
-                    <div class="tab-pane farsi active show text-right px-3 pt-3" id="link1">
-                        {{page.short_description|safe}}           
-                    </div>
-                    <div class="tab-pane farsi text-right px-3 pt-3" id="link2">
-                        {{page.description|safe}}                     
-                    </div>
-                    
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-6">
-        <div class="card " id="app">
-            <div class="card-header ">
-                <h4 class="card-title farsi text-right">زیرمجموعه ها -
-                    <small class="description">صفحه ای جزیی</small>
-                </h4>
-            </div>
-            <div class="card-body ">
-              
-                <a class="btn btn-link btn-warning" href="{{page.get_edit_url}}">
-                    <i class="material-icons">settings</i>
-                    ویرایش
-                </a>
-
-
-                {% for child_page in page.childs.all %}
-                  {{child_page.get_link|safe}}
-                {% endfor %}
-                <template v-for="project in projects">
-                    <div v-html="project.get_link"></div>
-  
-  
-                  </template>
-                {% if add_project_form %}
-                <div class="mt-5 mx-5">
-                  <div class="form-group bmd-form-group">
-                    <label for="exampleInput1" class="bmd-label-floating">نام پروژه جدید</label>
-                    {% csrf_token %}
-                    <input type="hidden" name="parent_id" value="{{page.id}}">
-                    <input v-model="title" type="text" class="form-control" id="exampleInput1" name="title" required=""
-                      aria-required="true">
-  
-  
-                  </div>
-                  <input type="button" @click="add_project" class="btn btn-next btn-fill btn-rose btn-wd" name="next"
-                    value="افزودن">
-  
-                </div>
-                {% endif %}
-
-
-            </div>
-        </div>
-    </div>
-</div>
-<div class="row">
-    <div class="col-md-6">
         <div class="card">
             <div class="card-header">
-                <h4 class="card-title">Collapsible Accordion</h4>
+                <h4 class="card-title farsi text-right">توضیحات</h4>
             </div>
             <div class="card-body">
                 <div id="accordion" role="tablist">
                     <div class="card-collapse">
                         <div class="card-header" role="tab" id="headingOne">
-                            <h5 class="mb-0">
+                            <h5 class="mb-0 text-right">
                                 <a data-toggle="collapse" href="#collapseOne" aria-expanded="true"
                                     aria-controls="collapseOne" class="collapsed">
-                                    Collapsible Group Item #1
+                                    شرح کوتاه
                                     <i class="material-icons">keyboard_arrow_down</i>
                                 </a>
                             </h5>
@@ -125,22 +46,17 @@
                         <div id="collapseOne" class="collapse show" role="tabpanel" aria-labelledby="headingOne"
                             data-parent="#accordion" style="">
                             <div class="card-body">
-                                Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad
-                                squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck
-                                quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it
-                                squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica,
-                                craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur
-                                butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth
-                                nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                                {{page.short_description|safe}}
+
                             </div>
                         </div>
                     </div>
                     <div class="card-collapse">
                         <div class="card-header" role="tab" id="headingTwo">
-                            <h5 class="mb-0">
+                            <h5 class="mb-0 text-right">
                                 <a class="collapsed" data-toggle="collapse" href="#collapseTwo" aria-expanded="false"
                                     aria-controls="collapseTwo">
-                                    Collapsible Group Item #2
+                                    شرح کامل
                                     <i class="material-icons">keyboard_arrow_down</i>
                                 </a>
                             </h5>
@@ -148,22 +64,16 @@
                         <div id="collapseTwo" class="collapse" role="tabpanel" aria-labelledby="headingTwo"
                             data-parent="#accordion">
                             <div class="card-body">
-                                Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad
-                                squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck
-                                quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it
-                                squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica,
-                                craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur
-                                butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth
-                                nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                                {{page.description|safe}}
                             </div>
                         </div>
                     </div>
                     <div class="card-collapse">
                         <div class="card-header" role="tab" id="headingThree">
-                            <h5 class="mb-0">
+                            <h5 class="mb-0 text-right">
                                 <a class="collapsed" data-toggle="collapse" href="#collapseThree" aria-expanded="false"
                                     aria-controls="collapseThree">
-                                    Collapsible Group Item #3
+                                    فایل ها و لینک های پیوست
                                     <i class="material-icons">keyboard_arrow_down</i>
                                 </a>
                             </h5>
@@ -185,6 +95,43 @@
             </div>
         </div>
     </div>
+    <div class="col-md-6">
+        <div class="card ">
+            <div class="card-header ">
+                <h4 class="card-title text-right">توضیحات
+                    <small class="description px-2 text-secondary">درباره {{page.title}}</small>
+                </h4>
+            </div>
+            <div class="card-body ">
+                <ul class="nav nav-pills nav-pills-warning" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active show" data-toggle="tab" href="#link1" role="tablist">
+                            شرح کوتاه
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="tab" href="#link2" role="tablist">
+                            شرح کامل
+                        </a>
+                    </li>
+
+                </ul>
+                <div class="tab-content tab-space">
+                    <div class="tab-pane farsi active show text-right px-3 pt-3" id="link1">
+                        {{page.short_description|safe}}
+                    </div>
+                    <div class="tab-pane farsi text-right px-3 pt-3" id="link2">
+                        {{page.description|safe}}
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<div class="row rtl">
+
     <div class="col-md-6">
         <div class="card ">
             <div class="card-header ">
@@ -363,33 +310,33 @@
 
 <script>
     var app = new Vue({
-      el: "#app",
-      data: {
-        projects: [],
-        title: '',
-  
-      },
-      methods: {
-        add_project: function () {
-          let url = "{% url 'projectmanager:add_project' %}"
-  
-          var posting = $.post(url,
-            {
-              parent_id: JSON.parse("{{page.id}}"),
-              title: app.title,
-              csrfmiddlewaretoken: csrfmiddlewaretoken
-            }
-          );
-  
-          // Put the results in a div
-          posting.done(function (data) {
-            // word_app.word = (data.word);
-            // word_app.definitions = (data.definitions);
-            app.title=""
-            app.projects.push(data)
-          })
+        el: "#app",
+        data: {
+            projects: [],
+            title: '',
+
         },
-      },
+        methods: {
+            add_project: function () {
+                let url = "{% url 'projectmanager:add_project' %}"
+
+                var posting = $.post(url,
+                    {
+                        parent_id: JSON.parse("{{page.id}}"),
+                        title: app.title,
+                        csrfmiddlewaretoken: csrfmiddlewaretoken
+                    }
+                );
+
+                // Put the results in a div
+                posting.done(function (data) {
+                    // word_app.word = (data.word);
+                    // word_app.definitions = (data.definitions);
+                    app.title = ""
+                    app.projects.push(data)
+                })
+            },
+        },
     })
-  </script>
+</script>
 {% endblock  %}
