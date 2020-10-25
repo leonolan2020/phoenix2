@@ -266,10 +266,8 @@
 <script src="{% static 'vendor/js/vue.min.js' %}"></script>
 
 <script>
-    let csrfmiddlewaretoken = ''
     $(document).ready(function () {
         // Javascript method's body can be found in assets/js/demos.js
-        csrfmiddlewaretoken = $("input[name='csrfmiddlewaretoken']").val()
     })
     let profile_app = new Vue({
         el: "#profile-app",
