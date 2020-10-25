@@ -6,7 +6,14 @@
         <div class="features-1">
             <div class="row">
                 <div class="col-md-8 ml-auto mr-auto">
-                    <h2 class="title farsi">آشنایی با سرویس های ما</h2>
+                    <h2 class="title farsi">
+                        آشنایی با سرویس های ما
+                        {% if perms.dashboard.add_ourteam %}
+                       
+                        {{admin_utility.get_add_feature|safe}}
+                   
+                    {% endif %}
+                    </h2>
                     <h5 class="description">
 
                         ریشه‌ی مدیریت پروژه به روش‌ها و فرآیندهایی برمی‌گردد که حدود صد سال پیش در کسب‌و‌کار توسعه پیدا

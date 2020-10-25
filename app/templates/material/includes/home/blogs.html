@@ -8,7 +8,16 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-10 ml-auto mr-auto">
-                    <h2 class="title text-center farsi">مقالات برگزیده</h2>
+                    <h2 class="title text-center farsi">
+                        مقالات برگزیده
+
+                        {% if perms.dashboard.add_ourteam %}
+                       
+                            {{admin_utility.get_add_blog|safe}}
+                       
+                        {% endif %}
+
+                    </h2>
                     <br>
 
 
