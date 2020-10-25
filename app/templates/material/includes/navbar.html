@@ -130,13 +130,11 @@ id="sectionsNav">
                     <a href="./examples/blog-post.html" class="dropdown-item">
                         <i class="material-icons">art_track</i> تنظیمات
                     </a>
-                    <a href="{% url 'authentication:logout' %}" class="dropdown-item">
+                    <a href="{% url 'authentication:logout' %}" class="dropdown-item text-danger">
                         <i class="material-icons">exit_to_app</i> خروج
                     </a>
                    
-                    <button onclick="signout()" class="dropdown-item text-danger">
-                        <i class="material-icons">exit_to_app</i> خروج
-                    </button>
+                    
                 </div>
             </li>
 {% endif %}
