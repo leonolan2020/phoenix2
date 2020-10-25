@@ -13,8 +13,20 @@
 {% if user.is_authenticated%}
 <script src="{% static 'pusher/pusher.min.js'%}"></script>
 
-
 <script>
+    notifications = JSON.parse(`{{notifications_s|escapejs}}`)
+    notifications_count = JSON.parse(`{{notifications_count|escapejs}}`)
+
+
+    // Vue application
+    const app_notifications = new Vue({
+        el: '#app-notifications',
+        data: {
+            notifications: notifications,
+            notifications_count: notifications_count
+        },
+    });
+
     my_channel_events = JSON.parse(`{{my_channel_events_s|escapejs}}`)
 
 
@@ -39,8 +51,8 @@
                     let message = `
                         <a href="${data.message.link}">
                         <div>
-                            <h4>${data.message.title}</h4>
-                            <div>${data.message.body}</div>
+                            <h4 class="text-right">${data.message.title}</h4>
+                            <div class="text-right">${data.message.body}</div>
                         </div>
                         </a>
                     `

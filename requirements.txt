@@ -18,3 +18,4 @@ qrcode
 requests
 sqlparse
 toml
+pylint-django

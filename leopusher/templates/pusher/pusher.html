@@ -214,7 +214,7 @@ let icons={{icons_s|safe}}
 let channel_events={{channel_events_s |safe}}
 </script>
 <script>
-    $("#pusher-link").addClass("active");
+    $("#nav-item-pusher").addClass("active");
     let manager_app = new Vue({
         el: "#manager-app",
         data: {
@@ -283,7 +283,14 @@ let channel_events={{channel_events_s |safe}}
         })
         posting.done(function (data) {
             if (data.result === 'SUCCESS')
-                showNotification('bottom', 'center', 'category', 'warning', ' پیام با موفقیت ارسال شد')
+                showNotification('bottom', 'center', 'category', 'warning', 
+                `
+                <div class="text-right">
+                 پیام با موفقیت ارسال شد
+                </div>
+                 `
+                
+                )
 
 
         })

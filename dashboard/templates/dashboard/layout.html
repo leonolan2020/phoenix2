@@ -495,7 +495,30 @@ The above copyright notice and this permission notice shall be included in all c
       // $('.sidebar .sidebar-wrapper, .main-panel').perfectScrollbar();
     });
   </script>
+ <script>
+  let to_price = function (x, currency) {
+      return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + ' ' + currency
+  }
 
+  var showNotification = function (from, align, icon, bgcolor, html) {
+      type = ['', 'info', 'danger', 'success', 'warning', 'rose', 'primary'];
+
+      color = Math.floor((Math.random() * 6) + 1);
+      color = 3;
+      $.notify({
+          icon: icon,
+          message: html
+
+      }, {
+          type: bgcolor,
+          timer: 30000,
+          placement: {
+              from: from,
+              align: align
+          }
+      });
+  }
+</script>
 {% if PUSHER_IS_ENABLE %}
 {% include "dashboard/includes/pusher.html" %}
 {% endif %}

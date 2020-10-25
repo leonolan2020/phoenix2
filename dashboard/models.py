@@ -519,7 +519,7 @@ class Notification(models.Model):
         return self.title
 
     def get_absolute_url(self):
-        return reverse("app:notification", kwargs={"notification_id": self.pk})
+        return reverse(APP_NAME+":notification", kwargs={"pk": self.pk})
 
 
 

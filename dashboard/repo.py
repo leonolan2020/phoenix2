@@ -333,6 +333,8 @@ class NotificationRepo:
         self.profile=ProfileRepo(user=user).me
         self.count=len(Notification.objects.filter(profile=self.profile).filter(seen=False))
     def add(self,profile_id,title,body,color,icon,url,priority=1,send_pusher=True):  
+        icon=Icon(icon_title=icon,icon_material=icon)
+        icon.save()
         notification=Notification(title=title,priority=priority,url=url,body=body,color=color,icon=icon,profile_id=profile_id)
         # input(profile_id)
         notification.save()
