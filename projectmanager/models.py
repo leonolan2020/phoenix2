@@ -84,6 +84,20 @@ class Project(ManagerPage):
         verbose_name = _("Project")
         verbose_name_plural = _("Projects")
 
+
+class OrganiazationUnit(ManagerPage):
+
+    
+
+    class Meta:
+        verbose_name = _("OrganiazationUnit")
+        verbose_name_plural = _("OrganiazationUnits")
+
+    def save(self):
+        self.child_class='organiazationunit'
+        super(OrganiazationUnit,self).save()
+
+
 class Event(ManagerPage):   
 
     class Meta:

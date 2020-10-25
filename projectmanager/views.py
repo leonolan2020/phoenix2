@@ -20,6 +20,8 @@ class BasicViews(View):
         context=getContext(request)
         projects=ProjectRepo(user=user).list_roots()
         context['projects']=projects
+        organiazationunits=OrganiazationUnitRepo(user=user).list_roots()
+        context['organiazationunits']=organiazationunits
         if user.has_perm(APP_NAME+'.add_project'):
             context['add_project_form']=AddProjectForm()
         return render(request,TEMPLATE_ROOT+'index.html',context)
@@ -54,6 +56,14 @@ class PageViews(View):
         event=EventRepo(user=user).event(event_id=event_id)
         context['event']=event
         context['page']=event
+        return render(request,TEMPLATE_ROOT+'event.html',context)
+    def organiazationunit(self,request,pk,*args, **kwargs):
+        organiazationunit_id=pk
+        user=request.user
+        context=getContext(request)
+        organiazationunit=OrganiazationUnitRepo(user=user).organiazationunit(organiazationunit_id=organiazationunit_id)
+        context['organiazationunit']=organiazationunit
+        context['page']=organiazationunit
         return render(request,TEMPLATE_ROOT+'event.html',context)
 
 

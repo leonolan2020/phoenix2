@@ -1,4 +1,4 @@
-from .models import Project,Event
+from .models import Project,Event,OrganiazationUnit
 from authentication.repo import ProfileRepo
 from dashboard.models import Icon
 
@@ -18,7 +18,17 @@ class EventRepo:
         except:
             return None
 
-
+class OrganiazationUnitRepo():
+    def __init__(self,user=None):
+        self.objects=OrganiazationUnit.objects
+        self.user=user
+    def list_roots(self):
+        return self.objects.filter(parent=None).order_by('-priority')
+    def organiazationunit(self,organiazationunit_id):
+        try:
+            return self.objects.get(pk=organiazationunit_id)
+        except:
+            return None 
 class ProjectRepo:
     def __init__(self,user=None):
         self.objects=Project.objects
