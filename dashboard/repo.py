@@ -1,4 +1,4 @@
-
+# from .models import GalleryPhoto2 as GalleryPhoto
 from django.contrib.auth import login, logout, authenticate
 from .models import *
 from authentication.models import Profile

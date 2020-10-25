@@ -11,10 +11,10 @@
                     {{page.title}}
                 </h1>
                 <h4 class=" farsi">
-                    
+
                     {{page.short_description|safe}}
                 </h4>
-                <br> 
+                <br>
                 {% if perms.dashboard.change_page %}
                 <a href="{{page.get_edit_url}}" class="btn btn-info btn-round btn-lg">
                     <i class="material-icons">rate_review</i> ویرایش
@@ -24,7 +24,7 @@
                     <i class="material-icons">format_align_left</i> توضیحات بیشتر
                 </a>
 
-               
+
             </div>
         </div>
     </div>
@@ -55,18 +55,14 @@
                 </div>
                 <div class="section col-md-10 ml-auto mr-auto">
                     <div class="row">
+                        {% for image in page.images.all %}
                         <div class="col-md-4">
-                            <img class="img-raised rounded img-fluid" alt="Raised Image"
-                                src="../assets/img/examples/blog4.jpg">
+                            <img class="img-raised rounded img-fluid" alt="Raised Image" src="{{image.thumbnail}}">
                         </div>
-                        <div class="col-md-4">
-                            <img class="img-raised rounded img-fluid" alt="Raised Image"
-                                src="../assets/img/examples/blog3.jpg">
-                        </div>
-                        <div class="col-md-4">
-                            <img class="img-raised rounded img-fluid" alt="Raised Image"
-                                src="../assets/img/examples/blog1.jpg">
-                        </div>
+                        {% endfor %}
+
+
+
                     </div>
                 </div>
                 <div class="col-md-8 ml-auto mr-auto">

@@ -250,12 +250,18 @@ class Page(models.Model):
     tags=models.ManyToManyField("Tag",related_name="pages", verbose_name=_("برچسب ها"),blank=True)
     documents=models.ManyToManyField("Document",related_name="pages", verbose_name=_("پاسخ ها"),blank=True)
 
+
+    images=models.ManyToManyField("GalleryPhoto",related_name="pages", verbose_name=_("تصویر ها"),blank=True)
+    
+
     def image(self):
         if self.image_origin:
             return MEDIA_URL+str(self.image_origin)
     def thumbnail(self):
         if self.thumbnail_origin:
             return MEDIA_URL+str(self.thumbnail_origin)
+        else:
+            return self.image()
     def header_image(self):
         if self.header_image_origin:
             return MEDIA_URL+str(self.header_image_origin)
@@ -774,13 +780,13 @@ class GalleryAlbum(Jumbotron):
         return reverse("OurService_detail", kwargs={"pk": self.pk})
 
 
-class GalleryPhoto(Jumbotron):
-    
+class GalleryPhoto(models.Model):
+    image_title=models.CharField(_("عنوان تصویر"),max_length=100,null=True,blank=True)
+    image_description=models.CharField(_("شرح تصویر"),max_length=500,null=True,blank=True)
+    thumbnail_origin=models.ImageField(_("Thumbnail Image"), upload_to=IMAGE_FOLDER+'Gallery/Photo/Thumbnail/',null=True,blank=True, height_field=None, width_field=None, max_length=None)
     image_origin=models.ImageField(_("Big Image 345*970 "), upload_to=IMAGE_FOLDER+'Gallery/Photo/', height_field=None, width_field=None, max_length=None)
-    for_home=models.BooleanField(_("Show on homepage"),default=False)
     archive=models.BooleanField(_("Archive?"),default=False)
     priority=models.IntegerField(_("Priority"),default=100)    
-    thumbnail_origin=models.ImageField(_("Thumbnail Image"), upload_to=IMAGE_FOLDER+'Gallery/Photo/Thumbnail/',null=True,blank=True, height_field=None, width_field=None, max_length=None)
     
     def image(self):
         return MEDIA_URL+str(self.image_origin)
@@ -792,10 +798,10 @@ class GalleryPhoto(Jumbotron):
         verbose_name_plural = _("تصاویر")
 
     def __str__(self):
-        return self.title
+        return 'image ('+str(self.pk)+')'
 
     def get_absolute_url(self):
-        return reverse("app:home")
+        return MEDIA_URL+str(self.image_origin)
     def get_edit_url(self):
         return f'{ADMIN_URL}{APP_NAME}/galleryphoto/{self.pk}/change/'
 
