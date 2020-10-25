@@ -792,3 +792,38 @@ class GalleryPhoto(Jumbotron):
     def get_edit_url(self):
         return f'{ADMIN_URL}{APP_NAME}/galleryphoto/{self.pk}/change/'
 
+
+class Tag(models.Model):
+    priority=models.IntegerField(_("ترتیب"),default=100)
+    image_header=models.ImageField(_("تصویر سربرگ"),null=True,blank=True, upload_to=IMAGE_FOLDER+'Tag/', height_field=None, width_field=None, max_length=None)
+    title=models.CharField(_("عنوان"), max_length=50)
+    icon=models.ForeignKey("Icon", verbose_name=_("آیکون"),null=True,blank=True, on_delete=models.SET_NULL)
+    
+    def image(self):
+        if self.image_header is None:
+            return None
+        return MEDIA_URL+str(self.image_header)
+
+    def to_link_tag(self):
+        return """
+        <a href="{get_absolute_url}" class="leo-farsi tag-cloud-link">
+             
+                {get_icon_tag}
+            
+              {title}</a>
+          """.format(get_absolute_url=tag.get_absolute_url(),get_icon_tag=tag.icon.get_icon_tag(),title=tag.title)    
+          
+    class Meta:
+        verbose_name = _("Tag")
+        verbose_name_plural = _("برچسب ها")
+
+    def __str__(self):
+        return self.title
+
+    def get_absolute_url(self):
+        return reverse('app:tag',kwargs={'tag_id':self.pk})
+    def get_manager_tag_url(self):
+        return reverse('projectmanager:tag',kwargs={'tag_id':self.pk})
+    def get_edit_url(self):
+        return f'{ADMIN_URL}app/tag/{self.pk}/change/'
+

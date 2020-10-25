@@ -22,12 +22,12 @@ SERVER_ON_PARS=False
 # ON_SERVER_LOCAL=True
 SERVER_ON_PARS=True
 
-ALLOWED_HOSTS = ['127.0.0.1','khafonline.com','www.khafonline.com']
 
 
 # Application definition
 
 INSTALLED_APPS = [
+    'leopusher',
     'projectmanager',
     'dashboard',
     'authentication',
@@ -146,3 +146,4 @@ STATIC_URL = server_settings.STATIC_URL
 MEDIA_URL = server_settings.MEDIA_URL
 SITE_URL = server_settings.SITE_URL
 DATABASES = server_settings.DATABASES
+ALLOWED_HOSTS=server_settings.ALLOWED_HOSTS

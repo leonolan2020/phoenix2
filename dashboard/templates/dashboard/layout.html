@@ -496,6 +496,12 @@ The above copyright notice and this permission notice shall be included in all c
     });
   </script>
 
+{% if PUSHER_IS_ENABLE %}
+{% include "dashboard/includes/pusher.html" %}
+{% endif %}
+
+
+
   {% block script %}
 
   {% endblock  %}

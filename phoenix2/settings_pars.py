@@ -10,6 +10,7 @@ DATABASES = {
         'NAME': BASE_DIR / 'db2.sqlite3',
     }
 }
+ALLOWED_HOSTS = ['khafonline.com','www.khafonline.com']
 
 
 SITE_URL='/phoenix2/'

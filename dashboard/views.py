@@ -4,7 +4,13 @@ from .settings import *
 from .repo import *
 from .forms import *
 from .enums import *
+from .settings import DEBUG
+from .serializers import * #NotificationSerializer
+if PUSHER_IS_ENABLE:
+    from leopusher.repo import PusherChannelEventRepo
+    from leopusher.serializers import PusherChannelEventSerializer
 
+import json
 from authentication.repo import ProfileRepo
 TEMPLATE_ROOT='dashboard/'
 
@@ -12,10 +18,28 @@ def getContext(request):
     user=request.user
     context={}
     context['title']="فونیکس"
+    context['DEBUG']=DEBUG
     context['ADMIN_URL']=ADMIN_URL
     context['MEDIA_URL']=MEDIA_URL
     context['SITE_URL']=SITE_URL
-    
+    context['PUSHER_IS_ENABLE']=PUSHER_IS_ENABLE
+    if user.is_authenticated:
+        profile=ProfileRepo(user=user).me    
+        context['profile']=profile 
+        context['notifications_s']=json.dumps(NotificationSerializer(NotificationRepo(user=request.user).list_unseen(),many=True).data)
+        context['notifications_count']=NotificationRepo(user=user).count
+        profiles=ProfileRepo(user=user).list_by_user(user=user)
+        if profile is not None:
+            context['profiles']=profiles.exclude(pk=profile.pk)
+        if PUSHER_IS_ENABLE:            
+            my_channel_events=PusherChannelEventRepo(user=user).my_channel_events()
+            my_channel_events_s=PusherChannelEventSerializer(my_channel_events,many=True).data
+            context['my_channel_events_s']=json.dumps(my_channel_events_s)
+    else:
+        context['profile']=None                
+        context['profiles']=None            
+        context['my_channel_events_s']='[]'
+        context['notifications_s']='[]'
     parameter_repo=ParameterRepo(user=request.user)
     main_pic_repo=MainPicRepo(user=request.user)
     link_repo=LinkRepo(user=request.user)
