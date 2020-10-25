@@ -5,11 +5,14 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db2.sqlite3',
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'OPTIONS': {
+                'read_default_file': os.path.join(os.path.join(BASE_DIR, 'phoenix2'),'secret_pars.cnf'),
+
+            },
+        }
     }
-}
 ALLOWED_HOSTS = ['khafonline.com','www.khafonline.com']
 
 
