@@ -93,7 +93,7 @@ class AuthenticationView(View):
                     return redirect(back_url)
                 else:   
                     context=getContext(request=request)         
-                    context['message']='نام کاربری و کلمه عبور صحیح نمی باشد'
+                    context['message']='نام کاربری و کلمه عبور صحیح نمی باشد.'
                     context['login_form']=LoginForm()
                     context['register_form']=RegisterForm()
                     context['reset_password_form']=ResetPasswordForm()

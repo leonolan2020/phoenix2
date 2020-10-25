@@ -18,7 +18,6 @@
       </div>
       <a class="navbar-brand" href="{% url 'app:home' %}">
         {{title}}
-
       </a>
     </div>
     <div class="collapse navbar-collapse justify-content-end">
@@ -41,40 +40,33 @@
           </a>
         </li>
         {% endif %}
-
-
-
         {% if profile %}
         <li class="nav-item dropdown" id="app-notifications">
           <a class="nav-link" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown"
             aria-haspopup="true" aria-expanded="false">
             <i class="material-icons">notifications</i>
-            <span class="notification" style="top:0!important;" v-show="notifications.length>0" v-text="notifications_count"></span>
+            <span class="notification" style="top:0!important;" v-show="notifications.length>0"
+              v-text="notifications_count">
+            </span>
             <p class="d-lg-none d-md-block">
               اعلان ها
             </p>
           </a>
           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-       
-            
             <template v-for="notification in notifications">
-              <a class="dropdown-item" href="#" v-text="notification.title" ></a>
+              <a class="dropdown-item" href="#" v-text="notification.title">
+              </a>
 
             </template>
-           
+
           </div>
         </li>
-
-
-
-
-
         <li class="nav-item dropdown">
           <a class="nav-link" href="javascript:;" id="navbarDropdownProfile" data-toggle="dropdown" aria-haspopup="true"
             aria-expanded="false">
-            
+
             <img width="32px" class="rounded-circle" src="{{profile.image}}" alt="">
-            
+
             <p class="d-lg-none d-md-block">
               اکانت
             </p>

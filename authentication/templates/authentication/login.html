@@ -2,10 +2,10 @@
 
 {% block content %}
 {% if login_form %}
-  
+
 <div class="col-lg-4 col-md-6 col-sm-8 ml-auto mr-auto">
     <form class="form" method="POST" action="{% url 'authentication:login' %}">
-       {% csrf_token %}
+        {% csrf_token %}
         <div class="card card-login card-hidden">
             <div class="card-header card-header-rose text-center">
                 <h4 class="card-title farsi">ورود</h4>
@@ -22,7 +22,12 @@
                 </div>
             </div>
             <div class="card-body ">
+                {% if message %}
+                <p class="card-description text-center text-warning">{{message}}</p>
+                {% else %}
                 <p class="card-description text-center">نام کاربری و کلمه عبور را وارد کنید.</p>
+
+                {% endif %}
                 <span class="bmd-form-group">
                     <div class="input-group">
                         <div class="input-group-prepend">
@@ -30,11 +35,12 @@
                                 <i class="material-icons">face</i>
                             </span>
                         </div>
-                        <input style="direction: ltr!important;text-align: center!important;" type="text" name="username" class="form-control" placeholder="نام کاربری">
+                        <input required style="direction: ltr!important;text-align: center!important;" type="text"
+                            name="username" class="form-control" placeholder="نام کاربری">
 
                     </div>
                 </span>
-                
+
                 <span class="bmd-form-group">
                     <div class="input-group">
                         <div class="input-group-prepend">
@@ -42,13 +48,14 @@
                                 <i class="material-icons">lock_outline</i>
                             </span>
                         </div>
-                        <input style="direction: ltr!important;text-align: center!important;" type="password" name="password" class="form-control" placeholder="کلمه عبور">
+                        <input required style="direction: ltr!important;text-align: center!important;" type="password"
+                            name="password" class="form-control" placeholder="کلمه عبور">
 
                     </div>
                 </span>
             </div>
             <div class="card-footer justify-content-center">
-                <button  type="submit" class="btn btn-rose btn-lg">ورود</button>
+                <button type="submit" class="btn btn-rose btn-lg">ورود</button>
             </div>
         </div>
     </form>
