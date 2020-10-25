@@ -266,83 +266,61 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-8 ml-auto mr-auto text-center">
-                    <h6 class="category text-muted">Our work</h6>
-                    <h2 class="title">Some of Our Awesome Projects - 3</h2>
+                    <h6 class="farsi category text-muted">پروژه های انجام شده</h6>
+                    <h2 class="farsi title">لیست برخی از کارها و پروژه هایی که انجام داده ایم.</h2>
                 </div>
             </div>
             <div class="row">
+                {% for ourwork in ourworks %}
                 <div class="col-md-5 ml-auto">
                     <div class="card card-plain">
-                        <a href="#pablo">
+                        <a href="{{ourwork.get_absolute_url}}">
                             <div class="card-header card-header-image">
-                                <img src="{% static 'material/img/card-project1.jpg' %}">
+                                <img src="{{ourwork.thumbnail}}">
                             </div>
                         </a>
                         <div class="card-body ">
-                            <h6 class="card-category">Web Design</h6>
-                            <a href="#pablo">
-                                <h4 class="card-title">Famous Website Redesign</h4>
+                            <h6 class="card-category farsi">
+                                {% if ourwork.category %}
+                                {{ourwork.category}}
+
+                                {% else %}
+                                &nbsp;
+                                {% endif %}
+
+
+                            </h6>
+                            <a href="{{ourwork.get_absolute_url}}">
+                                <h4 class="card-title farsi">{{ourwork.title}}</h4>
                             </a>
-                            <p class="card-description">
-                                Don't be scared of the truth because we need to restart the human foundation in truth.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-5 mr-auto">
-                    <div class="card card-plain">
-                        <a href="#pablo">
-                            <div class="card-header card-header-image">
-                                <img src="{% static 'material/img/card-project2.jpg' %}">
+                            <div class="card-description">
+
+                                {{ourwork.short_description|safe}}
                             </div>
-                        </a>
-                        <div class="card-body ">
-                            <h6 class="card-category">Productivity Tools</h6>
-                            <a href="#pablo">
-                                <h4 class="card-title">Beautiful Desktop for Designers</h4>
-                            </a>
-                            <p class="card-description">
-                                Don't be scared of the truth because we need to restart the human foundation in truth.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-5 ml-auto">
-                    <div class="card card-plain">
-                        <a href="#pablo">
-                            <div class="card-header card-header-image">
-                                <img src="{% static 'material/img/card-project3.jpg' %}">
+                            <div class="row farsi rtl">
+
+                                <div class="col-4">
+                                    <a href="{{ourwork.get_absolute_url}}" class="btn btn-info btn-round">
+                                        ادامه مطلب<div class="ripple-container"></div>
+                                    </a>
+                                </div>
+                                {% if perms.dashboard.change_ourwork %}
+                                <div class="col-4">
+                                    <a href="{{ourwork.get_edit_url}}" class="btn btn-info btn-round">
+
+                                        ویرایش
+                                        <div class="ripple-container"></div>
+                                    </a>
+                                </div>
+                                {% endif %}
+                                <div class="col-4"></div>
                             </div>
-                        </a>
-                        <div class="card-body ">
-                            <h6 class="card-category">Android App</h6>
-                            <a href="#pablo">
-                                <h4 class="card-title">Analytics for Android</h4>
-                            </a>
-                            <p class="card-description">
-                                Don't be scared of the truth because we need to restart the human foundation in truth.
-                            </p>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-5 mr-auto">
-                    <div class="card card-plain">
-                        <a href="#pablo">
-                            <div class="card-header card-header-image">
-                                <img src="{% static 'material/img/card-project4.jpg' %}">
-                            </div>
-                        </a>
-                        <div class="card-body ">
-                            <h6 class="card-category">Website</h6>
-                            <a href="#pablo">
-                                <h4 class="card-title">Behance Redesign</h4>
-                            </a>
-                            <p class="card-description">
-                                Don't be scared of the truth because we need to restart the human foundation in truth.
-                            </p>
-                        </div>
-                    </div>
-                </div>
+                {% endfor %}
+
+
             </div>
         </div>
     </div>
@@ -357,7 +335,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-10 ml-auto mr-auto">
-                    <h2 class="title text-right farsi">مقالات برگزیده</h2>
+                    <h2 class="title text-center farsi">مقالات برگزیده</h2>
                     <br>
 
 
@@ -394,9 +372,9 @@
                             </div>
                             <div class="col-md-5">
                                 <div class="card-header card-header-image">
-                                    <img class="img img-raised" src="{{blog.image}}">
+                                    <img class="img img-raised" src="{{blog.thumbnail}}">
                                     <div class="colored-shadow"
-                                        style="background-image: url('{{blog.image}}'); opacity: 1;">
+                                        style="background-image: url('{{blog.thumbnail}}'); opacity: 1;">
                                     </div>
                                 </div>
                             </div>
@@ -410,10 +388,10 @@
                             <div class="col-md-5">
                                 <div class="card-header card-header-image">
                                     <a href="{{blog.get_absolute_url}}">
-                                        <img class="img" src="{{blog.image}}">
+                                        <img class="img" src="{{blog.thumbnail}}">
                                     </a>
                                     <div class="colored-shadow"
-                                        style="background-image: url(&quot;{{blog.image}}&quot;); opacity: 1;">
+                                        style="background-image: url(&quot;{{blog.thumbnail}}&quot;); opacity: 1;">
                                     </div>
                                 </div>
                             </div>

@@ -233,6 +233,8 @@ class Page(models.Model):
     icon=models.ForeignKey("icon",null=True,blank=True,on_delete=models.SET_NULL)
     color=models.CharField(_("color class"),blank=True,null=True,choices=ColorEnum.choices,default=ColorEnum.DEFAULT,max_length=50)
     
+    # category=models.CharField(_("دسته بندی"),null=True,blank=True,max_length=100)
+
     short_description=tinymce_models.HTMLField(_("شرح کوتاه"),max_length=200,blank=True,null=True)
     description=tinymce_models.HTMLField(_("شرح کامل"),max_length=2000,null=True,blank=True)
     child_class=models.CharField(_('child_class'),null=True,blank=True,max_length=50)

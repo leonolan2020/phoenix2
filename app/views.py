@@ -26,6 +26,8 @@ class BasicViews(View):
         context['features']=features
         blogs=BlogRepo(user=user).list_for_home()
         context['blogs']=blogs
+        ourworks=OurWorkRepo(user=user).list_for_home()
+        context['ourworks']=ourworks
         return render(request,TEMPLATE_ROOT+'index.html',context)
 
     def features(self,request,*args,**kwargs):
