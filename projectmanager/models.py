@@ -73,7 +73,7 @@ class ManagerPage(DashboardPage):
 
 class Project(ManagerPage):
     # priority2=models.IntegerField(_("priority"),default=100)
-    
+    events=models.ManyToManyField("Event",blank=True, verbose_name=_("رویداد ها"))
     def save(self):
         self.child_class='project'
         super(Project,self).save()
@@ -84,5 +84,12 @@ class Project(ManagerPage):
         verbose_name = _("Project")
         verbose_name_plural = _("Projects")
 
-    
+class Event(ManagerPage):   
 
+    class Meta:
+        verbose_name = _("Event")
+        verbose_name_plural = _("Events")
+
+    def save(self):
+        self.child_class='event'
+        super(Event,self).save()

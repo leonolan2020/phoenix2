@@ -1,4 +1,6 @@
 {% extends "projectmanager/page.html" %}
+{% load to_persian_date %}
+{% load static %}
 {% block child_content %}
 <div class="row rtl">
     <div class="col-md-6">
@@ -10,10 +12,7 @@
             </div>
             <div class="card-body ">
               
-                <a class="btn btn-link btn-warning" href="{{page.get_edit_url}}">
-                    <i class="material-icons">settings</i>
-                    ویرایش
-                </a>
+             
 
 
                 {% for child_page in page.childs.all %}
@@ -45,7 +44,42 @@
             </div>
         </div>
     </div>
-
+<div class="col-md-6">
+    <ul class="timeline timeline-simple">
+      {% for event in project.events.all %}
+         <li class="timeline-inverted">
+          <div class="timeline-badge {{event.color}}">
+            {{event.icon.get_icon_tag|safe}}
+          </div>
+          <div class="timeline-panel">
+            <div class="timeline-heading">
+              <span class="badge badge-pill badge-danger">
+                {{event.title}}
+              </span>
+              <span class="text-secondary" style="float: right;">
+<small>
+                  {{event.date_added|to_persian_date|safe}}
+             </small> </span>
+            </div>
+            <div class="timeline-body">
+                {{event.short_description|safe}} 
+            </div>
+            <a href="{{event.get_absolute_url}}">
+              <i class="ti-time"></i>
+            <small>
+<small>
+              جزییات بیشتر
+</small>
+            </small>  
+            </a>
+          </div>
+        </li>
+      {% endfor %}
+       
+        
+        
+      </ul>
+</div>
 </div>
 
 {% endblock  %}

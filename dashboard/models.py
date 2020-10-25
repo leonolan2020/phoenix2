@@ -787,7 +787,7 @@ class GalleryPhoto(models.Model):
     image_origin=models.ImageField(_("Big Image 345*970 "), upload_to=IMAGE_FOLDER+'Gallery/Photo/', height_field=None, width_field=None, max_length=None)
     archive=models.BooleanField(_("Archive?"),default=False)
     priority=models.IntegerField(_("Priority"),default=100)    
-    
+    location=models.CharField(_("موقعیت مکانی تصویر"), max_length=50,null=True,blank=True)
     def image(self):
         return MEDIA_URL+str(self.image_origin)
     def thumbnail(self):

@@ -1,6 +1,22 @@
-from .models import Project
+from .models import Project,Event
 from authentication.repo import ProfileRepo
 from dashboard.models import Icon
+
+
+
+class EventRepo:
+    def __init__(self,user=None):
+        self.objects=Event.objects
+        self.user=user
+    def list_for_project(self,project_id):
+        project=ProjectRepo(user=self.user).project(project_id=project_id)
+        if project is not None:
+            return self.objects.filter(project=project)
+    def event(self,event_id):
+        try:
+            return self.objects.get(pk=event_id)
+        except:
+            return None
 
 
 class ProjectRepo:

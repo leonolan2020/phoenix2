@@ -47,5 +47,13 @@ class PageViews(View):
         if user.has_perm(APP_NAME+'.add_project'):
             context['add_project_form']=AddProjectForm()
         return render(request,TEMPLATE_ROOT+'project.html',context)
+    def event(self,request,pk,*args, **kwargs):
+        event_id=pk
+        user=request.user
+        context=getContext(request)
+        event=EventRepo(user=user).event(event_id=event_id)
+        context['event']=event
+        context['page']=event
+        return render(request,TEMPLATE_ROOT+'event.html',context)
 
 
