@@ -17,8 +17,8 @@ ALLOWED_HOSTS = ['khafonline.com','www.khafonline.com']
 
 
 SITE_URL='/phoenix2/'
-STATIC_ROOT='/home2/khafonli/public_html/staticfiles/'
-MEDIA_ROOT='/home2/khafonli/public_html/media/'
+STATIC_ROOT='/home2/khafonli/public_html/phoenix2/staticfiles/'
+MEDIA_ROOT='/home2/khafonli/public_html/phoenix2/media/'
 STATIC_URL = SITE_URL+'static/'
 MEDIA_URL =  SITE_URL+'media/'
 PUSHER_IS_ENABLE=True
