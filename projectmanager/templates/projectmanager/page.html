@@ -353,16 +353,22 @@
                         <i class="material-icons">close</i>
                     </button>
                 </div>
+                {% if image.image_title %}
+                  
                 <h4 class="card-title  text-right ">
                     <a href="{{image.get_absolute_url}}">{{image.image_title}}</a>
                 </h4>
-                <div class="card-description">
+                {% endif %}
+                {% if image.image_description %}
+                  <div class="card-description">
                     {{image.image_description}}
                 </div>
+                {% endif %}
+                
             </div>
             <div class="card-footer">
                 <div class="price">
-                    <h4>$899/night</h4>
+                    <h4> </h4>
                 </div>
                 <div class="stats">
                     <p class="card-category">
