@@ -18,6 +18,6 @@ path('tables/regular/',views.TablesViews().regular,name='tables_regular'),
 path('blog/<int:pk>/',app_views.PageViews().blog,name='blog'),
 path('ourwork/<int:pk>/',app_views.PageViews().ourwork,name='ourwork'),
 path('feature/<int:pk>/',app_views.PageViews().feature,name='feature'),
-path('notification/<int:pk>/',app_views.PageViews().feature,name='notification'),
-path('notifications/',app_views.PageViews().feature,name='notifications'),
+path('notifications/',views.ProfileViews().notifications,name='notifications'),
+path('notification/<int:pk>/',views.ProfileViews().notification,name='notification'),
 ]

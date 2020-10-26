@@ -99,7 +99,20 @@ class TablesViews(View):
         notifications=NotificationRepo(user=request.user).list_all()
         context['notifications']=notifications
         return render(request,TEMPLATE_ROOT+'tables/regular.html',context)
-    
+
+class ProfileViews(View):
+    def notification(self,request,pk,*args, **kwargs):
+        notification=NotificationRepo(user=request.user).get(notification_id=pk)
+        context=getContext(request)
+        context['notification']=notification
+        return render(request,TEMPLATE_ROOT+'notifications.html',context)
+    def notifications(self,request,*args, **kwargs):
+        context=getContext(request)
+        notifications_seen=NotificationRepo(user=request.user).list_seen()
+        notifications_unseen=NotificationRepo(user=request.user).list_unseen()
+        context['notifications_seen']=notifications_seen
+        context['notifications_unseen']=notifications_unseen
+        return render(request,TEMPLATE_ROOT+'notifications.html',context)
 class ComponentsViews(View):
     def buttons(self,request,*args,**kwargs):
         context=getContext(request)
