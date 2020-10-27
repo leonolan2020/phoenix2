@@ -73,6 +73,9 @@ def getContext(request):
 
 
 class BasicViews(View):
+    def download(self,request,document_id):
+        download=DocumentRepo(user=request.user).get(document_id=document_id).download()
+        return download
     def home(self,request,*args,**kwargs):
         context=getContext(request)
         return render(request,TEMPLATE_ROOT+'dashboard.html',context)

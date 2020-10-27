@@ -12,7 +12,7 @@ urlpatterns = [
     path('add_project/',views.ApiViews().add_project,name='add_project'),
     path('add_contractor/',views.ApiViews().add_contractor,name='add_contractor'),
     path('tag/<int:pk>/',views.PageViews().project,name='tag'),
-
+    
     
     
 ]

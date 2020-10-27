@@ -127,42 +127,41 @@
                 </div>
                 <div class="card-body">
                     <h4 class="mt-3 farsi text-right">تگ ها</h4>
-                    <div class="mr-4">
 
-                        <template v-for="tag in tags" v-html="tag.get_link">
 
-                            {% verbatim %}
-                            <a class="btn btn-rose btn-rounded" :href="tag.get_absolute_url">{{tag.title}}</a>
-
-                            {% endverbatim %}
-                        </template>
-                    </div>
-
-                    <div class="bootstrap-tagsinput rose-badge">
+                    <div class="mr-4 bootstrap-tagsinput rose-badge">
                         <template v-for="tag in tags" v-html="tag.get_link">
 
                             {% verbatim %}
                             <span class="tag badge mx-2">
-                                <a :href="tag.get_absolute_url" class="text-light"> 
+                                <a :href="tag.get_absolute_url" class="text-light">
                                     {{tag.title}}
                                 </a>
-                                
-                               <span data-role="remove"></span></span>
-                      
 
-                           
+                                <span @click="remove_tag(tag.id)" data-role="remove"></span></span>
+
+
+
 
                             {% endverbatim %}
                         </template>
 
 
-                        
-                           <span class="bmd-form-group"><input type="text" class="form-control" placeholder=""></span></div>
+                        <form class="d-inline mx-2" v-on:submit.prevent="add_tag">
+                            <span class="bmd-form-group"><input v-model="tag_title" type="text" class="form-control"
+                                    placeholder="تگ جدید"></span>
+                        </form>
+                    </div>
 
                     <h4 class="mt-3 farsi text-right">دانلود ها</h4>
                     <templates v-for="document in documents">
-                        <div class="mr-4" v-html="document.get_link">
-
+                        <div class="mr-4">
+                            <a :href="document.get_download_url" class="btn btn-success btn-link ">
+                                <i class="material-icons text-success">get_app</i>
+                                {% verbatim %}
+                                {{document.title}}
+                                {% endverbatim %}
+                            </a>
                         </div>
                     </templates>
                     <h4 class="mt-3 farsi text-right">لینک ها</h4>
@@ -377,6 +376,7 @@
 
 
     </div>
+    
 </div>
 {% endif %}
 
@@ -410,17 +410,63 @@
             tags: JSON.parse(`{{tags_s|escapejs}}`),
             links: JSON.parse(`{{links_s|escapejs}}`),
             documents: JSON.parse(`{{documents_s|escapejs}}`),
-            title: '',
+            tag_title: '',
+            projects:[],
+            project_title:''
 
         },
         methods: {
+            remove_tag: function (tag_id) {
+                let url = "{% url 'dashboard:remove_tag' %}"
+
+                var posting = $.post(url,
+                    {
+                        tag_id: tag_id,
+                        page_id: JSON.parse(`{{page.id}}`),
+                        csrfmiddlewaretoken: csrfmiddlewaretoken
+                    }
+                );
+
+                // Put the results in a div
+                posting.done(function (data) {
+                    console.log(data)
+                    if (data.result === 'SUCCEED')
+                        app.tags = data.tags
+                })
+
+
+            },
+            add_tag: function (tag_id) {
+                
+                let url = "{% url 'dashboard:add_tag' %}"
+
+                var posting = $.post(url,
+                    {
+                        title: app.tag_title,
+                        page_id: JSON.parse(`{{page.id}}`),
+                        csrfmiddlewaretoken: csrfmiddlewaretoken
+                    }
+                );
+
+                // Put the results in a div
+                posting.done(function (data) {
+                    console.log(data)
+
+                    if (data.result === 'SUCCEED') {
+                        app.tags = data.tags
+                        app.tag_title = ''
+                    }
+                })
+
+
+            },
             add_project: function () {
                 let url = "{% url 'projectmanager:add_project' %}"
 
                 var posting = $.post(url,
                     {
                         parent_id: JSON.parse("{{page.id}}"),
-                        title: app.title,
+                        title: app.project_title,
                         csrfmiddlewaretoken: csrfmiddlewaretoken
                     }
                 );
@@ -429,10 +475,11 @@
                 posting.done(function (data) {
                     // word_app.word = (data.word);
                     // word_app.definitions = (data.definitions);
-                    app.title = ""
+                    app.project_title = ""
                     app.projects.push(data)
                 })
             },
+
         },
     })
 </script>

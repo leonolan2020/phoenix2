@@ -198,6 +198,11 @@ class TagRepo:
             return self.objects.get(pk=tag_id)
         except:
             return None
+    def get_by_title(self,title):
+        try:
+            return self.objects.get(title=title)
+        except:
+            return None
 
     def tag(self,tag_id):
         return self.get(tag_id)

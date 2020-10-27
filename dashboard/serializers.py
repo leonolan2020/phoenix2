@@ -17,13 +17,13 @@ class LinkSerializer(serializers.ModelSerializer):
 class TagSerializer(serializers.ModelSerializer):
     class Meta:
         model=Tag
-        fields=['id','title','get_absolute_url','get_manager_tag_url','get_link']
+        fields=['id','title','get_absolute_url','get_link']
 
 
 class DocumentSerializer(serializers.ModelSerializer):
     class Meta:
         model=Document
-        fields=['id','title','get_absolute_url','get_manager_tag_url','get_link']
+        fields=['id','title','get_download_url']
 
 
 class CommentSerializer(serializers.ModelSerializer):

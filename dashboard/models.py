@@ -248,7 +248,7 @@ class Page(models.Model):
 
     links=models.ManyToManyField("Link",related_name="pages", verbose_name=_("لینک ها"),blank=True)
     tags=models.ManyToManyField("Tag",related_name="pages", verbose_name=_("برچسب ها"),blank=True)
-    documents=models.ManyToManyField("Document",related_name="pages", verbose_name=_("پاسخ ها"),blank=True)
+    documents=models.ManyToManyField("Document",related_name="pages", verbose_name=_("دانلود ها"),blank=True)
 
 
     images=models.ManyToManyField("GalleryPhoto",related_name="pages", verbose_name=_("تصویر ها"),blank=True)
@@ -437,7 +437,7 @@ class Document(Icon):
         verbose_name_plural = _("اسناد")
     def get_download_url(self):
         if self.file:
-            return reverse('app:download',kwargs={'document_id':self.pk})
+            return reverse('dashboard:download',kwargs={'document_id':self.pk})
         else:
             return ''
     def download(self):        
@@ -832,7 +832,7 @@ class Tag(models.Model):
         return f"""
 
             <a class="btn btn-link btn-info"  href="{self.get_absolute_url()}">
-            {self.icon.get_icon_tag()}
+            {self.icon.get_icon_tag() if self.icon else ''}
             {self.title}</a>
         """
     def image(self):

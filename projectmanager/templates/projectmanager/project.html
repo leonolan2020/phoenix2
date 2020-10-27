@@ -29,7 +29,7 @@
                     <label for="exampleInput1" class="bmd-label-floating">نام پروژه جدید</label>
                     {% csrf_token %}
                     <input type="hidden" name="parent_id" value="{{page.id}}">
-                    <input v-model="title" type="text" class="form-control" id="exampleInput1" name="title" required=""
+                    <input v-model="project_title" type="text" class="form-control" id="exampleInput1" name="title" required=""
                       aria-required="true">
   
   

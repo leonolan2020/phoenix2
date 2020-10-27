@@ -1,5 +1,6 @@
 from django.urls import path
 from . import views
+from . import apis
 from .apps import APP_NAME
 from app import views as app_views
 app_name=APP_NAME
@@ -20,4 +21,7 @@ path('ourwork/<int:pk>/',app_views.PageViews().ourwork,name='ourwork'),
 path('feature/<int:pk>/',app_views.PageViews().feature,name='feature'),
 path('notifications/',views.ProfileViews().notifications,name='notifications'),
 path('notification/<int:pk>/',views.ProfileViews().notification,name='notification'),
+path('remove_tag/',apis.PageViews().remove_tag,name='remove_tag'),
+path('add_tag/',apis.PageViews().add_tag,name='add_tag'),
+path('download/<int:document_id>/',views.BasicViews().download,name='download'),
 ]
