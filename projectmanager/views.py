@@ -7,6 +7,7 @@ from .repo import *
 from .serializers import *
 from .forms import *
 import json
+from dashboard.serializers import TagSerializer,DocumentSerializer,LinkSerializer
 from .utils import AdminUtility
 TEMPLATE_ROOT='projectmanager/'
 def getContext(request):
@@ -59,17 +60,20 @@ class ApiViews(View):
                     return JsonResponse(contractor_s)
 
 class PageViews(View):
-    def getManagerPageContext(self,request,*args, **kwargs):
+    def getManagerPageContext(self,request,page,*args, **kwargs):
         context=getContext(request)
         context['add_tag_form']=AddTagForm()
         context['add_link_form']=AddLinkForm()
         context['add_document_form']=AddDocumentForm()
+        context['tags_s']=json.dumps(TagSerializer(page.tags.all(),many=True).data)
+        context['links_s']=json.dumps(LinkSerializer(page.links.all(),many=True).data)
+        context['documents_s']=json.dumps(DocumentSerializer(page.documents.all(),many=True).data)
         return context
     def project(self,request,pk,*args, **kwargs):
         project_id=pk
         user=request.user
-        context=self.getManagerPageContext(request)
         project=ProjectRepo(user=user).project(project_id=project_id)
+        context=self.getManagerPageContext(request=request,page=project)
         context['project']=project
         context['page']=project
         if user.has_perm(APP_NAME+'.add_project'):
@@ -86,16 +90,16 @@ class PageViews(View):
     def organiazationunit(self,request,pk,*args, **kwargs):
         organiazationunit_id=pk
         user=request.user
-        context=self.getManagerPageContext(request)
         organiazationunit=OrganiazationUnitRepo(user=user).organiazationunit(organiazationunit_id=organiazationunit_id)
+        context=self.getManagerPageContext(request=request,page=organiazationunit)
         context['organiazationunit']=organiazationunit
         context['page']=organiazationunit
         return render(request,TEMPLATE_ROOT+'event.html',context)
     def contractor(self,request,pk,*args, **kwargs):
         contractor_id=pk
         user=request.user
-        context=self.getManagerPageContext(request)
         contractor=ContractorRepo(user=user).contractor(contractor_id=contractor_id)
+        context=self.getManagerPageContext(request=request,page=contractor)
         context['contractor']=contractor
         context['page']=contractor
         return render(request,TEMPLATE_ROOT+'contractor.html',context)

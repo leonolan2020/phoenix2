@@ -323,6 +323,13 @@ class Link(Icon):
     priority=models.IntegerField(_("ترتیب"),default=100)
     url=models.CharField(_("لینک"), max_length=2000,default="#")    
     
+    def get_link(self):
+        return f"""
+
+            <a href="{self.get_absolute_url()}">
+            {self.get_icon_tag()}
+            {self.title}</a>
+        """
     def get_link_icon_tag(self):
         if self.url:
             icon=self.get_icon_tag()
@@ -413,9 +420,18 @@ class OurTeam(models.Model):
 
 
 class Document(Icon):
+    title=models.CharField(_('عنوان'),max_length=200)
+    priority=models.IntegerField(_('ترتیب'),default=100)
     profile=models.ForeignKey("authentication.Profile", verbose_name=_("پروفایل"), on_delete=models.CASCADE)
     file=models.FileField(_("فایل ضمیمه"),null=True,blank=True, upload_to=APP_NAME+'/Document', max_length=100)
     
+    def get_link(self):
+        return f"""
+
+            <a href="{self.get_absolute_url()}">
+            {self.get_icon_tag()}
+            {self.title}</a>
+        """
     class Meta:
         verbose_name = _("Document")
         verbose_name_plural = _("اسناد")
@@ -812,21 +828,25 @@ class Tag(models.Model):
     image_header=models.ImageField(_("تصویر سربرگ"),null=True,blank=True, upload_to=IMAGE_FOLDER+'Tag/', height_field=None, width_field=None, max_length=None)
     title=models.CharField(_("عنوان"), max_length=50)
     icon=models.ForeignKey("Icon", verbose_name=_("آیکون"),null=True,blank=True, on_delete=models.SET_NULL)
-    
+    def get_link(self):
+        return f"""
+
+            <a class="btn btn-link btn-info"  href="{self.get_absolute_url()}">
+            {self.icon.get_icon_tag()}
+            {self.title}</a>
+        """
     def image(self):
         if self.image_header is None:
             return None
         return MEDIA_URL+str(self.image_header)
 
-    def to_link_tag(self):
-        return """
-        <a href="{get_absolute_url}" class="leo-farsi tag-cloud-link">
-             
-                {get_icon_tag}
+    def get_inner_link(self):
+        return f"""
+
+            {self.icon.get_icon_tag()}
+            {self.title}
+        """
             
-              {title}</a>
-          """.format(get_absolute_url=tag.get_absolute_url(),get_icon_tag=tag.icon.get_icon_tag(),title=tag.title)    
-          
     class Meta:
         verbose_name = _("Tag")
         verbose_name_plural = _("برچسب ها")
@@ -835,9 +855,9 @@ class Tag(models.Model):
         return self.title
 
     def get_absolute_url(self):
-        return reverse('app:tag',kwargs={'tag_id':self.pk})
+        return reverse('app:tag',kwargs={'pk':self.pk})
     def get_manager_tag_url(self):
-        return reverse('projectmanager:tag',kwargs={'tag_id':self.pk})
+        return reverse('projectmanager:tag',kwargs={'pk':self.pk})
     def get_edit_url(self):
         return f'{ADMIN_URL}app/tag/{self.pk}/change/'
 

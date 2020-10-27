@@ -10,5 +10,6 @@ urlpatterns=[
     path('pages/profile/<int:profile_id>/',views.ProfileViews().profile,name='selected_profile'),
     path('features/',views.BasicViews().features,name='features'),
     path('ourteam/<int:pk>/',views.BasicViews().features,name='ourteam'),
+    path('tag/<int:pk>/',views.BasicViews().features,name='tag'),
 ]
 

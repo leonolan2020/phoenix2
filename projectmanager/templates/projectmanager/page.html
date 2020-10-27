@@ -31,157 +31,277 @@
     {% endif %}
 
 </h3>
+<div id="app">
 
+    <div class="row rtl">
+        <div class="col-md-6">
+            <div class="card card-stats">
+                <div class="card-header card-header-info card-header-icon">
+                    <div class="card-icon">
+                        <i class="material-icons">description</i>
+                    </div>
+                    <p class="card-category">{{page.title}}</p>
+                    <h3 class="card-title">توضیحات</h3>
+                </div>
+                <div class="card-body">
+                    <div id="accordion" role="tablist">
+                        <div class="card-collapse">
+                            <div class="card-header" role="tab" id="headingOne">
+                                <h5 class="mb-0 text-right">
+                                    <a data-toggle="collapse" href="#collapseOne" aria-expanded="true"
+                                        aria-controls="collapseOne" class="collapsed">
+                                        شرح کوتاه
+                                        <i class="material-icons">keyboard_arrow_down</i>
+                                    </a>
+                                </h5>
+                            </div>
+                            <div id="collapseOne" class="collapse show" role="tabpanel" aria-labelledby="headingOne"
+                                data-parent="#accordion" style="">
+                                <div class="card-body">
+                                    {{page.short_description|safe}}
 
-<div class="row rtl">
-    <div class="col-md-6">
-        <div class="card">
-            <div class="card-header">
-                <h4 class="card-title farsi text-right">توضیحات</h4>
-            </div>
-            <div class="card-body">
-                <div id="accordion" role="tablist">
-                    <div class="card-collapse">
-                        <div class="card-header" role="tab" id="headingOne">
-                            <h5 class="mb-0 text-right">
-                                <a data-toggle="collapse" href="#collapseOne" aria-expanded="true"
-                                    aria-controls="collapseOne" class="collapsed">
-                                    شرح کوتاه
-                                    <i class="material-icons">keyboard_arrow_down</i>
-                                </a>
-                            </h5>
-                        </div>
-                        <div id="collapseOne" class="collapse show" role="tabpanel" aria-labelledby="headingOne"
-                            data-parent="#accordion" style="">
-                            <div class="card-body">
-                                {{page.short_description|safe}}
-
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="card-collapse">
-                        <div class="card-header" role="tab" id="headingTwo">
-                            <h5 class="mb-0 text-right">
-                                <a class="collapsed" data-toggle="collapse" href="#collapseTwo" aria-expanded="false"
-                                    aria-controls="collapseTwo">
-                                    شرح کامل
-                                    <i class="material-icons">keyboard_arrow_down</i>
-                                </a>
-                            </h5>
-                        </div>
-                        <div id="collapseTwo" class="collapse" role="tabpanel" aria-labelledby="headingTwo"
-                            data-parent="#accordion">
-                            <div class="card-body">
-                                {{page.description|safe}}
+                        <div class="card-collapse">
+                            <div class="card-header" role="tab" id="headingTwo">
+                                <h5 class="mb-0 text-right">
+                                    <a class="collapsed" data-toggle="collapse" href="#collapseTwo"
+                                        aria-expanded="false" aria-controls="collapseTwo">
+                                        شرح کامل
+                                        <i class="material-icons">keyboard_arrow_down</i>
+                                    </a>
+                                </h5>
+                            </div>
+                            <div id="collapseTwo" class="collapse" role="tabpanel" aria-labelledby="headingTwo"
+                                data-parent="#accordion">
+                                <div class="card-body">
+                                    {{page.description|safe}}
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="card-collapse">
-                        <div class="card-header" role="tab" id="headingThree">
-                            <h5 class="mb-0 text-right">
-                                <a class="collapsed" data-toggle="collapse" href="#collapseThree" aria-expanded="false"
-                                    aria-controls="collapseThree">
+                        <div class="card-collapse">
+                            <div class="card-header" role="tab" id="headingThree">
+                                <h5 class="mb-0 text-right">
+                                    <a class="collapsed" data-toggle="collapse" href="#collapseThree"
+                                        aria-expanded="false" aria-controls="collapseThree">
 
-                                    فایل ها و لینک های پیوست
-                                    <i class="material-icons">keyboard_arrow_down</i>
-                                </a>
-                            </h5>
-                        </div>
-                        <div id="collapseThree" class="collapse" role="tabpanel" aria-labelledby="headingThree"
-                            data-parent="#accordion">
-                            <div class="card-body">
-                                Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad
-                                squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck
-                                quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it
-                                squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica,
-                                craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur
-                                butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth
-                                nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                                        فایل ها و لینک های پیوست
+                                        <i class="material-icons">keyboard_arrow_down</i>
+                                    </a>
+                                </h5>
+                            </div>
+                            <div id="collapseThree" class="collapse" role="tabpanel" aria-labelledby="headingThree"
+                                data-parent="#accordion">
+                                <div class="card-body">
+                                    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry
+                                    richardson ad
+                                    squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck
+                                    quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird
+                                    on it
+                                    squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh
+                                    helvetica,
+                                    craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan
+                                    excepteur
+                                    butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic
+                                    synth
+                                    nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+
+
+
         </div>
-
-        <div class="card ">
-            <div class="card-header ">
-                <h4 class="card-title text-right">توضیحات
-                    <small class="description px-2 text-secondary">درباره {{page.title}}</small>
-                </h4>
-            </div>
-            <div class="card-body ">
-                <ul class="nav nav-pills nav-pills-warning" role="tablist">
-                    <li class="nav-item">
-                        <a class="nav-link active show" data-toggle="tab" href="#link1" role="tablist">
-                            شرح کوتاه
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-toggle="tab" href="#link2" role="tablist">
-                            شرح کامل
-                        </a>
-                    </li>
-
-                </ul>
-                <div class="tab-content tab-space">
-                    <div class="tab-pane farsi active show text-right px-3 pt-3" id="link1">
-                        {{page.short_description|safe}}
+        <div class="col-md-6">
+            <div class="card card-stats">
+                <div class="card-header card-header-success card-header-icon">
+                    <div class="card-icon">
+                        <i class="material-icons">store</i>
                     </div>
-                    <div class="tab-pane farsi text-right px-3 pt-3" id="link2">
-                        {{page.description|safe}}
+                    <p class="card-category">{{page.title}}</p>
+                    <h3 class="card-title">تگ و لینک و دانلود</h3>
+                </div>
+                <div class="card-body">
+                    <h4 class="mt-3 farsi text-right">تگ ها</h4>
+                    <div class="mr-4">
+
+                        <template v-for="tag in tags" v-html="tag.get_link">
+
+                            {% verbatim %}
+                            <a class="btn btn-rose btn-rounded" :href="tag.get_absolute_url">{{tag.title}}</a>
+
+                            {% endverbatim %}
+                        </template>
                     </div>
 
+                    <div class="bootstrap-tagsinput rose-badge">
+                        <template v-for="tag in tags" v-html="tag.get_link">
+
+                            {% verbatim %}
+                            <span class="tag badge mx-2">
+                                <a :href="tag.get_absolute_url" class="text-light"> 
+                                    {{tag.title}}
+                                </a>
+                                
+                               <span data-role="remove"></span></span>
+                      
+
+                           
+
+                            {% endverbatim %}
+                        </template>
+
+
+                        
+                           <span class="bmd-form-group"><input type="text" class="form-control" placeholder=""></span></div>
+
+                    <h4 class="mt-3 farsi text-right">دانلود ها</h4>
+                    <templates v-for="document in documents">
+                        <div class="mr-4" v-html="document.get_link">
+
+                        </div>
+                    </templates>
+                    <h4 class="mt-3 farsi text-right">لینک ها</h4>
+                    <templates v-for="link in links">
+                        <div class="mr-4" v-html="link.get_link">
+
+                        </div>
+                    </templates>
+                </div>
+                <div class="card-footer">
+                    <div class="stats">
+                        <i class="material-icons">date_range</i> Last 24 Hours
+                    </div>
                 </div>
             </div>
         </div>
 
     </div>
-    <div class="col-md-6">
-        <div class="card ">
-            <div class="card-header ">
-                <h4 class="card-title">Navigation Pills Icons -
-                    <small class="description">Vertical Tabs</small>
-                </h4>
-            </div>
-            <div class="card-body ">
-                <div class="row">
-                    <div class="col-lg-4 col-md-6">
-                        <!--
-                            color-classes: "nav-pills-primary", "nav-pills-info", "nav-pills-success", "nav-pills-warning","nav-pills-danger"
-                        -->
-                        <ul class="nav nav-pills nav-pills-rose nav-pills-icons flex-column" role="tablist">
-                            <li class="nav-item">
-                                <a class="nav-link active" data-toggle="tab" href="#link110" role="tablist">
-                                    <i class="material-icons">dashboard</i> Home
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" data-toggle="tab" href="#link111" role="tablist">
-                                    <i class="material-icons">schedule</i> Settings
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="col-md-8">
-                        <div class="tab-content">
-                            <div class="tab-pane active" id="link110">
-                                Collaboratively administrate empowered markets via plug-and-play networks. Dynamically
-                                procrastinate B2C users after installed base benefits.
-                                <br>
-                                <br> Dramatically visualize customer directed convergence without revolutionary ROI.
-                                Collaboratively administrate empowered markets via plug-and-play networks. Dynamically
-                                procrastinate B2C users after installed base benefits.
-                                <br>
-                                <br> Dramatically visualize customer directed convergence without revolutionary ROI.
-                                Collaboratively administrate empowered markets via plug-and-play networks. Dynamically
-                                procrastinate B2C users after installed base benefits.
+    <div class="row rtl">
+
+        <div class="col-md-6">
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-8 ml-auto mr-auto">
+            <div class="page-categories">
+                {% if page.parent %}
+                <div class="text-center" style="font-size: 0.8em;">
+                    {{page.parent.get_breadcrumb_url|safe}}
+                </div>
+
+                {% endif %}
+                <h3 class="title text-center">
+                    <span class="mx-2 text-{{page.color}}">{{page.icon.get_icon_tag|safe}}</span>
+                    {{page.title}}
+                    {% if perms.projectmanager.change_managerpage %}
+                    <a class="btn btn-link btn-warning" title="ویرایش" href="{{page.get_edit_url}}">
+                        <i class="material-icons">settings</i>
+                        ویرایش
+                    </a>
+                    {% endif %}
+
+                </h3>
+
+                <br>
+                <ul class="nav nav-pills nav-pills-warning nav-pills-icons justify-content-center" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="tab" href="#link7" role="tablist">
+                            <i class="material-icons">info</i> Description
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" data-toggle="tab" href="#link8" role="tablist">
+                            <i class="material-icons">location_on</i> Location
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="tab" href="#link9" role="tablist">
+                            <i class="material-icons">gavel</i> Legal Info
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="tab" href="#link10" role="tablist">
+                            <i class="material-icons">help_outline</i> Help Center
+                        </a>
+                    </li>
+                </ul>
+                <div class="tab-content tab-space tab-subcategories">
+                    <div class="tab-pane" id="link7">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4 class="card-title">Description about product</h4>
+                                <p class="card-category">
+                                    More information here
+                                </p>
                             </div>
-                            <div class="tab-pane" id="link111">
+                            <div class="card-body">
+                                Collaboratively administrate empowered markets via plug-and-play networks. Dynamically
+                                procrastinate B2C users after installed base benefits.
+                                <br>
+                                <br> Dramatically visualize customer directed convergence without revolutionary ROI.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane active" id="link8">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4 class="card-title">Location of the product</h4>
+                                <p class="card-category">
+                                    More information here
+                                </p>
+                            </div>
+                            <div class="card-body">
                                 Efficiently unleash cross-media information without cross-media value. Quickly maximize
                                 timely deliverables for real-time schemas.
                                 <br>
-                                <br>Dramatically maintain clicks-and-mortar solutions without functional solutions.
+                                <br> Dramatically maintain clicks-and-mortar solutions without functional solutions.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="link9">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4 class="card-title">Legal info of the product</h4>
+                                <p class="card-category">
+                                    More information here
+                                </p>
+                            </div>
+                            <div class="card-body">
+                                Completely synergize resource taxing relationships via premier niche markets.
+                                Professionally
+                                cultivate one-to-one customer service with robust ideas.
+                                <br>
+                                <br>Dynamically innovate resource-leveling customer service for state of the art
+                                customer
+                                service.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="link10">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4 class="card-title">Help center</h4>
+                                <p class="card-category">
+                                    More information here
+                                </p>
+                            </div>
+                            <div class="card-body">
+                                From the seamless transition of glass and metal to the streamlined profile, every detail
+                                was
+                                carefully considered to enhance your experience. So while its display is larger, the
+                                phone
+                                feels just right.
+                                <br>
+                                <br> Another Text. The first thing you notice when you hold the phone is how great it
+                                feels
+                                in your hand. The cover glass curves down around the sides to meet the anodized aluminum
+                                enclosure in a remarkable, simplified design.
                             </div>
                         </div>
                     </div>
@@ -189,200 +309,75 @@
             </div>
         </div>
     </div>
-
-</div>
-<div class="row rtl">
-
-    <div class="col-md-6">
-
-    </div>
-</div>
-<div class="row">
-    <div class="col-md-8 ml-auto mr-auto">
-        <div class="page-categories">
-            {% if page.parent %}
-            <div class="text-center" style="font-size: 0.8em;">
-                {{page.parent.get_breadcrumb_url|safe}}
-            </div>
-
-            {% endif %}
-            <h3 class="title text-center">
-                <span class="mx-2 text-{{page.color}}">{{page.icon.get_icon_tag|safe}}</span>
-                {{page.title}}
-                {% if perms.projectmanager.change_managerpage %}
-                <a class="btn btn-link btn-warning" title="ویرایش" href="{{page.get_edit_url}}">
-                    <i class="material-icons">settings</i>
-                    ویرایش
-                </a>
-                {% endif %}
-
-            </h3>
-
-            <br>
-            <ul class="nav nav-pills nav-pills-warning nav-pills-icons justify-content-center" role="tablist">
-                <li class="nav-item">
-                    <a class="nav-link" data-toggle="tab" href="#link7" role="tablist">
-                        <i class="material-icons">info</i> Description
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active" data-toggle="tab" href="#link8" role="tablist">
-                        <i class="material-icons">location_on</i> Location
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" data-toggle="tab" href="#link9" role="tablist">
-                        <i class="material-icons">gavel</i> Legal Info
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" data-toggle="tab" href="#link10" role="tablist">
-                        <i class="material-icons">help_outline</i> Help Center
-                    </a>
-                </li>
-            </ul>
-            <div class="tab-content tab-space tab-subcategories">
-                <div class="tab-pane" id="link7">
-                    <div class="card">
-                        <div class="card-header">
-                            <h4 class="card-title">Description about product</h4>
-                            <p class="card-category">
-                                More information here
-                            </p>
-                        </div>
-                        <div class="card-body">
-                            Collaboratively administrate empowered markets via plug-and-play networks. Dynamically
-                            procrastinate B2C users after installed base benefits.
-                            <br>
-                            <br> Dramatically visualize customer directed convergence without revolutionary ROI.
-                        </div>
-                    </div>
-                </div>
-                <div class="tab-pane active" id="link8">
-                    <div class="card">
-                        <div class="card-header">
-                            <h4 class="card-title">Location of the product</h4>
-                            <p class="card-category">
-                                More information here
-                            </p>
-                        </div>
-                        <div class="card-body">
-                            Efficiently unleash cross-media information without cross-media value. Quickly maximize
-                            timely deliverables for real-time schemas.
-                            <br>
-                            <br> Dramatically maintain clicks-and-mortar solutions without functional solutions.
-                        </div>
-                    </div>
-                </div>
-                <div class="tab-pane" id="link9">
-                    <div class="card">
-                        <div class="card-header">
-                            <h4 class="card-title">Legal info of the product</h4>
-                            <p class="card-category">
-                                More information here
-                            </p>
-                        </div>
-                        <div class="card-body">
-                            Completely synergize resource taxing relationships via premier niche markets. Professionally
-                            cultivate one-to-one customer service with robust ideas.
-                            <br>
-                            <br>Dynamically innovate resource-leveling customer service for state of the art customer
-                            service.
-                        </div>
-                    </div>
-                </div>
-                <div class="tab-pane" id="link10">
-                    <div class="card">
-                        <div class="card-header">
-                            <h4 class="card-title">Help center</h4>
-                            <p class="card-category">
-                                More information here
-                            </p>
-                        </div>
-                        <div class="card-body">
-                            From the seamless transition of glass and metal to the streamlined profile, every detail was
-                            carefully considered to enhance your experience. So while its display is larger, the phone
-                            feels just right.
-                            <br>
-                            <br> Another Text. The first thing you notice when you hold the phone is how great it feels
-                            in your hand. The cover glass curves down around the sides to meet the anodized aluminum
-                            enclosure in a remarkable, simplified design.
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-{% if page.images.all %}
+    {% if page.images.all %}
 
 
-<h3 class="farsi text-center">تصویر ها</h3>
-<br>
-<div class="row">
-    {% for image in page.images.all %}
-    <div class="col-md-4">
-        <div class="card card-product" data-count="0">
-            <div class="card-header card-header-image" data-header-animation="true">
-                <a target="_blank" href="{{image.get_absolute_url}}">
-                    <img class="img" src="{{image.thumbnail}}">
-
-                </a>
-            </div>
-            <div class="card-body">
-                <div class="card-actions text-center">
-
-                    <button type="button" class="btn btn-danger btn-link fix-broken-card">
-                        <i class="material-icons">build</i> Fix Header!
-                    </button>
+    <h3 class="farsi text-center">تصویر ها</h3>
+    <br>
+    <div class="row">
+        {% for image in page.images.all %}
+        <div class="col-md-4">
+            <div class="card card-product" data-count="0">
+                <div class="card-header card-header-image" data-header-animation="true">
                     <a target="_blank" href="{{image.get_absolute_url}}">
-                        <button type="button" class="btn btn-default btn-link" rel="tooltip" data-placement="bottom"
-                            title="" data-original-title="نمایش">
-                            <i class="material-icons">art_track</i>
-                        </button>
-                    </a>
-                    <a target="_blank" href="{{image.get_edit_url}}">
-                        <button type="button" class="btn btn-success btn-link" rel="tooltip" data-placement="bottom"
-                            title="" data-original-title="ویرایش">
-                            <i class="material-icons">edit</i>
-                        </button>
-                    </a>
+                        <img class="img" src="{{image.thumbnail}}">
 
-                    <button type="button" class="btn btn-danger btn-link" rel="tooltip" data-placement="bottom" title=""
-                        data-original-title="حذف">
-                        <i class="material-icons">close</i>
-                    </button>
+                    </a>
                 </div>
-                {% if image.image_title %}
-                  
-                <h4 class="card-title  text-right ">
-                    <a href="{{image.get_absolute_url}}">{{image.image_title}}</a>
-                </h4>
-                {% endif %}
-                {% if image.image_description %}
-                  <div class="card-description">
-                    {{image.image_description}}
+                <div class="card-body">
+                    <div class="card-actions text-center">
+
+                        <button type="button" class="btn btn-danger btn-link fix-broken-card">
+                            <i class="material-icons">build</i> Fix Header!
+                        </button>
+                        <a target="_blank" href="{{image.get_absolute_url}}">
+                            <button type="button" class="btn btn-default btn-link" rel="tooltip" data-placement="bottom"
+                                title="" data-original-title="نمایش">
+                                <i class="material-icons">art_track</i>
+                            </button>
+                        </a>
+                        <a target="_blank" href="{{image.get_edit_url}}">
+                            <button type="button" class="btn btn-success btn-link" rel="tooltip" data-placement="bottom"
+                                title="" data-original-title="ویرایش">
+                                <i class="material-icons">edit</i>
+                            </button>
+                        </a>
+
+                        <button type="button" class="btn btn-danger btn-link" rel="tooltip" data-placement="bottom"
+                            title="" data-original-title="حذف">
+                            <i class="material-icons">close</i>
+                        </button>
+                    </div>
+                    {% if image.image_title %}
+
+                    <h4 class="card-title  text-right ">
+                        <a href="{{image.get_absolute_url}}">{{image.image_title}}</a>
+                    </h4>
+                    {% endif %}
+                    {% if image.image_description %}
+                    <div class="card-description">
+                        {{image.image_description}}
+                    </div>
+                    {% endif %}
+
                 </div>
-                {% endif %}
-                
-            </div>
-            <div class="card-footer">
-                <div class="price">
-                    <h4> </h4>
-                </div>
-                <div class="stats">
-                    <p class="card-category">
-                        <i class="material-icons">place</i> {{image.location}}
-                    </p>
+                <div class="card-footer">
+                    <div class="price">
+                        <h4> </h4>
+                    </div>
+                    <div class="stats">
+                        <p class="card-category">
+                            <i class="material-icons">place</i> {{image.location}}
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>
+        {% endfor %}
+
+
     </div>
-    {% endfor %}
-
-
 </div>
-
 {% endif %}
 
 
@@ -412,7 +407,9 @@
     var app = new Vue({
         el: "#app",
         data: {
-            projects: [],
+            tags: JSON.parse(`{{tags_s|escapejs}}`),
+            links: JSON.parse(`{{links_s|escapejs}}`),
+            documents: JSON.parse(`{{documents_s|escapejs}}`),
             title: '',
 
         },
