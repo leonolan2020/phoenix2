@@ -46,6 +46,7 @@ def getContext(request):
     parameter_repo=ParameterRepo(user=request.user)
     main_pic_repo=MainPicRepo(user=request.user)
     link_repo=LinkRepo(user=request.user)
+    context['search_form']=SearchForm()
     context['app']={
         'nav_items':link_repo.get_nav_items(),
         'about_us_short':parameter_repo.get(ParametersEnum.ABOUT_US_SHORT),
@@ -79,6 +80,19 @@ class BasicViews(View):
     def home(self,request,*args,**kwargs):
         context=getContext(request)
         return render(request,TEMPLATE_ROOT+'dashboard.html',context)
+
+    def search(self,request,*args, **kwargs):
+        if request.method=='POST':
+            search_form=SearchForm(request.POST)
+            if search_form.is_valid():
+                search_for=search_form.cleaned_data['search_for']
+                context=getContext(request)
+                context['search_for']=search_for
+                context['pages']=PageRepo(user=request.user).search(search_for=search_for)
+                return render(request,TEMPLATE_ROOT+'search.html',context)
+
+
+
     def charts(self,request,*args,**kwargs):
         context=getContext(request)
         return render(request,TEMPLATE_ROOT+'charts.html',context)

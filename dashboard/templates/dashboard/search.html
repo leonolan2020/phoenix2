@@ -13,7 +13,16 @@
 
 
 {% block content %}
-  
+  <div class="row">
+      <div class="col-md-6">
+          {% for page in pages %}
+            {{page.get_link|safe}}
+          {% endfor %}
+      </div>
+      <div class="col-md-6"></div>
+      <div class="col-md-6"></div>
+      <div class="col-md-6"></div>
+  </div>
 {% endblock  %}
 
 

@@ -1,0 +1,55 @@
+{% extends "dashboard/layout.html" %}
+{% load static %}
+{% load to_persian_date %}
+
+{% block head %}
+
+{% endblock  %}
+
+
+{% block ofbar %}
+
+{% endblock  %}
+
+
+{% block content %}
+<div class="row">
+    <div class="col-md-6">
+      
+
+
+        <div class="card card-stats">
+            <div class="card-header card-header-info card-header-icon">
+                <div class="card-icon">
+                    <i class="material-icons">description</i>
+                </div>
+                <p class="card-category">جستجو برای</p>
+                <h3 class="card-title">
+                {{search_for}}
+                </h3>
+            </div>
+            <div class="card-body pt-5">
+                {% for page in pages %}
+                {{page.get_link|safe}}
+                {% endfor %}
+        
+            </div>
+        </div>
+
+    </div>
+
+
+</div>
+{% endblock  %}
+
+
+
+{% block modal %}
+
+{% endblock  %}
+
+
+
+{% block script %}
+
+{% endblock  %}

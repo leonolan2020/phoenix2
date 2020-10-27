@@ -14,9 +14,20 @@ def getContext(request):
     user=request.user
     context=DashboardContext(request)
     context['admin_utility']=AdminUtility()
+    context['search_form']=SearchForm()
     return context
 
 class BasicViews(View):
+    def search(self,request,*args, **kwargs):
+        if request.method=='POST':
+            search_form=SearchForm(request.POST)
+            if search_form.is_valid():
+                search_for=search_form.cleaned_data['search_for']
+                context=getContext(request)
+                context['search_for']=search_for
+                context['pages']=ManagerPageRepo(user=request.user).search(search_for=search_for)
+                return render(request,TEMPLATE_ROOT+'search.html',context)
+
     def home(self,request,*args, **kwargs):
         user=request.user
         context=getContext(request)
@@ -35,29 +46,6 @@ class BasicViews(View):
         contractors_s=json.dumps(ContractorSerializer(contractors,many=True).data)
         context['contractors_s']=contractors_s
         return render(request,TEMPLATE_ROOT+'index.html',context)
-
-class ApiViews(View):
-    def add_project(self,request):
-        user=request.user
-        if request.method=='POST':
-            add_project_form=AddProjectForm(request.POST)
-            if add_project_form.is_valid():
-                title=add_project_form.cleaned_data['title']
-                parent_id=add_project_form.cleaned_data['parent_id']
-                project=ProjectRepo(user=user).add(title=title,parent_id=parent_id)
-                if project is not None:
-                    project_s=ProjectSerializer(project).data
-                    return JsonResponse(project_s)
-    def add_contractor(self,request):
-        user=request.user
-        if request.method=='POST':
-            add_project_form=AddProjectForm(request.POST)
-            if add_project_form.is_valid():
-                title=add_project_form.cleaned_data['title']
-                contractor=ContractorRepo(user=user).add(title=title)
-                if contractor is not None:
-                    contractor_s=ContractorSerializer(contractor).data
-                    return JsonResponse(contractor_s)
 
 class PageViews(View):
     def getManagerPageContext(self,request,page,*args, **kwargs):

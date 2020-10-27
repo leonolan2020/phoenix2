@@ -80,13 +80,13 @@
                   <label for="exampleInput1" class="bmd-label-floating">نام پروژه جدید</label>
                   {% csrf_token %}
                   <input type="hidden" name="parent_id" value="0">
-                  <input v-model="title_project" type="text" class="form-control" id="exampleInput1" name="title"
-                    required="" aria-required="true">
-
+                  <form @submit.prevent="add_project">
+                    <input v-model="title_project" type="text" class="form-control" id="exampleInput1" name="title"
+                      required="" aria-required="true">
+                  </form>
 
                 </div>
-                <input type="button" @click="add_project" class="btn btn-next btn-fill btn-rose btn-wd" name="next"
-                  value="افزودن">
+
 
               </div>
               {% endif %}
@@ -124,13 +124,14 @@
                   <label for="exampleInput1" class="bmd-label-floating">نام پیمانکار جدید</label>
                   {% csrf_token %}
                   <input type="hidden" name="parent_id" value="0">
-                  <input v-model="title_contractor" type="text" class="form-control" id="exampleInput1" name="title"
+                 
+                  <form @submit.prevent="add_contractor">
+                     <input v-model="title_contractor" type="text" class="form-control" id="exampleInput1" name="title"
                     required="" aria-required="true">
-
+                  </form>
 
                 </div>
-                <input type="button" @click="add_contractor" class="btn btn-next btn-fill btn-rose btn-wd" name="next"
-                  value="افزودن">
+               
 
               </div>
               {% endif %}

@@ -4,6 +4,21 @@ from .serializers import *
 from .constants import SUCCEED,FAILED
 from .repo import *
 from .forms import *
+import json
+
+
+class BasicViews(APIView):    
+    def my_notifications(self,request,*args, **kwargs):        
+        my_notifications1=[]#NotificationRepo(user=request.user).list_unseen()
+        my_notifications_s=json.dumps(NotificationSerializer(my_notifications1,many=True).data)
+        context={}
+        context['my_notifications_s']=my_notifications_s
+        return JsonResponse(context)
+
+
+
+
+
 class PageViews(APIView):
 
     def remove_tag(self,request,*args, **kwargs):        

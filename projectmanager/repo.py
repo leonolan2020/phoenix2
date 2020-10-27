@@ -1,7 +1,16 @@
-from .models import Project,Event,OrganiazationUnit,Contractor
+from .models import Project,Event,OrganiazationUnit,Contractor,ManagerPage
 from authentication.repo import ProfileRepo
 from dashboard.models import Icon
 from dashboard.enums import ColorEnum
+from django.db.models import Q,F
+class ManagerPageRepo:
+    def __init__(self,user=None):
+        self.objects=ManagerPage.objects
+        self.user=user
+    def list(self):
+        return self.objects.all()
+    def search(self,search_for):
+        return self.objects.filter(Q(title__contains=search_for)|Q(short_description__contains=search_for))
 
 class ContractorRepo:
     def __init__(self,user=None):
@@ -112,7 +121,7 @@ class ProjectRepo:
             parent=None
         else:
             parent=self.project(project_id=parent_id)
-        icon=Icon(icon_material='dashboard',icon_title='آیکون '+title)
+        icon=Icon(color=ColorEnum.PRIMARY,icon_material='dashboard',icon_title='آیکون '+title)
         icon.save()
         project=Project(parent=parent,icon=icon,title=title,short_description='',description='')
         project.save()
