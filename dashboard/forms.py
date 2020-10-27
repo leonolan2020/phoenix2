@@ -5,3 +5,7 @@ class AddNotificationForm(forms.Form):
     salary=forms.IntegerField(required=True)
     city=forms.CharField(max_length=50,required=True)
     country=forms.CharField(max_length=50,required=True )
+
+
+
+    

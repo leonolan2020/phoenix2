@@ -17,9 +17,9 @@ class ContractorRepo:
         if contractor is not None:
             return contractor
              
-    def contactor(self,contactor_id):
+    def contractor(self,contractor_id):
         try:
-            return self.objects.get(pk=contactor_id)
+            return self.objects.get(pk=contractor_id)
         except:
             return None
 

@@ -24,6 +24,14 @@ class AddLinkForm(forms.Form):
     manager_page_id=forms.IntegerField(required=True)
     title=forms.CharField(max_length=50,required=True)
 
+class AddDocumentForm(forms.Form):
+    manager_page_id=forms.IntegerField(required=True)
+    title=forms.CharField(max_length=100,required=True)
+
+class AddTagForm(forms.Form):
+    manager_page_id=forms.IntegerField(required=True)
+    title=forms.CharField(max_length=100,required=True)
+
 class AddProjectForm(forms.Form):
     parent_id=forms.IntegerField(required=True)
     title=forms.CharField(max_length=100,required=True)
@@ -52,10 +60,6 @@ class AddLocationForm(forms.Form):
 class AddWorkUnitForm(forms.Form):
     parent_id=forms.IntegerField(required=True)
     title=forms.CharField(max_length=50,required=True)
-
-class AddDocumentForm(forms.Form):
-    manager_page_id=forms.IntegerField(required=True)
-    title=forms.CharField(max_length=100,required=True)
 
 class AddIssueForm(forms.Form):
     page_id=forms.IntegerField(required=True)

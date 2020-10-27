@@ -57,11 +57,18 @@ class ApiViews(View):
                 if contractor is not None:
                     contractor_s=ContractorSerializer(contractor).data
                     return JsonResponse(contractor_s)
+
 class PageViews(View):
+    def getManagerPageContext(self,request,*args, **kwargs):
+        context=getContext(request)
+        context['add_tag_form']=AddTagForm()
+        context['add_link_form']=AddLinkForm()
+        context['add_document_form']=AddDocumentForm()
+        return context
     def project(self,request,pk,*args, **kwargs):
         project_id=pk
         user=request.user
-        context=getContext(request)
+        context=self.getManagerPageContext(request)
         project=ProjectRepo(user=user).project(project_id=project_id)
         context['project']=project
         context['page']=project
@@ -71,7 +78,7 @@ class PageViews(View):
     def event(self,request,pk,*args, **kwargs):
         event_id=pk
         user=request.user
-        context=getContext(request)
+        context=self.getManagerPageContext(request)
         event=EventRepo(user=user).event(event_id=event_id)
         context['event']=event
         context['page']=event
@@ -79,7 +86,7 @@ class PageViews(View):
     def organiazationunit(self,request,pk,*args, **kwargs):
         organiazationunit_id=pk
         user=request.user
-        context=getContext(request)
+        context=self.getManagerPageContext(request)
         organiazationunit=OrganiazationUnitRepo(user=user).organiazationunit(organiazationunit_id=organiazationunit_id)
         context['organiazationunit']=organiazationunit
         context['page']=organiazationunit
@@ -87,7 +94,7 @@ class PageViews(View):
     def contractor(self,request,pk,*args, **kwargs):
         contractor_id=pk
         user=request.user
-        context=getContext(request)
+        context=self.getManagerPageContext(request)
         contractor=ContractorRepo(user=user).contractor(contractor_id=contractor_id)
         context['contractor']=contractor
         context['page']=contractor
