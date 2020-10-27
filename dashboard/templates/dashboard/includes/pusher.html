@@ -2,12 +2,12 @@
 {% if DEBUG %}
 <script>
 
-    var logToConsole=true
+    var logToConsole = true
 </script>
 {% else %}
 <script>
 
-    var logToConsole=false
+    var logToConsole = false
 </script>
 {% endif %}
 {% if user.is_authenticated%}
@@ -23,7 +23,6 @@
         el: '#app-notifications',
         data: {
             notifications: notifications,
-            notifications_count: notifications_count
         },
     });
 
@@ -41,34 +40,27 @@
         })
             .subscribe(my_channel_event.channel.channel_name)
             .bind(my_channel_event.event_name, function (data) {
-                app_notifications.notifications.reverse()
-                app_notifications.notifications.push(data.message);
-                app_notifications.notifications_count++
-                app_notifications.notifications.reverse()
-                // showNotification('bottom', 'center', 'chat', 'info', data.message)
 
-                if (true || my_channel_event.channel.channel_name === 'NOTIFICATION') {
-                    let message = `
-                        <a href="${data.message.link}">
-                        <div>
+                let url = "{% url 'dashboard:my_notifications' %}"
+                $.get(url, function (data) {
+                    console.log(data.my_notifications_s)
+                    app_notifications.notifications = JSON.parse(data.my_notifications_s)
+                
+                });
+
+
+                // showNotification('bottom', 'center', 'chat', 'info', data.message)
+                let message = `
+                         <div>
                             <h4 class="text-right">${data.message.title}</h4>
                             <div class="text-right">${data.message.body}</div>
-                        </div>
-                        </a>
+                        </div>                       
                     `
-                    if (data.message.get_absolute_url) {
-                        message = `
-                        <a href="${data.message.get_absolute_url}">
-                            <div>
-                                <h4>${data.message.title}</h4>
-                                <div>${data.message.body}</div>
-                            </div>
-                        </a>
-                    `
-                    }
-                    showNotification('bottom', 'center', data.message.icon, data.message.color,
-                        message)
-                }
+
+
+                showNotification('bottom', 'center', data.message.icon, data.message.color,
+                    message)
+
 
 
                 try {

@@ -25,5 +25,5 @@ urlpatterns=[
     path('remove_tag/',apis.PageViews().remove_tag,name='remove_tag'),
     path('add_tag/',apis.PageViews().add_tag,name='add_tag'),
     path('download/<int:document_id>/',views.BasicViews().download,name='download'),
-    # path('my_notifications',apis.BasicViews().my_notifications,'my_notifications_s'),
+    path('my_notifications/',apis.BasicViews().my_notifications,name='my_notifications'),
 ]
