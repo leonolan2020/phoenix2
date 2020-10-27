@@ -39,14 +39,10 @@
         </li>
         <li class="nav-item">
           <a class="nav-link" data-toggle="tab" href="#link9" role="tablist">
-            <i class="material-icons">gavel</i>متریال ها
+            <i class="material-icons">gavel</i>انبار های متریال
           </a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" data-toggle="tab" href="#link10" role="tablist">
-            <i class="material-icons">apartment</i> چارت سازمانی
-          </a>
-        </li>
+
       </ul>
       <div class="tab-content tab-space tab-subcategories">
         <div class="tab-pane  active" id="link7">
@@ -69,9 +65,9 @@
                 <br>
               </p>
               <div>
-               
 
-               
+
+
                 <template v-for="project in projects">
                   <div v-html="project.get_link"></div>
 
@@ -84,8 +80,8 @@
                   <label for="exampleInput1" class="bmd-label-floating">نام پروژه جدید</label>
                   {% csrf_token %}
                   <input type="hidden" name="parent_id" value="0">
-                  <input v-model="title_project" type="text" class="form-control" id="exampleInput1" name="title" required=""
-                    aria-required="true">
+                  <input v-model="title_project" type="text" class="form-control" id="exampleInput1" name="title"
+                    required="" aria-required="true">
 
 
                 </div>
@@ -104,10 +100,17 @@
             <div class="card-header">
               <h4 class="card-title farsi text-right">پیمانکار ها</h4>
               <p class="card-category">
-               لیست پیمانکار های ثبت شده
+                لیست پیمانکار های ثبت شده
               </p>
             </div>
             <div class="card-body">
+              <p>
+                پیمانکار عمومی (انگلیسی: General contractor) به سازمان یا گروهی ازسازمانها (مشارکت/کنسرسیوم) گفته می‌شود
+                که با سازمانی دیگر یا با شخصی دیگر که کارفرما نام دارد قرارداد امضاء می‌کند تا یک پروژه را از مرحله صفر
+                (Green Field) تا تحویل نهایی FA به انجام برساند، دامنه خدمات وی می‌تواند شامل مهندسی و طراحی، تهیه مدارک
+                فنی، (پیگیری) ساخت و نصب تجهیزات، ساختمان و اجرا، نصب و پیش راه اندازی، راه اندازی، مدیریت پیمان، تحویل
+                موقت ودائم و حتی بخشی از مرحله بهره‌برداری باشد.
+              </p>
               <template v-for="contractor in contractors">
                 <div v-html="contractor.get_link"></div>
 
@@ -121,8 +124,8 @@
                   <label for="exampleInput1" class="bmd-label-floating">نام پیمانکار جدید</label>
                   {% csrf_token %}
                   <input type="hidden" name="parent_id" value="0">
-                  <input v-model="title_contractor" type="text" class="form-control" id="exampleInput1" name="title" required=""
-                    aria-required="true">
+                  <input v-model="title_contractor" type="text" class="form-control" id="exampleInput1" name="title"
+                    required="" aria-required="true">
 
 
                 </div>
@@ -131,8 +134,8 @@
 
               </div>
               {% endif %}
-           
-              
+
+
 
             </div>
           </div>
@@ -140,37 +143,26 @@
         <div class="tab-pane" id="link9">
           <div class="card">
             <div class="card-header">
-              <h4 class="card-title">Legal info of the product</h4>
+              <h4 class="card-title farsi text-right">انبار های متریال</h4>
               <p class="card-category">
-                More information here
+                لیست همه انبار های متریال
               </p>
             </div>
             <div class="card-body">
-              Completely synergize resource taxing relationships via premier niche markets. Professionally cultivate
-              one-to-one customer service with robust ideas.
-              <br>
-              <br>Dynamically innovate resource-leveling customer service for state of the art customer service.
-            </div>
-          </div>
-        </div>
-        <div class="tab-pane" id="link10">
-          <div class="card">
-            <div class="card-header">
-              <h4 class="card-title">Help center</h4>
-              <p class="card-category">
-                More information here
+              <p>
+                در این سیستم اقلام با یک سیستم کدینگ مشخص وارد انبار می شوند. نگهداری اطلاعات اقلام در این سیستم مشابه
+                با
+                سیستم های رایج انبار در سیستم های غیر پروژ ه ای متفاوت است. در این نرم افزار اهمیت دارد که اقلام مربوط
+                به
+                کدام جبهه کاری و با چه الویتی واگذار می گردند. بازگشایی و بازرسی اقلام OPI، کنترل صحت یا خرابی(OSDI)
+                ورود
+                انبار و انطباق تعدادی با اقلام مهندسی شده (MTO) و نهیاتا کنترل تحویل بر اساس جبه های کاری تعریف شده در
+                سایت همه جزء قابلیت های این نرم افزار می باشند.
               </p>
             </div>
-            <div class="card-body">
-              From the seamless transition of glass and metal to the streamlined profile, every detail was carefully
-              considered to enhance your experience. So while its display is larger, the phone feels just right.
-              <br>
-              <br> Another Text. The first thing you notice when you hold the phone is how great it feels in your hand.
-              The cover glass curves down around the sides to meet the anodized aluminum enclosure in a remarkable,
-              simplified design.
-            </div>
           </div>
         </div>
+
       </div>
     </div>
   </div>
@@ -220,7 +212,7 @@
         posting.done(function (data) {
           // word_app.word = (data.word);
           // word_app.definitions = (data.definitions);
-          app.title_project=""
+          app.title_project = ""
           app.projects.push(data)
         })
       },
@@ -240,7 +232,7 @@
         posting.done(function (data) {
           // word_app.word = (data.word);
           // word_app.definitions = (data.definitions);
-          app.title_contractor=""
+          app.title_contractor = ""
           app.contractors.push(data)
         })
       },

@@ -26,7 +26,7 @@
                 {% if add_project_form %}
                 <div class="mt-5 mx-5">
                   <div class="form-group bmd-form-group">
-                    <label for="exampleInput1" class="bmd-label-floating">نام پروژه جدید</label>
+                    <label for="exampleInput1" class="bmd-label-floating">نام پروژه زیرمجموعه جدید</label>
                     {% csrf_token %}
                     <input type="hidden" name="parent_id" value="{{page.id}}">
                     <input v-model="project_title" type="text" class="form-control" id="exampleInput1" name="title" required=""

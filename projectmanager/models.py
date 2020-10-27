@@ -73,6 +73,9 @@ class ManagerPage(DashboardPage):
 class Project(ManagerPage):
 	# priority2=models.IntegerField(_("priority"),default=100)
 	events=models.ManyToManyField("Event",blank=True, verbose_name=_("رویداد ها"))
+	contractors=models.ManyToManyField("Contractor",blank=True, verbose_name=_("پیمانکار ها"))
+	organiazation_units=models.ManyToManyField("OrganiazationUnit",blank=True, verbose_name=_("واحد های سازمانی"))
+	
 	def save(self):
 		self.child_class='project'
 		super(Project,self).save()
