@@ -2,6 +2,7 @@ from django.contrib import admin
 from .models import *
 # from .models import GalleryPhoto2 as GalleryPhoto
 admin.site.register(Notification)
+admin.site.register(ProfileCustomization)
 admin.site.register(Card)
 admin.site.register(Jumbotron)
 admin.site.register(Icon)

@@ -8,6 +8,7 @@ from django.utils.translation import gettext as _
 from django.shortcuts import reverse
 from dashboard.settings import MEDIA_URL,STATIC_URL
 IMAGE_FOLDER=APP_NAME+'/images/'
+from dashboard.models import ProfileCustomization
 class Profile(models.Model):
     # region = models.ForeignKey("Region", verbose_name=_("region"), on_delete=models.CASCADE)
     user = models.ForeignKey(
@@ -46,7 +47,11 @@ class Profile(models.Model):
     #         img.save(file_name)
     #     except :
     #         pass
-        
+    def profile_customization(self):
+        try:
+            return ProfileCustomization.objects.get(profile=self)
+        except:
+            return None
     def header_image(self):
         if self.image_header_origin:
             return MEDIA_URL+str(self.image_header_origin)

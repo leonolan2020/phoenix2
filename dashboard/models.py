@@ -551,9 +551,18 @@ class Notification(models.Model):
     def get_absolute_url(self):
         return reverse(APP_NAME+":notification", kwargs={"pk": self.pk})
 
+class ProfileCustomization(models.Model):
+    profile=models.ForeignKey("authentication.profile",verbose_name="پروفایل",on_delete=models.CASCADE)
+    sidebar_bg_color=models.CharField(_('sidebar_bg_color'),default='rose',max_length=50)
+    sidebar_bg_image=models.CharField(_('sidebar_bg_image'),null=True,blank=True,max_length=50)
+    sidebar_active_color=models.CharField(_('sidebar_active_color'),default='black',max_length=50)
+    class Meta:
+        verbose_name = _("ProfileCustomization")
+        verbose_name_plural = _("سفارشی سازی پروفایل ها")
 
 
-
+    def __str__(self):
+        return self.profile.name()
 class Comment(models.Model):
     profile=models.ForeignKey("authentication.Profile",null=True,blank=True, verbose_name=_("توسط"), on_delete=models.CASCADE)
     text=models.TextField(_("نظر"))

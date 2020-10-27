@@ -34,6 +34,19 @@ def getContext(request):
         profiles=ProfileRepo(user=user).list_by_user(user=user)
         if profile is not None:
             context['profiles']=profiles.exclude(pk=profile.pk)
+            profile_customization=profile.profile_customization()
+            if profile_customization is not None:
+                context['sidebar']={
+                    'sidebar_active_color':profile_customization.sidebar_active_color,
+                    'sidebar_bg_color':profile_customization.sidebar_bg_color,
+                    'sidebar_bg_image':profile_customization.sidebar_bg_image,
+                }
+            if profile_customization is None:
+                context['sidebar']={
+                    'sidebar_active_color':'rose',
+                    'sidebar_bg_color':'black',
+                    'sidebar_bg_image':'',
+                }
         if PUSHER_IS_ENABLE:            
             my_channel_events=PusherChannelEventRepo(user=user).my_channel_events()
             my_channel_events_s=PusherChannelEventSerializer(my_channel_events,many=True).data
