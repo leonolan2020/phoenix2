@@ -1,8 +1,27 @@
-from .models import Project,Event,OrganiazationUnit
+from .models import Project,Event,OrganiazationUnit,Contractor
 from authentication.repo import ProfileRepo
 from dashboard.models import Icon
+from dashboard.enums import ColorEnum
 
-
+class ContractorRepo:
+    def __init__(self,user=None):
+        self.objects=Contractor.objects
+        self.user=user
+    def list(self):
+        return self.objects.all()
+    def add(self,title):
+        icon=Icon(icon_material='engineering',icon_title='آیکون '+title,color=ColorEnum.PRIMARY)
+        icon.save()
+        contractor=Contractor(icon=icon,title=title,short_description='',description='')
+        contractor.save()
+        if contractor is not None:
+            return contractor
+             
+    def contactor(self,contactor_id):
+        try:
+            return self.objects.get(pk=contactor_id)
+        except:
+            return None
 
 class EventRepo:
     def __init__(self,user=None):

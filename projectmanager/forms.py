@@ -28,6 +28,9 @@ class AddProjectForm(forms.Form):
     parent_id=forms.IntegerField(required=True)
     title=forms.CharField(max_length=100,required=True)
 
+class AddContractorForm(forms.Form):
+    title=forms.CharField(max_length=100,required=True)
+
 class AddArchiveDocumentForm(forms.Form):
     parent_id=forms.IntegerField(required=False)
     category_id=forms.IntegerField(required=False)

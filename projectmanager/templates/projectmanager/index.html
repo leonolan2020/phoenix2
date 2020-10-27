@@ -69,15 +69,9 @@
                 <br>
               </p>
               <div>
-                {% for project in projects %}
+               
 
-                {{project.get_link|safe}}
-
-
-
-
-                {% endfor %}
-
+               
                 <template v-for="project in projects">
                   <div v-html="project.get_link"></div>
 
@@ -90,7 +84,7 @@
                   <label for="exampleInput1" class="bmd-label-floating">نام پروژه جدید</label>
                   {% csrf_token %}
                   <input type="hidden" name="parent_id" value="0">
-                  <input v-model="title" type="text" class="form-control" id="exampleInput1" name="title" required=""
+                  <input v-model="title_project" type="text" class="form-control" id="exampleInput1" name="title" required=""
                     aria-required="true">
 
 
@@ -108,16 +102,38 @@
         <div class="tab-pane" id="link8">
           <div class="card">
             <div class="card-header">
-              <h4 class="card-title">Location of the product</h4>
+              <h4 class="card-title farsi text-right">پیمانکار ها</h4>
               <p class="card-category">
-                More information here
+               لیست پیمانکار های ثبت شده
               </p>
             </div>
             <div class="card-body">
-              Efficiently unleash cross-media information without cross-media value. Quickly maximize timely
-              deliverables for real-time schemas.
-              <br>
-              <br> Dramatically maintain clicks-and-mortar solutions without functional solutions.
+              <template v-for="contractor in contractors">
+                <div v-html="contractor.get_link"></div>
+
+
+              </template>
+
+
+              {% if add_contracotr_form %}
+              <div class="mt-5 mx-5">
+                <div class="form-group bmd-form-group">
+                  <label for="exampleInput1" class="bmd-label-floating">نام پیمانکار جدید</label>
+                  {% csrf_token %}
+                  <input type="hidden" name="parent_id" value="0">
+                  <input v-model="title_contractor" type="text" class="form-control" id="exampleInput1" name="title" required=""
+                    aria-required="true">
+
+
+                </div>
+                <input type="button" @click="add_contractor" class="btn btn-next btn-fill btn-rose btn-wd" name="next"
+                  value="افزودن">
+
+              </div>
+              {% endif %}
+           
+              
+
             </div>
           </div>
         </div>
@@ -182,8 +198,10 @@
   var app = new Vue({
     el: "#app",
     data: {
-      projects: [],
-      title: '',
+      projects: JSON.parse(`{{projects_s|escapejs}}`),
+      contractors: JSON.parse(`{{contractors_s|escapejs}}`),
+      title_project: '',
+      title_contractor: '',
 
     },
     methods: {
@@ -193,7 +211,7 @@
         var posting = $.post(url,
           {
             parent_id: 0,
-            title: app.title,
+            title: app.title_project,
             csrfmiddlewaretoken: csrfmiddlewaretoken
           }
         );
@@ -202,10 +220,31 @@
         posting.done(function (data) {
           // word_app.word = (data.word);
           // word_app.definitions = (data.definitions);
-          app.title=""
+          app.title_project=""
           app.projects.push(data)
         })
       },
+
+      add_contractor: function () {
+        let url = "{% url 'projectmanager:add_contractor' %}"
+
+        var posting = $.post(url,
+          {
+            parent_id: 0,
+            title: app.title_contractor,
+            csrfmiddlewaretoken: csrfmiddlewaretoken
+          }
+        );
+
+        // Put the results in a div
+        posting.done(function (data) {
+          // word_app.word = (data.word);
+          // word_app.definitions = (data.definitions);
+          app.title_contractor=""
+          app.contractors.push(data)
+        })
+      },
+
     },
   })
 </script>
