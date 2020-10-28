@@ -28,90 +28,92 @@
                     </div>
                     <div class="card-body">
                         <div>
-                            {% csrf_token %}
-                            <div class="row mt-3">
-                                <div class="col-md-4">
-                                    <div class="form-group bmd-form-group">
-                                        <label class="bmd-label-floating">نام کاربری</label>
-                                        <input disabled type="text" class="form-control"
-                                            value="{{selected_profile.user.username}}">
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-group bmd-form-group">
-                                        <label class="bmd-label-floating">پست الکترونیک</label>
-                                        <input disabled type="email" class="form-control"
-                                            value="{{selected_profile.user.email}}">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <div class="form-group bmd-form-group">
-                                        <label class="bmd-label-floating">نام</label>
-                                        <input type="text" class="form-control" v-model="first_name">
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-group bmd-form-group">
-                                        <label class="bmd-label-floating">نام خانوادگی</label>
-                                        <input type="text" class="form-control" v-model="last_name">
-                                    </div>
-                                </div>
-
-                                <div class="col-md-4">
-                                    <div class="form-group bmd-form-group">
-                                        <label class="bmd-label-floating">عنوان</label>
-                                        <input type="text" class="form-control" v-model="slogan"
-                                            value="{{selected_profile.slogan}}">
-                                    </div>
-                                </div>
-
-                            </div>
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="form-group bmd-form-group">
-                                        <label class="bmd-label-floating">آدرس</label>
-                                        <input type="text" class="form-control" v-model="address"
-                                            value="{{selected_profile.address}}">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <div class="form-group bmd-form-group">
-                                        <label class="bmd-label-floating">موبایل</label>
-                                        <input type="phone" class="form-control" v-model="mobile"
-                                            value="{{selected_profile.mobile}}">
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-group bmd-form-group">
-                                        <label class="bmd-label-floating">کد پستی</label>
-                                        <input type="text" class="form-control" v-model="postal_code"
-                                            value="{{selected_profile.postal_code}}">
-                                    </div>
-                                </div>
-
-                            </div>
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <p>
-
+                            <form @submit.prevent="submit">
+                                {% csrf_token %}
+                                <div class="row mt-3">
+                                    <div class="col-md-4">
                                         <div class="form-group bmd-form-group">
-                                            <label class="bmd-label-floating">
-                                                درباره ...
-                                            </label>
-                                            <textarea class="form-control" rows="5" v-model="bio"
-                                                value="{{selected_profile.bio}}"></textarea>
+                                            <label class="bmd-label-floating">نام کاربری</label>
+                                            <input disabled type="text" class="form-control"
+                                                value="{{selected_profile.user.username}}">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group bmd-form-group">
+                                            <label class="bmd-label-floating">پست الکترونیک</label>
+                                            <input disabled type="email" class="form-control"
+                                                value="{{selected_profile.user.email}}">
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <button @click="submit" class="btn btn-success pull-right">
-                                <i class="material-icons">publish</i>
-                                تایید</button>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="form-group bmd-form-group">
+                                            <label class="bmd-label-floating">نام</label>
+                                            <input type="text" class="form-control" v-model="first_name">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group bmd-form-group">
+                                            <label class="bmd-label-floating">نام خانوادگی</label>
+                                            <input type="text" class="form-control" v-model="last_name">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <div class="form-group bmd-form-group">
+                                            <label class="bmd-label-floating">عنوان</label>
+                                            <input type="text" class="form-control" v-model="slogan"
+                                                value="{{selected_profile.slogan}}">
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group bmd-form-group">
+                                            <label class="bmd-label-floating">آدرس</label>
+                                            <input type="text" class="form-control" v-model="address"
+                                                value="{{selected_profile.address}}">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="form-group bmd-form-group">
+                                            <label class="bmd-label-floating">موبایل</label>
+                                            <input type="phone" class="form-control" v-model="mobile"
+                                                value="{{selected_profile.mobile}}">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group bmd-form-group">
+                                            <label class="bmd-label-floating">کد پستی</label>
+                                            <input type="text" class="form-control" v-model="postal_code"
+                                                value="{{selected_profile.postal_code}}">
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <p>
+
+                                            <div class="form-group bmd-form-group">
+                                                <label class="bmd-label-floating">
+                                                    درباره ...
+                                                </label>
+                                                <textarea class="form-control" rows="5" v-model="bio"
+                                                    value="{{selected_profile.bio}}"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button @click="submit" class="btn btn-success pull-right">
+                                    <i class="material-icons">publish</i>
+                                    تایید</button>
+                            </form>
                             <div class="clearfix"></div>
                         </div>
                     </div>
@@ -125,26 +127,26 @@
                         </a>
                     </div>
                     <div class="card-body">
-                     
-                        
+
+
 
                         <h6 class="card-category text-gray" v-text="slogan"></h6>
                         <h4 class="card-title" v-text="first_name+' '+last_name"></h4>
                         <p class="card-description text-center" v-text="bio">
-                           
+
                         </p>
                         <!-- <a href="{{selected_profile.get_edit_url_admin}}" class="btn btn-rose btn-round farsi">ویرایش </a> -->
-                         <button @click="show_edit_image=!show_edit_image" class="btn btn-warning btn-round farsi">
-                            <i class="material-icons">add_a_photo</i> 
-                             انتخاب تصویر   </button>
-                   </div>
+                        <button @click="show_edit_image=!show_edit_image" class="btn btn-warning btn-round farsi">
+                            <i class="material-icons">add_a_photo</i>
+                            انتخاب تصویر </button>
+                    </div>
                 </div>
 
 
 
 
                 <div v-if="show_edit_image" v-cloak class="card card-profile">
-                   
+
                     <div class="card-body">
                         {% if upload_profile_image_form %}
 
@@ -164,13 +166,13 @@
                                     <button type="submit" class="fileinput-exists btn btn-success btn-round farsi">
                                         <i class="material-icons mx-2">backup</i>
                                         آپلود
-                                        </button>
-                                     
-                                        <a href="#pablo" class="btn btn-danger btn-round fileinput-exists"
+                                    </button>
+
+                                    <a href="#pablo" class="btn btn-danger btn-round fileinput-exists"
                                         data-dismiss="fileinput">
                                         <i class="fa fa-times"></i>
                                         <span class="farsi">انصراف</span>
-                                    </a>   <br>
+                                    </a> <br>
                                     <span class="btn btn-raised btn-round btn-info btn-file">
                                         <span class="fileinput-new farsi">
                                             <i class="material-icons">add_a_photo</i>
@@ -183,10 +185,10 @@
                                         <div class="ripple-container"></div>
                                     </span>
                                     <br>
-                                 
+
                                 </div>
                                 {% csrf_token %}
-                               
+
                             </div>
                         </form>
                         {% endif %}
@@ -194,8 +196,8 @@
 
                         {% if upload_profile_header_form %}
 
-                        <form enctype="multipart/form-data" action="{% url 'authentication:upload_profile_header_image' %}"
-                            method="POST">
+                        <form enctype="multipart/form-data"
+                            action="{% url 'authentication:upload_profile_header_image' %}" method="POST">
 
 
 
@@ -204,20 +206,19 @@
                                     <img src="{{selected_profile.header_image}}" alt="...">
 
                                 </div>
-                                <div class="fileinput-preview fileinput-exists thumbnail img-raised"
-                                    style=""></div>
+                                <div class="fileinput-preview fileinput-exists thumbnail img-raised" style=""></div>
                                 <div>
                                     <button type="submit" class="fileinput-exists btn btn-success btn-round farsi">
                                         <i class="material-icons">backup</i>
                                         آپلود
-                                        </button>
+                                    </button>
 
                                     <a href="#pablo" class="btn btn-danger btn-round fileinput-exists"
-                                    data-dismiss="fileinput">
-                                    <i class="fa fa-times"></i>
-                                    <span class="farsi">انصراف</span>
-                                </a>
-                                <br>
+                                        data-dismiss="fileinput">
+                                        <i class="fa fa-times"></i>
+                                        <span class="farsi">انصراف</span>
+                                    </a>
+                                    <br>
                                     <span class="btn btn-raised btn-round btn-primary btn-file">
                                         <span class="fileinput-new farsi">
                                             <i class="material-icons">add_a_photo</i>
@@ -230,23 +231,23 @@
                                         <div class="ripple-container"></div>
                                     </span>
                                     <br>
-                                   
+
                                 </div>
                                 {% csrf_token %}
-                               
+
                             </div>
                         </form>
                         {% endif %}
 
-                       
-                        
+
+
                         <button @click="show_edit_image=!show_edit_image" class="btn btn-secondary btn-round farsi">
                             <i class="fa fa-times"></i>
                             انصراف</button>
 
                     </div>
                 </div>
-                
+
             </div>
         </div>
     </div>
@@ -272,7 +273,7 @@
     let profile_app = new Vue({
         el: "#profile-app",
         data: {
-            show_edit_image:false,
+            show_edit_image: false,
             profile_id: JSON.parse("{{selected_profile.id}}"),
             first_name: "{{selected_profile.first_name}}",
             last_name: "{{selected_profile.last_name}}",
