@@ -18,3 +18,7 @@ class RemoveTagForm(forms.Form):
 class AddTagForm(forms.Form):
     title=forms.CharField(max_length=50,required=True)
     page_id=forms.IntegerField(required=True)
+    
+class ProfileCustomizationForm(forms.Form):
+    line_key=forms.CharField(max_length=50,required=True)
+    line_value=forms.CharField(max_length=50,required=True)

@@ -483,11 +483,12 @@ The above copyright notice and this permission notice shall be included in all c
       src="https://www.facebook.com/tr?id=111649226022273&ev=PageView&noscript=1" />
   </noscript> -->
   <script>
-    var csrfmiddlewaretoken=''
+    var csrfmiddlewaretoken = ''
     $(document).ready(function () {
       md.checkFullPageBackgroundImage();
 
-
+      $("#sidebar_active_color_{{sidebar.sidebar_active_color}}").addClass("active")
+      $("#sidebar_bg_color_{{sidebar.sidebar_bg_color}}").addClass("active")
       // Javascript method's body can be found in assets/js/demos.js
       csrfmiddlewaretoken = $("input[name='csrfmiddlewaretoken']").val()
 
@@ -495,33 +496,57 @@ The above copyright notice and this permission notice shall be included in all c
       // $('.sidebar .sidebar-wrapper, .main-panel').perfectScrollbar();
     });
   </script>
- <script>
-  let to_price = function (x, currency) {
-      return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + ' ' + currency
-  }
+  <script>
 
-  var showNotification = function (from, align, icon, bgcolor, html) {
+
+
+
+
+    let to_price = function (x, currency) {
+      return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + ' ' + currency
+    }
+
+    var showNotification = function (from, align, icon, bgcolor, html) {
       type = ['', 'info', 'danger', 'success', 'warning', 'rose', 'primary'];
 
       color = Math.floor((Math.random() * 6) + 1);
       color = 3;
       $.notify({
-          icon: icon,
-          message: html
+        icon: icon,
+        message: html
 
       }, {
-          type: bgcolor,
-          timer: 5000,
-          placement: {
-              from: from,
-              align: align
-          }
+        type: bgcolor,
+        timer: 5000,
+        placement: {
+          from: from,
+          align: align
+        }
       });
-  }
-</script>
-{% if PUSHER_IS_ENABLE %}
-{% include "dashboard/includes/pusher.html" %}
-{% endif %}
+    }
+  </script>
+
+
+  <!-- profile_customization_form -->
+  <script>
+    let url_profile_customization_form = "{% url 'dashboard:profile_customization' %}"
+    var CustomizeProfile=function(line_key, line_value){
+      var posting = $.post(url_profile_customization_form,
+        {
+          line_key: line_key,
+          line_value: line_value,
+          csrfmiddlewaretoken: csrfmiddlewaretoken
+        }
+      );
+
+    } 
+
+  </script>
+
+
+  {% if PUSHER_IS_ENABLE %}
+  {% include "dashboard/includes/pusher.html" %}
+  {% endif %}
 
 
 

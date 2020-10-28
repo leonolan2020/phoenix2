@@ -26,4 +26,5 @@ urlpatterns=[
     path('add_tag/',apis.PageViews().add_tag,name='add_tag'),
     path('download/<int:document_id>/',views.BasicViews().download,name='download'),
     path('my_notifications/',apis.BasicViews().my_notifications,name='my_notifications'),
+    path('profile_customization/',apis.ProfileViews().profile_customization,name='profile_customization'),
 ]

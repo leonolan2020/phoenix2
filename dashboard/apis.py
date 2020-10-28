@@ -4,8 +4,27 @@ from .serializers import *
 from .constants import SUCCEED,FAILED
 from .repo import *
 from .forms import *
+from authentication.repo import ProfileRepo
 import json
 
+class ProfileViews(APIView):
+    def profile_customization(self,request,*args, **kwargs): 
+        if request.method=='POST':
+            profile_customization_form=ProfileCustomizationForm(request.POST)
+            if profile_customization_form.is_valid():
+                line_key=profile_customization_form.cleaned_data['line_key']
+                line_value=profile_customization_form.cleaned_data['line_value']
+                user=request.user
+                profile=ProfileRepo(user=user).me
+                if profile is not None :
+                    profile_customization=profile.profile_customization()
+                    if profile_customization is None:
+                        profile_customization=ProfileCustomization(profile=profile)
+                        profile_customization.save()
+                    profile_customization.set_value(line_key=line_key,line_value=line_value)
+                    profile_customization.save()
+                    return JsonResponse({'result':SUCCEED})
+        return JsonResponse({'result':FAILED})
 
 class BasicViews(APIView):    
     def my_notifications(self,request,*args, **kwargs):        

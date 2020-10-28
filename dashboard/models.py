@@ -559,7 +559,14 @@ class ProfileCustomization(models.Model):
     class Meta:
         verbose_name = _("ProfileCustomization")
         verbose_name_plural = _("سفارشی سازی پروفایل ها")
-
+    def set_value(self,line_key,line_value):
+        if line_key=='sidebar_bg_color':
+            self.sidebar_bg_color=line_value
+        if line_key=='sidebar_bg_image':
+            self.sidebar_bg_image=line_value
+        if line_key=='sidebar_active_color':
+            self.sidebar_active_color=line_value
+        self.save() 
 
     def __str__(self):
         return self.profile.name()

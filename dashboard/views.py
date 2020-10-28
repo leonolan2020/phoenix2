@@ -35,6 +35,7 @@ def getContext(request):
         if profile is not None:
             context['profiles']=profiles.exclude(pk=profile.pk)
             profile_customization=profile.profile_customization()
+            context['profile_customization_form']=ProfileCustomizationForm()
             if profile_customization is not None:
                 context['sidebar']={
                     'sidebar_active_color':profile_customization.sidebar_active_color,
