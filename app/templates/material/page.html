@@ -36,13 +36,13 @@
             <div class="row">
                 <div class="col-md-8 ml-auto mr-auto">
                     <h3 class="title farsi text-right">
-                        {{page.title}} 
+                        {{page.title}}
                     </h3>
-              
+
                     <div>
                         {{page.description|safe}}
                     </div>
-                    
+
                 </div>
                 <div class="section col-md-10 ml-auto mr-auto">
                     <div class="row">
@@ -56,7 +56,7 @@
 
                     </div>
                 </div>
-               
+
             </div>
         </div>
         <div class="section section-blog-info">
@@ -208,7 +208,7 @@
     </div>
 </div>
 {% if page.related_pages.all %}
-  
+
 <div class="section">
     <div class="container">
         <div class="row rtl">
@@ -217,33 +217,36 @@
                 <br>
                 <div class="row">
                     {% for related_page in page.related_pages.all %}
-                         <div class="col-md-4">
+                    <div class="col-md-4">
                         <div class="card card-blog">
+                            {% if related_page.thumbnail %}
                             <div class="card-header card-header-image">
                                 <a href="{{related_page.get_absolute_url}}">
                                     <img class="img img-raised" src="{{related_page.thumbnail}}">
+
+
                                 </a>
                                 <div class="colored-shadow"
                                     style="background-image: url(&quot;{{related_page.thumbnail}}&quot;); opacity: 1;">
                                 </div>
                             </div>
+                            {% endif %}
                             <div class="card-body">
                                 <h6 class="category farsi text-info">{{related_page.category}}</h6>
-                                <h4 class="card-titlefarsi ">
+                                <h4 class="card-title text-right farsi ">
                                     <a href="{{related_page.get_absolute_url}}">{{related_page.title}}</a>
                                 </h4>
                                 <div class="card-description">
                                     {{related_page.short_description|safe}}
-                                    
-                                    <a
-                                        href="{{related_page.get_absolute_url}}">بیشتر ...</a>
+
+                                    <a class="badge badge-secondary" href="{{related_page.get_absolute_url}}">ادامه مطلب</a>
                                 </div>
                             </div>
                         </div>
                     </div>
                     {% endfor %}
-                 
-                    
+
+
                 </div>
             </div>
         </div>
