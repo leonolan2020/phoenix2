@@ -182,6 +182,19 @@
 
                         </div>
                     </templates>
+                    {% if add_link_form %}
+                    <form id="add-link-form" @submit.prevent="add_link">
+                        <div>
+                            <input placeholder="عنوان لینک" type="text"  class="form-control"
+                                v-model="link_title">
+                                <input placeholder="آدرس لینک" type="text"  class="form-control"
+                                v-model="link_url">
+                            <button v-if="link_url && link_title" class="btn btn-warning"
+                                type="submit">تایید</button>
+                        </div>
+                    </form>
+                    {% endif %}
+
                 </div>
                 <div class="card-footer">
                     <div class="stats">
@@ -427,11 +440,12 @@
             project_title: '',
             document_title: '',
             document_file: '',
+            link_title:'',
+            link_url:'',
 
         },
         methods: {
             add_document: function () {
-                console.log('11111111111111111')
                 let page_id = JSON.parse(`{{page.id}}`)
                 let title = app.document_title
                 let url = "{% url 'dashboard:add_document' %}"
@@ -441,8 +455,6 @@
                 formData.append("title", title);
                 formData.append("csrfmiddlewaretoken", csrfmiddlewaretoken);
                 formData.append("page_id", page_id);
-                console.log(file1)
-                console.log('22222222222222222222222')
                 // var posting = $.post(url,
                 //     {
                 //         title: title,
@@ -471,7 +483,7 @@
                                 app.documents = response.documents
                                 // alert('file uploaded');
                                 app.title=''
-                                app.document_title=''
+                                app.document_file=''
                             }
                         }
                         else {
@@ -479,6 +491,28 @@
                         }
                     },
                 });
+
+            },add_link: function () {
+                let page_id = JSON.parse(`{{page.id}}`)
+                let title = app.link_title
+                let url = "{% url 'dashboard:add_link' %}"
+                let link_url = app.link_url
+                
+                 var posting = $.post(url,
+                    {
+                        title: title,
+                        url: link_url,
+                        page_id: page_id,
+                        csrfmiddlewaretoken: csrfmiddlewaretoken
+                    }
+                );
+                
+                // Put the results in a div
+                posting.done(function (data) {
+                    if (data.result === 'SUCCEED')
+                        app.links = data.links
+                })
+                
 
             },
             remove_tag: function (tag_id) {

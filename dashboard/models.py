@@ -322,11 +322,12 @@ class Link(Icon):
     for_nav=models.BooleanField(_("نمایش در منوی بالای سایت"),default=False)
     priority=models.IntegerField(_("ترتیب"),default=100)
     url=models.CharField(_("لینک"), max_length=2000,default="#")    
+    profile_adder=models.ForeignKey("authentication.Profile", verbose_name=_("پروفایل"), on_delete=models.CASCADE)
     
     def get_link(self):
         return f"""
 
-            <a href="{self.get_absolute_url()}">
+            <a target="_blank" href="{self.get_absolute_url()}">
             {self.get_icon_tag()}
             {self.title}</a>
         """

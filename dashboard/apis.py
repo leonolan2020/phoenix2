@@ -106,3 +106,30 @@ class PageViews(APIView):
                     documents_s=DocumentSerializer(documents,many=True).data
                     return JsonResponse({'documents':documents_s,'result':SUCCEED})
         return JsonResponse({'result':FAILED,'level':level})
+
+
+    def add_link(self,request,*args, **kwargs):  
+        level=1  
+        user=request.user
+        profile=ProfileRepo(user=user).me
+        
+        if request.method=='POST' and profile is not None:
+            level=2
+            add_link_form=AddLinkForm(request.POST)
+            if add_link_form.is_valid():
+                level=3
+                title=add_link_form.cleaned_data['title']
+                url=add_link_form.cleaned_data['url']
+                page_id=add_link_form.cleaned_data['page_id']
+                
+                page=PageRepo(user=user).page(page_id=page_id)
+                if page is not None:
+                    level=4
+                    link=Link(profile_adder=profile,title=title,icon_title='tag',icon_material='link',url=url)
+                    link.save()
+                    page.links.add(link)  
+                    page.save()
+                    links=page.links.all()                  
+                    link_s=LinkSerializer(links,many=True).data
+                    return JsonResponse({'links':link_s,'result':SUCCEED})
+        return JsonResponse({'result':FAILED,'level':level})

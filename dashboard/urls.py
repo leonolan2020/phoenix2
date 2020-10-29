@@ -24,6 +24,7 @@ urlpatterns=[
     path('notification/<int:pk>/',views.ProfileViews().notification,name='notification'),
     path('remove_tag/',apis.PageViews().remove_tag,name='remove_tag'),
     path('add_tag/',apis.PageViews().add_tag,name='add_tag'),
+    path('add_link/',apis.PageViews().add_link,name='add_link'),
     path('download/<int:document_id>/',views.BasicViews().download,name='download'),
     path('add_document/',apis.PageViews().add_document,name='add_document'),
     path('document/<int:pk>/',views.BasicViews().download,name='document'),
