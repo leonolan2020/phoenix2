@@ -22,3 +22,13 @@ class AddTagForm(forms.Form):
 class ProfileCustomizationForm(forms.Form):
     line_key=forms.CharField(max_length=50,required=True)
     line_value=forms.CharField(max_length=50,required=True)
+
+
+class AddLinkForm(forms.Form):
+    page_id=forms.IntegerField(required=True)
+    title=forms.CharField(max_length=50,required=True)
+    url=forms.CharField(max_length=2000,required=True)
+
+class AddDocumentForm(forms.Form):
+    page_id=forms.IntegerField(required=True)
+    title=forms.CharField(max_length=100,required=True)

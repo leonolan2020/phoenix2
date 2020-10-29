@@ -6,6 +6,7 @@ from .repo import *
 from .forms import *
 from authentication.repo import ProfileRepo
 import json
+from .models import Document,Icon,Tag,Page
 
 class ProfileViews(APIView):
     def profile_customization(self,request,*args, **kwargs): 
@@ -78,3 +79,28 @@ class PageViews(APIView):
                     tags_s=TagSerializer(tags,many=True).data
                     return JsonResponse({'tags':tags_s,'result':SUCCEED})
         return JsonResponse({'result':FAILED})
+
+    def add_document(self,request,*args, **kwargs):  
+        level=1      
+        if request.method=='POST':
+            level=2
+            add_document_form=AddDocumentForm(request.POST,request.FILES)
+            if add_document_form.is_valid():
+                level=3
+                title=add_document_form.cleaned_data['title']
+                page_id=add_document_form.cleaned_data['page_id']
+                print(request.FILES)
+                print(200*'#')
+                file1=request.FILES['file1']                
+                user=request.user
+                page=PageRepo(user=user).page(page_id=page_id)
+                if page is not None:
+                    level=4
+                    document=Document(title=title,icon_title='tag',icon_material='get_app',file=file1)
+                    document.save()
+                    page.documents.add(document)  
+                    page.save()
+                    documents=page.documents.all()                  
+                    documents_s=DocumentSerializer(documents,many=True).data
+                    return JsonResponse({'documents':documents_s,'result':SUCCEED})
+        return JsonResponse({'result':FAILED,'level':level})

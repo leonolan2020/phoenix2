@@ -6,6 +6,7 @@ from dashboard.views import getContext as DashboardContext
 from .repo import *
 from .serializers import *
 from .forms import *
+from dashboard.forms import AddDocumentForm,AddTagForm,AddLinkForm
 import json
 from dashboard.serializers import TagSerializer,DocumentSerializer,LinkSerializer
 from .utils import AdminUtility

@@ -428,7 +428,7 @@ class Document(Icon):
     def get_link(self):
         return f"""
 
-            <a href="{self.get_absolute_url()}">
+            <a href="{self.get_download_url()}">
             {self.get_icon_tag()}
             {self.title}</a>
         """
@@ -457,7 +457,7 @@ class Document(Icon):
         return self.title
 
     def get_absolute_url(self):
-        return reverse("app:document", kwargs={"document_id": self.pk})
+        return reverse("dashboard:document", kwargs={"pk": self.pk})
 
 
     def get_edit_url(self):

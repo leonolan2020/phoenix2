@@ -23,7 +23,7 @@ class TagSerializer(serializers.ModelSerializer):
 class DocumentSerializer(serializers.ModelSerializer):
     class Meta:
         model=Document
-        fields=['id','title','get_download_url']
+        fields=['id','get_link','title','get_download_url']
 
 
 class CommentSerializer(serializers.ModelSerializer):
