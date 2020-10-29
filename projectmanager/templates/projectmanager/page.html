@@ -169,9 +169,42 @@
                         <div>
                             <input placeholder="عنوان فایل دانلود" type="text" name="title" class="form-control"
                                 v-model="document_title">
-                            <input type="file" name="file" id="document-file" v-model="document_file">
-                            <button v-if="document_file && document_title" class="btn btn-info"
-                                type="submit">آپلود</button>
+
+                                <div>
+                                    <span class="btn btn-raised btn-round btn-default btn-file">
+                                        <span class="fileinput-new">انتخاب فایل</span>
+                                        <input type="hidden" value="" name="..."><input type="file" v-model="document_file" name="">
+                                    <div class="ripple-container"></div></span>
+                                    
+                                    <button v-if="(document_file && document_title) || false" class="btn btn-info btn-round"
+                                    type="submit">آپلود</button>
+                                                                    
+                                </div>
+
+                                <!-- <div>
+                                    <span class="btn btn-raised btn-round btn-default btn-file">
+                                        <span class="fileinput-new">Add Photo</span>
+                                        <span class="fileinput-exists">Change</span>
+                                        <input type="file"  v-model="document_file" name="">
+                                        <input type="hidden"  value="" name="...">
+                                    <div class="ripple-container"></div></span>
+                                    <br>
+                                    <a href="#pablo" class="btn btn-danger btn-round fileinput-exists google-drive-opener" data-dismiss="fileinput">
+                                        <i class="fa fa-times"></i> Remove
+                                    </a>
+                                </div> -->
+
+
+
+                                <!-- <div class="form-group has-default form-file-upload form-file-simple bmd-form-group">
+                                    <input type="text" class="form-control inputFileVisible" placeholder="Simple chooser...">
+                                    <input type="file"  name="file" id="document-file1" v-model="document_file" class="inputFileHidden">
+        
+                                </div> -->
+
+
+                           
+                           
                         </div>
                     </form>
                     {% endif %}
@@ -189,7 +222,7 @@
                                 v-model="link_title">
                                 <input placeholder="آدرس لینک" type="text"  class="form-control"
                                 v-model="link_url">
-                            <button v-if="link_url && link_title" class="btn btn-warning"
+                            <button v-if="link_url && link_title" class="btn btn-warning btn-round"
                                 type="submit">تایید</button>
                         </div>
                     </form>
@@ -450,7 +483,7 @@
                 let title = app.document_title
                 let url = "{% url 'dashboard:add_document' %}"
                 let formData = new FormData();
-                let file1 = $('#add-document-form')[0].elements[1].files[0]
+                let file1 = $('#add-document-form')[0].elements[2].files[0]
                 formData.append("file1", file1);
                 formData.append("title", title);
                 formData.append("csrfmiddlewaretoken", csrfmiddlewaretoken);
