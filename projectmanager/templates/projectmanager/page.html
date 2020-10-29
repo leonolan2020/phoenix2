@@ -20,6 +20,7 @@
 </div>
 
 {% endif %}
+
 <h3 class="title text-center">
     <span class="mx-2 text-{{page.color}}">{{page.icon.get_icon_tag|safe}}</span>
     {{page.title}}
@@ -170,18 +171,20 @@
                             <input placeholder="عنوان فایل دانلود" type="text" name="title" class="form-control"
                                 v-model="document_title">
 
-                                <div>
-                                    <span class="btn btn-raised btn-round btn-default btn-file">
-                                        <span class="fileinput-new">انتخاب فایل</span>
-                                        <input type="hidden" value="" name="..."><input type="file" v-model="document_file" name="">
-                                    <div class="ripple-container"></div></span>
-                                    
-                                    <button v-if="(document_file && document_title) || false" class="btn btn-info btn-round"
-                                    type="submit">آپلود</button>
-                                                                    
-                                </div>
+                            <div>
+                                <span class="btn btn-raised btn-round btn-default btn-file">
+                                    <span class="fileinput-new">انتخاب فایل</span>
+                                    <input type="hidden" value="" name="..."><input type="file" v-model="document_file"
+                                        name="">
+                                    <div class="ripple-container"></div>
+                                </span>
 
-                                <!-- <div>
+                                <button v-if="(document_file && document_title) || false" class="btn btn-info btn-round"
+                                    type="submit">آپلود</button>
+
+                            </div>
+
+                            <!-- <div>
                                     <span class="btn btn-raised btn-round btn-default btn-file">
                                         <span class="fileinput-new">Add Photo</span>
                                         <span class="fileinput-exists">Change</span>
@@ -196,15 +199,15 @@
 
 
 
-                                <!-- <div class="form-group has-default form-file-upload form-file-simple bmd-form-group">
+                            <!-- <div class="form-group has-default form-file-upload form-file-simple bmd-form-group">
                                     <input type="text" class="form-control inputFileVisible" placeholder="Simple chooser...">
                                     <input type="file"  name="file" id="document-file1" v-model="document_file" class="inputFileHidden">
         
                                 </div> -->
 
 
-                           
-                           
+
+
                         </div>
                     </form>
                     {% endif %}
@@ -218,10 +221,8 @@
                     {% if add_link_form %}
                     <form id="add-link-form" @submit.prevent="add_link">
                         <div>
-                            <input placeholder="عنوان لینک" type="text"  class="form-control"
-                                v-model="link_title">
-                                <input placeholder="آدرس لینک" type="text"  class="form-control"
-                                v-model="link_url">
+                            <input placeholder="عنوان لینک" type="text" class="form-control" v-model="link_title">
+                            <input placeholder="آدرس لینک" type="text" class="form-control" v-model="link_url">
                             <button v-if="link_url && link_title" class="btn btn-warning btn-round"
                                 type="submit">تایید</button>
                         </div>
@@ -435,13 +436,14 @@
 
     </div>
 
+    {% endif %}
 </div>
-{% endif %}
 
 
 {% block child_content %}
 
 {% endblock  %}
+
 {% endblock  %}
 
 
@@ -469,12 +471,11 @@
             links: JSON.parse(`{{links_s|escapejs}}`),
             documents: JSON.parse(`{{documents_s|escapejs}}`),
             tag_title: '',
-            projects: [],
-            project_title: '',
+            
             document_title: '',
             document_file: '',
-            link_title:'',
-            link_url:'',
+            link_title: '',
+            link_url: '',
 
         },
         methods: {
@@ -515,8 +516,8 @@
                                 console.log(response)
                                 app.documents = response.documents
                                 // alert('file uploaded');
-                                app.title=''
-                                app.document_file=''
+                                app.title = ''
+                                app.document_file = ''
                             }
                         }
                         else {
@@ -525,13 +526,13 @@
                     },
                 });
 
-            },add_link: function () {
+            }, add_link: function () {
                 let page_id = JSON.parse(`{{page.id}}`)
                 let title = app.link_title
                 let url = "{% url 'dashboard:add_link' %}"
                 let link_url = app.link_url
-                
-                 var posting = $.post(url,
+
+                var posting = $.post(url,
                     {
                         title: title,
                         url: link_url,
@@ -539,15 +540,15 @@
                         csrfmiddlewaretoken: csrfmiddlewaretoken
                     }
                 );
-                
+
                 // Put the results in a div
                 posting.done(function (data) {
                     if (data.result === 'SUCCEED')
                         app.links = data.links
-                        app.link_title=''
-                        app.link_url=''
+                    app.link_title = ''
+                    app.link_url = ''
                 })
-                
+
 
             },
             remove_tag: function (tag_id) {
@@ -594,27 +595,12 @@
 
 
             },
-            add_project: function () {
-                let url = "{% url 'projectmanager:add_project' %}"
-
-                var posting = $.post(url,
-                    {
-                        parent_id: JSON.parse("{{page.id}}"),
-                        title: app.project_title,
-                        csrfmiddlewaretoken: csrfmiddlewaretoken
-                    }
-                );
-
-                // Put the results in a div
-                posting.done(function (data) {
-                    // word_app.word = (data.word);
-                    // word_app.definitions = (data.definitions);
-                    app.project_title = ""
-                    app.projects.push(data)
-                })
-            },
 
         },
     })
 </script>
+
+{% block child_script %}
+
+{% endblock %}
 {% endblock  %}

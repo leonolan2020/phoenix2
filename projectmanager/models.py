@@ -75,7 +75,7 @@ class Project(ManagerPage):
 	events=models.ManyToManyField("Event",blank=True, verbose_name=_("رویداد ها"))
 	contractors=models.ManyToManyField("Contractor",blank=True, verbose_name=_("پیمانکار ها"))
 	organiazation_units=models.ManyToManyField("OrganiazationUnit",blank=True, verbose_name=_("واحد های سازمانی"))
-	
+	location=models.TextField(_('موقعیت در نقشه گوگل مپ'),null=True,blank=True)
 	def save(self):
 		self.child_class='project'
 		super(Project,self).save()

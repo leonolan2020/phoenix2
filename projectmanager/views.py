@@ -65,6 +65,8 @@ class PageViews(View):
         context=self.getManagerPageContext(request=request,page=project)
         context['project']=project
         context['page']=project
+        if user.has_perm(APP_NAME+'.change_project'):
+            context['add_location_form']=AddLocationForm()
         if user.has_perm(APP_NAME+'.add_project'):
             context['add_project_form']=AddProjectForm()
         return render(request,TEMPLATE_ROOT+'project.html',context)
