@@ -11,32 +11,32 @@
                 </h4>
             </div>
             <div class="card-body ">
-              
-             
+
+
 
 
                 {% for child_page in page.childs.all %}
-                  {{child_page.get_link|safe}}
+                {{child_page.get_link|safe}}
                 {% endfor %}
                 <template v-for="project in projects">
                     <div v-html="project.get_link"></div>
-  
-  
-                  </template>
+
+
+                </template>
                 {% if add_project_form %}
                 <div class="mt-5 mx-5">
-                  <div class="form-group bmd-form-group">
-                    <label for="exampleInput1" class="bmd-label-floating">نام پروژه زیرمجموعه جدید</label>
-                    {% csrf_token %}
-                    <input type="hidden" name="parent_id" value="{{page.id}}">
-                    <input v-model="project_title" type="text" class="form-control" id="exampleInput1" name="title" required=""
-                      aria-required="true">
-  
-  
-                  </div>
-                  <input type="button" @click="add_project" class="btn btn-next btn-fill btn-rose btn-wd" name="next"
-                    value="افزودن">
-  
+                    <div class="form-group bmd-form-group">
+                        <label for="exampleInput1" class="bmd-label-floating">نام پروژه زیرمجموعه جدید</label>
+                        {% csrf_token %}
+                        <input type="hidden" name="parent_id" value="{{page.id}}">
+                        <input v-model="project_title" type="text" class="form-control" id="exampleInput1" name="title"
+                            required="" aria-required="true">
+
+
+                    </div>
+                    <input type="button" @click="add_project" class="btn btn-next btn-fill btn-rose btn-wd" name="next"
+                        value="افزودن">
+
                 </div>
                 {% endif %}
 
@@ -44,43 +44,43 @@
             </div>
         </div>
     </div>
-<div class="col-md-6">
-    <h3 class="text-center farsi">رویداد ها و وقایع</h3>
-    <ul class="timeline timeline-simple">
-      {% for event in project.events.all %}
-         <li class="timeline-inverted">
-          <div class="timeline-badge {{event.color}}">
-            {{event.icon.get_icon_tag|safe}}
-          </div>
-          <div class="timeline-panel">
-            <div class="timeline-heading">
-              <span class="badge badge-pill badge-danger">
-                {{event.title}}
-              </span>
-              <span class="text-secondary" style="float: right;">
-<small>
-                  {{event.date_added|to_persian_date|safe}}
-             </small> </span>
-            </div>
-            <div class="timeline-body">
-                {{event.short_description|safe}} 
-            </div>
-            <a href="{{event.get_absolute_url}}">
-              <i class="ti-time"></i>
-            <small>
-<small>
-              جزییات بیشتر
-</small>
-            </small>  
-            </a>
-          </div>
-        </li>
-      {% endfor %}
-       
-        
-        
-      </ul>
-</div>
+    <div class="col-md-6">
+        <h3 class="text-center farsi">رویداد ها و وقایع</h3>
+        <ul class="timeline timeline-simple">
+            {% for event in project.events.all %}
+            <li class="timeline-inverted">
+                <div class="timeline-badge {{event.color}}">
+                    {{event.icon.get_icon_tag|safe}}
+                </div>
+                <div class="timeline-panel">
+                    <div class="timeline-heading">
+                        <span class="badge badge-pill badge-danger">
+                            {{event.title}}
+                        </span>
+                        <span class="text-secondary" style="float: right;">
+                            <small>
+                                {{event.date_added|to_persian_date|safe}}
+                            </small> </span>
+                    </div>
+                    <div class="timeline-body">
+                        {{event.short_description|safe}}
+                    </div>
+                    <a class="btn btn-light btn-sm btn-round" href="{{event.get_absolute_url}}">
+                        <i class="material-icons">description</i>
+                        <small>
+                            <small>
+                                جزییات بیشتر
+                            </small>
+                        </small>
+                    </a>
+                </div>
+            </li>
+            {% endfor %}
+
+
+
+        </ul>
+    </div>
 </div>
 
 {% endblock  %}

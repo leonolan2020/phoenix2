@@ -71,8 +71,8 @@ class PageViews(View):
     def event(self,request,pk,*args, **kwargs):
         event_id=pk
         user=request.user
-        context=self.getManagerPageContext(request)
         event=EventRepo(user=user).event(event_id=event_id)
+        context=self.getManagerPageContext(request,page=event)
         context['event']=event
         context['page']=event
         return render(request,TEMPLATE_ROOT+'event.html',context)
