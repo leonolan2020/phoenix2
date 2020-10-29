@@ -32,7 +32,13 @@
 
     <nav>
         <div class="menu">
-            <p class="website_name">{{app.title.value}}</p>
+            <p class="website_name">
+                <a href="{% url 'app:home' %}">
+
+                    {{app.title.value}}
+                </a>
+            
+            </p>
             <div class="menu_links">
                 <a href="{% url 'app:home' %}" class="link">about</a>
                 <a href="{% url 'app:home' %}" class="link">projects</a>
