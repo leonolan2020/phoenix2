@@ -178,7 +178,7 @@
 
                     <h4 class="mt-3 farsi text-right">لینک ها</h4>
                     <templates v-for="link in links">
-                        <div class="mr-4" v-html="link.get_link">
+                        <div class="mr-4 mb-3" v-html="link.get_link">
 
                         </div>
                     </templates>
@@ -511,6 +511,8 @@
                 posting.done(function (data) {
                     if (data.result === 'SUCCEED')
                         app.links = data.links
+                        app.link_title=''
+                        app.link_url=''
                 })
                 
 
