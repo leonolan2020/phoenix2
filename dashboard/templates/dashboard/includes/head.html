@@ -11,7 +11,22 @@
     {% endif %}
 
 
+
+
   </title>
+
+
+
+{% if app.GOOGLE_SEARCH_CONSOLE_TAG %} {{app.GOOGLE_SEARCH_CONSOLE_TAG.value|safe}} {% endif %}
+
+<!-- keywords -->
+<meta name="description" content="Author:Hossein Moghimi ,{% for meta_data in app.meta_data_items %}{{meta_data.content}} , {% endfor %}" />
+<meta name="robots" content="Author:Hossein Moghimi ,{% for meta_data in app.meta_data_items %}{{meta_data.content}} , {% endfor %}" />
+<!--  end keywords -->
+
+
+
+
   <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
   <!-- Extra details for Live View on GitHub Pages -->
   <!-- Canonical SEO -->
@@ -19,8 +34,8 @@
   <!--  Social tags      -->
   <meta name="keywords"
     content="creative tim, html dashboard, html css dashboard, web dashboard, bootstrap 4 dashboard, bootstrap 4, css3 dashboard, bootstrap 4 admin, material dashboard bootstrap 4 dashboard, frontend, responsive bootstrap 4 dashboard, material design, material dashboard bootstrap 4 dashboard">
-  <meta name="description"
-    content="Material Dashboard PRO is a Premium Material Bootstrap 4 Admin with a fresh, new design inspired by Google's Material Design.">
+  <!-- <meta name="description111"
+    content="Material Dashboard PRO is a Premium Material Bootstrap 4 Admin with a fresh, new design inspired by Google's Material Design."> -->
   <!-- Schema.org markup for Google+ -->
   <meta itemprop="name" content="Material Dashboard PRO by Creative Tim">
   <meta itemprop="description"
