@@ -66,6 +66,7 @@ def getContext(request):
         'about_us_short':parameter_repo.get(ParametersEnum.ABOUT_US_SHORT),
         'GOOGLE_SEARCH_CONSOLE_TAG':parameter_repo.get(ParametersEnum.GOOGLE_SEARCH_CONSOLE_TAG),
         'NAV_TEXT_COLOR':parameter_repo.get(ParametersEnum.NAV_TEXT_COLOR),
+        'NAV_BACK_COLOR':parameter_repo.get(ParametersEnum.NAV_BACK_COLOR),
         'slogan':parameter_repo.get(ParametersEnum.SLOGAN),
         'logo':main_pic_repo.get(name=MainPicEnum.LOGO),
         'favicon':main_pic_repo.get(name=MainPicEnum.FAVICON),
