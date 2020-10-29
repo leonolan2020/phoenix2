@@ -7,20 +7,35 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '-+(&pe9ld9unwos@077r(cg#_)1$^l0c##+%gpy@&95da$=_hp'
 
-# SECURITY WARNING: don't run with debug turned on in production!
+
+SERVER_ON_HEROKU=False
 DEBUG = False
-ON_SERVER_LOCAL=False
+SERVER_ON_LOCAL=False
 SERVER_ON_PARS=False
 
 
-# ON_SERVER_LOCAL=True
+# SERVER_ON_LOCAL=True
 SERVER_ON_PARS=True
+
+
+if SERVER_ON_HEROKU:
+    SECRET_KEY = '-+(&pe9ld9unwos@077r(cg#_)1$^l0c##+%gpy@&95da$=_hp'
+else:
+    try:        
+        from .secret_key import SECRET_KEY as SECRET_KEY_FROM_FILE
+        SECRET_KEY=SECRET_KEY_FROM_FILE
+    except :
+        if SERVER_ON_LOCAL:
+            secret_file_content="""SECRET_KEY = 'yj)%c-)__z_null-_l-ned!$6*cs)_=w@g&t=0vj^wg)knwm3z'"""
+            f = open('phoenix2/secret_key.py', 'w')  # open file in write mode
+            f.write(secret_file_content)
+            f.close()
+            from .secret_key import SECRET_KEY as SECRET_KEY_FROM_FILE
+            SECRET_KEY=SECRET_KEY_FROM_FILE
+
+
 
 
 
@@ -125,10 +140,9 @@ MEDIA_ROOT=os.path.join(BASE_DIR,'media')
 STATICFILES_DIRS=[os.path.join(BASE_DIR,'static')]
 
 
-SERVER_ON_HEROKU=False
 
-if '--no-color' in sys.argv or ON_SERVER_LOCAL:
-    ON_SERVER_LOCAL=True  
+if '--no-color' in sys.argv or SERVER_ON_LOCAL:
+    SERVER_ON_LOCAL=True  
     SERVER_ON_HEROKU=False
     SERVER_ON_PARS=False
 
@@ -136,7 +150,7 @@ if '--no-color' in sys.argv or ON_SERVER_LOCAL:
 if SERVER_ON_PARS:
     from . import settings_pars as server_settings
 
-if ON_SERVER_LOCAL:
+if SERVER_ON_LOCAL:
     from . import settings_local as server_settings
 
 DEBUG=server_settings.DEBUG
