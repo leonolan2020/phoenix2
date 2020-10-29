@@ -165,7 +165,7 @@
                         </div>
                     </templates>
                     {% if add_document_form %}
-                    <form id="document_form" @submit.prevent="add_document" enctype="multipart/form-data">
+                    <form id="add-document-form" @submit.prevent="add_document" enctype="multipart/form-data">
                         <div>
                             <input placeholder="عنوان فایل دانلود" type="text" name="title" class="form-control"
                                 v-model="document_title">
@@ -432,27 +432,54 @@
         methods: {
             add_document: function () {
                 console.log('11111111111111111')
-
+                let page_id = JSON.parse(`{{page.id}}`)
+                let title = app.document_title
                 let url = "{% url 'dashboard:add_document' %}"
                 let formData = new FormData();
-
-                formData.append("file1", $('#document-file')[0].files[0]);
+                let file1 = $('#add-document-form')[0].elements[1].files[0]
+                formData.append("file1", file1);
+                formData.append("title", title);
+                formData.append("csrfmiddlewaretoken", csrfmiddlewaretoken);
+                formData.append("page_id", page_id);
+                console.log(file1)
                 console.log('22222222222222222222222')
-                var posting = $.post(url,
-                    {
-                        title: app.document_title,
-                        file1: formData,
-                        page_id: JSON.parse(`{{page.id}}`),
-                        csrfmiddlewaretoken: csrfmiddlewaretoken
-                    }
-                );
+                // var posting = $.post(url,
+                //     {
+                //         title: title,
+                //         page_id: page_id,
+                //         csrfmiddlewaretoken: csrfmiddlewaretoken
+                //     }
+                // );
+                // console.log('333333333333333')
 
-                // Put the results in a div
-                posting.done(function (data) {
-                    console.log(data)
-                    if (data.result === 'SUCCEED')
-                        app.documents = data.documents
-                })
+                // // Put the results in a div
+                // posting.done(function (data) {
+                //     console.log(data)
+                //     if (data.result === 'SUCCEED')
+                //         app.documents = data.documents
+                // })
+                $.ajax({
+                    url: url,
+                    type: 'post',
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    success: function (response) {
+                        if (response != 0) {
+                            if (response.result === 'SUCCEED') {
+                                console.log(response)
+                                app.documents = response.documents
+                                // alert('file uploaded');
+                                app.title=''
+                                app.document_title=''
+                            }
+                        }
+                        else {
+                            // alert('file not uploaded');
+                        }
+                    },
+                });
+
             },
             remove_tag: function (tag_id) {
                 let url = "{% url 'dashboard:remove_tag' %}"

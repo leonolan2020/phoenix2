@@ -81,8 +81,11 @@ class PageViews(APIView):
         return JsonResponse({'result':FAILED})
 
     def add_document(self,request,*args, **kwargs):  
-        level=1      
-        if request.method=='POST':
+        level=1  
+        user=request.user
+        profile=ProfileRepo(user=user).me
+        
+        if request.method=='POST' and profile is not None:
             level=2
             add_document_form=AddDocumentForm(request.POST,request.FILES)
             if add_document_form.is_valid():
@@ -91,12 +94,11 @@ class PageViews(APIView):
                 page_id=add_document_form.cleaned_data['page_id']
                 print(request.FILES)
                 print(200*'#')
-                file1=request.FILES['file1']                
-                user=request.user
+                file1=request.FILES['file1']              
                 page=PageRepo(user=user).page(page_id=page_id)
                 if page is not None:
                     level=4
-                    document=Document(title=title,icon_title='tag',icon_material='get_app',file=file1)
+                    document=Document(profile=profile,title=title,icon_title='tag',icon_material='get_app',file=file1)
                     document.save()
                     page.documents.add(document)  
                     page.save()
