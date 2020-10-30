@@ -23,7 +23,11 @@ class Icon(models.Model):
     height=models.IntegerField(_("ارتفاع آیکون"),null=True,blank=True)
     
     
-    def get_icon_tag(self,icon_style=''):
+    def get_icon_tag(self,icon_style='',color=None):
+        if color is None:
+            self.color=self.color
+        else:
+            self.color=color
         if self.image_origin is not None and self.image_origin:
             return f'<img src="{MEDIA_URL}{str(self.image_origin)}" alt="{self.title}" height="{self.height}" width="{self.width}">'
         if self.icon_material is not None and len(self.icon_material)>0:
@@ -34,6 +38,8 @@ class Icon(models.Model):
             return f'<span  style="{icon_style}" class="text-{self.color}">{self.icon_svg}</span>'
     
     
+    
+      
       
     class Meta:
         verbose_name = _("Icon")

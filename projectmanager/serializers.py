@@ -13,4 +13,4 @@ class ContractorSerializer(serializers.ModelSerializer):
 class EventSerializer(serializers.ModelSerializer):
     class Meta:
         model=Event        
-        fields=['id','title','get_tag','short_description','persian_date_added']
+        fields=['get_tag']

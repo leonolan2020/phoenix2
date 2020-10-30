@@ -1,3 +1,4 @@
+from dashboard.enums import ColorEnum
 import os
 from django.http import Http404,HttpResponse
 from django.db import models
@@ -106,25 +107,29 @@ class OrganiazationUnit(ManagerPage):
 
 
 class Event(ManagerPage):
+	event_date=models.DateTimeField(_("event_date"), auto_now=False, auto_now_add=False)
+
+	def persian_event_date(self):
+		return PersianCalendar().from_gregorian(self.event_date)
 
 	def get_tag(self):
 		event=self
 		return f"""
 		 <div class="timeline-badge {event.color}">
-                    {event.icon.get_icon_tag()}
+                    {event.icon.get_icon_tag(color=ColorEnum.LIGHT)}
                 </div>
                 <div class="timeline-panel">
                     <div class="timeline-heading">
                         <span class="badge badge-pill badge-danger">
                             {event.title}
                         </span>
-                        <span class="text-secondary" style="float: right;">
+                        <span title="{event.event_date.strftime("%Y/%m/%d %H:%M:%S")}" class="text-secondary" style="float: right;">
                             <small>
-                                {event.persian_date_added()}
+                                {event.persian_event_date()}
                             </small> </span>
                     </div>
                     <div class="timeline-body">
-                        {event.short_description}
+                    <p>   {event.short_description}<p>
                     </div>
                     <a class="btn btn-light btn-sm btn-round" href="{event.get_absolute_url()}">
                         <i class="material-icons">description</i>

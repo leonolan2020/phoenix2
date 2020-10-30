@@ -67,7 +67,7 @@ class PageViews(APIView):
                 event_date=PersianCalendar().to_gregorian(event_date)
                 if project is not None:
                     log=4
-                    event=EventRepo(user=user).add(project_id=project_id,title=title,short_description=short_description,date_added=event_date)
+                    event=EventRepo(user=user).add(project_id=project_id,title=title,short_description=short_description,event_date=event_date)
                     if event is not None:
                         log=5
                         events_s=EventSerializer(project.events.all(),many=True).data

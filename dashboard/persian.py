@@ -8,6 +8,8 @@ class PersianCalendar:
         return f'<span title="{value.strftime("%Y/%m/%d %H:%M:%S") }">{str(a)}</span>'
     def to_gregorian(self,persian_date_input):
         persian_date=self.parse(persian_date_input)
+        print(persian_date.persian_date)
+        print(200*"#")
         return persian_date.date
     def __init__(self,date=None):
         if date is None:

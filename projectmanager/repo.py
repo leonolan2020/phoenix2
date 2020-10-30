@@ -46,12 +46,14 @@ class EventRepo:
             return self.objects.get(pk=event_id)
         except:
             return None
-    def add(self,title,short_description,project_id,date_added):
+    def add(self,title,short_description,project_id,event_date,color=None):
+        if color is None:
+            color=ColorEnum.DANGER
         project=ProjectRepo(user=self.user).project(project_id=project_id)
         if project is not None and self.profile is not None:
-            icon=Icon(icon_title='event icon',color=ColorEnum.LIGHT,icon_fa='fa fa-calendar')
+            icon=Icon(icon_title='event icon',color=color,icon_fa='fa fa-calendar')
             icon.save()
-            event=Event(profile=self.profile,color=ColorEnum.DANGER,icon=icon,title=title,short_description=short_description,date_added=date_added)
+            event=Event(profile=self.profile,color=color,icon=icon,title=title,short_description=short_description,event_date=event_date)
             event.save()
             project.events.add(event)
             project.save()
