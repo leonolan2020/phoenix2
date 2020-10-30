@@ -18,6 +18,10 @@ from dashboard.persian import PersianCalendar
 class ManagerPage(DashboardPage):
 	parent=models.ForeignKey("ManagerPage", verbose_name=_("parent"),null=True,blank=True, on_delete=models.SET_NULL)
 
+	def get_download_url(self):
+		return reverse('projectmanager:download_page',kwargs={'pk':self.pk})
+
+
 	def get_breadcrumb_url(self):
 		if self.parent is None:
 			return f"""<div class="d-inline"><a href="{self.get_absolute_url()}">&nbsp;{self.title}&nbsp;</a></div>"""

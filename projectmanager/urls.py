@@ -18,7 +18,7 @@ urlpatterns = [
     path('add_contractor/',apis.PageViews().add_contractor,name='add_contractor'),
     path('tag/<int:pk>/',views.PageViews().project,name='tag'),
     path('archivedocument/<int:pk>/',views.PageViews().archivedocument,name='archivedocument'),
-    
+    path('download_page/<int:pk>/',views.DownloadViews().get_page,name='download_page'),
     
     
 ]

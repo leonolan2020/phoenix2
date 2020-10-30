@@ -19,3 +19,6 @@ class AdminUtility():
         return self.get_link(class_name='ourwork',class_title='پروژه ما')
     def get_add_homeslider(self):
         return self.get_link(class_name='homeslider',class_title='اسلایدر')
+
+
+

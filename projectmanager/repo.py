@@ -11,7 +11,11 @@ class ManagerPageRepo:
         return self.objects.all()
     def search(self,search_for):
         return self.objects.filter(Q(title__contains=search_for)|Q(short_description__contains=search_for))
-
+    def page(self,page_id):
+        try:
+            return self.objects.get(pk=page_id)
+        except :
+            return None
 class ContractorRepo:
     def __init__(self,user=None):
         self.objects=Contractor.objects

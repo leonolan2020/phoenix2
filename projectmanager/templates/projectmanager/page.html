@@ -151,8 +151,9 @@
                     <h4 class="mt-3 farsi text-right">دانلود ها</h4>
                     <templates v-for="document in documents">
                         <div class="mr-4">
-                            <a v-if="document.profile" :title="document.profile.name" :href="document.profile.get_absolute_url">
-                                <img :src="document.profile.image" class="rounded-circle" width="32px">  
+                            <a v-if="document.profile" :title="document.profile.name"
+                                :href="document.profile.get_absolute_url">
+                                <img :src="document.profile.image" class="rounded-circle" width="32px">
                             </a>
                             <a :href="document.get_download_url" class="btn btn-success btn-link ">
                                 <i class="material-icons text-success">get_app</i>
@@ -208,9 +209,13 @@
                         </div>
                     </form>
                     {% endif %}
+                    <p>
+                        <a href="{{page.get_download_url}}" class="btn btn-success btn-round">
+                            <i class="material-icons">get_app</i>
+                            دانلود
 
-
-
+                        </a>
+                    </p>
                 </div>
                 <div class="card-footer">
                     <div class="stats">

@@ -8,6 +8,7 @@ from .serializers import *
 from .forms import *
 from dashboard.forms import AddDocumentForm,AddTagForm,AddLinkForm,AddImageForm
 import json
+from utility.excel import ReportWorkBook,ReportSheet
 from dashboard.serializers import TagSerializer,DocumentSerializer,LinkSerializer,GalleryPhotoSerializer
 from .utils import AdminUtility
 TEMPLATE_ROOT='projectmanager/'
@@ -122,3 +123,13 @@ class PageViews(View):
         return render(request,TEMPLATE_ROOT+'contractor.html',context)
 
 
+class DownloadViews(View):
+    def get_page(self,request,pk,*args, **kwargs):
+        user=request.user
+        page_id=pk
+        page=ManagerPageRepo(user=user).page(page_id=page_id)
+        lines_s=page.links.values('title')
+        report_work_book=ReportWorkBook()
+        report_work_book.sheets.append(ReportSheet(data=lines_s,table_headers=None,title='سفارش شماره '+str(page_id)))
+        response=report_work_book.to_excel()    
+        return response
