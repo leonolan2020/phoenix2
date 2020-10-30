@@ -42,13 +42,18 @@
             </div>
         </div>
 
-
-        <div class="card">
-            <div class=" card-header ">
-                <h4 class=" card-title farsi text-right">موقعیت -
-                    <small class="description">نقاط مشخص در نقشه گوگل</small>
-                </h4>
+        <div class="card card-stats">
+            <div class="card-header card-header-warning card-header-icon">
+                <div class="card-icon">
+                    <i class="material-icons">place</i>
+                </div>
+                <p class="card-category">
+                    {{project.title}}
+                </p>
+                <h3 class="card-title">موقعیت در نقشه</h3>
             </div>
+
+       
             <div class="card-body ">
 
 
@@ -71,17 +76,50 @@
         </div>
 
 
+        <div class="card card-stats">
+            <div class="card-header card-header-success card-header-icon">
+                <div class="card-icon">
+                    <i aria-hidden="true" class="material-icons">engineering</i>
+                </div>
+                <p class="card-category">
+                    {{project.title}}
+                </p>
+                <h3 class="card-title">پیمانکاران</h3>
+            </div>
+            <div class="card-body">
+              <template v-for="contractor in contractors" v-html="contractor.get_link">
+<p class="mr-4">
+
+    <a :class="'text-'+contractor.color" :href="contractor.get_absolute_url">
+        <i class="mx-2 text-success material-icons">engineering</i>
+        {% verbatim %}
+          {{contractor.title}}
+        {% endverbatim %}
+
+    </a>
+</p>
+              </template>
+
+            </div>
+            <div class="card-footer">
+                <div class="stats"><i class="material-icons">date_range</i> Last 24 Hours
+                </div>
+            </div>
+        </div>
+
+
+
 
     </div>
     <div class="col-md-6">
         <h3 class="text-center farsi">رویداد ها و وقایع</h3>
         <ul class="timeline timeline-simple">
-          
+
             <li class="timeline-inverted" v-for="event in events" v-html="event.get_tag">
-              
-                
+
+
             </li>
-          
+
 
             <li class="timeline-inverted">
                 <div class="timeline-badge success">
@@ -90,7 +128,8 @@
                 <div class="timeline-panel">
                     <div class="timeline-heading">
                         <span class="badge badge-pill badge-danger">
-                            <input type="text" v-model="event_title" class="form-control text-light" placeholder="عنوان رویداد" id="event-title">
+                            <input type="text" v-model="event_title" class="form-control text-light"
+                                placeholder="عنوان رویداد" id="event-title">
                         </span>
                         <div class="text-secondary" style="float: right;">
                             <small>
@@ -99,7 +138,8 @@
                         </div>
                     </div>
                     <div class="timeline-body">
-                        <input type="text" v-model="event_description" class="form-control" placeholder="شرح رویداد" id="event-description">
+                        <input type="text" v-model="event_description" class="form-control" placeholder="شرح رویداد"
+                            id="event-description">
 
                     </div>
                     <button @click="add_event" class="btn btn-light btn-sm btn-round" href="{{event.get_absolute_url}}">
@@ -144,6 +184,7 @@
             event_description: '',
             current_location: `{{project.location|escapejs}}`,
             events: JSON.parse(`{{events_s|escapejs}}`),
+            contractors: JSON.parse(`{{contractors_s|escapejs}}`),
         },
         components: {
             DatePicker: VuePersianDatetimePicker

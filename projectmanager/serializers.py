@@ -7,9 +7,10 @@ class ProjectSerializer(serializers.ModelSerializer):
         model=Project        
         fields=['get_link']
 class ContractorSerializer(serializers.ModelSerializer):
+    
     class Meta:
         model=Contractor        
-        fields=['get_link']
+        fields=['id','color','get_link','title','get_absolute_url']
 class EventSerializer(serializers.ModelSerializer):
     class Meta:
         model=Event        
