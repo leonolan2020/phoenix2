@@ -37,7 +37,7 @@
 <div id="app">
 
     <div class="row rtl">
-        <div class="col-md-6">
+        <div class="col-12">
             <div class="card card-stats">
                 <div class="card-header card-header-info card-header-icon">
                     <div class="card-icon">
@@ -119,129 +119,185 @@
 
 
         </div>
-        <div class="col-md-6">
-            <div class="card card-stats">
-                <div class="card-header card-header-success card-header-icon">
-                    <div class="card-icon">
-                        <i class="material-icons">store</i>
-                    </div>
-                    <p class="card-category">{{page.title}}</p>
-                    <h3 class="card-title">تگ و لینک و دانلود</h3>
-                </div>
-                <div class="card-body">
-                    <h4 class="mt-3 farsi text-right">تگ ها</h4>
-
-
-                    <div class="mr-4 bootstrap-tagsinput rose-badge">
-                        <template v-for="tag in tags" v-html="tag.get_link">
-
-                            {% verbatim %}
-                            <span class="tag badge mx-2">
-                                <a :href="tag.get_absolute_url" class="text-light">
-                                    {{tag.title}}
-                                </a>
-
-                                <span @click="remove_tag(tag.id)" data-role="remove"></span></span>
-
-
-
-
-                            {% endverbatim %}
-                        </template>
-
-
-                        <form class="d-inline mx-2" v-on:submit.prevent="add_tag">
-                            <span class="bmd-form-group"><input v-model="tag_title" type="text" class="form-control"
-                                    placeholder="تگ جدید"></span>
-                        </form>
-                    </div>
-
-                    <h4 class="mt-3 farsi text-right">دانلود ها</h4>
-                    <templates v-for="document in documents">
-                        <div class="mr-4">
-                            <a :href="document.get_download_url" class="btn btn-success btn-link ">
-                                <i class="material-icons text-success">get_app</i>
-                                {% verbatim %}
-                                {{document.title}}
-                                {% endverbatim %}
-                            </a>
-                        </div>
-                    </templates>
-                    {% if add_document_form %}
-                    <form id="add-document-form" @submit.prevent="add_document" enctype="multipart/form-data">
-                        <div>
-                            <input placeholder="عنوان فایل دانلود" type="text" name="title" class="form-control"
-                                v-model="document_title">
-
-                            <div>
-                                <span class="btn btn-raised btn-round btn-default btn-file">
-                                    <span class="fileinput-new">انتخاب فایل</span>
-                                    <input type="hidden" value="" name="..."><input type="file" v-model="document_file"
-                                        name="">
-                                    <div class="ripple-container"></div>
-                                </span>
-
-                                <button v-if="(document_file && document_title) || false" class="btn btn-info btn-round"
-                                    type="submit">آپلود</button>
-
-                            </div>
-
-                            <!-- <div>
-                                    <span class="btn btn-raised btn-round btn-default btn-file">
-                                        <span class="fileinput-new">Add Photo</span>
-                                        <span class="fileinput-exists">Change</span>
-                                        <input type="file"  v-model="document_file" name="">
-                                        <input type="hidden"  value="" name="...">
-                                    <div class="ripple-container"></div></span>
-                                    <br>
-                                    <a href="#pablo" class="btn btn-danger btn-round fileinput-exists google-drive-opener" data-dismiss="fileinput">
-                                        <i class="fa fa-times"></i> Remove
-                                    </a>
-                                </div> -->
-
-
-
-                            <!-- <div class="form-group has-default form-file-upload form-file-simple bmd-form-group">
-                                    <input type="text" class="form-control inputFileVisible" placeholder="Simple chooser...">
-                                    <input type="file"  name="file" id="document-file1" v-model="document_file" class="inputFileHidden">
+       
         
-                                </div> -->
 
-
-
-
-                        </div>
-                    </form>
-                    {% endif %}
-
-                    <h4 class="mt-3 farsi text-right">لینک ها</h4>
-                    <templates v-for="link in links">
-                        <div class="mr-4 mb-3" v-html="link.get_link">
-
-                        </div>
-                    </templates>
-                    {% if add_link_form %}
-                    <form id="add-link-form" @submit.prevent="add_link">
-                        <div>
-                            <input placeholder="عنوان لینک" type="text" class="form-control" v-model="link_title">
-                            <input placeholder="آدرس لینک" type="text" class="form-control" v-model="link_url">
-                            <button v-if="link_url && link_title" class="btn btn-warning btn-round"
-                                type="submit">تایید</button>
-                        </div>
-                    </form>
-                    {% endif %}
-
+    </div>
+  <div class="row rtl">
+    <!-- links -->
+    <div class="col-md-4">
+        <div class="card card-stats">
+            <div class="card-header card-header-primary card-header-icon">
+                <div class="card-icon">
+                    <i class="fa fa-link"></i>
                 </div>
-                <div class="card-footer">
-                    <div class="stats">
-                        <i class="material-icons">date_range</i> Last 24 Hours
+                <p class="card-category">{{page.title}}</p>
+                <h3 class="card-title"> لینک</h3>
+            </div>
+            <div class="card-body">
+          
+                <h4 class="mt-3 farsi text-right">لینک ها</h4>
+                <templates v-for="link in links">
+                    <div class="mr-4 mb-3" v-html="link.get_link">
+
                     </div>
+                </templates>
+                {% if add_link_form %}
+                <form id="add-link-form" @submit.prevent="add_link">
+                    <div>
+                        <input placeholder="عنوان لینک" type="text" class="form-control" v-model="link_title">
+                        <input placeholder="آدرس لینک" type="text" class="form-control" v-model="link_url">
+                        <button v-if="link_url && link_title" class="btn btn-warning btn-round"
+                            type="submit">تایید</button>
+                    </div>
+                </form>
+                {% endif %}
+
+            </div>
+            <div class="card-footer">
+                <div class="stats">
+                    <i class="material-icons">date_range</i> Last 24 Hours
                 </div>
             </div>
         </div>
-
     </div>
-  
+
+    <!-- downloads -->
+    <div class="col-md-4">
+        <div class="card card-stats">
+            <div class="card-header card-header-success card-header-icon">
+                <div class="card-icon">
+                    <i class="fa fa-download" aria-hidden="true"></i>
+                </div>
+                <p class="card-category">{{page.title}}</p>
+                <h3 class="card-title">دانلود</h3>
+            </div>
+            <div class="card-body">
+               
+                
+
+                <h4 class="mt-3 farsi text-right">دانلود ها</h4>
+                <templates v-for="document in documents">
+                    <div class="mr-4">
+                        <a :href="document.get_download_url" class="btn btn-success btn-link ">
+                            <i class="material-icons text-success">get_app</i>
+                            {% verbatim %}
+                            {{document.title}}
+                            {% endverbatim %}
+                        </a>
+                    </div>
+                </templates>
+                {% if add_document_form %}
+                <form id="add-document-form" @submit.prevent="add_document" enctype="multipart/form-data">
+                    <div>
+                        <input placeholder="عنوان فایل دانلود" type="text" name="title" class="form-control"
+                            v-model="document_title">
+
+                        <div>
+                            <span class="btn btn-raised btn-round btn-default btn-file">
+                                <span class="fileinput-new">انتخاب فایل</span>
+                                <input type="hidden" value="" name="..."><input type="file" v-model="document_file"
+                                    name="">
+                                <div class="ripple-container"></div>
+                            </span>
+
+                            <button v-if="(document_file && document_title) || false" class="btn btn-info btn-round"
+                                type="submit">آپلود</button>
+
+                        </div>
+
+                        <!-- <div>
+                                <span class="btn btn-raised btn-round btn-default btn-file">
+                                    <span class="fileinput-new">Add Photo</span>
+                                    <span class="fileinput-exists">Change</span>
+                                    <input type="file"  v-model="document_file" name="">
+                                    <input type="hidden"  value="" name="...">
+                                <div class="ripple-container"></div></span>
+                                <br>
+                                <a href="#pablo" class="btn btn-danger btn-round fileinput-exists google-drive-opener" data-dismiss="fileinput">
+                                    <i class="fa fa-times"></i> Remove
+                                </a>
+                            </div> -->
+
+
+
+                        <!-- <div class="form-group has-default form-file-upload form-file-simple bmd-form-group">
+                                <input type="text" class="form-control inputFileVisible" placeholder="Simple chooser...">
+                                <input type="file"  name="file" id="document-file1" v-model="document_file" class="inputFileHidden">
+    
+                            </div> -->
+
+
+
+
+                    </div>
+                </form>
+                {% endif %}
+
+              
+
+            </div>
+            <div class="card-footer">
+                <div class="stats">
+                    <i class="material-icons">date_range</i> Last 24 Hours
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+<!-- tags -->
+    <div class="col-md-4">
+        <div class="card card-stats">
+            <div class="card-header card-header-info card-header-icon">
+                <div class="card-icon">
+                    <i class="fa fa-tags"></i>
+                </div>
+                <p class="card-category">{{page.title}}</p>
+                <h3 class="card-title">تگ </h3>
+            </div>
+            <div class="card-body">
+                <h4 class="mt-3 farsi text-right">تگ ها</h4>
+
+
+                <div class="mr-4 bootstrap-tagsinput rose-badge">
+                    <template v-for="tag in tags" v-html="tag.get_link">
+
+                        {% verbatim %}
+                        <span class="tag badge mx-2">
+                            <a :href="tag.get_absolute_url" class="text-light">
+                                {{tag.title}}
+                            </a>
+
+                            <span @click="remove_tag(tag.id)" data-role="remove"></span></span>
+
+
+
+
+                        {% endverbatim %}
+                    </template>
+
+
+                    <form class="d-inline mx-2" v-on:submit.prevent="add_tag">
+                        <span class="bmd-form-group"><input v-model="tag_title" type="text" class="form-control"
+                                placeholder="تگ جدید"></span>
+                    </form>
+                </div>
+
+               
+                
+
+            </div>
+            <div class="card-footer">
+                <div class="stats">
+                    <i class="material-icons">date_range</i> Last 24 Hours
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+  </div>
     {% if page.images.all %}
 
 
