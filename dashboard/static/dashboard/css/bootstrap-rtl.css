@@ -1156,7 +1156,7 @@ th {
 }
 @media (min-width: 768px) {
   .navbar-nav {
-    float: right;
+    /* float: right; */
   }
   .navbar-nav > li {
     float: right;
