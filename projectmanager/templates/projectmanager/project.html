@@ -53,7 +53,7 @@
                 <h3 class="card-title">موقعیت در نقشه</h3>
             </div>
 
-       
+
             <div class="card-body ">
 
 
@@ -87,18 +87,18 @@
                 <h3 class="card-title">پیمانکاران</h3>
             </div>
             <div class="card-body">
-              <template v-for="contractor in contractors" v-html="contractor.get_link">
-<p class="mr-4">
+                <template v-for="contractor in contractors" v-html="contractor.get_link">
+                    <p class="mr-4">
 
-    <a :class="'text-'+contractor.color" :href="contractor.get_absolute_url">
-        <i class="mx-2 text-success material-icons">engineering</i>
-        {% verbatim %}
-          {{contractor.title}}
-        {% endverbatim %}
+                        <a :class="'text-'+contractor.color" :href="contractor.get_absolute_url">
+                            <i class="mx-2 text-success material-icons">engineering</i>
+                            {% verbatim %}
+                            {{contractor.title}}
+                            {% endverbatim %}
 
-    </a>
-</p>
-              </template>
+                        </a>
+                    </p>
+                </template>
 
             </div>
             <div class="card-footer">
@@ -157,6 +157,36 @@
 
 
     </div>
+
+
+
+
+    <div class="col-12">
+        <div class="card card-stats">
+            <div class="card-header card-header-success card-header-icon">
+                <div class="card-icon">
+                    <i aria-hidden="true" class="material-icons">engineering</i>
+                </div>
+                <p class="card-category">
+                    {{project.title}}
+                </p>
+                <h3 class="card-title">گانت چارت 2</h3>
+            </div>
+            <div class="card-body">
+
+                <div id="chart_div2">
+
+                </div>
+
+            </div>
+            <div class="card-footer">
+                <div class="stats"><i class="material-icons">date_range</i> Last 24 Hours
+                </div>
+            </div>
+        </div>
+
+    </div>
+
 </div>
 
 {% endblock  %}
@@ -267,4 +297,11 @@
         },
     })
 </script>
+
+
+
+
+<script type="text/javascript" src="{% static 'projectmanager/charts/loader.js' %}"></script>
+
+{% include "projectmanager/includes/guant-chart2.html" %}
 {% endblock %}
