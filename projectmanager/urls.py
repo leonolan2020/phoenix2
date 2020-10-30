@@ -6,6 +6,7 @@ from . import apis
 app_name=APP_NAME
 urlpatterns = [
     path('',views.BasicViews().home,name='home'),
+    path('archivedocuments/',views.BasicViews().archive_documents,name='archivedocuments'),
     path('search/',views.BasicViews().search,name='search'),
     path('project/<int:pk>/',views.PageViews().project,name='project'),
     path('contractor/<int:pk>/',views.PageViews().contractor,name='contractor'),
@@ -16,6 +17,7 @@ urlpatterns = [
     path('add_event/',apis.PageViews().add_event,name='add_event'),
     path('add_contractor/',apis.PageViews().add_contractor,name='add_contractor'),
     path('tag/<int:pk>/',views.PageViews().project,name='tag'),
+    path('archivedocument/<int:pk>/',views.PageViews().archivedocument,name='archivedocument'),
     
     
     

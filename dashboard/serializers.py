@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from .models import Comment,Blog,Link,Notification,Tag,Document,GalleryPhoto
 from authentication.models import Profile
-
+from authentication.serializers import ProfileSerializer
 
 class BlogSerializer(serializers.ModelSerializer):
     class Meta:
@@ -30,10 +30,7 @@ class CommentSerializer(serializers.ModelSerializer):
     class Meta:
         model=Comment
         fields=['id','text','profile_id','profile_name','persian_date_added','persian_date_added_tag','profile_image']
-class ProfileSerializer(serializers.ModelSerializer):
-    class Meta:
-        model=Profile
-        fields=['id','name','image','get_absolute_url']      
+      
 
 class NotificationSerializer(serializers.ModelSerializer):
     class Meta:
@@ -41,7 +38,8 @@ class NotificationSerializer(serializers.ModelSerializer):
         fields=['id','title','url','get_absolute_url','icon','body','seen','date_added','color']
 
 class GalleryPhotoSerializer(serializers.ModelSerializer):
+    profile=ProfileSerializer()
     class Meta:
         model=GalleryPhoto
-        fields=['id','image','get_absolute_url','get_edit_url','persian_date_added','thumbnail','image_description','image_title','location']      
+        fields=['id','image','profile','get_absolute_url','get_edit_url','persian_date_added','thumbnail','image_description','image_title','location']      
 

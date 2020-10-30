@@ -1,0 +1,230 @@
+{% extends "dashboard/layout.html" %}
+{% load static %}
+
+
+{% block head %}
+<style>
+    .em25 {
+        font-size: 2.5em;
+    }
+</style>
+{% endblock  %}
+
+
+{% block ofbar %}
+
+{% endblock  %}
+
+
+{% block content %}
+
+
+
+<div class="row" id="app">
+    <div class="col-lg-2"></div>
+    <div class="col-lg-8">
+        <div class="page-categories">
+            <h3 class="title text-center">اسناد آرشیو شده</h3>
+            <br>
+            <ul class="nav nav-pills nav-pills-success nav-pills-icons justify-content-center" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" data-toggle="tab" href="#link7" role="tablist">
+                        <i class="material-icons">info</i> اسناد
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#link8" role="tablist">
+                        <i class="material-icons">engineering</i> پیمانکار ها
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#link9" role="tablist">
+                        <i class="material-icons">gavel</i>انبار های متریال
+                    </a>
+                </li>
+
+            </ul>
+            <div class="tab-content tab-space tab-subcategories">
+                <div class="tab-pane  active" id="link7">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title text-right">سند های آرشیو شده</h4>
+                            <p class="card-category">
+                                اطلاعات بیشتر
+                            </p>
+                        </div>
+                        <div class="card-body">
+
+                            <p>
+                                ریشه‌ی مدیریت پروژه به روش‌ها و فرآیندهایی برمی‌گردد که حدود صد سال پیش در کسب‌و‌کار
+                                توسعه پیدا کردند.
+                                با این حال، در سال‌های اخیر، مدیریت پروژه رشد چشمگیری داشته و به عنوان یک عملیات مجزا و
+                                جدی در تجارت
+                                ظهور کرده است و در صحنه‌ی تجارت جهانی، یعنی جایی که شرکت‌ها دائما به دنبال رسیدن به مزیت
+                                رقابتی هستند،
+                                به یک عامل کلیدی تبدیل شده است. در مقاله زیر با مفهوم مدیریت پروژه بیشتر آشنا خواهید شد.
+
+
+                                <br>
+                            </p>
+                            <div>
+
+
+
+                                <template v-for="archive_document in archive_documents">
+                                    <div v-html="archive_document.get_link"></div>
+
+
+                                </template>
+                            </div>
+                            {% if add_project_form %}
+                            <div class="mt-5 mx-5">
+                                <div class="form-group bmd-form-group">
+                                    <label for="exampleInput1" class="bmd-label-floating">نام پروژه جدید</label>
+                                    {% csrf_token %}
+                                    <input type="hidden" name="parent_id" value="0">
+                                    <form @submit.prevent="add_project">
+                                        <input v-model="title_project" type="text" class="form-control"
+                                            id="exampleInput1" name="title" required="" aria-required="true">
+                                    </form>
+
+                                </div>
+
+
+                            </div>
+                            {% endif %}
+
+
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane" id="link8">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title farsi text-right">پیمانکار ها</h4>
+                            <p class="card-category">
+                                لیست پیمانکار های ثبت شده
+                            </p>
+                        </div>
+                        <div class="card-body">
+                            <p>
+                                پیمانکار عمومی (انگلیسی: General contractor) به سازمان یا گروهی ازسازمانها
+                                (مشارکت/کنسرسیوم) گفته می‌شود
+                                که با سازمانی دیگر یا با شخصی دیگر که کارفرما نام دارد قرارداد امضاء می‌کند تا یک پروژه
+                                را از مرحله صفر
+                                (Green Field) تا تحویل نهایی FA به انجام برساند، دامنه خدمات وی می‌تواند شامل مهندسی و
+                                طراحی، تهیه مدارک
+                                فنی، (پیگیری) ساخت و نصب تجهیزات، ساختمان و اجرا، نصب و پیش راه اندازی، راه اندازی،
+                                مدیریت پیمان، تحویل
+                                موقت ودائم و حتی بخشی از مرحله بهره‌برداری باشد.
+                            </p>
+                           
+
+
+                            {% if add_contracotr_form %}
+                            <div class="mt-5 mx-5">
+                                <div class="form-group bmd-form-group">
+                                    <label for="exampleInput1" class="bmd-label-floating">نام پیمانکار جدید</label>
+                                    {% csrf_token %}
+                                    <input type="hidden" name="parent_id" value="0">
+
+                                    <form @submit.prevent="add_contractor">
+                                        <input v-model="title_contractor" type="text" class="form-control"
+                                            id="exampleInput1" name="title" required="" aria-required="true">
+                                    </form>
+
+                                </div>
+
+
+                            </div>
+                            {% endif %}
+
+
+
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane" id="link9">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title farsi text-right">انبار های متریال</h4>
+                            <p class="card-category">
+                                لیست همه انبار های متریال
+                            </p>
+                        </div>
+                        <div class="card-body">
+                            <p>
+                                در این سیستم اقلام با یک سیستم کدینگ مشخص وارد انبار می شوند. نگهداری اطلاعات اقلام در
+                                این سیستم مشابه
+                                با
+                                سیستم های رایج انبار در سیستم های غیر پروژ ه ای متفاوت است. در این نرم افزار اهمیت دارد
+                                که اقلام مربوط
+                                به
+                                کدام جبهه کاری و با چه الویتی واگذار می گردند. بازگشایی و بازرسی اقلام OPI، کنترل صحت یا
+                                خرابی(OSDI)
+                                ورود
+                                انبار و انطباق تعدادی با اقلام مهندسی شده (MTO) و نهیاتا کنترل تحویل بر اساس جبه های
+                                کاری تعریف شده در
+                                سایت همه جزء قابلیت های این نرم افزار می باشند.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-2"></div>
+</div>
+
+
+{% endblock  %}
+
+
+
+{% block modal %}
+
+{% endblock  %}
+
+
+
+{% block script %}
+
+<script>
+    $("#nav-item-projectmanager-archivedocuments").addClass('active')
+    $("#projectmanagerPages").addClass('show')
+</script>
+<script>
+    var app = new Vue({
+        el: "#app",
+        data: {
+            archive_documents: JSON.parse(`{{archive_documents_s|escapejs}}`),
+            document_title: '',
+            document_description: '',
+
+        },
+        methods: {
+            add_document: function () {
+                let url = "{% url 'projectmanager:add_project' %}"
+
+                var posting = $.post(url,
+                    {
+                        parent_id: 0,
+                        title: app.title_project,
+                        csrfmiddlewaretoken: csrfmiddlewaretoken
+                    }
+                );
+
+                // Put the results in a div
+                posting.done(function (data) {
+                    // word_app.word = (data.word);
+                    // word_app.definitions = (data.definitions);
+                    app.title_project = ""
+                    app.projects.push(data)
+                })
+            },
+
+        },
+    })
+</script>
+{% endblock  %}

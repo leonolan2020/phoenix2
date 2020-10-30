@@ -1,4 +1,4 @@
-from .models import Project,Event,OrganiazationUnit,Contractor,ManagerPage
+from .models import Project,Event,OrganiazationUnit,Contractor,ManagerPage,ArchiveDocument
 from authentication.repo import ProfileRepo
 from dashboard.models import Icon
 from dashboard.enums import ColorEnum
@@ -59,6 +59,20 @@ class EventRepo:
             project.save()
             return event
 
+class ArchiveDocumentRepo:
+    def __init__(self,user=None):
+        self.objects=ArchiveDocument.objects
+        self.user=user
+        self.profile=ProfileRepo(user=user).me
+    def list_roots(self):
+        return self.objects.filter(parent=None)
+    def archivedocument(self,archivedocument_id):
+        try:
+            return self.objects.get(pk=archivedocument_id)
+        except:
+            return None
+
+  
 class OrganiazationUnitRepo():
     def __init__(self,user=None):
         self.objects=OrganiazationUnit.objects

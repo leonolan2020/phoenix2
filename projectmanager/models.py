@@ -149,6 +149,7 @@ class Event(ManagerPage):
 		self.child_class='event'
 		super(Event,self).save()
 
+
 class Contractor(ManagerPage):
 
 	
@@ -160,6 +161,19 @@ class Contractor(ManagerPage):
 	def save(self):
 		self.child_class='contractor'
 		super(Contractor,self).save()
+
+
+
+class ArchiveDocument(ManagerPage):
+	
+
+	class Meta:
+		verbose_name = _("ArchiveDocument")
+		verbose_name_plural = _("اسناد آرشیوی")
+
+	def save(self):
+		self.child_class='archivedocument'
+		super(ArchiveDocument,self).save()
 
 
 

@@ -49,6 +49,13 @@ class BasicViews(View):
         contractors_s=json.dumps(ContractorSerializer(contractors,many=True).data)
         context['contractors_s']=contractors_s
         return render(request,TEMPLATE_ROOT+'index.html',context)
+    def archive_documents(self,request,*args, **kwargs):
+        user=request.user
+        context=getContext(request)
+        archive_documents=ArchiveDocumentRepo(user=user).list_roots()
+        archive_documents_s=json.dumps(ArchiveDocumentSerializer(archive_documents,many=True).data)
+        context['archive_documents_s']=archive_documents_s
+        return render(request,TEMPLATE_ROOT+'archive-documents.html',context)
 
 class PageViews(View):
     def getManagerPageContext(self,request,page,*args, **kwargs):
@@ -62,6 +69,15 @@ class PageViews(View):
         context['links_s']=json.dumps(LinkSerializer(page.links.all(),many=True).data)
         context['documents_s']=json.dumps(DocumentSerializer(page.documents.all(),many=True).data)
         return context
+    def archivedocument(self,request,pk,*args, **kwargs):
+        archivedocument_id=pk
+        user=request.user
+        archivedocument=ArchiveDocumentRepo(user=user).archivedocument(archivedocument_id=archivedocument_id)
+        context=self.getManagerPageContext(request,page=archivedocument)
+        context['archivedocument']=archivedocument
+        context['page']=archivedocument
+        context['page_type']='سند آرشیو شده'
+        return render(request,TEMPLATE_ROOT+'archive-document.html',context)
     def project(self,request,pk,*args, **kwargs):
         project_id=pk
         user=request.user

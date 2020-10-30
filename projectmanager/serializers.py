@@ -14,3 +14,7 @@ class EventSerializer(serializers.ModelSerializer):
     class Meta:
         model=Event        
         fields=['get_tag']
+class ArchiveDocumentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=ArchiveDocument        
+        fields=['get_link']

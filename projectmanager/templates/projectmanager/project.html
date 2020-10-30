@@ -128,6 +128,9 @@
 <script src="{% static 'persian/vue-persian-datetime-picker-browser.js' %}"></script>
 
 <script>
+    $("#nav-item-projectmanager-projects").addClass('active')
+
+
     let project_id = JSON.parse("{{page.id}}")
     var current_date = '{{current_date}}'
     let project_app = new Vue({
