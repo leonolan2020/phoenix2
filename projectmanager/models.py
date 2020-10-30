@@ -48,7 +48,7 @@ class ManagerPage(DashboardPage):
                   </div>
                   <div class="media-body mr-3">
                     <a href="{self.get_absolute_url()}">
-                      <h4 class="info-title text-primary text-right">
+                      <h4 class="info-title text-{self.color} text-right">
                         {self.title}
 
                       </h4>
