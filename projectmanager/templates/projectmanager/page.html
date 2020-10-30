@@ -13,7 +13,9 @@
 
 {% block content %}
 
-
+<p class="text-center text-secondary">
+    {{page_type}}
+</p>
 {% if page.parent %}
 <div class="text-center" style="font-size: 0.8em;">
     {{page.parent.get_breadcrumb_url|safe}}

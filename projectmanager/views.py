@@ -69,6 +69,7 @@ class PageViews(View):
             context['add_location_form']=AddLocationForm()
         if user.has_perm(APP_NAME+'.add_project'):
             context['add_project_form']=AddProjectForm()
+        context['page_type']='پروژه'
         return render(request,TEMPLATE_ROOT+'project.html',context)
     def event(self,request,pk,*args, **kwargs):
         event_id=pk
@@ -77,6 +78,7 @@ class PageViews(View):
         context=self.getManagerPageContext(request,page=event)
         context['event']=event
         context['page']=event
+        context['page_type']='رویداد'
         return render(request,TEMPLATE_ROOT+'event.html',context)
     def organiazationunit(self,request,pk,*args, **kwargs):
         organiazationunit_id=pk
@@ -85,6 +87,7 @@ class PageViews(View):
         context=self.getManagerPageContext(request=request,page=organiazationunit)
         context['organiazationunit']=organiazationunit
         context['page']=organiazationunit
+        context['page_type']='واحد سازمانی'
         return render(request,TEMPLATE_ROOT+'event.html',context)
     def contractor(self,request,pk,*args, **kwargs):
         contractor_id=pk
@@ -93,6 +96,7 @@ class PageViews(View):
         context=self.getManagerPageContext(request=request,page=contractor)
         context['contractor']=contractor
         context['page']=contractor
+        context['page_type']='پیمانکار'
         return render(request,TEMPLATE_ROOT+'contractor.html',context)
 
 

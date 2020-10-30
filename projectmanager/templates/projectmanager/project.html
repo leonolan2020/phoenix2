@@ -24,7 +24,7 @@
 
                 </template>
                 {% if add_project_form %}
-                <div class="mt-5 mx-5">
+                <form class="mt-5 mx-5" @submit.prevent="add_project">
                     <div class="form-group bmd-form-group">
                         <label for="exampleInput1" class="bmd-label-floating">نام پروژه زیرمجموعه جدید</label>
 
@@ -34,8 +34,8 @@
 
 
                     </div>
-                </div>
-                <button @click="add_project" class="btn btn-rose btn-round">افزودن</button>
+                    <button type="submit" class="btn btn-rose btn-round">افزودن</button>
+                </form>
                 {% endif %}
 
 
@@ -59,11 +59,11 @@
                 </div>
 
                 {% if add_location_form %}
-                <div>
+                <form @submit.prevent="add_location">
                     <input placeholder="موقعیت" type="text" class="form-control" v-model="location">
 
-                    <button v-if="location" class="btn btn-success btn-round" @click="add_location">تایید</button>
-                </div>
+                    <button v-if="location" class="btn btn-success btn-round" type="submit">تایید</button>
+                </form>
                 {% endif %}
 
 
