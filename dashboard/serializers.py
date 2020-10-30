@@ -21,9 +21,10 @@ class TagSerializer(serializers.ModelSerializer):
 
 
 class DocumentSerializer(serializers.ModelSerializer):
+    profile=ProfileSerializer()
     class Meta:
         model=Document
-        fields=['id','get_link','title','get_download_url']
+        fields=['id','get_link','profile','title','get_download_url']
 
 
 class CommentSerializer(serializers.ModelSerializer):

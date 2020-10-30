@@ -83,7 +83,7 @@
                                 </div>
                             </div>
                         </div>
-                       
+
                     </div>
                 </div>
             </div>
@@ -151,6 +151,9 @@
                     <h4 class="mt-3 farsi text-right">دانلود ها</h4>
                     <templates v-for="document in documents">
                         <div class="mr-4">
+                            <a v-if="document.profile" :title="document.profile.name" :href="document.profile.get_absolute_url">
+                                <img :src="document.profile.image" class="rounded-circle" width="32px">  
+                            </a>
                             <a :href="document.get_download_url" class="btn btn-success btn-link ">
                                 <i class="material-icons text-success">get_app</i>
                                 {% verbatim %}
@@ -400,7 +403,7 @@
         {% endif %}
 
 
-        
+
 
 
         <div class="col-md-4" v-for="image in images">
@@ -448,11 +451,18 @@
                 </div>
                 <div class="card-footer">
                     <div class="price">
-                        
-                        <a :href="image.profile.get_absolute_url" :title="image.profile.name">
-                        <img :src="image.profile.image" class="rounded-circle" width="32px" >
-                        </a>    
-                        
+
+                        <a v-if="image.profile" :href="image.profile.get_absolute_url" :title="image.profile.name">
+                            {% verbatim %}
+                            <small>
+                                <small>
+                                    {{image.profile.name}}
+                                </small>
+                            </small>
+                            {% endverbatim %}
+                            <img :src="image.profile.image" class="rounded-circle" width="32px">
+                        </a>
+
                     </div>
                     <div class="stats">
                         <p class="card-category">
@@ -487,7 +497,7 @@
 {% block script %}
 
 <script>
-    
+
     $("#projectmanagerPages").addClass("show")
 </script>
 <script src="{% static 'vendor/js/vue.min.js' %}"></script>
