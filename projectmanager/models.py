@@ -29,7 +29,7 @@ class ManagerPage(DashboardPage):
 
 	def persian_date_added(self):
 		return PersianCalendar().from_gregorian(self.date_added)
-		
+
 	def get_link(self):
 		icon=self.icon
 		if self.icon is None:
@@ -107,6 +107,35 @@ class OrganiazationUnit(ManagerPage):
 
 class Event(ManagerPage):
 
+	def get_tag(self):
+		event=self
+		return f"""
+		 <div class="timeline-badge {event.color}">
+                    {event.icon.get_icon_tag()}
+                </div>
+                <div class="timeline-panel">
+                    <div class="timeline-heading">
+                        <span class="badge badge-pill badge-danger">
+                            {event.title}
+                        </span>
+                        <span class="text-secondary" style="float: right;">
+                            <small>
+                                {event.persian_date_added()}
+                            </small> </span>
+                    </div>
+                    <div class="timeline-body">
+                        {event.short_description}
+                    </div>
+                    <a class="btn btn-light btn-sm btn-round" href="{event.get_absolute_url()}">
+                        <i class="material-icons">description</i>
+                        <small>
+                            <small>
+                                جزییات بیشتر
+                            </small>
+                        </small>
+                    </a>
+                </div>
+		"""
 	class Meta:
 		verbose_name = _("Event")
 		verbose_name_plural = _("Events")

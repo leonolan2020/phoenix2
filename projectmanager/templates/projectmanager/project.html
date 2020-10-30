@@ -76,35 +76,12 @@
     <div class="col-md-6">
         <h3 class="text-center farsi">رویداد ها و وقایع</h3>
         <ul class="timeline timeline-simple">
-            {% for event in project.events.all %}
-            <li class="timeline-inverted">
-                <div class="timeline-badge {{event.color}}">
-                    {{event.icon.get_icon_tag|safe}}
-                </div>
-                <div class="timeline-panel">
-                    <div class="timeline-heading">
-                        <span class="badge badge-pill badge-danger">
-                            {{event.title}}
-                        </span>
-                        <span class="text-secondary" style="float: right;">
-                            <small>
-                                {{event.date_added|to_persian_date|safe}}
-                            </small> </span>
-                    </div>
-                    <div class="timeline-body">
-                        {{event.short_description|safe}}
-                    </div>
-                    <a class="btn btn-light btn-sm btn-round" href="{{event.get_absolute_url}}">
-                        <i class="material-icons">description</i>
-                        <small>
-                            <small>
-                                جزییات بیشتر
-                            </small>
-                        </small>
-                    </a>
-                </div>
+          
+            <li class="timeline-inverted" v-for="event in events" v-html="event.get_tag">
+              
+                
             </li>
-            {% endfor %}
+          
 
             <li class="timeline-inverted">
                 <div class="timeline-badge success">
@@ -163,7 +140,7 @@
             event_title: '',
             event_description: '',
             current_location: `{{project.location|escapejs}}`,
-            events: `{{events_s|escapejs}}`,
+            events: JSON.parse(`{{events_s|escapejs}}`),
         },
         components: {
             DatePicker: VuePersianDatetimePicker
