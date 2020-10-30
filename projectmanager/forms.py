@@ -44,6 +44,12 @@ class AddAssignmentForm(forms.Form):
 class AddLocationForm(forms.Form):
     page_id=forms.IntegerField(required=True)
     location=forms.CharField(max_length=500,required=True)
+
+class AddEventForm(forms.Form):
+    project_id=forms.IntegerField(required=True)
+    title=forms.CharField(max_length=200,required=True)
+    short_description=forms.CharField(max_length=500,required=True)
+    event_date=forms.CharField(max_length=20,required=True)
 class AddWorkUnitForm(forms.Form):
     parent_id=forms.IntegerField(required=True)
     title=forms.CharField(max_length=50,required=True)

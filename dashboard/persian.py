@@ -1,4 +1,4 @@
-from persiantools.jdatetime import JalaliDateTime
+from persiantools.jdatetime import JalaliDateTime,JalaliDate
 from django.utils import timezone
 from .settings import SERVER_ON_PARS as SERVER_ON_PARS,SERVER_ON_HEROKU
 import datetime
@@ -6,7 +6,9 @@ class PersianCalendar:
     def tag(self,value):
         a=PersianCalendar().from_gregorian(value)
         return f'<span title="{value.strftime("%Y/%m/%d %H:%M:%S") }">{str(a)}</span>'
-
+    def to_gregorian(self,persian_date_input):
+        persian_date=self.parse(persian_date_input)
+        return persian_date.date
     def __init__(self,date=None):
         if date is None:
             self.date=datetime.datetime.today()

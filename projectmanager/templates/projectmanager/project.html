@@ -106,24 +106,67 @@
             </li>
             {% endfor %}
 
+            <li class="timeline-inverted">
+                <div class="timeline-badge success">
+                    <i class="material-icons">settings</i>
+                </div>
+                <div class="timeline-panel">
+                    <div class="timeline-heading">
+                        <span class="badge badge-pill badge-danger">
+                            <input type="text" v-model="event_title" class="form-control text-light" placeholder="عنوان رویداد" id="event-title">
+                        </span>
+                        <div class="text-secondary" style="float: right;">
+                            <small>
+                                <date-picker v-model="selected_date"></date-picker>
+                            </small>
+                        </div>
+                    </div>
+                    <div class="timeline-body">
+                        <input type="text" v-model="event_description" class="form-control" placeholder="شرح رویداد" id="event-description">
 
+                    </div>
+                    <button @click="add_event" class="btn btn-light btn-sm btn-round" href="{{event.get_absolute_url}}">
+                        <i class="material-icons">description</i>
+                        <small>
+                            <small>
+                                افزودن
+                            </small>
+                        </small>
+                    </button>
+                </div>
+            </li>
 
         </ul>
+
+
     </div>
 </div>
 
 {% endblock  %}
 
 {% block child_script %}
+
+<script src="{% static 'persian/moment.js' %}"></script>
+<script src="{% static 'persian/moment-jalaali.js' %}"></script>
+<script src="{% static 'persian/vue-persian-datetime-picker-browser.js' %}"></script>
+
 <script>
     let project_id = JSON.parse("{{page.id}}")
+    var current_date = '{{current_date}}'
     let project_app = new Vue({
         el: "#project-app",
         data: {
+            selected_date: current_date,
             projects: [],
             project_title: '',
             location: '',
+            event_title: '',
+            event_description: '',
             current_location: `{{project.location|escapejs}}`,
+            events: `{{events_s|escapejs}}`,
+        },
+        components: {
+            DatePicker: VuePersianDatetimePicker
         },
         methods: {
             add_project: function () {
@@ -145,6 +188,37 @@
                     if (data.result === 'SUCCEED') {
                         project_app.project_title = ""
                         project_app.projects.push(data.project)
+                    }
+                })
+            },
+            add_event: function () {
+                let url = "{% url 'projectmanager:add_event' %}"
+                console.log({
+                    project_id: project_id,
+                    title: project_app.event_title,
+                    short_description: project_app.event_description,
+                    event_date: project_app.selected_date,
+                    csrfmiddlewaretoken: csrfmiddlewaretoken
+                })
+                var posting = $.post(url,
+                    {
+                        project_id: project_id,
+                        title: project_app.event_title,
+                        short_description: project_app.event_description,
+                        event_date: project_app.selected_date,
+                        csrfmiddlewaretoken: csrfmiddlewaretoken
+                    }
+                );
+
+                // Put the results in a div
+                posting.done(function (data) {
+                    console.log(data)
+                    // word_app.word = (data.word);
+                    // word_app.definitions = (data.definitions);
+                    if (data.result === 'SUCCEED') {
+                        project_app.event_title = ""
+                        project_app.event_description = ""
+                        project_app.events = data.events
                     }
                 })
             },

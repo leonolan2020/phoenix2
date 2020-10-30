@@ -51,3 +51,25 @@ class PageViews(APIView):
                 if contractor is not None:
                     contractor_s=ContractorSerializer(contractor).data
                     return JsonResponse(contractor_s)
+    def add_event(self,request):
+        log=1
+        user=request.user
+        if request.method=='POST':
+            log=2
+            add_event_form=AddEventForm(request.POST)
+            if add_event_form.is_valid():
+                log=3
+                project_id=add_event_form.cleaned_data['project_id']
+                title=add_event_form.cleaned_data['title']
+                short_description=add_event_form.cleaned_data['short_description']
+                event_date=add_event_form.cleaned_data['event_date']
+                project=ProjectRepo(user=request.user).project(project_id=project_id)
+                event_date=PersianCalendar().to_gregorian(event_date)
+                if project is not None:
+                    log=4
+                    event=EventRepo(user=user).add(project_id=project_id,title=title,short_description=short_description,date_added=event_date)
+                    if event is not None:
+                        log=5
+                        events_s=EventSerializer(project.events.all(),many=True).data
+                        return JsonResponse({'result':SUCCEED,'events':events_s})
+        return JsonResponse({'result':FAILED,'log':log})

@@ -12,6 +12,7 @@ from dashboard.enums import *
 from dashboard.constants import *
 from .constants import *
 from dashboard.models import Page as DashboardPage
+from dashboard.persian import PersianCalendar
 
 class ManagerPage(DashboardPage):
 	parent=models.ForeignKey("ManagerPage", verbose_name=_("parent"),null=True,blank=True, on_delete=models.SET_NULL)
@@ -25,6 +26,10 @@ class ManagerPage(DashboardPage):
 		return ManagerPage.objects.filter(parent=self)
 
 
+
+	def persian_date_added(self):
+		return PersianCalendar().from_gregorian(self.date_added)
+		
 	def get_link(self):
 		icon=self.icon
 		if self.icon is None:
@@ -109,7 +114,6 @@ class Event(ManagerPage):
 	def save(self):
 		self.child_class='event'
 		super(Event,self).save()
-
 
 class Contractor(ManagerPage):
 

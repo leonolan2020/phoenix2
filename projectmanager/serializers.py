@@ -10,3 +10,7 @@ class ContractorSerializer(serializers.ModelSerializer):
     class Meta:
         model=Contractor        
         fields=['get_link']
+class EventSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=Event        
+        fields=['id','title','short_description','persian_date_added']

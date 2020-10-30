@@ -67,6 +67,7 @@ class PageViews(View):
         user=request.user
         project=ProjectRepo(user=user).project(project_id=project_id)
         context=self.getManagerPageContext(request=request,page=project)
+        context['events_s']=json.dumps(EventSerializer(project.events.all(),many=True).data)
         context['project']=project
         context['page']=project
         if user.has_perm(APP_NAME+'.change_project'):

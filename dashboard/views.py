@@ -10,7 +10,7 @@ from .serializers import * #NotificationSerializer
 if PUSHER_IS_ENABLE:
     from leopusher.repo import PusherChannelEventRepo
     from leopusher.serializers import PusherChannelEventSerializer
-
+from datetime import datetime
 import json
 from authentication.repo import ProfileRepo
 TEMPLATE_ROOT='dashboard/'
@@ -82,7 +82,7 @@ def getContext(request):
         'our_team_title':OurTeamRepo(user=user).get_title(),
         'our_team_link':OurTeamRepo(user=user).get_link(),
     }
-
+    context['current_date']=PersianCalendar().from_gregorian(datetime.now())[:10]
     context['profile']=ProfileRepo(user=request.user).me
     return context
 
