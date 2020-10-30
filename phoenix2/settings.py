@@ -162,4 +162,5 @@ SITE_URL = server_settings.SITE_URL
 DATABASES = server_settings.DATABASES
 ALLOWED_HOSTS=server_settings.ALLOWED_HOSTS
 PUSHER_IS_ENABLE=server_settings.PUSHER_IS_ENABLE
+STATICFILES_DIRS=[os.path.join(BASE_DIR,'static')]
 

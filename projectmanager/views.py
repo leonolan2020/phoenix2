@@ -6,9 +6,9 @@ from dashboard.views import getContext as DashboardContext
 from .repo import *
 from .serializers import *
 from .forms import *
-from dashboard.forms import AddDocumentForm,AddTagForm,AddLinkForm
+from dashboard.forms import AddDocumentForm,AddTagForm,AddLinkForm,AddImageForm
 import json
-from dashboard.serializers import TagSerializer,DocumentSerializer,LinkSerializer
+from dashboard.serializers import TagSerializer,DocumentSerializer,LinkSerializer,GalleryPhotoSerializer
 from .utils import AdminUtility
 TEMPLATE_ROOT='projectmanager/'
 def getContext(request):
@@ -54,6 +54,8 @@ class PageViews(View):
         context['add_tag_form']=AddTagForm()
         context['add_link_form']=AddLinkForm()
         context['add_document_form']=AddDocumentForm()
+        context['add_image_form']=AddImageForm()
+        context['images_s']=json.dumps(GalleryPhotoSerializer(page.images.all(),many=True).data)
         context['tags_s']=json.dumps(TagSerializer(page.tags.all(),many=True).data)
         context['links_s']=json.dumps(LinkSerializer(page.links.all(),many=True).data)
         context['documents_s']=json.dumps(DocumentSerializer(page.documents.all(),many=True).data)

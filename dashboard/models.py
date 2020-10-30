@@ -1,37 +1,14 @@
 import os
-from django.http import Http404,HttpResponse
-from django.db import models
-from .settings import ADMIN_URL
 from .apps import APP_NAME
-from django.utils.translation import gettext as _
 from .enums import *
-from tinymce import models as tinymce_models
-from .settings import MEDIA_URL,STATIC_URL
-IMAGE_FOLDER=APP_NAME+'/images/'
+from .settings import ADMIN_URL,MEDIA_URL,STATIC_URL
+from .persian import PersianCalendar
+from django.db import models
+from django.http import Http404,HttpResponse
 from django.shortcuts import reverse
-class NotificationTemp(models.Model):
-    name=models.CharField(_("نام"),max_length=50)
-    country=models.CharField(_("کشور"),max_length=50)
-    city=models.CharField(_("شهر"),max_length=50)
-    salary=models.IntegerField(_("حقوق"))
-    def __str__(self):
-        return f'{self.country} - {self.name}'
-    def get_color(self):
-        if self.salary>10000:
-            return 'table-success'
-        if self.salary>8000:
-            return 'table-info'
-        if self.salary>6000:
-            return 'table-warning'
-        if self.salary>4000:
-            return 'table-secondary'
-        if self.salary>2000:
-            return 'table-danger'
-    class Meta:
-        verbose_name = 'Notification'
-        verbose_name_plural = 'Notifications'
-    def get_edit_url(self):
-        return f'{ADMIN_URL}{APP_NAME}/notification/{self.pk}/change/'
+from django.utils.translation import gettext as _
+from tinymce import models as tinymce_models
+IMAGE_FOLDER=APP_NAME+'/images/'
 
 
 class Icon(models.Model):
@@ -822,11 +799,15 @@ class GalleryPhoto(models.Model):
     archive=models.BooleanField(_("Archive?"),default=False)
     priority=models.IntegerField(_("Priority"),default=100)    
     location=models.CharField(_("موقعیت مکانی تصویر"), max_length=50,null=True,blank=True)
+    profile=models.ForeignKey("authentication.profile",null=True,blank=True, verbose_name=_("پروفایل"), on_delete=models.SET_NULL)
+    date_added=models.DateTimeField(_("افزوده شده در"), auto_now=False, auto_now_add=True)
+
     def image(self):
         return MEDIA_URL+str(self.image_origin)
     def thumbnail(self):
         return MEDIA_URL+str(self.thumbnail_origin)
-
+    def persian_date_added(self):
+        return PersianCalendar().from_gregorian(self.date_added)
     class Meta:
         verbose_name = _("GalleryPhoto")
         verbose_name_plural = _("تصاویر")

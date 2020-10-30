@@ -25,7 +25,7 @@
 
 <h3 class="title text-center ">
     <span class="mx-2 text-{{page.color}}">{{page.icon.get_icon_tag|safe}}</span>
-   <span class="text-{{page.color}}">{{page.title}}</span>
+    <span class="text-{{page.color}}">{{page.title}}</span>
     {% if perms.projectmanager.change_managerpage %}
     <a class="btn btn-link btn-warning" title="ویرایش" href="{{page.get_edit_url}}">
         <i class="material-icons">settings</i>
@@ -119,94 +119,94 @@
 
 
         </div>
-       
-        
+
+
 
     </div>
-  <div class="row rtl">
-    <!-- links -->
-    <div class="col-md-4">
-        <div class="card card-stats">
-            <div class="card-header card-header-primary card-header-icon">
-                <div class="card-icon">
-                    <i class="fa fa-link"></i>
+    <div class="row rtl">
+        <!-- links -->
+        <div class="col-md-4">
+            <div class="card card-stats">
+                <div class="card-header card-header-primary card-header-icon">
+                    <div class="card-icon">
+                        <i class="fa fa-link"></i>
+                    </div>
+                    <p class="card-category">{{page.title}}</p>
+                    <h3 class="card-title"> لینک</h3>
                 </div>
-                <p class="card-category">{{page.title}}</p>
-                <h3 class="card-title"> لینک</h3>
-            </div>
-            <div class="card-body">
-          
-                <h4 class="mt-3 farsi text-right">لینک ها</h4>
-                <templates v-for="link in links">
-                    <div class="mr-4 mb-3" v-html="link.get_link">
+                <div class="card-body">
 
-                    </div>
-                </templates>
-                {% if add_link_form %}
-                <form id="add-link-form" @submit.prevent="add_link">
-                    <div>
-                        <input placeholder="عنوان لینک" type="text" class="form-control" v-model="link_title">
-                        <input placeholder="آدرس لینک" type="text" class="form-control" v-model="link_url">
-                        <button v-if="link_url && link_title" class="btn btn-warning btn-round"
-                            type="submit">تایید</button>
-                    </div>
-                </form>
-                {% endif %}
+                    <h4 class="mt-3 farsi text-right">لینک ها</h4>
+                    <templates v-for="link in links">
+                        <div class="mr-4 mb-3" v-html="link.get_link">
 
-            </div>
-            <div class="card-footer">
-                <div class="stats">
-                    <i class="material-icons">date_range</i> Last 24 Hours
+                        </div>
+                    </templates>
+                    {% if add_link_form %}
+                    <form id="add-link-form" @submit.prevent="add_link">
+                        <div>
+                            <input placeholder="عنوان لینک" type="text" class="form-control" v-model="link_title">
+                            <input placeholder="آدرس لینک" type="text" class="form-control" v-model="link_url">
+                            <button v-if="link_url && link_title" class="btn btn-warning btn-round"
+                                type="submit">تایید</button>
+                        </div>
+                    </form>
+                    {% endif %}
+
+                </div>
+                <div class="card-footer">
+                    <div class="stats">
+                        <i class="material-icons">date_range</i> Last 24 Hours
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <!-- downloads -->
-    <div class="col-md-4">
-        <div class="card card-stats">
-            <div class="card-header card-header-success card-header-icon">
-                <div class="card-icon">
-                    <i class="fa fa-download" aria-hidden="true"></i>
-                </div>
-                <p class="card-category">{{page.title}}</p>
-                <h3 class="card-title">دانلود</h3>
-            </div>
-            <div class="card-body">
-               
-                
-
-                <h4 class="mt-3 farsi text-right">دانلود ها</h4>
-                <templates v-for="document in documents">
-                    <div class="mr-4">
-                        <a :href="document.get_download_url" class="btn btn-success btn-link ">
-                            <i class="material-icons text-success">get_app</i>
-                            {% verbatim %}
-                            {{document.title}}
-                            {% endverbatim %}
-                        </a>
+        <!-- downloads -->
+        <div class="col-md-4">
+            <div class="card card-stats">
+                <div class="card-header card-header-success card-header-icon">
+                    <div class="card-icon">
+                        <i class="fa fa-download" aria-hidden="true"></i>
                     </div>
-                </templates>
-                {% if add_document_form %}
-                <form id="add-document-form" @submit.prevent="add_document" enctype="multipart/form-data">
-                    <div>
-                        <input placeholder="عنوان فایل دانلود" type="text" name="title" class="form-control"
-                            v-model="document_title">
+                    <p class="card-category">{{page.title}}</p>
+                    <h3 class="card-title">دانلود</h3>
+                </div>
+                <div class="card-body">
 
-                        <div>
-                            <span class="btn btn-raised btn-round btn-default btn-file">
-                                <span class="fileinput-new">انتخاب فایل</span>
-                                <input type="hidden" value="" name="..."><input type="file" v-model="document_file"
-                                    name="">
-                                <div class="ripple-container"></div>
-                            </span>
 
-                            <button v-if="(document_file && document_title) || false" class="btn btn-info btn-round"
-                                type="submit">آپلود</button>
 
+                    <h4 class="mt-3 farsi text-right">دانلود ها</h4>
+                    <templates v-for="document in documents">
+                        <div class="mr-4">
+                            <a :href="document.get_download_url" class="btn btn-success btn-link ">
+                                <i class="material-icons text-success">get_app</i>
+                                {% verbatim %}
+                                {{document.title}}
+                                {% endverbatim %}
+                            </a>
                         </div>
+                    </templates>
+                    {% if add_document_form %}
+                    <form id="add-document-form" @submit.prevent="add_document" enctype="multipart/form-data">
+                        <div>
+                            <input placeholder="عنوان فایل دانلود" type="text" name="title" class="form-control"
+                                v-model="document_title">
 
-                        <!-- <div>
+                            <div>
+                                <span class="btn btn-raised btn-round btn-default btn-file">
+                                    <span class="fileinput-new">انتخاب فایل</span>
+                                    <input type="hidden" value="" name="..."><input type="file" v-model="document_file"
+                                        name="">
+                                    <div class="ripple-container"></div>
+                                </span>
+
+                                <button v-if="(document_file && document_title) || false" class="btn btn-info btn-round"
+                                    type="submit">آپلود</button>
+
+                            </div>
+
+                            <!-- <div>
                                 <span class="btn btn-raised btn-round btn-default btn-file">
                                     <span class="fileinput-new">Add Photo</span>
                                     <span class="fileinput-exists">Change</span>
@@ -221,7 +221,7 @@
 
 
 
-                        <!-- <div class="form-group has-default form-file-upload form-file-simple bmd-form-group">
+                            <!-- <div class="form-group has-default form-file-upload form-file-simple bmd-form-group">
                                 <input type="text" class="form-control inputFileVisible" placeholder="Simple chooser...">
                                 <input type="file"  name="file" id="document-file1" v-model="document_file" class="inputFileHidden">
     
@@ -230,81 +230,88 @@
 
 
 
-                    </div>
-                </form>
-                {% endif %}
-
-              
-
-            </div>
-            <div class="card-footer">
-                <div class="stats">
-                    <i class="material-icons">date_range</i> Last 24 Hours
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-<!-- tags -->
-    <div class="col-md-4">
-        <div class="card card-stats">
-            <div class="card-header card-header-info card-header-icon">
-                <div class="card-icon">
-                    <i class="fa fa-tags"></i>
-                </div>
-                <p class="card-category">{{page.title}}</p>
-                <h3 class="card-title">تگ </h3>
-            </div>
-            <div class="card-body">
-                <h4 class="mt-3 farsi text-right">تگ ها</h4>
-
-
-                <div class="mr-4 bootstrap-tagsinput rose-badge">
-                    <template v-for="tag in tags" v-html="tag.get_link">
-
-                        {% verbatim %}
-                        <span class="tag badge mx-2">
-                            <a :href="tag.get_absolute_url" class="text-light">
-                                {{tag.title}}
-                            </a>
-
-                            <span @click="remove_tag(tag.id)" data-role="remove"></span></span>
-
-
-
-
-                        {% endverbatim %}
-                    </template>
-
-
-                    <form class="d-inline mx-2" v-on:submit.prevent="add_tag">
-                        <span class="bmd-form-group"><input v-model="tag_title" type="text" class="form-control"
-                                placeholder="تگ جدید"></span>
+                        </div>
                     </form>
+                    {% endif %}
+
+
+
                 </div>
-
-               
-                
-
-            </div>
-            <div class="card-footer">
-                <div class="stats">
-                    <i class="material-icons">date_range</i> Last 24 Hours
+                <div class="card-footer">
+                    <div class="stats">
+                        <i class="material-icons">date_range</i> Last 24 Hours
+                    </div>
                 </div>
             </div>
         </div>
+
+
+        <!-- tags -->
+        <div class="col-md-4">
+            <div class="card card-stats">
+                <div class="card-header card-header-info card-header-icon">
+                    <div class="card-icon">
+                        <i class="fa fa-tags"></i>
+                    </div>
+                    <p class="card-category">{{page.title}}</p>
+                    <h3 class="card-title">تگ </h3>
+                </div>
+                <div class="card-body">
+                    <h4 class="mt-3 farsi text-right">تگ ها</h4>
+
+
+                    <div class="mr-4 bootstrap-tagsinput rose-badge">
+                        <template v-for="tag in tags" v-html="tag.get_link">
+
+                            {% verbatim %}
+                            <span class="tag badge mx-2">
+                                <a :href="tag.get_absolute_url" class="text-light">
+                                    {{tag.title}}
+                                </a>
+
+                                <span @click="remove_tag(tag.id)" data-role="remove"></span></span>
+
+
+
+
+                            {% endverbatim %}
+                        </template>
+
+
+                        <form class="d-inline mx-2" v-on:submit.prevent="add_tag">
+                            <span class="bmd-form-group"><input v-model="tag_title" type="text" class="form-control"
+                                    placeholder="تگ جدید"></span>
+                        </form>
+                    </div>
+
+
+
+
+                </div>
+                <div class="card-footer">
+                    <div class="stats">
+                        <i class="material-icons">date_range</i> Last 24 Hours
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
     </div>
 
-
-  </div>
-    {% if page.images.all %}
-
-
+    {% if page.images.all or add_image_form %}
     <h3 class="farsi text-center">تصویر ها</h3>
     <br>
+    {% endif %}
+
+
+
     <div class="row">
-        {% for image in page.images.all %}
+
+
+
+
+        {% for image in page.images.all1 %}
         <div class="col-md-4">
             <div class="card card-product" data-count="0">
                 <div class="card-header card-header-image" data-header-animation="true">
@@ -365,11 +372,180 @@
         {% endfor %}
 
 
+        <div class="col-md-4" v-for="image in images">
+            <div class="card card-product" data-count="0">
+                <div class="card-header card-header-image" data-header-animation="true">
+                    <a target="_blank" :href="image.get_absolute_url">
+                        <img class="img" :src="image.thumbnail">
+
+                    </a>
+                </div>
+                <div class="card-body">
+                    <div class="card-actions text-center">
+
+                        <button type="button" class="btn btn-danger btn-link fix-broken-card">
+                            <i class="material-icons">build</i> بروزرسانی سربرگ
+                        </button>
+                        <a target="_blank" :href="image.get_absolute_url">
+                            <button type="button" class="btn btn-default btn-link" rel="tooltip" data-placement="bottom"
+                                title="" data-original-title="نمایش">
+                                <i class="material-icons">art_track</i>
+                            </button>
+                        </a>
+                        <a target="_blank" :href="image.get_edit_url">
+                            <button type="button" class="btn btn-success btn-link" rel="tooltip" data-placement="bottom"
+                                title="" data-original-title="ویرایش">
+                                <i class="material-icons">edit</i>
+                            </button>
+                        </a>
+
+                        <button type="button" class="btn btn-danger btn-link" rel="tooltip" data-placement="bottom"
+                            title="" data-original-title="حذف">
+                            <i class="material-icons">close</i>
+                        </button>
+                    </div>
+
+                    <h4 class="card-title  text-right ">
+                        <a :href="image.get_absolute_url" v-text="image.image_title"></a>
+                    </h4>
+
+                    <div class="card-description farsi text-right" v-html="image.image_description">
+
+                    </div>
+
+
+                </div>
+                <div class="card-footer">
+                    <div class="price">
+                        <h4> </h4>
+                    </div>
+                    <div class="stats">
+                        <p class="card-category">
+                            <i class="material-icons">place</i>
+                            <span v-text="image.location"></span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        {% if add_image_form %}
+        <div class="col-md-4">
+            <form id="add-image-form" @submit.prevent="add_image">
+
+                <div class="card">
+
+
+
+                    <div class="fileinput text-center fileinput-new" data-provides="fileinput">
+                        <div class="fileinput-new thumbnail img-raised">
+                            <img src="{% static 'dashboard/img/image_placeholder.jpg' %}" alt="...">
+                        </div>
+                        <div class="fileinput-preview fileinput-exists thumbnail img-raised" style=""></div>
+                        <div>
+                            <span class="btn btn-raised btn-round btn-default btn-file">
+                                <span class="fileinput-new">انتخاب تصویر</span>
+                                <span class="fileinput-exists">انتخاب تصویر</span>
+                                <input type="hidden" value="" name="..."><input type="file" name="">
+                                <div class="ripple-container"></div>
+                            </span>
+                            <a href="#pablo" class="btn btn-danger btn-round fileinput-exists" data-dismiss="fileinput">
+                                <i class="fa fa-times"></i> انصراف<div class="ripple-container">
+                                    <div class="ripple-decorator ripple-on ripple-out"
+                                        style="left: 32.1562px; top: 27.1562px; background-color: rgb(255, 255, 255); transform: scale(15.5077);">
+                                    </div>
+                                </div></a>
+                        </div>
+                    </div>
+
+                    <div class="mx-3">
+                        <input placeholder="عنوان تصویر" type="text" class="form-control" v-model="image_title">
+                        <input placeholder="توضیحات" type="text" class="form-control" v-model="image_description">
+                        <input placeholder="موقعیت  مکانی تصویر" type="text" class="form-control"
+                            v-model="image_location">
+                        <button class="btn btn-success btn-round" v-if="image_title" type="submit">
+                            <i class="fa fa-upload"></i>
+                            تایید</button>
+
+                    </div>
+
+                </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                <!-- <div class="card card-product" data-count="0">
+                    <div class="card-header card-header-image" data-header-animation="true">
+                        <a target="_blank" href="{{image.get_absolute_url}}">
+                            <img class="img" src="{{image.thumbnail}}">
+
+                        </a>
+                    </div>
+                    <div class="card-body">
+                        <div class="card-actions text-center">
+
+                            <button type="button" class="btn btn-danger btn-link fix-broken-card">
+                                <i class="material-icons">build</i> بروزرسانی سربرگ
+                            </button>
+                            <a target="_blank" href="{{image.get_absolute_url}}">
+                                <button type="button" class="btn btn-default btn-link" rel="tooltip"
+                                    data-placement="bottom" title="" data-original-title="نمایش">
+                                    <i class="material-icons">art_track</i>
+                                </button>
+                            </a>
+                            <a target="_blank" href="{{image.get_edit_url}}">
+                                <button type="button" class="btn btn-success btn-link" rel="tooltip"
+                                    data-placement="bottom" title="" data-original-title="ویرایش">
+                                    <i class="material-icons">edit</i>
+                                </button>
+                            </a>
+
+                            <button type="button" class="btn btn-danger btn-link" rel="tooltip" data-placement="bottom"
+                                title="" data-original-title="حذف">
+                                <i class="material-icons">close</i>
+                            </button>
+                        </div>
+                        {% if image.image_title %}
+
+                        <h4 class="card-title  text-right ">
+                            <a href="{{image.get_absolute_url}}">{{image.image_title}}</a>
+                        </h4>
+                        {% endif %}
+                        {% if image.image_description %}
+                        <div class="card-description farsi text-right">
+                            {{image.image_description}}
+                        </div>
+                        {% endif %}
+
+                    </div>
+                    <div class="card-footer">
+                        <div class="price">
+                            <h4> </h4>
+                        </div>
+                        <div class="stats">
+                            <p class="card-category">
+                                <i class="material-icons">place</i> {{image.location}}
+                            </p>
+                        </div>
+                    </div>
+                </div> -->
+            </form>
+        </div>
+        {% endif %}
+
     </div>
-
-    {% endif %}
 </div>
-
 
 {% block child_content %}
 
@@ -395,23 +571,27 @@
 <script src="{% static 'vendor/js/vue.min.js' %}"></script>
 
 <script>
+    let page_id = JSON.parse(`{{page.id}}`)
+
+
     var app = new Vue({
         el: "#app",
         data: {
             tags: JSON.parse(`{{tags_s|escapejs}}`),
             links: JSON.parse(`{{links_s|escapejs}}`),
             documents: JSON.parse(`{{documents_s|escapejs}}`),
+            images: JSON.parse(`{{images_s|escapejs}}`),
             tag_title: '',
-            
             document_title: '',
             document_file: '',
             link_title: '',
             link_url: '',
-
+            image_title: '',
+            image_description: '',
+            image_location: '',
         },
         methods: {
             add_document: function () {
-                let page_id = JSON.parse(`{{page.id}}`)
                 let title = app.document_title
                 let url = "{% url 'dashboard:add_document' %}"
                 let formData = new FormData();
@@ -420,21 +600,7 @@
                 formData.append("title", title);
                 formData.append("csrfmiddlewaretoken", csrfmiddlewaretoken);
                 formData.append("page_id", page_id);
-                // var posting = $.post(url,
-                //     {
-                //         title: title,
-                //         page_id: page_id,
-                //         csrfmiddlewaretoken: csrfmiddlewaretoken
-                //     }
-                // );
-                // console.log('333333333333333')
 
-                // // Put the results in a div
-                // posting.done(function (data) {
-                //     console.log(data)
-                //     if (data.result === 'SUCCEED')
-                //         app.documents = data.documents
-                // })
                 $.ajax({
                     url: url,
                     type: 'post',
@@ -447,7 +613,7 @@
                                 console.log(response)
                                 app.documents = response.documents
                                 // alert('file uploaded');
-                                app.title = ''
+                                app.document_title = ''
                                 app.document_file = ''
                             }
                         }
@@ -458,7 +624,6 @@
                 });
 
             }, add_link: function () {
-                let page_id = JSON.parse(`{{page.id}}`)
                 let title = app.link_title
                 let url = "{% url 'dashboard:add_link' %}"
                 let link_url = app.link_url
@@ -488,7 +653,7 @@
                 var posting = $.post(url,
                     {
                         tag_id: tag_id,
-                        page_id: JSON.parse(`{{page.id}}`),
+                        page_id: page_id,
                         csrfmiddlewaretoken: csrfmiddlewaretoken
                     }
                 );
@@ -509,7 +674,7 @@
                 var posting = $.post(url,
                     {
                         title: app.tag_title,
-                        page_id: JSON.parse(`{{page.id}}`),
+                        page_id: page_id,
                         csrfmiddlewaretoken: csrfmiddlewaretoken
                     }
                 );
@@ -526,7 +691,46 @@
 
 
             },
+            add_image: function () {
+                let title = app.image_title
+                let description = app.image_description
+                let location = app.image_location
+                let url = "{% url 'dashboard:add_image' %}"
+                let formData = new FormData();
+                let image = $('#add-image-form')[0].elements[2].files[0]
+                let thumbnail = $('#add-image-form')[0].elements[2].files[0]
+                formData.append("thumbnail", thumbnail);
+                formData.append("image", image);
+                formData.append("title", title);
+                formData.append("description", description);
+                formData.append("location", location);
+                formData.append("csrfmiddlewaretoken", csrfmiddlewaretoken);
+                formData.append("page_id", page_id);
 
+                $.ajax({
+                    url: url,
+                    type: 'post',
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    success: function (response) {
+                        if (response != 0) {
+                            if (response.result === 'SUCCEED') {
+                                app.images = response.images
+                                // alert('file uploaded');
+                                app.image_title = ''
+                                app.image_description = ''
+                                // app.image_location = ''
+                            }
+                        }
+                        else {
+                            // alert('file not uploaded');
+                        }
+                    },
+                });
+
+
+            }
         },
     })
 </script>

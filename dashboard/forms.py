@@ -32,3 +32,9 @@ class AddLinkForm(forms.Form):
 class AddDocumentForm(forms.Form):
     page_id=forms.IntegerField(required=True)
     title=forms.CharField(max_length=100,required=True)
+
+class AddImageForm(forms.Form):
+    page_id=forms.IntegerField(required=True)
+    title=forms.CharField(max_length=100,required=True)
+    description=forms.CharField(max_length=100,required=True)
+    location=forms.CharField(max_length=100,required=True)

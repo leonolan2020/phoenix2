@@ -6,7 +6,7 @@ from .repo import *
 from .forms import *
 from authentication.repo import ProfileRepo
 import json
-from .models import Document,Icon,Tag,Page
+from .models import Document,Icon,Tag,Page,GalleryPhoto
 
 class ProfileViews(APIView):
     def profile_customization(self,request,*args, **kwargs): 
@@ -91,9 +91,7 @@ class PageViews(APIView):
             if add_document_form.is_valid():
                 level=3
                 title=add_document_form.cleaned_data['title']
-                page_id=add_document_form.cleaned_data['page_id']
-                print(request.FILES)
-                print(200*'#')
+                page_id=add_document_form.cleaned_data['page_id']                
                 file1=request.FILES['file1']              
                 page=PageRepo(user=user).page(page_id=page_id)
                 if page is not None:
@@ -105,6 +103,37 @@ class PageViews(APIView):
                     documents=page.documents.all()                  
                     documents_s=DocumentSerializer(documents,many=True).data
                     return JsonResponse({'documents':documents_s,'result':SUCCEED})
+        return JsonResponse({'result':FAILED,'level':level})
+    
+    def add_image(self,request,*args, **kwargs):  
+        level=1  
+        user=request.user
+        profile=ProfileRepo(user=user).me
+        
+        if request.method=='POST' and profile is not None:
+            level=2
+            add_image_form=AddImageForm(request.POST,request.FILES)
+            if add_image_form.is_valid():
+                level=3
+                image_title=add_image_form.cleaned_data['title']
+                page_id=add_image_form.cleaned_data['page_id']
+                image_description=add_image_form.cleaned_data['description']
+                location=add_image_form.cleaned_data['location']
+                
+                image=request.FILES['image']              
+                thumbnail=request.FILES['thumbnail']              
+                page=PageRepo(user=user).page(page_id=page_id)
+                if page is not None:
+                    level=4
+                    image=GalleryPhoto(profile=profile,image_title=image_title,
+                    image_description=image_description,thumbnail_origin=thumbnail,
+                    image_origin=image,location=location)
+                    image.save()
+                    page.images.add(image)  
+                    page.save()
+                    images=page.images.all()                  
+                    images_s=GalleryPhotoSerializer(images,many=True).data
+                    return JsonResponse({'images':images_s,'result':SUCCEED})
         return JsonResponse({'result':FAILED,'level':level})
 
 
