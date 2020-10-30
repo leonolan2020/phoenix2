@@ -13,6 +13,8 @@ from .utils import AdminUtility
 TEMPLATE_ROOT='projectmanager/'
 def getContext(request):
     user=request.user
+    if not user.is_authenticated:
+        raise Http404
     context=DashboardContext(request)
     context['admin_utility']=AdminUtility()
     context['search_form']=SearchForm()
