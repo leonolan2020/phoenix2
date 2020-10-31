@@ -90,7 +90,8 @@ class Project(ManagerPage):
 		self.child_class='project'
 		super(Project,self).save()
 
-
+	def get_guantt_url(self):
+		return reverse('projectmanager:guantt',kwargs={'pk':self.pk})
 
 	class Meta:
 		verbose_name = _("Project")

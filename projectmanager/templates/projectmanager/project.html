@@ -173,10 +173,12 @@
                 <h3 class="card-title">گانت چارت 2</h3>
             </div>
             <div class="card-body">
-
-                <div id="chart_div2">
-
-                </div>
+                <a target="_blank" href="{{project.get_guantt_url}}">نمایش نمودار گانت</a>
+               
+                    <frame name = "top" src = "{% url 'projectmanager:guantt' page.id %}" />
+                 
+                   
+              
 
             </div>
             <div class="card-footer">
@@ -303,5 +305,4 @@
 
 <script type="text/javascript" src="{% static 'projectmanager/charts/loader.js' %}"></script>
 
-{% include "projectmanager/includes/guant-chart2.html" %}
 {% endblock %}

@@ -8,6 +8,7 @@ urlpatterns = [
     path('',views.BasicViews().home,name='home'),
     path('archivedocuments/',views.BasicViews().archive_documents,name='archivedocuments'),
     path('search/',views.BasicViews().search,name='search'),
+    path('guantt/<int:pk>/',views.PageViews().guantt,name='guantt'),
     path('project/<int:pk>/',views.PageViews().project,name='project'),
     path('contractor/<int:pk>/',views.PageViews().contractor,name='contractor'),
     path('organiazationunit/<int:pk>/',views.PageViews().organiazationunit,name='organiazationunit'),

@@ -79,6 +79,12 @@ class PageViews(View):
         context['page']=archivedocument
         context['page_type']='سند آرشیو شده'
         return render(request,TEMPLATE_ROOT+'archive-document.html',context)
+    def guantt(self,request,pk,*args, **kwargs):
+        user=request.user
+        context={}
+        project=ProjectRepo(user=user).project(project_id=pk)
+        context['project']=project
+        return render(request,TEMPLATE_ROOT+'guantt.html',context)
     def project(self,request,pk,*args, **kwargs):
         project_id=pk
         user=request.user
