@@ -174,11 +174,12 @@
             </div>
             <div class="card-body">
                 <a target="_blank" href="{{project.get_guantt_url}}">نمایش نمودار گانت</a>
-               
-                    <frame name = "top" src = "{% url 'projectmanager:guantt' page.id %}" />
-                 
-                   
-              
+
+                <iframe width="100%" name="top" src="{% url 'projectmanager:guantt' page.id %}">
+                </iframe>
+
+
+
 
             </div>
             <div class="card-footer">
