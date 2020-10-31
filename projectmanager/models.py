@@ -128,7 +128,7 @@ class Project(ManagerPage):
 	def get_guantt_url(self):
 		return reverse('projectmanager:guantt',kwargs={'pk':self.pk})
 	def childs(self):
-		return Project.objects.filter(parent=self)
+		return Project.objects.filter(parent=self).order_by('start_date')
 	class Meta:
 		verbose_name = _("Project")
 		verbose_name_plural = _("Projects")

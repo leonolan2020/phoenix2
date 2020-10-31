@@ -115,12 +115,6 @@
         <h3 class="text-center farsi">رویداد ها و وقایع</h3>
         <ul class="timeline timeline-simple">
 
-            <li class="timeline-inverted" v-for="event in events" v-html="event.get_tag">
-
-
-            </li>
-
-
             <li class="timeline-inverted">
                 <div class="timeline-badge success">
                     <i class="material-icons">settings</i>
@@ -152,6 +146,14 @@
                     </button>
                 </div>
             </li>
+            
+            <li class="timeline-inverted" v-for="event in events" v-html="event.get_tag">
+
+
+            </li>
+
+
+           
 
         </ul>
 

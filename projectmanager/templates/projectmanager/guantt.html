@@ -25,7 +25,7 @@
 
         google.charts.load('current', { 'packages': ['gantt'] });
         google.charts.setOnLoadCallback(drawChart);
-        var data =[]
+        var data = []
         function drawChart() {
 
             data = new google.visualization.DataTable();
@@ -79,6 +79,19 @@
         <div class="text-center">
 
             <div id="chart_div"></div>
+        </div>
+
+        <div class="row">
+            <div class="col-6">
+                {% for sub_project in project.childs.all %}
+                <div>
+                    <a href="{{sub_project.get_absolute_url}}">
+
+                        <h6>{{sub_project.title}}</h6>
+                    </a>
+                </div>
+                {% endfor %}
+            </div>
         </div>
     </div>
 

@@ -91,7 +91,7 @@ class PageViews(View):
         user=request.user
         project=ProjectRepo(user=user).project(project_id=project_id)
         context=self.getManagerPageContext(request=request,page=project)
-        context['events_s']=json.dumps(EventSerializer(project.events.order_by('event_date'),many=True).data)
+        context['events_s']=json.dumps(EventSerializer(project.events.order_by('-event_date'),many=True).data)
         context['contractors_s']=json.dumps(ContractorSerializer(project.contractors.all(),many=True).data)
         context['project']=project
         context['page']=project
