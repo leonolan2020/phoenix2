@@ -82,12 +82,14 @@
         </div>
 
         <div class="row">
-            <div class="col-6">
+            <div class="col-md-4 " >
                 {% for sub_project in project.childs.all %}
-                <div>
-                    <a href="{{sub_project.get_absolute_url}}">
+                <div class="mb-2">
+                    <a class="btn btn-block btn-{{sub_project.color}}" href="{{sub_project.get_absolute_url}}">
 
-                        <h6>{{sub_project.title}}</h6>
+                      
+                        {{sub_project.title}}
+                        
                     </a>
                 </div>
                 {% endfor %}

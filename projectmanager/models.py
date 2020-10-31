@@ -91,6 +91,7 @@ class Project(ManagerPage):
 		return PersianCalendar().from_gregorian_date(self.end_date)
 
 	def get_resource(self):
+		return self.color
 		if self.color==ColorEnum.SUCCESS:
 			return 'spring'
 		
