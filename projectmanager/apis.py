@@ -70,6 +70,6 @@ class PageViews(APIView):
                     event=EventRepo(user=user).add(project_id=project_id,title=title,short_description=short_description,event_date=event_date)
                     if event is not None:
                         log=5
-                        events_s=EventSerializer(project.events.all(),many=True).data
+                        events_s=EventSerializer(project.events.order_by('event_date'),many=True).data
                         return JsonResponse({'result':SUCCEED,'events':events_s})
         return JsonResponse({'result':FAILED,'log':log})
