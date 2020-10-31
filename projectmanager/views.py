@@ -83,6 +83,7 @@ class PageViews(View):
         user=request.user
         context={}
         project=ProjectRepo(user=user).project(project_id=pk)
+        context['projects_s']=json.dumps(ProjectSerializer(project.childs(),many=True).data)
         context['project']=project
         return render(request,TEMPLATE_ROOT+'guantt.html',context)
     def project(self,request,pk,*args, **kwargs):

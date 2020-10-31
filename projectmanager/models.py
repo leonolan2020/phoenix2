@@ -82,6 +82,14 @@ class ManagerPage(DashboardPage):
 
 class Project(ManagerPage):
 	# priority2=models.IntegerField(_("priority"),default=100)
+	percent=models.IntegerField(_('درصد پیشرفت'),default=0)
+	start_date=models.DateField(_("شروع"),null=True,blank=True, auto_now=False, auto_now_add=False)
+	end_date=models.DateField(_("پایان"),null=True,blank=True, auto_now=False, auto_now_add=False)
+	def persian_start_date(self):
+		return PersianCalendar().from_gregorian_date(self.start_date)
+	def persian_end_date(self):
+		return PersianCalendar().from_gregorian_date(self.end_date)
+
 	events=models.ManyToManyField("Event",blank=True, verbose_name=_("رویداد ها"))
 	contractors=models.ManyToManyField("Contractor",blank=True, verbose_name=_("پیمانکار ها"))
 	organiazation_units=models.ManyToManyField("OrganiazationUnit",blank=True, verbose_name=_("واحد های سازمانی"))
@@ -92,7 +100,8 @@ class Project(ManagerPage):
 
 	def get_guantt_url(self):
 		return reverse('projectmanager:guantt',kwargs={'pk':self.pk})
-
+	def childs(self):
+		return Project.objects.filter(parent=self)
 	class Meta:
 		verbose_name = _("Project")
 		verbose_name_plural = _("Projects")
