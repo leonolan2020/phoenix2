@@ -90,6 +90,33 @@ class Project(ManagerPage):
 	def persian_end_date(self):
 		return PersianCalendar().from_gregorian_date(self.end_date)
 
+	def get_resource(self):
+		if self.color==ColorEnum.SUCCESS:
+			return 'spring'
+		
+		if self.color==ColorEnum.DANGER:
+			return 'sports'
+		
+		if self.color==ColorEnum.WARNING:
+			return 'winter'
+		
+		if self.color==ColorEnum.INFO:
+			return 'autumn'
+		
+		if self.color==ColorEnum.ROSE:
+			return 'summer'
+		
+		if self.color==ColorEnum.PRIMARY:
+			return 'summer'
+		
+		if self.color==ColorEnum.DEFAULT:
+			return 'sports'
+		
+		
+		if self.color==ColorEnum.SECONDARY:
+			return 'autumn'
+		
+
 	events=models.ManyToManyField("Event",blank=True, verbose_name=_("رویداد ها"))
 	contractors=models.ManyToManyField("Contractor",blank=True, verbose_name=_("پیمانکار ها"))
 	organiazation_units=models.ManyToManyField("OrganiazationUnit",blank=True, verbose_name=_("واحد های سازمانی"))

@@ -5,7 +5,7 @@ from .models import *
 class ProjectSerializer(serializers.ModelSerializer):
     class Meta:
         model=Project        
-        fields=['get_link','start_date','end_date','persian_start_date','persian_end_date','title','percent']
+        fields=['id','parent','get_resource','get_link','start_date','end_date','persian_start_date','persian_end_date','title','percent']
 class ContractorSerializer(serializers.ModelSerializer):
     
     class Meta:

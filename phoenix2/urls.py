@@ -9,7 +9,7 @@ from django.conf.urls import url
 
 
 urlpatterns = [
-    path('',include('app.urls')),
+    path('',include('projectmanager.urls')),
     path('phoenix2/',include('app.urls')),
     path('phoenix_v1/',include('app.urls')),
 

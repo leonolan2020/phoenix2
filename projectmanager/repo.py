@@ -3,6 +3,7 @@ from authentication.repo import ProfileRepo
 from dashboard.models import Icon
 from dashboard.enums import ColorEnum
 from django.db.models import Q,F
+import datetime
 class ManagerPageRepo:
     def __init__(self,user=None):
         self.objects=ManagerPage.objects
@@ -16,6 +17,7 @@ class ManagerPageRepo:
             return self.objects.get(pk=page_id)
         except :
             return None
+
 class ContractorRepo:
     def __init__(self,user=None):
         self.objects=Contractor.objects
@@ -88,6 +90,7 @@ class OrganiazationUnitRepo():
             return self.objects.get(pk=organiazationunit_id)
         except:
             return None 
+
 class ProjectRepo:
     def __init__(self,user=None):
         self.objects=Project.objects
@@ -154,7 +157,10 @@ class ProjectRepo:
             parent=self.project(project_id=parent_id)
         icon=Icon(color=ColorEnum.PRIMARY,icon_material='dashboard',icon_title='آیکون '+title)
         icon.save()
-        project=Project(parent=parent,icon=icon,title=title,short_description='',description='')
+        start_date=datetime.datetime.now().date()
+        end_date=(start_date+ datetime.timedelta(days=2))
+        percent=5
+        project=Project(percent=percent,start_date=start_date,end_date=end_date,parent=parent,icon=icon,title=title,short_description='',description='')
         project.save()
         if project is not None:
             return project
