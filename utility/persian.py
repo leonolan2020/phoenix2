@@ -70,5 +70,5 @@ class PersianCalendar:
             minutes=30
         return JalaliDateTime.to_jalali(greg_date_time+datetime.timedelta(hours=hours,minutes=minutes)).strftime("%Y/%m/%d %H:%M:%S") 
     def from_gregorian_date(self,greg_date):
-        return JalaliDateTime.to_jalali(greg_date).strftime("%Y/%m/%d") 
+        return JalaliDate.to_jalali(greg_date).strftime("%Y/%m/%d") 
         
