@@ -462,8 +462,16 @@ class OurTeamRepo:
             return self.objects.get(pk=ourteam_id)
         except:
             return None
-    
 
+class ResumeRepo:
+    def __init__(self,user=None):
+        self.user=user
+        self.objects=Resume.objects.order_by('priority')    
+    def resume(self,resume_id):
+        try:
+            return self.objects.get(pk=resume_id)
+        except:
+            return None
 class LinkRepo:
     def __init__(self,user=None):
         self.user=user

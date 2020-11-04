@@ -18,6 +18,7 @@ urlpatterns=[
     path('charts/',views.BasicViews().charts,name='charts'),
     path('tables/regular/',views.TablesViews().regular,name='tables_regular'),
     path('blog/<int:pk>/',app_views.PageViews().blog,name='blog'),
+    path('resume/<int:pk>/',app_views.PageViews().resume,name='resume'),
     path('ourwork/<int:pk>/',app_views.PageViews().ourwork,name='ourwork'),
     path('feature/<int:pk>/',app_views.PageViews().feature,name='feature'),
     path('notifications/',views.ProfileViews().notifications,name='notifications'),

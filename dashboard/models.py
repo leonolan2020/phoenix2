@@ -714,50 +714,44 @@ class Feature(Page):
 
 
 class ResumeCategory(models.Model):
-    our_team=models.ForeignKey("OurTeam", verbose_name=_("our_team"), on_delete=models.CASCADE)
-    resumes=models.ManyToManyField("Resume", verbose_name=_("resume"))
+    profile=models.ForeignKey("authentication.profile", verbose_name=_("profile"), on_delete=models.CASCADE)
     title=models.CharField(_("title"),choices=ResumeCategoryEnum.choices,default=ResumeCategoryEnum.EDUCATION, max_length=50)
-    priority=models.IntegerField(_("priority"))
+    resumes=models.ManyToManyField("Resume", verbose_name=_("resume"))
+    priority=models.IntegerField(_("priority"),default=100)
+    icon=models.ForeignKey("Icon",verbose_name='icon',on_delete=models.SET_NULL,null=True,blank=True)
 
+    def get_icon(self):
+        if self.icon is not None:
+            return self.icon.get_icon_tag()
+        return f"""
+               <i class="material-icons">palette</i>
+            """
     class Meta:
         verbose_name = _("ResumeCategory")
         verbose_name_plural = _("دسته بندی رزومه")
 
     def __str__(self):
-        return f'{self.our_team.name} -> {self.title}'
+        return f'{self.profile.name()} -> {self.title}'
 
     def get_absolute_url(self):
         return reverse("ResumeCategory_detail", kwargs={"pk": self.pk})
+    def get_edit_url(self):
+        return (f'{ADMIN_URL}{APP_NAME}/resumecategory/{self.pk}/change')
 
 
-class Resume(models.Model):
-    priority=models.IntegerField(_("priority"))
-    title=models.CharField(_("title"), max_length=50)
-    subtitle=models.CharField(_("subtitle"),null=True,blank=True, max_length=50)
-    description=models.CharField(_("description"),null=True,blank=True, max_length=500)
-    date=models.DateTimeField(_("date"), auto_now=False, auto_now_add=False)
+class Resume(Page):
+    start_date=models.DateTimeField(_("start_date"),null=True,blank=True, auto_now=False, auto_now_add=False)
+    end_date=models.DateTimeField(_("end_date"),null=True,blank=True, auto_now=False, auto_now_add=False)
     duration=models.CharField(_("مدت زمان"),max_length=50,null=True,blank=True)
-    links=models.ManyToManyField("Link", verbose_name=_("links"),blank=True)
-    documents=models.ManyToManyField("Document", verbose_name=_("documents"),blank=True)
-    album=models.ForeignKey("GalleryAlbum",null=True,blank=True, verbose_name=_("آلبوم"), on_delete=models.CASCADE)
     
-
     class Meta:
         verbose_name = _("Resume")
         verbose_name_plural = _("رزومه")
 
-    def __str__(self):
-        return self.title
-
-    def get_absolute_url(self):
-        return reverse("Resume_detail", kwargs={"pk": self.pk})
-
-
-    def get_edit_url(self):
-        return f'{ADMIN_URL}{APP_NAME}/resume/{self.pk}/change/'
-
-
-
+    def save(self):
+        self.child_class='resume'
+        self.app_name=APP_NAME
+        super(Resume,self).save()
 
 class GalleryAlbum(Jumbotron):
     image_origin=models.ImageField(_("Big Image 345*970 "), upload_to=IMAGE_FOLDER+'Gallery/Album/',null=True,blank=True, height_field=None, width_field=None, max_length=None)

@@ -37,8 +37,8 @@
                                 class="img-raised rounded-circle img-fluid">
                         </div>
                         <div class="name">
-                            <h3 class="title farsi">{{selected_profile.name}}</h3>
                             <h6>{{selected_profile.slogan}}</h6>
+                            <h3 class="title farsi mt-0">{{selected_profile.name}}</h3>
                             {% for social_link in selected_profile.sociallink_set.all %}
                             {{social_link.get_link|safe}}
                             {% endfor %}
@@ -70,25 +70,37 @@
                 </p>
                 {% endif %}
             </div>
-            <div class="row">
+            <div class="row rtl">
                 <div class="col-md-6 ml-auto mr-auto">
                     <div class="profile-tabs">
-                        <ul class="nav nav-pills nav-pills-icons justify-content-center" role="tablist">
+                        <ul class="nav nav-pills nav-pills-icons justify-content-center nav-pills-success"
+                            role="tablist">
                             <!--
                                                         color-classes: "nav-pills-primary", "nav-pills-info", "nav-pills-success", "nav-pills-warning","nav-pills-danger"
                                                 -->
-                            <li class="nav-item">
-                                <a class="nav-link active show" href="#work" role="tab" data-toggle="tab"
-                                    aria-selected="true">
-                                    <i class="material-icons">palette</i>
-                                    پروژه ها
+
+                            {% for resumecategory in selected_profile.resumecategory_set.all %}
+                            <!-- {% if forloop.first %}active show{% endif %} -->
+
+                            <li class="nav-item " id="resumecategory_{{resumecategory.pk}}">
+                                <a class="nav-link" href="#resumecategory{{resumecategory.pk}}" role="tab"
+                                    data-toggle="tab" aria-selected="true">
+                                    {{resumecategory.get_icon|safe}}
+                                    {{resumecategory.title}}
                                 </a>
                             </li>
+
+
+
+                            {% endfor %}
+
+
+
                             <li class="nav-item">
-                                <a class="nav-link" href="#connections" role="tab" data-toggle="tab"
+                                <a class="nav-link " href="#connections" role="tab" data-toggle="tab"
                                     aria-selected="false">
                                     <i class="material-icons">people</i>
-                                    موقعیت
+                                    همکاران
                                 </a>
                             </li>
                             <li class="nav-item">
@@ -102,60 +114,173 @@
                 </div>
             </div>
             <div class="tab-content tab-space">
-                <div class="tab-pane work active show" id="work">
+
+                {% for resumecategory in selected_profile.resumecategory_set.all %}
+                <!-- {% if forloop.first %}active show{% endif %} -->
+                <div class="tab-pane work " id="resumecategory{{resumecategory.pk}}">
                     <div class="row">
                         <div class="col-md-7 ml-auto mr-auto ">
-                            <h4 class="title">Latest Collections</h4>
-                            <div class="row collections">
-                                <div class="col-md-6">
-                                    <div class="card card-background"
-                                        style="background-image: url('{% static 'material/img/mariya-georgieva.jpg' %}')">
-                                        <a href="#pablo"></a>
-                                        <div class="card-body">
-                                            <label class="badge badge-warning">Spring 2016</label>
-                                            <a href="#pablo">
-                                                <h2 class="card-title">Stilleto</h2>
-                                            </a>
+                            <!-- <h4 class="title farsi text-right">رزومه</h4> -->
+                           
+
+
+
+                            <div class="row collections rtl">
+
+
+                                {% for resume in resumecategory.resumes.all %}
+                                <div class="col-md-6 d-none">
+                                    <div class="rotating-card-container manual-flip" style="margin-bottom: 30px;">
+                                        <div class="card card-rotate">
+                                            <div class="front front-background"
+                                                style="background-image: url(&quot;{{resume.thumbnail}}&quot;); width: 289.984px;">
+                                                <div class="card-body">
+                                                    <h6 class="card-category farsi"> {{resume.pretitle}}</h6>
+                                                    <a href="#pablo">
+                                                        <h3 class="card-title farsi">
+                                                            {{resume.title}}
+                                                        </h3>
+                                                    </a>
+                                                    <p class="card-description">
+                                                        {{resume.posttitle}}
+                                                    </p>
+                                                    <div class="stats text-center">
+                                                        <button type="button" name="button"
+                                                            class="btn btn-danger btn-fill btn-round btn-rotate">
+                                                            <i class="material-icons">refresh</i> بررسی بیشتر
+                                                            <div class="ripple-container"></div></button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="back back-background"
+                                                style="background-image: url(&quot;{{resume.thumbnail}}&quot;); width: 289.984px;">
+                                                <div class="card-body">
+                                                    <h5 class="card-title farsi">
+                                                        {{resume.title}}
+                                                    </h5>
+                                                    <div class="card-description">
+                                                        {{resume.short_description|safe}}
+
+                                                    </div>
+                                                    <div class="stats text-center">
+                                                        <a href="{{resume.get_absolute_url}}" title="جزییات"
+                                                            class="btn btn-info btn-just-icon btn-fill btn-round">
+                                                            <i class="material-icons">subject</i>
+                                                        </a>
+                                                        <a href="{{resume.get_edit_url}}"
+                                                            class="btn btn-success btn-just-icon btn-fill btn-round btn-wd">
+                                                            <i class="material-icons">mode_edit</i>
+                                                        </a>
+                                                        <a href="#pablo"
+                                                            class="btn btn-danger btn-just-icon btn-fill btn-round">
+                                                            <i class="material-icons">delete</i>
+                                                        </a>
+                                                        <br>
+                                                        <br>
+                                                        <button type="button" name="button"
+                                                            class="btn btn-success btn-fill btn-round btn-rotate farsi">
+                                                            <i class="material-icons">refresh</i> بازگشت
+                                                            <div class="ripple-container"></div></button>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
+
+
+                                <!-- <div class="col-md-6 col-lg-4">
+                                    <div class="rotating-card-container" style="margin-bottom: 30px;">
+                                        <div class="card card-rotate card-background">
+                                            <div class="front front-background" style="background-image: url(&quot;/static/material/img/card-blog5.jpg&quot;); width: 350px;">
+                                                <div class="card-body">
+                                                    <h6 class="card-category">Full Background Card</h6>
+                                                    <a href="#pablo">
+                                                        <h3 class="card-title">This Background Card Will Rotate on Hover</h3>
+                                                    </a>
+                                                    <p class="card-description">
+                                                        Don't be scared of the truth because we need to restart the human
+                                                        foundation in truth And I love you like Kanye loves Kanye I love Rick
+                                                        Owens’ bed design but the back is...
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <div class="back back-background" style="background-image: url(&quot;/static/material/img/card-blog5.jpg&quot;); width: 350px;">
+                                                <div class="card-body">
+                                                    <h5 class="card-title">
+                                                        Manage Post
+                                                    </h5>
+                                                    <p class="card-description">As an Admin, you have shortcuts to edit, view or
+                                                        delete the posts.</p>
+                                                    <div class="footer text-center">
+                                                        <a href="#pablo" class="btn btn-info btn-just-icon btn-fill btn-round">
+                                                            <i class="material-icons">subject</i>
+                                                        </a>
+                                                        <a href="#pablo" class="btn btn-success btn-just-icon btn-fill btn-round btn-wd">
+                                                            <i class="material-icons">mode_edit</i>
+                                                        </a>
+                                                        <a href="#pablo" class="btn btn-danger btn-just-icon btn-fill btn-round">
+                                                            <i class="material-icons">delete</i>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div> -->
+
+
                                 <div class="col-md-6">
-                                    <div class="card card-background"
-                                        style="background-image: url('{% static 'material/img/clem-onojeghuo.jpg' %}')">
-                                        <a href="#pablo"></a>
-                                        <div class="card-body">
-                                            <label class="badge badge-info">Spring 2016</label>
+                                    <div class="card card-profile">
+                                        <div class="card-header card-header-image">
                                             <a href="#pablo">
-                                                <h2 class="card-title">High Heels</h2>
+                                                <img class="img" src="{{resume.thumbnail}}">
+
                                             </a>
+                                            <div class="colored-shadow"
+                                                style="background-image: url(&quot;/static/material/img/card-profile1.jpg&quot;); opacity: 1;">
+                                            </div>
+                                        </div>
+                                        <div class="card-body ">
+                                            <h4 class="card-title farsi">{{resume.title}}</h4>
+                                            <div class="card-category text-center text-gray">
+                                                {{resume.short_description|safe}}
+                                            </div>
+                                        </div>
+                                        <div class="card-footer justify-content-center">
+                                            <a href="{{resume.get_absolute_url}}" title="جزییات"
+                                                class="btn btn-info btn-just-icon btn-fill btn-round">
+                                                <i class="material-icons">subject</i>
+                                                <div class="ripple-container"></div>
+                                            </a>
+
+
+                                            <a href="{{resume.get_edit_url}}"
+                                                class="btn btn-success btn-just-icon btn-fill btn-round btn-wd">
+                                                <i class="material-icons">mode_edit</i>
+                                                <div class="ripple-container"></div>
+                                            </a>
+
+                                          
+                                            <a href="#pablo" class="btn btn-danger btn-just-icon btn-fill btn-round">
+                                                <i class="material-icons">delete</i>
+                                            <div class="ripple-container"></div></a>
+
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
-                                    <div class="card card-background"
-                                        style="background-image: url('{% static 'material/img/olu-eletu.jpg' %}')">
-                                        <a href="#pablo"></a>
-                                        <div class="card-body">
-                                            <label class="badge badge-danger">Summer 2016</label>
-                                            <a href="#pablo">
-                                                <h2 class="card-title">Flats</h2>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="card card-background"
-                                        style="background-image: url('{% static 'material/img/darren-coleshill.jpg' %}')">
-                                        <a href="#pablo"></a>
-                                        <div class="card-body">
-                                            <label class="badge badge-success">Winter 2015</label>
-                                            <a href="#pablo">
-                                                <h2 class="card-title">Men's Sneakers</h2>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
+
+                                {% endfor %}
+
+
+
                             </div>
+                            <p class="text-center">
+
+                                <a class="btn btn-info" href="{{resumecategory.get_edit_url}}">
+                                    اصلاح {{resumecategory.title}}
+                                </a>
+                            </p>
                         </div>
                         <div class="col-md-2 mr-auto ml-auto stats">
                             <h4 class="title">Stats</h4>
@@ -176,7 +301,13 @@
                         </div>
                     </div>
                 </div>
-                <div class="tab-pane connections" id="connections">
+
+                {% endfor %}
+
+
+
+
+                <div class="tab-pane connections show" id="connections">
                     <div class="row">
                         <div class="col-md-5 ml-auto mr-auto">
                             <div class="card card-profile card-plain">
@@ -363,4 +494,15 @@
     </ul>
 </nav>
 
+
+{% for resumecategory in selected_profile.resumecategory_set.all %}
+
+<script>
+    $("#resumecategory{{resumecategory.pk}}").addClass("active")
+    $("#resumecategory{{resumecategory.pk}}").addClass("show")
+    $("#resumecategory{{resumecategory.pk}}").removeClass("active")
+    $("#resumecategory{{resumecategory.pk}}").removeClass("show")
+
+</script>
+{% endfor %}
 {% endblock  %}

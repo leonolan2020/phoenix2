@@ -57,6 +57,16 @@ class ExampleViews(View):
 
 
 class PageViews(View):
+    def get_page_context(self,request,pk,page_type,*args, **kwargs):
+        pass
+
+    def resume(self,request,pk,*args, **kwargs):
+        user=request.user
+        context=getContext(request)
+        resume=ResumeRepo(user=user).resume(resume_id=pk)
+        context['page']=resume
+        context['resume']=resume
+        return render(request,TEMPLATE_ROOT+'resume.html',context)
     def blog(self,request,pk,*args, **kwargs):
         user=request.user
         context=getContext(request)
