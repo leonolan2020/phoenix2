@@ -1,0 +1,14 @@
+server {
+    listen 8085;
+    server_name phoenix2.com www.phoenix2.com;
+
+    location = /favicon.ico { access_log off; log_not_found off; }
+    location /static/ {
+        root /home/leo/repo/phoenix2;
+    }
+
+    location / {
+        include         uwsgi_params;
+        uwsgi_pass      unix:/run/uwsgi/phoenix2.sock;
+    }
+}

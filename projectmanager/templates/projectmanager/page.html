@@ -244,15 +244,16 @@
 
 
                     <div class="mr-4 bootstrap-tagsinput rose-badge">
-                        <template v-for="tag in tags" v-html="tag.get_link">
+                        <template v-for="tag in tags">
 
                             {% verbatim %}
                             <span class="tag badge mx-2">
-                                <a :href="tag.get_absolute_url" class="text-light">
+                                <a :href="tag.get_projectmanager_url" class="text-light">
                                     {{tag.title}}
                                 </a>
 
-                                <span @click="remove_tag(tag.id)" data-role="remove"></span></span>
+                                <span @click="remove_tag(tag.id)" data-role="remove"></span>
+                            </span>
 
 
 
@@ -330,7 +331,8 @@
                         <input placeholder="توضیحات" type="text" class="form-control" v-model="image_description">
                         <input placeholder="موقعیت  مکانی تصویر" type="text" class="form-control"
                             v-model="image_location">
-                        <button class="btn btn-success btn-round" v-if="image_title && image_description && image_location" type="submit">
+                        <button class="btn btn-success btn-round"
+                            v-if="image_title && image_description && image_location" type="submit">
                             <i class="fa fa-upload"></i>
                             تایید</button>
 

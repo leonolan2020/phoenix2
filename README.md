@@ -78,3 +78,10 @@ collectstatic :
 ```python
 python manage.py collectstatic
 ```
+
+
+```bash
+cp ./server/phoenix2.ini /etc/uwsgi/sites/phoenix2.ini
+cp ./server/phoenix2 /etc/nginx/sites-available/phoenix2
+
+```
