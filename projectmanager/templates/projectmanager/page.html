@@ -26,14 +26,17 @@
 <h3 class="title text-center ">
     <span class="mx-2 text-{{page.color}}">{{page.icon.get_icon_tag|safe}}</span>
     <span class="text-{{page.color}}">{{page.title}}</span>
-    {% if perms.projectmanager.change_managerpage %}
+
+</h3> {% if perms.projectmanager.change_managerpage %}
+
+<div class="text-center">
     <a class="btn btn-link btn-warning" title="ویرایش" href="{{page.get_edit_url}}">
         <i class="material-icons">settings</i>
         ویرایش
     </a>
-    {% endif %}
 
-</h3>
+</div>
+{% endif %}
 <div id="app">
 
     <div class="row rtl">

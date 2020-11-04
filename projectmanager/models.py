@@ -196,7 +196,7 @@ class OrganizationUnit(ManagerPage):
 		verbose_name_plural = _("OrganizationUnits")
 
 	def save(self):
-		self.child_class='organizatiounit'
+		self.child_class='organizationunit'
 		super(OrganizationUnit,self).save()
 
 

@@ -12,6 +12,7 @@ urlpatterns = [
     path('search/',views.BasicViews().search,name='search'),
     path('guantt/<int:pk>/',views.PageViews().guantt,name='guantt'),
     path('project/<int:pk>/',views.PageViews().project,name='project'),
+    path('organizationunit/<int:pk>/',views.PageViews().organizationunit,name='organizationunit'),
     path('contractor/<int:pk>/',views.PageViews().contractor,name='contractor'),
     path('organizationunit/<int:pk>/',views.PageViews().organizationunit,name='organizationunit'),
     path('event/<int:pk>/',views.PageViews().event,name='event'),
