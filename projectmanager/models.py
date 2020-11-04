@@ -14,7 +14,7 @@ from dashboard.enums import *
 from dashboard.constants import *
 from .constants import *
 from dashboard.models import Page as DashboardPage
-from dashboard.persian import PersianCalendar
+from utility.persian import PersianCalendar
 
 class ManagerPage(DashboardPage):
 	parent=models.ForeignKey("ManagerPage", verbose_name=_("parent"),null=True,blank=True, on_delete=models.SET_NULL)
@@ -147,7 +147,7 @@ class OrganizationUnit(ManagerPage):
 		template= f"""
 		<div>
 		<h4 class="mt-4">
-			<a class="text-{self.color} mb-2" href="#">
+			<a class="text-{self.color} mb-2" href="{self.get_absolute_url()}">
 				{self.icon.get_colored_icon() if self.icon else '<i class="material-icons">apartment</i>'}
 				{self.title}</a>  
 			</h4>

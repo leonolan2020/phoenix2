@@ -2,7 +2,7 @@ import os
 from .apps import APP_NAME
 from .enums import *
 from .settings import ADMIN_URL,MEDIA_URL,STATIC_URL
-from .persian import PersianCalendar
+from utility.persian import PersianCalendar
 from django.db import models
 from django.http import Http404,HttpResponse
 from django.shortcuts import reverse

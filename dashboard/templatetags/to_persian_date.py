@@ -1,6 +1,6 @@
 from django import template
 register = template.Library()
-from dashboard.persian import PersianCalendar
+from utility.persian import PersianCalendar
 
 @register.filter
 def to_persian_date(value):
