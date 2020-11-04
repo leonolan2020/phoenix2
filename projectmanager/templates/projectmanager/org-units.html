@@ -3,16 +3,33 @@
 <div class="row">
   <div class="col-12">
 
-    <div class="text-right rtl">
-      <a class="btn btn-success" href="{% url 'projectmanager:organizationchart' %}">چارت سازمانی</a>
 
+
+    <div class="card card-stats">
+      <div class="card-header card-header-success card-header-icon">
+        <div class="card-icon">
+          <i class="material-icons">apartment</i>
+        </div>
+        <p class="card-category">کارکنان و</p>
+        <h3 class="card-title">چارت سازمانی</h3>
+      </div>
+      <div class="card-body">
+        {% for org_unit in organization_units %}
+        {{org_unit.get_template|safe}}
+        {% endfor %}
+      </div>
+      <div class="card-footer">
+        <div class="stats">
+          <a class="" href="{% url 'projectmanager:organizationchart' %}">چارت سازمانی</a>
+
+        </div>
+      </div>
     </div>
+
+
+
+
   </div>
-</div>
-<div class="text-right rtl">
-  {% for org_unit in organization_units %}
-  {{org_unit.get_template|safe}}
-  {% endfor %}
 </div>
 {% endblock  %}
 {% block script %}

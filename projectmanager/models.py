@@ -148,7 +148,7 @@ class OrganizationUnit(ManagerPage):
 		<div>
 		<h4 class="mt-4">
 			<a class="text-{self.color} mb-2" href="{self.get_absolute_url()}">
-				{self.icon.get_colored_icon() if self.icon else '<i class="material-icons">apartment</i>'}
+				{self.icon.get_icon_tag() if self.icon else '<i class="material-icons">apartment</i>'}
 				{self.title}</a>  
 			</h4>
 		"""

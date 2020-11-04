@@ -330,7 +330,7 @@
                         <input placeholder="توضیحات" type="text" class="form-control" v-model="image_description">
                         <input placeholder="موقعیت  مکانی تصویر" type="text" class="form-control"
                             v-model="image_location">
-                        <button class="btn btn-success btn-round" v-if="image_title" type="submit">
+                        <button class="btn btn-success btn-round" v-if="image_title && image_description && image_location" type="submit">
                             <i class="fa fa-upload"></i>
                             تایید</button>
 
@@ -580,10 +580,13 @@
 
                 // Put the results in a div
                 posting.done(function (data) {
-                    if (data.result === 'SUCCEED')
+                    if (data.result === 'SUCCEED') {
                         app.links = data.links
-                    app.link_title = ''
-                    app.link_url = ''
+                        app.link_title = ''
+                        app.link_url = ''
+                    }
+                    else
+                        console.log(data)
                 })
 
 
@@ -666,7 +669,7 @@
                             }
                         }
                         else {
-                            // alert('file not uploaded');
+                            console.log(data)
                         }
                     },
                 });
