@@ -73,3 +73,27 @@ class PageViews(APIView):
                         events_s=EventSerializer(project.events.order_by('-event_date'),many=True).data
                         return JsonResponse({'result':SUCCEED,'events':events_s})
         return JsonResponse({'result':FAILED,'log':log})
+    def edit_project_timing(self,request):
+        log=1
+        user=request.user
+        if request.method=='POST':
+            log=2
+            edit_project_timing_form=EditProjectTimingForm(request.POST)
+            if edit_project_timing_form.is_valid():
+                log=3
+                project_id=edit_project_timing_form.cleaned_data['project_id']
+                start_date=edit_project_timing_form.cleaned_data['start_date']
+                end_date=edit_project_timing_form.cleaned_data['end_date']
+                percent=edit_project_timing_form.cleaned_data['percent']
+
+                project=ProjectRepo(user=request.user).project(project_id=project_id)
+                start_date=PersianCalendar().to_gregorian(start_date)
+                end_date=PersianCalendar().to_gregorian(end_date)
+                if project is not None:
+                    log=4
+                    project=ProjectRepo(user=user).edit_timing(project_id=project_id,start_date=start_date,end_date=end_date,percent=percent)
+                    if project is not None:
+                        log=5
+                        EventSerializer(project.events.order_by('-event_date'),many=True).data
+                        return JsonResponse({'result':SUCCEED,'start_date':project.persian_start_date(),'percent':project.percent,'end_date':project.persian_end_date()})
+        return JsonResponse({'result':FAILED,'log':log})

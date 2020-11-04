@@ -50,6 +50,12 @@ class AddEventForm(forms.Form):
     title=forms.CharField(max_length=200,required=True)
     short_description=forms.CharField(max_length=500,required=True)
     event_date=forms.CharField(max_length=20,required=True)
+
+class EditProjectTimingForm(forms.Form):
+    project_id=forms.IntegerField(required=True)
+    start_date=forms.CharField(max_length=50,required=True)
+    end_date=forms.CharField(max_length=50,required=True)
+    percent=forms.IntegerField(required=True)
 class AddWorkUnitForm(forms.Form):
     parent_id=forms.IntegerField(required=True)
     title=forms.CharField(max_length=50,required=True)

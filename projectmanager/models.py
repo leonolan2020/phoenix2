@@ -1,3 +1,4 @@
+from django.core.validators import MinValueValidator,MaxValueValidator
 from dashboard.enums import ColorEnum
 import os
 from django.http import Http404,HttpResponse
@@ -82,7 +83,7 @@ class ManagerPage(DashboardPage):
 
 class Project(ManagerPage):
 	# priority2=models.IntegerField(_("priority"),default=100)
-	percent=models.IntegerField(_('درصد پیشرفت'),default=0)
+	percent=models.IntegerField(_('درصد پیشرفت'),default=0,validators=[MinValueValidator(0), MaxValueValidator(100)])
 	start_date=models.DateField(_("شروع"),null=True,blank=True, auto_now=False, auto_now_add=False)
 	end_date=models.DateField(_("پایان"),null=True,blank=True, auto_now=False, auto_now_add=False)
 	def persian_start_date(self):

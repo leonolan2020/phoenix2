@@ -50,6 +50,10 @@ class BasicViews(View):
         contractors_s=json.dumps(ContractorSerializer(contractors,many=True).data)
         context['contractors_s']=contractors_s
         return render(request,TEMPLATE_ROOT+'index.html',context)
+    def organiazationunits(self,request,*args, **kwargs):
+        context=getContext(request)
+        return render(request,TEMPLATE_ROOT+'org-chart.html',context)
+        
     def archive_documents(self,request,*args, **kwargs):
         user=request.user
         context=getContext(request)
@@ -95,6 +99,7 @@ class PageViews(View):
         context['contractors_s']=json.dumps(ContractorSerializer(project.contractors.all(),many=True).data)
         context['project']=project
         context['page']=project
+        context['edit_project_timing_form']=EditProjectTimingForm()
         if user.has_perm(APP_NAME+'.change_project'):
             context['add_location_form']=AddLocationForm()
         if user.has_perm(APP_NAME+'.add_project'):

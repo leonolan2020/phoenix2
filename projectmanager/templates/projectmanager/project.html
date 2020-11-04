@@ -112,51 +112,116 @@
 
     </div>
     <div class="col-md-6">
-        <h3 class="text-center farsi">رویداد ها و وقایع</h3>
-        <ul class="timeline timeline-simple">
 
-            <li class="timeline-inverted">
-                <div class="timeline-badge success">
-                    <i class="material-icons">settings</i>
+        <div class="card card-stats">
+            <div class="card-header card-header-success card-header-icon">
+                <div class="card-icon">
+                    <i class="fa fa-briefcase"></i>
                 </div>
-                <div class="timeline-panel">
-                    <div class="timeline-heading">
-                        <span class="badge badge-pill badge-danger">
-                            <input type="text" v-model="event_title" class="form-control text-light"
-                                placeholder="عنوان رویداد" id="event-title">
-                        </span>
-                        <div class="text-secondary" style="float: right;">
-                            <small>
-                                <date-picker v-model="selected_date"></date-picker>
-                            </small>
+                <p class="card-category">{{page.title}}</p>
+                <h3 class="card-title">
+                    اطلاعات تکمیلی
+
+                </h3>
+            </div>
+            <div class="card-body">
+                {% if edit_project_timing_form %}
+
+
+                <form @submit.prevent="edit_project_timing">
+
+
+                    <div class="row">
+                        <div class="col-6">
+                            <span class="farsi text-secondary">
+
+                                شروع :
+                            </span>
+                            <date-picker v-model="start_date"></date-picker>
+                        </div>
+                        <div class="col-6">
+                            <span class="farsi text-secondary">
+
+                                پایان :
+
+                            </span>
+
+                            <date-picker v-model="end_date"></date-picker>
+                        </div>
+                        <div class="col-6 mt-3">
+                            <span class="farsi text-secondary">
+
+                                میزان پیشرفت پروژه :
+
+                            </span>
+
+                            <input type="number" min="0" max="100" class="form-control" v-model="percent">
                         </div>
                     </div>
-                    <div class="timeline-body">
-                        <input type="text" v-model="event_description" class="form-control" placeholder="شرح رویداد"
-                            id="event-description">
-
+                    <div class="row">
+                        <button class="btn btn-rounded btn-info">تایید</button>
                     </div>
-                    <button @click="add_event" class="btn btn-light btn-sm btn-round" href="{{event.get_absolute_url}}">
-                        <i class="material-icons">description</i>
-                        <small>
+                </form>
+                {% else %}
+                sdsddddddddddddddd
+                {% endif %}
+            </div>
+            <div class="card-footer">
+                assad
+            </div>
+
+        </div>
+
+
+        <div>
+            <h3 class="text-center farsi">رویداد ها و وقایع</h3>
+            <ul class="timeline timeline-simple">
+
+                <li class="timeline-inverted">
+                    <div class="timeline-badge success">
+                        <i class="material-icons">settings</i>
+                    </div>
+                    <div class="timeline-panel">
+                        <div class="timeline-heading">
+                            <span class="badge badge-pill badge-danger">
+                                <input type="text" v-model="event_title" class="form-control text-light"
+                                    placeholder="عنوان رویداد" id="event-title">
+                            </span>
+                            <div class="text-secondary" style="float: right;">
+                                <small>
+                                </small>
+                            </div>
+                        </div>
+                        <div class="timeline-body">
+                            <date-picker v-model="selected_date"></date-picker>
+
+
+                            <input type="text" v-model="event_description" class="form-control" placeholder="شرح رویداد"
+                                id="event-description">
+
+                        </div>
+                        <button @click="add_event" class="btn btn-light btn-sm btn-round"
+                            href="{{event.get_absolute_url}}">
+                            <i class="material-icons">description</i>
                             <small>
-                                افزودن
+                                <small>
+                                    افزودن
+                                </small>
                             </small>
-                        </small>
-                    </button>
-                </div>
-            </li>
+                        </button>
+                    </div>
+                </li>
 
-            <li class="timeline-inverted" v-for="event in events" v-html="event.get_tag">
-
-
-            </li>
+                <li class="timeline-inverted" v-for="event in events" v-html="event.get_tag">
 
 
-           
+                </li>
 
-        </ul>
 
+
+
+            </ul>
+        </div>
 
     </div>
 
@@ -177,7 +242,7 @@
             <div class="card-body">
                 <a target="_blank" href="{{project.get_guantt_url}}">نمایش نمودار گانت</a>
 
-              
+
 
 
 
@@ -210,6 +275,9 @@
         el: "#project-app",
         data: {
             selected_date: current_date,
+            start_date: "{{project.persian_start_date}}",
+            end_date: "{{project.persian_end_date}}",
+            percent: parseInt("{{project.percent}}"),
             projects: [],
             project_title: '',
             location: '',
@@ -223,6 +291,35 @@
             DatePicker: VuePersianDatetimePicker
         },
         methods: {
+            edit_project_timing: function () {
+           
+
+                let url = "{% url 'projectmanager:edit_project_timing' %}"
+
+                var posting = $.post(url,
+                    {
+                        project_id: project_id,
+                        start_date: project_app.start_date,
+                        end_date: project_app.end_date,
+                        percent: project_app.percent,
+                        csrfmiddlewaretoken: csrfmiddlewaretoken
+                    }
+                );
+
+                // Put the results in a div
+                posting.done(function (data) {
+                    // console.log(data)
+                    // word_app.word = (data.word);
+                    // word_app.definitions = (data.definitions);
+                    if (data.result === 'SUCCEED') {
+                        project_app.start_date = data.start_date
+                        project_app.end_date = data.end_date
+                        project_app.percent = data.percent
+                    }
+                })
+            
+
+            },
             add_project: function () {
                 let url = "{% url 'projectmanager:add_project' %}"
 

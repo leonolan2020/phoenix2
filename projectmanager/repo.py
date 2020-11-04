@@ -52,6 +52,7 @@ class EventRepo:
             return self.objects.get(pk=event_id)
         except:
             return None
+
     def add(self,title,short_description,project_id,event_date,color=None):
         if color is None:
             color=ColorEnum.DANGER
@@ -103,11 +104,11 @@ class ProjectRepo:
         # print(self.me_employee)
         # print('me_contractor')
         # print(self.me_contractor)
-    def my_projects(self):
-        if self.me_contractor is not None:
-            return self.me_contractor.project_set.all()
-        if self.me_employee is not None:
-            return self.me_employee.work_unit.project_set.all()
+    # def my_projects(self):
+    #     if self.me_contractor is not None:
+    #         return self.me_contractor.project_set.all()
+    #     if self.me_employee is not None:
+    #         return self.me_employee.work_unit.project_set.all()
     def list_roots(self):
         return self.objects.filter(parent=None).order_by('-priority')
     def list(self):
@@ -119,6 +120,14 @@ class ProjectRepo:
             return self.objects.get(pk=project_id)
         except:
             return None
+    def edit_timing(self,project_id,start_date,end_date,percent):
+        project=self.project(project_id=project_id)
+        if project is not None:
+            project.start_date=start_date
+            project.end_date=end_date
+            project.percent=percent
+            project.save()
+            return project
     def get(self,pk):
         try:
             return self.objects.get(pk=pk)
