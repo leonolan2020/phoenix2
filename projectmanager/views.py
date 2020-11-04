@@ -38,8 +38,8 @@ class BasicViews(View):
         projects=ProjectRepo(user=user).list_roots()
         context['projects']=projects
         contractors=ContractorRepo(user=user).list()
-        organiazationunits=OrganiazationUnitRepo(user=user).list_roots()
-        context['organiazationunits']=organiazationunits
+        organizationunits=organizationUnitRepo(user=user).list_roots()
+        context['organizationunits']=organizationunits
         context['contractors']=contractors
         if user.has_perm(APP_NAME+'.add_project'):
             context['add_project_form']=AddProjectForm()
@@ -52,13 +52,23 @@ class BasicViews(View):
         return render(request,TEMPLATE_ROOT+'index.html',context)
 
 
-    def organiazationunits(self,request,*args, **kwargs):
+    def organizationunits(self,request,*args, **kwargs):
         context=getContext(request)
-        organization_units=OrganiazationUnitRepo(user=request.user).list()
-        organization_units_s=OrganiazationUnitSerializer(organization_units,many=True).data
+        organization_units=organizationUnitRepo(user=request.user).list()
+        organization_units_s=organizationUnitSerializer(organization_units,many=True).data
+        context['organization_units_s']=json.dumps(organization_units_s)
+        return render(request,TEMPLATE_ROOT+'org-units.html',context)
+  
+
+    def organizationchart(self,request,*args, **kwargs):
+        context=getContext(request)
+        organization_units=organizationUnitRepo(user=request.user).list()
+        organization_units_s=organizationUnitSerializer(organization_units,many=True).data
         context['organization_units_s']=json.dumps(organization_units_s)
         return render(request,TEMPLATE_ROOT+'org-chart.html',context)
-        
+
+
+         
     def archive_documents(self,request,*args, **kwargs):
         user=request.user
         context=getContext(request)
@@ -120,13 +130,13 @@ class PageViews(View):
         context['page']=event
         context['page_type']='رویداد'
         return render(request,TEMPLATE_ROOT+'event.html',context)
-    def organiazationunit(self,request,pk,*args, **kwargs):
-        organiazationunit_id=pk
+    def organizationunit(self,request,pk,*args, **kwargs):
+        organizationunit_id=pk
         user=request.user
-        organiazationunit=OrganiazationUnitRepo(user=user).organiazationunit(organiazationunit_id=organiazationunit_id)
-        context=self.getManagerPageContext(request=request,page=organiazationunit)
-        context['organiazationunit']=organiazationunit
-        context['page']=organiazationunit
+        organizationunit=organizationUnitRepo(user=user).organizationunit(organizationunit_id=organizationunit_id)
+        context=self.getManagerPageContext(request=request,page=organizationunit)
+        context['organizationunit']=organizationunit
+        context['page']=organizationunit
         context['page_type']='واحد سازمانی'
         return render(request,TEMPLATE_ROOT+'event.html',context)
     def contractor(self,request,pk,*args, **kwargs):

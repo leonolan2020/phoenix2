@@ -1,0 +1,29 @@
+{% extends "dashboard/layout.html" %}
+{% block content %}
+<div class="row">
+  <div class="col-12">
+    <a class="btn btn-success" href="{% url 'projectmanager:organizationchart' %}">نمودار</a>
+    
+  </div>
+</div>
+<div class="row">
+  <div class="col-4">adwewer</div>
+  <div class="col-4">adwewer</div>
+  <div class="col-4">adwewer</div>
+  <div class="col-4">adwewer</div>
+  <div class="col-4">adwewer</div>
+  <div class="col-4">adwewer</div>
+  <div class="col-4">adwewer</div>
+  <div class="col-4">adwewer</div>
+  <div class="col-4">adwewer</div>
+  <div class="col-4">adwewer</div>
+</div>
+{% endblock  %}
+{% block script %}
+<script>
+$("#projectmanagerPages").addClass("show")
+$("#nav-item-projectmanager-organizationunits").addClass('active')
+</script>
+
+
+{% endblock  %}
