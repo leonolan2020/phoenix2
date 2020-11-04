@@ -38,7 +38,7 @@ class BasicViews(View):
         projects=ProjectRepo(user=user).list_roots()
         context['projects']=projects
         contractors=ContractorRepo(user=user).list()
-        organizationunits=organizationUnitRepo(user=user).list_roots()
+        organizationunits=OrganizationUnitRepo(user=user).list_roots()
         context['organizationunits']=organizationunits
         context['contractors']=contractors
         if user.has_perm(APP_NAME+'.add_project'):
@@ -54,16 +54,16 @@ class BasicViews(View):
 
     def organizationunits(self,request,*args, **kwargs):
         context=getContext(request)
-        organization_units=organizationUnitRepo(user=request.user).list()
-        organization_units_s=organizationUnitSerializer(organization_units,many=True).data
-        context['organization_units_s']=json.dumps(organization_units_s)
+        organization_units=OrganizationUnitRepo(user=request.user).list_roots()
+        context['organization_units']=organization_units
+        context['organization_units_s']=json.dumps(OrganizationUnitSerializer(organization_units,many=True).data)
         return render(request,TEMPLATE_ROOT+'org-units.html',context)
   
 
     def organizationchart(self,request,*args, **kwargs):
         context=getContext(request)
-        organization_units=organizationUnitRepo(user=request.user).list()
-        organization_units_s=organizationUnitSerializer(organization_units,many=True).data
+        organization_units=OrganizationUnitRepo(user=request.user).list()
+        organization_units_s=OrganizationUnitSerializer(organization_units,many=True).data
         context['organization_units_s']=json.dumps(organization_units_s)
         return render(request,TEMPLATE_ROOT+'org-chart.html',context)
 
@@ -133,7 +133,7 @@ class PageViews(View):
     def organizationunit(self,request,pk,*args, **kwargs):
         organizationunit_id=pk
         user=request.user
-        organizationunit=organizationUnitRepo(user=user).organizationunit(organizationunit_id=organizationunit_id)
+        organizationunit=OrganizationUnitRepo(user=user).organizationunit(organizationunit_id=organizationunit_id)
         context=self.getManagerPageContext(request=request,page=organizationunit)
         context['organizationunit']=organizationunit
         context['page']=organizationunit

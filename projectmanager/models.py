@@ -121,7 +121,7 @@ class Project(ManagerPage):
 
 	events=models.ManyToManyField("Event",blank=True, verbose_name=_("رویداد ها"))
 	contractors=models.ManyToManyField("Contractor",blank=True, verbose_name=_("پیمانکار ها"))
-	organiazation_units=models.ManyToManyField("OrganiazationUnit",blank=True, verbose_name=_("واحد های سازمانی"))
+	organization_units=models.ManyToManyField("OrganizationUnit",blank=True, verbose_name=_("واحد های سازمانی"))
 	location=models.TextField(_('موقعیت در نقشه گوگل مپ'),null=True,blank=True)
 	def save(self):
 		self.child_class='project'
@@ -136,11 +136,47 @@ class Project(ManagerPage):
 		verbose_name_plural = _("Projects")
 
 
-class OrganiazationUnit(ManagerPage):
+class OrganizationUnit(ManagerPage):
 
 	def parent_title(self):
 		if self.parent is not None:
 			return self.parent.title
+	def childs(self):
+		return OrganizationUnit.objects.filter(parent=self)
+	def get_template(self):
+		template= f"""
+		<div>
+		<h4 class="mt-4">
+			<a class="text-{self.color} mb-2" href="#">
+				{self.icon.get_colored_icon() if self.icon else '<i class="material-icons">apartment</i>'}
+				{self.title}</a>  
+			</h4>
+		"""
+		# for employee in work_unit.employee_set.all():
+		#     template+=f"""
+		#         <div class="">
+		#             <small>
+		#                 <a class="d-inline ml-5 text-secondary" href="{employee.profile.get_absolute_url()}">
+		#                 <i class="fa fa-user"></i>
+		#                 {employee.profile.name()}</a>
+
+		#                 <span class="badge badge-info">{employee.role}</span>
+		#             </small>
+		#         </div>
+		#     	"""
+		template+="""
+		<hr>
+		<div class="mr-5">
+		"""
+		for work_unit1 in self.childs():
+			template+=work_unit1.get_template()
+		template+="""
+		</div>
+		"""
+
+
+		template+='</div>'
+		return template
 
 	def caption(self):
 		return f"""
@@ -156,12 +192,12 @@ class OrganiazationUnit(ManagerPage):
 		"""
 
 	class Meta:
-		verbose_name = _("OrganiazationUnit")
-		verbose_name_plural = _("OrganiazationUnits")
+		verbose_name = _("OrganizationUnit")
+		verbose_name_plural = _("OrganizationUnits")
 
 	def save(self):
-		self.child_class='organiazationunit'
-		super(OrganiazationUnit,self).save()
+		self.child_class='organizatiounit'
+		super(OrganizationUnit,self).save()
 
 
 class Event(ManagerPage):

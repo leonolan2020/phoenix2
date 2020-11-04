@@ -16,9 +16,9 @@ class EventSerializer(serializers.ModelSerializer):
         model=Event        
         fields=['get_tag']
 
-class OrganiazationUnitSerializer(serializers.ModelSerializer):
+class OrganizationUnitSerializer(serializers.ModelSerializer):
     class Meta:
-        model=OrganiazationUnit        
+        model=OrganizationUnit        
         fields=['id','title','parent_title','caption']
 class ArchiveDocumentSerializer(serializers.ModelSerializer):
     class Meta:

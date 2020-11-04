@@ -1,4 +1,4 @@
-from .models import Project,Event,OrganiazationUnit,Contractor,ManagerPage,ArchiveDocument
+from .models import Project,Event,OrganizationUnit as OrganizationUnit,Contractor,ManagerPage,ArchiveDocument
 from authentication.repo import ProfileRepo
 from dashboard.models import Icon
 from dashboard.enums import ColorEnum
@@ -80,17 +80,17 @@ class ArchiveDocumentRepo:
             return None
 
   
-class OrganiazationUnitRepo():
+class OrganizationUnitRepo():
     def __init__(self,user=None):
-        self.objects=OrganiazationUnit.objects
+        self.objects=OrganizationUnit.objects
         self.user=user
     def list_roots(self):
         return self.objects.filter(parent=None).order_by('-priority')
     def list(self):
         return self.objects.order_by('-priority')
-    def organiazationunit(self,organiazationunit_id):
+    def organizationunit(self,organizationunit_id):
         try:
-            return self.objects.get(pk=organiazationunit_id)
+            return self.objects.get(pk=organizationunit_id)
         except:
             return None 
 
