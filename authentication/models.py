@@ -10,7 +10,7 @@ from dashboard.settings import MEDIA_URL,STATIC_URL
 IMAGE_FOLDER=APP_NAME+'/images/'
 from dashboard.models import ProfileCustomization
 class Profile(models.Model):
-    # region = models.ForeignKey("Region", verbose_name=_("region"), on_delete=models.CASCADE)
+    region = models.ForeignKey("dashboard.Region",null=True,blank=True, verbose_name=_("region"), on_delete=models.CASCADE)
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.SET_NULL,null=True,blank=True

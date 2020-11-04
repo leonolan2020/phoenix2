@@ -33,6 +33,11 @@ class AddDocumentForm(forms.Form):
     page_id=forms.IntegerField(required=True)
     title=forms.CharField(max_length=100,required=True)
 
+class AddCommentForm(forms.Form):
+    reply_to=forms.IntegerField(required=False)
+    text=forms.CharField( max_length=200, required=True)
+    object_id=forms.IntegerField(required=True)
+    object_type=forms.CharField(required=True,max_length=30)
 class AddImageForm(forms.Form):
     page_id=forms.IntegerField(required=True)
     title=forms.CharField(max_length=100,required=True)

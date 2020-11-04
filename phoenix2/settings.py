@@ -42,6 +42,7 @@ else:
 # Application definition
 
 INSTALLED_APPS = [
+    'market',
     'leopusher',
     'projectmanager',
     'dashboard',
