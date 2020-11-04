@@ -50,8 +50,13 @@ class BasicViews(View):
         contractors_s=json.dumps(ContractorSerializer(contractors,many=True).data)
         context['contractors_s']=contractors_s
         return render(request,TEMPLATE_ROOT+'index.html',context)
+
+
     def organiazationunits(self,request,*args, **kwargs):
         context=getContext(request)
+        organization_units=OrganiazationUnitRepo(user=request.user).list()
+        organization_units_s=OrganiazationUnitSerializer(organization_units,many=True).data
+        context['organization_units_s']=json.dumps(organization_units_s)
         return render(request,TEMPLATE_ROOT+'org-chart.html',context)
         
     def archive_documents(self,request,*args, **kwargs):

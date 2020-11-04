@@ -138,7 +138,22 @@ class Project(ManagerPage):
 
 class OrganiazationUnit(ManagerPage):
 
+	def parent_title(self):
+		if self.parent is not None:
+			return self.parent.title
 
+	def caption(self):
+		return f"""
+		<strong>
+		{self.title}
+		</strong>
+		<small>
+		<small>
+		{self.short_description}
+		</small>		
+		</small>
+		
+		"""
 
 	class Meta:
 		verbose_name = _("OrganiazationUnit")

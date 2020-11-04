@@ -86,6 +86,8 @@ class OrganiazationUnitRepo():
         self.user=user
     def list_roots(self):
         return self.objects.filter(parent=None).order_by('-priority')
+    def list(self):
+        return self.objects.order_by('-priority')
     def organiazationunit(self,organiazationunit_id):
         try:
             return self.objects.get(pk=organiazationunit_id)

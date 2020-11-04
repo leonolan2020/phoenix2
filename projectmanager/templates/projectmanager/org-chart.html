@@ -1,71 +1,92 @@
 {% load static %}
 <html>
-  <head>
-      
-    <script type="text/javascript" src="{% static 'charts/loader.js' %}"></script>
 
-    <script type="text/javascript">
-
+<head>
+  
+  {% include "projectmanager/includes/head-google.html" %}
 
 
 
+  <script type="text/javascript">
 
 
 
-      google.charts.load('current', {packages:["orgchart"]});
-      google.charts.setOnLoadCallback(drawChart);
-
-      function drawChart() {
-        var data = new google.visualization.DataTable();
-        data.addColumn('string', 'Name');
-        data.addColumn('string', 'Manager');
-        data.addColumn('string', 'ToolTip');
-
-        // For each orgchart box, provide the name, manager, and tooltip to show.
-        
-
-        data.addRows([
-          [{'v':'Mike', 'f':'Mike<div style="color:red; font-style:italic">President</div>'},'', 'The President'],
-          [{'v':'Jim', 'f':'Jim<div style="color:red; font-style:italic">Vice President</div>'},'Mike', 'VP'],
-          ['Alice', 'Mike', ''],
-          ['Bob', 'Jim', 'Bob Sponge'],
-          ['Carol', 'Bob', ''],
-          [{'v':'Hossein','f':'<span style="color:blue;display:block;">حسین</span> IT manager'}, 'Bob', 'IT man'],
-        ]);
+    let org_units = JSON.parse(`{{organization_units_s|escapejs}}`)
 
 
 
-        // let name='name'
-        // let caption='caption'
-        // let manager='manager'
-        // let tooltip='tooltip'
+    google.charts.load('current', { packages: ["orgchart"] });
+    google.charts.setOnLoadCallback(drawChart);
+
+    function drawChart() {
+      var data = new google.visualization.DataTable();
+      data.addColumn('string', 'Name');
+      data.addColumn('string', 'Manager');
+      data.addColumn('string', 'ToolTip');
+
+      // For each orgchart box, provide the name, manager, and tooltip to show.
 
 
-        // name='name'
-        // caption='caption'
-        // manager='manager'
-        // tooltip='tooltip'
-        // data.addRow([{'v':name, 'f':caption}, manager, tooltip])
+      // data.addRows([
+      //   [{ 'v': 'Mike', 'f': 'Mike<div style="color:red; font-style:italic">President</div>' }, '', 'The President'],
+      //   [{ 'v': 'Jim', 'f': 'Jim<div style="color:red; font-style:italic">Vice President</div>' }, 'Mike', 'VP'],
+      //   ['Alice', 'Mike', ''],
+      //   ['Bob', 'Jim', 'Bob Sponge'],
+      //   ['Carol', 'Bob', ''],
+      //   [{ 'v': 'Hossein', 'f': '<span style="color:blue;display:block;">حسین</span> IT manager' }, 'Bob', 'IT man'],
+      // ]);
 
-        // name='name'
-        // caption='caption'
-        // manager='manager'
-        // tooltip='tooltip'
-        // data.addRow([{'v':name, 'f':caption}, manager, tooltip])
 
-        // name='name'
-        // caption='caption'
-        // manager='manager'
-        // tooltip='tooltip'
-        // data.addRow([{'v':name, 'f':caption}, manager, tooltip])
-        // Create the chart.
-        var chart = new google.visualization.OrgChart(document.getElementById('chart_div'));
-        // Draw the chart, setting the allowHtml option to true for the tooltips.
-        chart.draw(data, {'allowHtml':true});
-      }
-   </script>
-    </head>
-  <body>
-    <div id="chart_div"></div>
-  </body>
+
+      let name = 'name'
+      let caption = 'caption'
+      let manager = 'manager'
+      let tooltip = 'tooltip'
+
+
+      // name='name'
+      // caption='caption'
+      // manager='manager'
+      // tooltip='tooltip'
+      // data.addRow([{'v':name, 'f':caption}, manager, tooltip])
+
+      // name='name'
+      // caption='caption'
+      // manager='manager'
+      // tooltip='tooltip'
+      // data.addRow([{'v':name, 'f':caption}, manager, tooltip])
+
+      org_units.forEach(element => {
+        console.log(element)
+        name = element.title
+        caption = element.caption
+        manager = element.parent_title
+        tooltip = element.title
+        data.addRow([{ 'v': name, 'f': caption }, manager, tooltip])
+      });
+
+
+      // Create the chart.
+      var chart = new google.visualization.OrgChart(document.getElementById('chart_div'));
+      // Draw the chart, setting the allowHtml option to true for the tooltips.
+      chart.draw(data, { 'allowHtml': true });
+    }
+  </script>
+<style>
+  h1,h2,
+</style>
+</head>
+
+<body>
+
+  <div style="margin-top: 2em;">
+    <h3 style="text-align: center;">چارت سازمانی</h3>
+    <h2 style="text-align: center;">{{app.title.value}}</h2>
+  </div>
+
+  <div id="chart_div">
+
+  </div>
+</body>
+
 </html>
