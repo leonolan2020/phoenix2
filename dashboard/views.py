@@ -61,8 +61,8 @@ def getContext(request):
     main_pic_repo=MainPicRepo(user=request.user)
     link_repo=LinkRepo(user=request.user)
     context['search_form']=SearchForm()
-    context['theme_color']=parameter_repo.get(ParametersEnum.THEME_COLOR),
     context['app']={
+        'theme_color':parameter_repo.get(ParametersEnum.THEME_COLOR),
         'nav_items':link_repo.get_nav_items(),
         'about_us_short':parameter_repo.get(ParametersEnum.ABOUT_US_SHORT),
         'GOOGLE_SEARCH_CONSOLE_TAG':parameter_repo.get(ParametersEnum.GOOGLE_SEARCH_CONSOLE_TAG),
