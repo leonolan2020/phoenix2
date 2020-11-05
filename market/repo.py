@@ -21,6 +21,52 @@ from dashboard.repo import NotificationRepo,ProfileTransactionRepo
 
 
 
+
+
+class MarketParameterRepo:
+    
+    def __init__(self,user=None):
+        self.objects=MarketParameter.objects
+    
+    def set(self,name,value='--'):
+        if value is None:
+            value='--'
+        self.objects.filter(name=name).delete()
+        MarketParameter(name=name,value=value).save()
+    
+    def init(self,name,value=None):
+        if value is None:
+            value='...'
+        try:
+            param=self.objects.get(name=name)
+        except :
+            self.set(name=name,value=value)
+
+    def get(self,name):
+        try:
+            parameter=self.objects.get(name=name)
+        except:
+            self.set(name=name)            
+            parameter=self.objects.get(name=name)
+        return parameter
+
+
+
+class MarketPicRepo:
+    def __init__(self,user=None):
+        self.objects=MarketPic.objects
+    def get(self,name):
+        try:
+            parameter=self.objects.get(name=name)
+            return parameter
+        except:
+            parameter=self.objects.create(name=name,image_origin=None)
+            return parameter
+        
+  
+
+
+
 class EmployeeRepo():
     def __init__(self,user=None):
         self.user=user

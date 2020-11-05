@@ -7,7 +7,7 @@ from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.utils import timezone
 from django.utils.translation import gettext as _
 from io import BytesIO
-from .enums import ProfileEnum,OrderStatusEnum
+from .enums import ProfileEnum,OrderStatusEnum,MarketPicEnum,MarketParameterEnum
 from .constants import *
 from dashboard.enums import EmployeeEnum,DegreeLevelEnum,TransactionDirectionEnum, IconsEnum, RegionEnum,AddressTitleEnum
 from utility.persian import PersianCalendar
@@ -60,10 +60,13 @@ class Category(models.Model):
     prefix=models.CharField(_("پیش تعریف"), max_length=200,default='',null=True,blank=True)
     name=models.CharField(_("نام دسته"), max_length=50)
     description=models.CharField(_("توضیحات"), max_length=500,default='',null=True,blank=True)
+    
     image_origin=models.ImageField(_("تصویر"), upload_to=IMAGE_FOLDER+'Category/', height_field=None, width_field=None, max_length=None,blank=True,null=True)
     image_header_origin=models.ImageField(_("تصویر سربرگ"), upload_to=IMAGE_FOLDER+'Category/Header/', height_field=None, width_field=None, max_length=None,blank=True,null=True)
+    
     rate=models.IntegerField(_("امتیاز"),default=0)
     priority=models.IntegerField(_("ترتیب"),default=1000)
+    suggestions=models.ManyToManyField("Product",related_name='suggestions_category',blank=True, verbose_name=_("پیشنهاد برای مشتری"))
     def image(self):
         return MEDIA_URL+str(self.image_origin)
     def image_header(self):
@@ -276,25 +279,26 @@ class ProductInStock(models.Model):
 
 class Product(models.Model):
     price=0
-    colors=models.ManyToManyField("Color", verbose_name=_("رنگ ها"),blank=True)
+    colors=models.ManyToManyField("dashboard.Color", verbose_name=_("رنگ ها"),blank=True)
     for_home=models.BooleanField(_("نمایش در صفحه خانه"),default=False)
     discount=models.IntegerField(_("درصد تخفیف"),null=True,blank=True)
     is_new=models.BooleanField(_("جدید است؟"),default=False)
     brand=models.ForeignKey("Brand",related_name='brand',null=True,blank=True,on_delete=models.PROTECT)
     category=models.ForeignKey("Category",related_name='products',on_delete=models.PROTECT)
-    image_header=models.ImageField(_("تصویر سربرگ"), upload_to=IMAGE_FOLDER+'Product/Header/', height_field=None, width_field=None, max_length=None,blank=True,null=True)
-    thumbnail=models.ImageField(_("تصویر کوچک"), upload_to=IMAGE_FOLDER+'Product/thumbnail/', height_field=None, width_field=None, max_length=None,blank=True,null=True)
-    image=models.ImageField(_("تصویر 1"), upload_to=IMAGE_FOLDER+'Product/', height_field=None, width_field=None, max_length=None,blank=True,null=True)
-    image2=models.ImageField(_("تصویر 2"), upload_to=IMAGE_FOLDER+'Product/', height_field=None, width_field=None, max_length=None,blank=True,null=True)
-    image3=models.ImageField(_("تصویر 3"), upload_to=IMAGE_FOLDER+'Product/', height_field=None, width_field=None, max_length=None,blank=True,null=True)
+    image_header_origin=models.ImageField(_("تصویر سربرگ"), upload_to=IMAGE_FOLDER+'Product/Header/', height_field=None, width_field=None, max_length=None,blank=True,null=True)
+    
+    images=models.ManyToManyField("dashboard.GalleryPhoto",blank=True, verbose_name=_("images"))
+    
     name=models.CharField(_("نام محصول"), max_length=100)
     model_name=models.CharField(_("مدل"),max_length=50,null=True,blank=True)
     barcode=models.CharField(_("بارکد"), max_length=1000,null=True,blank=True)
     rate=models.IntegerField(_("امتیاز"),default=0)
     priority=models.IntegerField(_("ترتیب"),default=1000)
     origin_price=models.IntegerField(_("قیمت بدون تخفیف"),null=True,blank=True)
-    short_description=tinymce_models.HTMLField(_("شرح کوتاه"), max_length=500,blank=True,null=True)
+    
+    short_description=models.CharField(_("شرح کوتاه"), max_length=500,blank=True,null=True)
     description=tinymce_models.HTMLField(_("شرح کامل"), max_length=5000,default='',blank=True,null=True)
+    
     adder=models.ForeignKey("authentication.profile",on_delete=models.SET_NULL,null=True,blank=True)
     time_added=models.DateTimeField(_("تاریخ ایجاد"), auto_now=False, auto_now_add=True)
     time_updated=models.DateTimeField(_("تاریخ اصلاح"), auto_now=True, auto_now_add=False)
@@ -318,26 +322,22 @@ class Product(models.Model):
 
         }
         return obj
-    def get_image(self):
-        if self.image is not None and self.image and len(str(self.image))>0 :
-            return MEDIA_URL+str(self.image)
+    
+    def image_header(self):
+        if self.image_header_origin is not None and self.image_header_origin and len(str(self.image_header_origin))>0 :
+            return MEDIA_URL+str(self.image_header_origin)
         return f'{STATIC_URL}one-tech/images/default_product.png'
-    def get_image_header(self):
-        if self.image_header is not None and self.image_header and len(str(self.image_header))>0 :
-            return MEDIA_URL+str(self.image_header)
-        return f'{STATIC_URL}one-tech/images/default_product.png'
-    def get_image2(self):
-        if self.image2 is not None and self.image2 and len(str(self.image2))>0 :
-            return MEDIA_URL+str(self.image2)
-        return self.get_image()
-    def get_image3(self):
-        if self.image3 is not None and self.image3 and len(str(self.image3))>0 :
-            return MEDIA_URL+str(self.image3)
-        return self.get_image2()
-    def get_thumbnail(self):
-        if self.thumbnail is not None and self.thumbnail and len(str(self.thumbnail))>0 :           
-            return MEDIA_URL+str(self.thumbnail)
-        return f'{STATIC_URL}one-tech/images/default_product.png'
+    def thumbnail(self):
+        try:           
+            return self.images.all()[0].thumbnail()
+        except:
+            return f'{STATIC_URL}one-tech/images/default_product.png'
+
+    def image(self):
+        try:           
+            return self.images.all()[0].image()
+        except:
+            return f'{STATIC_URL}one-tech/images/default_product.png'
     def save_temp(self):
         if not self.image:
             super(Product,self).save()             
@@ -474,16 +474,6 @@ class Supplier(models.Model):
 
     def get_edit_url(self):
         return f'{ADMIN_URL}{APP_NAME}/supplier/{self.pk}/change/'
-
-class Color(models.Model):
-    name=models.CharField(_('نام رنگ'),max_length=50)
-    color=models.CharField(_('کد رنگ'),max_length=50)
-    class Meta:
-        verbose_name = _("Color")
-        verbose_name_plural = _("رنگ ها")
-        
-    def __str__(self):
-        return self.name
 
 
 class Shipper(models.Model):
@@ -699,4 +689,49 @@ class ShopRegion(models.Model):
 
     def get_absolute_url(self):
         return reverse("ShopRegion_detail", kwargs={"pk": self.pk})
+
+
+
+class MarketParameter(models.Model):
+    name=models.CharField(_("نام"), max_length=50,choices=MarketParameterEnum.choices)
+    value=models.CharField(_("مقدار"), max_length=10000)
+    
+    def get_edit_btn(self):
+        return f"""
+         <a target="_blank" title="ویرایش {self.name}" class="btn btn-info btn-link" href="{self.get_edit_url()}">
+                            <i class="material-icons">settings</i>
+                        </a>
+        """
+    class Meta:
+        verbose_name = _("Parameter")
+        verbose_name_plural = _("پارامتر ها")
+
+    def __str__(self):
+        return f'{self.name} : {self.value}'
+
+    def get_edit_url(self):
+        return f'{ADMIN_URL}{APP_NAME}/parameter/{self.pk}/change/'
+
+
+
+
+class MarketPic(models.Model):
+    name=models.CharField(_("جای تصویر"), max_length=50,choices=MarketPicEnum.choices)    
+    image_origin=models.ImageField(_("تصویر"), upload_to=IMAGE_FOLDER+'MainPic/', height_field=None, width_field=None, max_length=None,null=True,blank=True)
+
+    class Meta:
+        verbose_name = _("MainPic")
+        verbose_name_plural = _("تصویر های اصلی فروشگاه")
+    def image(self):
+        if self.image_origin is not None:
+            return f'{MEDIA_URL}{str(self.image_origin)}'
+        return None
+    def __str__(self):
+        return self.name
+
+    def get_absolute_url(self):
+        return reverse("MainPic_detail", kwargs={"pk": self.pk})
+   
+    def get_edit_url(self):
+        return f'{ADMIN_URL}{APP_NAME}/mainpic/{self.pk}/change/'
 

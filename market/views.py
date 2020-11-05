@@ -8,6 +8,7 @@ from utility.excel import ReportWorkBook,ReportSheet
 from dashboard.settings import *
 from dashboard.views import getContext as app_getContext
 from .repo import *
+from .enums import MarketPicEnum
 from .serializers import *
 from dashboard.serializers import CommentSerializer
 # from authentication.forms import UploadProfileImageForm,EditProfileForm,ChangeProfileForm
@@ -142,14 +143,25 @@ class ShopView(View):
         else:
             parent_id=0
         context=getContext(request=request)
+            
         category_repo=CategoryRepo(user=user)
         product_repo=ProductRepo(user=user)
         categories=category_repo.list(parent_id=parent_id)
-        if parent_id==0:            
+        if parent_id==0:  
+            parent={
+                'get_breadcrumb':None,
+                'name':'فروشگاه',
+                'description':MarketParameterRepo(user=user).get(MarketParameterEnum.SHOP_DESCRIPTION).value,
+                'image_header':MarketPicRepo(user=user).get(MarketPicEnum.SHOP_HEADER).image(),
+            }          
             products=product_repo.list_for_home()
-        else:            
+        else:     
+            parent=category_repo.get(category_id=parent_id)
+            # print(len(parent.sub_products()))
+            # print(parent.sub_products())
             products=product_repo.list(category_id=parent_id)
 
+        context['parent']=parent       
         # categories.top_products_length=len(categories.top_products())
         # categories.top_products()=categories.top_products()[:5]
         # for category in categories:
@@ -161,12 +173,9 @@ class ShopView(View):
         # products=product_repo.list_all()
         context['products']=products
         brands=BrandRepo(user=user).list()
-        context['brands']=brands
-        parent=category_repo.get(category_id=parent_id)
-        # print(len(parent.sub_products()))
-        # print(parent.sub_products())
-        context['parent']=parent
-        if parent is not None : context['breadcrumb']=parent.get_breadcrumb()
+        context['brands']=brands        
+        if not parent_id==0 : 
+            context['breadcrumb']=parent.get_breadcrumb()
 
         can_add_category=(len(products)==0) and (user.has_perm('market.add_category'))
         can_add_product=(len(categories)==0) and (user.has_perm('market.add_product'))
@@ -527,6 +536,8 @@ class CartView(View):
             else:
                 redirect(reverse('market:home'))
         context=getContext(request)
+        context['body_class']='shopping-cart'
+        context['header']=MarketPicRepo(user=request.user).get(MarketPicEnum.CART_HEADER)
         cart=CartRepo(user=user).get_by_customer(customer_id=customer_id)
         context['cart']=cart
         cart_orders=CartRepo(user=user).get_cart_orders(customer_id=customer_id)

@@ -712,6 +712,16 @@ class Feature(Page):
         return self.title
 
 
+class Color(models.Model):
+    name=models.CharField(_('نام رنگ'),max_length=50)
+    color=models.CharField(_('کد رنگ'),max_length=50)
+    class Meta:
+        verbose_name = _("Color")
+        verbose_name_plural = _("رنگ ها")
+        
+    def __str__(self):
+        return self.name
+
 
 class ResumeCategory(models.Model):
     profile=models.ForeignKey("authentication.profile", verbose_name=_("profile"), on_delete=models.CASCADE)

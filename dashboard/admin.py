@@ -31,3 +31,5 @@ admin.site.register(GalleryAlbum)
 admin.site.register(Resume)
 admin.site.register(ResumeCategory)
 admin.site.register(Document)
+admin.site.register(Color)
+

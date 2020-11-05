@@ -20,3 +20,11 @@ class ProfileEnum(TextChoices):
     CUSTOMER='مشتری',_('مشتری')
     # CUSTOMER='',_('')
     # CUSTOMER='',_('')
+
+
+class MarketParameterEnum(TextChoices):
+    SHOP_DESCRIPTION='SHOP_DESCRIPTION',_('SHOP_DESCRIPTION')
+
+class MarketPicEnum(TextChoices):    
+    CART_HEADER='سربرگ سبد خرید',_('سربرگ سبد خرید')   
+    SHOP_HEADER='سربرگ فروشگاه',_('سربرگ فروشگاه')  
