@@ -1,0 +1,40 @@
+{% extends "material_rus/base-layout.html" %}
+{% load static %}
+{% load to_persian_date %}
+
+{% block head %}
+
+{% endblock  %}
+
+
+{% block ofbar %}
+
+{% endblock  %}
+
+
+{% block content %}
+
+{% include 'material_rus/includes/home/slider.html' %}
+{% include 'material_rus/includes/home/features.html' %}
+{% include 'material_rus/includes/home/ourworks.html' %}
+{% include 'material_rus/includes/home/blogs.html' %}
+{% include 'material_rus/includes/home/team.html' %}
+
+
+
+{% endblock  %}
+
+
+
+{% block modal %}
+
+{% endblock  %}
+
+
+
+{% block script %}
+<script>
+    $("#carousel-item0").addClass("active")
+    $("#carousel-indicator0").addClass("active")
+</script>
+{% endblock  %}

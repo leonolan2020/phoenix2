@@ -1,0 +1,221 @@
+{% extends "material_en/base-layout.html" %}
+
+{% load static %}
+{% block content %}
+<div class="page-header header-filter" data-parallax="true"
+    style="background-image: url(&quot;{{page.header_image}}&quot;); transform: translate3d(0px, 0px, 0px);">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 ml-auto mr-auto text-center">
+                <h1 class="title farsi text-center">
+                    {{page.title}}
+                </h1>
+                <h4 class=" farsi text-center">
+
+                    {{page.short_description|safe}}
+                </h4>
+                <br>
+                {% if perms.dashboard.change_page %}
+                <a href="{{page.get_edit_url}}" class="btn btn-info btn-round btn-lg">
+                    <i class="material-icons">rate_review</i> ویرایش
+                </a>
+                {% endif %}
+                <a href="{{page.get_absolute_url}}" class="btn btn-rose btn-round btn-lg">
+                    <i class="material-icons">format_align_left</i> توضیحات بیشتر
+                </a>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="main main-raised">
+    <div class="container">
+        <div class="section section-text">
+            <div class="row">
+                <div class="col-md-8 ml-auto mr-auto">
+                    <h3 class="title farsi text-right">
+                        {{page.title}}
+                    </h3>
+
+                    <div>
+                        {{page.description|safe}}
+                    </div>
+
+                </div>
+                <div class="section col-md-10 ml-auto mr-auto">
+                    <div class="row">
+                        {% for image in page.images.all %}
+                        <div class="col-md-4">
+                            <img class="img-raised rounded img-fluid" alt="Raised Image" src="{{image.thumbnail}}">
+                        </div>
+                        {% endfor %}
+
+
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="section section-blog-info">
+            <div class="row">
+                <div class="col-md-8 ml-auto mr-auto">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="blog-tags">
+                                Tags:
+                                <span class="badge badge-primary badge-pill">Photography</span>
+                                <span class="badge badge-primary badge-pill">Stories</span>
+                                <span class="badge badge-primary badge-pill">Castle</span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <a href="#pablo" class="btn btn-google btn-round float-right">
+                                <i class="fa fa-google"></i> 232
+                            </a>
+                            <a href="#pablo" class="btn btn-twitter btn-round float-right">
+                                <i class="fa fa-twitter"></i> 910
+                            </a>
+                            <a href="#pablo" class="btn btn-facebook btn-round float-right">
+                                <i class="fa fa-facebook-square"></i> 872
+                            </a>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="card card-profile card-plain">
+                        <div class="row">
+                            <div class="col-md-2">
+                                <div class="card-avatar">
+                                    <a href="#pablo">
+                                        <img class="img" src="../assets/img/faces/card-profile1-square.jpg">
+                                    </a>
+                                    <div class="ripple-container"></div>
+                                </div>
+                            </div>
+                            <div class="col-md-8">
+                                <h4 class="card-title">Alec Thompson</h4>
+                                <p class="description">I've been trying to figure out the bed design for the master
+                                    bedroom at our Hidden Hills compound...I like good music from Youtube.</p>
+                            </div>
+                            <div class="col-md-2">
+                                <button type="button" class="btn btn-default pull-right btn-round">Follow</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="section section-comments">
+            <div class="row">
+                <div class="col-md-8 ml-auto mr-auto">
+                    <div class="media-area">
+                        <h3 class="title text-center rtl farsi text-right">3 نظر</h3>
+
+                        <div class="media rtl">
+                            <a class="float-left" href="#pablo">
+                                <div class="avatar">
+                                    <img class="media-object" src="{{profile.image}}" alt="...">
+                                </div>
+                            </a>
+                            <div class="media-body">
+                                <h4 class="media-heading text-right farsi rtl">
+                                    <span class="farsi">
+                                        {{profile.name}}
+                                    </span>
+                                    <small>· 7 minutes ago</small></h4>
+                                <h6 class="text-muted text-right farsi"></h6>
+                                <p>
+                                    ریشه‌ی مدیریت پروژه به روش‌ها 
+                                    و فرآیندهایی برمی‌گردد که حدود صد سال پیش
+                                    در کسب‌و‌کار توسعه پیدا کردند.
+                                    با این حال، در سال‌های اخیر،
+                                    مدیریت پروژه رشد چشمگیری داشته
+
+                                </p>
+                                <div class="media-footer">
+                                    <a href="#pablo" class="btn btn-primary btn-link float-right" rel="tooltip" title=""
+                                        data-original-title="Reply to Comment">
+                                        <i class="material-icons">reply</i> Reply
+                                    </a>
+                                    <a href="#pablo" class="btn btn-danger btn-link float-right">
+                                        <i class="material-icons">favorite</i> 243
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <h3 class="title text-center">Post your comment</h3>
+                    <div class="media media-post">
+                        <a class="author float-left" href="#pablo">
+                            <div class="avatar">
+                                <img class="media-object" alt="64x64"
+                                    src="../assets/img/faces/card-profile6-square.jpg">
+                            </div>
+                        </a>
+                        <div class="media-body">
+                            <div class="form-group label-floating bmd-form-group">
+                                <label class="form-control-label bmd-label-floating" for="exampleBlogPost"> Write some
+                                    nice stuff or nothing...</label>
+                                <textarea class="form-control" rows="5" id="exampleBlogPost"></textarea>
+                            </div>
+                            <div class="media-footer">
+                                <a href="#pablo" class="btn btn-primary btn-round btn-wd float-right">Post Comment</a>
+                            </div>
+                        </div>
+                    </div> <!-- end media-post -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% if page.related_pages.all %}
+
+<div class="section">
+    <div class="container">
+        <div class="row rtl">
+            <div class="col-md-12">
+                <h2 class="title text-center farsi">صفحه های مرتبط</h2>
+                <br>
+                <div class="row">
+                    {% for related_page in page.related_pages.all %}
+                    <div class="col-md-4">
+                        <div class="card card-blog">
+                            {% if related_page.thumbnail %}
+                            <div class="card-header card-header-image">
+                                <a href="{{related_page.get_absolute_url}}">
+                                    <img class="img img-raised" src="{{related_page.thumbnail}}">
+
+
+                                </a>
+                                <div class="colored-shadow"
+                                    style="background-image: url(&quot;{{related_page.thumbnail}}&quot;); opacity: 1;">
+                                </div>
+                            </div>
+                            {% endif %}
+                            <div class="card-body">
+                                <h6 class="category farsi text-info">{{related_page.category}}</h6>
+                                <h4 class="card-title text-right farsi ">
+                                    <a href="{{related_page.get_absolute_url}}">{{related_page.title}}</a>
+                                </h4>
+                                <div class="card-description">
+                                    {{related_page.short_description|safe}}
+
+                                    <a class="badge badge-secondary" href="{{related_page.get_absolute_url}}">ادامه
+                                        مطلب</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endblock %}

@@ -21,6 +21,7 @@ urlpatterns = [
     path('dashboard/',include('dashboard.urls')),
     path('app/fa/',include('app.urls')),
     path('app/en/',include('app_en.urls')),
+    path('app/rus/',include('app_rus.urls')),
     path('projectmanager/',include('projectmanager.urls')),
 
     path('admin/', admin.site.urls),
