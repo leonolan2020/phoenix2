@@ -1,6 +1,9 @@
 from django import forms
 from .settings import SITE_URL
 from .apps import APP_NAME
+
+
+
 class AddNotificationForm(forms.Form):
     name=forms.CharField(max_length=50,required=True)
     salary=forms.IntegerField(required=True)

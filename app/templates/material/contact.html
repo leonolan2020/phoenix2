@@ -3,6 +3,7 @@
 
 
 {% block head %}
+<link href="{% static 'material/css/material-dashboard.css' %}" rel="stylesheet" />
 
 {% endblock  %}
 
@@ -363,34 +364,43 @@
 <div class="main main-raised">
     <div class="contact-content">
         <div class="container">
-            <h2 class="title">Send us a message</h2>
+            <h2 class="title farsi">برای ما پیام بفرستید</h2>
             <div class="row">
-                <div class="col-md-6">
-                    <p class="description">You can contact us with anything related to our Products. We'll get in touch
-                        with you as soon as possible.<br><br>
+                <div class="col-md-6" id="app">
+                    <p class="description">
+                        شما می توانید با پر کردن فرم زیر پیام خود را برای ما  بفرستید.
+                        <br><br>
                     </p>
-                    <form role="form" id="contact-form" method="post">
+                    {% if add_contact_message_form %}
+                    <form role="form" id="contact-form" method="post" @submit.prevent="add_contact_message">
                         <div class="form-group bmd-form-group">
-                            <label for="name" class="bmd-label-floating">Your name</label>
-                            <input type="text" class="form-control" id="name">
+                            <label for="name" class="bmd-label-floating">نام شما</label>
+                            <input v-model="full_name" type="text" class="form-control" id="name">
                         </div>
                         <div class="form-group bmd-form-group">
-                            <label for="exampleInputEmails" class="bmd-label-floating">Email address</label>
-                            <input type="email" class="form-control" id="exampleInputEmails">
-                            <span class="bmd-help">We'll never share your email with anyone else.</span>
+                            <label for="exampleInputEmails" class="bmd-label-floating">ایمیل شما</label>
+                            <input v-model="email" type="email" class="form-control ltr text-left" id="exampleInputEmails">
+                            <span class="bmd-help rtl text-right">اطلاعات شما محفوظ خواهد ماند.</span>
                         </div>
                         <div class="form-group bmd-form-group">
-                            <label for="phone" class="bmd-label-floating">Phone</label>
-                            <input type="text" class="form-control" id="phone">
+                            <label for="phone" class="bmd-label-floating">تلفن تماس</label>
+                            <input v-model="mobile" type="tel" class="form-control" id="phone">
                         </div>
+                        <div class="form-group bmd-form-group">
+                            <label for="phone" class="bmd-label-floating">عنوان پیام</label>
+                            <input required v-model="subject" type="text" class="form-control" id="subject">
+                        </div>
+
                         <div class="form-group label-floating bmd-form-group">
-                            <label class="form-control-label bmd-label-floating" for="message"> Your message</label>
-                            <textarea class="form-control" rows="6" id="message"></textarea>
+                            <label class="form-control-label bmd-label-floating" for="message">متن پیام</label>
+                            <textarea required v-model="message" class="form-control text-right" rows="6" id="message"></textarea>
                         </div>
                         <div class="submit text-center">
-                            <input type="submit" class="btn btn-primary btn-raised btn-round" value="Contact Us">
+                            <input type="submit" class="btn btn-primary btn-raised btn-round farsi" value="ارسال پیام">
                         </div>
                     </form>
+                    {% endif %}
+
                 </div>
                 <div class="col-md-4 ml-auto">
                     <div class="info info-horizontal">
@@ -446,5 +456,34 @@
 
 
 {% block script %}
-
+ <!--  Google Maps Plugin    -->
+ <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB2Yno10-YTnLjjn_Vtk0V8cdcY5lC4plU"></script>
+<!--  Plugin for Sweet Alert -->
+<script src="{% static 'vendor/js/sweetalert2.js' %}"></script>
+<!-- Forms Validations Plugin -->
+<script src="{% static 'vendor/js/jquery.validate.min.js' %}"></script>
+<script src="{% static 'vendor/js/vue.min.js' %}"></script>
+<script>
+    let app = new Vue({
+        el: "#app",
+        data: {
+            full_name: '',
+            mobile: '',
+            email: '',
+            subject: '',
+            message: '',
+        },
+        methods: {
+            add_contact_message: function () {
+                swal({
+                    title: "ارسال پیام",
+                    text: "پیام شما با موفقیت ارسال شد.",
+                    buttonsStyling: false,
+                    confirmButtonClass: "btn btn-success",
+                    type: "success"
+                }).catch(swal.noop)
+            },
+        },
+    })
+</script>
 {% endblock  %}

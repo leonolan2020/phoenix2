@@ -23,6 +23,7 @@ class BasicViews(View):
     def contact(self,request,*args, **kwargs):
         context=getContext(request)
         context['body_class']='contact-page'
+        context['add_contact_message_form']=AddContactMessageForm()
         return render(request,TEMPLATE_ROOT+'contact.html',context)
 
     def about(self,request,*args, **kwargs):
