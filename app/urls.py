@@ -12,5 +12,7 @@ urlpatterns=[
     path('ourteam/<int:pk>/',views.BasicViews().features,name='ourteam'),
     path('resume/<int:pk>/',views.PageViews().resume,name='resume'),
     path('tag/<int:pk>/',views.BasicViews().features,name='tag'),
+    path('contact/',views.BasicViews().contact,name='contact'),
+    path('about/',views.BasicViews().about,name='about'),
 ]
 

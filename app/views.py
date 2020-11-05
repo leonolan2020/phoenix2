@@ -3,6 +3,7 @@ from django.views import View
 from .apps import APP_NAME
 from dashboard.settings import ADMIN_URL,MEDIA_URL
 from dashboard.repo import *
+from dashboard.enums import *
 from .forms import *
 from authentication.repo import ProfileRepo
 from dashboard.views import getContext as DashboardContext
@@ -13,10 +14,24 @@ TEMPLATE_ROOT='material/'
 
 
 def getContext(request):
+    user=request.user
     context=DashboardContext(request)
     return context
 
 class BasicViews(View):
+    def contact(self,request,*args, **kwargs):
+        context=getContext(request)
+        context['body_class']='contact-page'
+        return render(request,TEMPLATE_ROOT+'contact.html',context)
+
+    def about(self,request,*args, **kwargs):
+        context=getContext(request)
+        user=request.user
+        context['body_class']='about-us'
+        context['about_header']=MainPicRepo(user=user).get(MainPicEnum.ABOUT_HEADER)
+        context['about_text']=ParameterRepo(user=user).get(ParametersEnum.ABOUT_US_TITLE)
+        return render(request,TEMPLATE_ROOT+'about.html',context)
+
     def home(self,request,*args,**kwargs):
         user=request.user
         context=getContext(request)

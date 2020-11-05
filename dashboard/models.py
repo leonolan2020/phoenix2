@@ -129,7 +129,13 @@ class MetaData(models.Model):
 class MainPic(models.Model):
     name=models.CharField(_("جای تصویر"), max_length=50,choices=MainPicEnum.choices)    
     image_origin=models.ImageField(_("تصویر"), upload_to=IMAGE_FOLDER+'MainPic/', height_field=None, width_field=None, max_length=None,null=True,blank=True)
-
+    def get_edit_btn(self):
+        return f"""
+            <a class="" href="{self.get_edit_url()}">
+            <i class="material-icons">settings</i>
+            ویرایش تصویر
+            </a>
+        """
     class Meta:
         verbose_name = _("MainPic")
         verbose_name_plural = _("تصویر های اصلی سایت")
