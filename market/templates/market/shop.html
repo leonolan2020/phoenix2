@@ -20,7 +20,7 @@
 <div class="main main-raised">
     <div class="section">
       <div class="container">
-        <h2 class="section-title farsi text-right">
+        <h2 class="section-title farsi text-center">
           پیشنهاد ما برای شما
         </h2>
         <div class="row rtl">
@@ -68,7 +68,7 @@
     <!-- section -->
     <div class="section">
       <div class="container">
-        <h2 class="section-title text-right farsi">دسته بندی را انتخاب کنید</h2>
+        <h2 class="section-title text-center farsi">دسته بندی را انتخاب کنید</h2>
         <div class="row rtl">
           <div class="col-md-3">
             <div class="card card-refine card-plain card-rose">
@@ -673,7 +673,13 @@
 </div>
 
 {% endblock %}
-
+{% block head %}
+  <style>
+    .form-check-label{
+      direction: ltr;
+    }
+  </style>
+{% endblock  %}
 
 
 
