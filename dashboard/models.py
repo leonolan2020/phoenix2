@@ -10,7 +10,6 @@ from django.utils.translation import gettext as _
 from tinymce import models as tinymce_models
 IMAGE_FOLDER=APP_NAME+'/images/'
 
-
 class Icon(models.Model):
     icon_title=models.CharField(_("عنوان آیکون"), max_length=50)    
     icon_class=models.CharField(_("کلاس آیکون"), max_length=50 ,null=True,blank=True)    
@@ -224,7 +223,7 @@ class Page(models.Model):
     
     # category=models.CharField(_("دسته بندی"),null=True,blank=True,max_length=100)
 
-    short_description=tinymce_models.HTMLField(_("شرح کوتاه"),max_length=1000,blank=True,null=True)
+    short_description=models.CharField(_("شرح کوتاه"),max_length=1000,blank=True,null=True)
     description=tinymce_models.HTMLField(_("شرح کامل"),max_length=10000,null=True,blank=True)
     child_class=models.CharField(_('child_class'),null=True,blank=True,max_length=50)
     app_name=models.CharField(_('app_name'),null=True,blank=True,max_length=50)
@@ -275,7 +274,6 @@ class Blog(Page):
 
     def save(self):
         self.child_class='blog'
-        self.app_name=APP_NAME
         super(Blog,self).save()
 
     class Meta:
@@ -284,14 +282,12 @@ class Blog(Page):
    
     def __str__(self):
         return self.title
-
    
 
 class Technology(Page):
 
     def save(self):
         self.child_class='technology'
-        self.app_name=APP_NAME
         super(Technology,self).save()
 
     
@@ -375,25 +371,25 @@ class OurTeam(models.Model):
     job=models.CharField(_("سمت"), max_length=100)
     description=models.CharField(_("توضیحات"), max_length=500)
     priority=models.IntegerField(_("ترتیب"),default=1000)
-    image_origin=models.ImageField(_("تصویر"), upload_to=IMAGE_FOLDER+'OurTeam/', height_field=None, width_field=None, max_length=None)
+    # image_origin=models.ImageField(_("تصویر"), upload_to=IMAGE_FOLDER+'OurTeam/', height_field=None, width_field=None, max_length=None)
     social_links=models.ManyToManyField("SocialLink", verbose_name=_("social_links"),blank=True)
     resume_categories=models.ManyToManyField("ResumeCategory", verbose_name=_("ResumeCategories"),blank=True)
-    header_image_origin=models.ImageField(_("تصویر سربرگ"),null=True,blank=True, upload_to=IMAGE_FOLDER+'OurTeam/Header/', height_field=None, width_field=None, max_length=None)
+    # header_image_origin=models.ImageField(_("تصویر سربرگ"),null=True,blank=True, upload_to=IMAGE_FOLDER+'OurTeam/Header/', height_field=None, width_field=None, max_length=None)
     
     def __str__(self):
         return self.profile.name()
     def get_resume_url(self):
         return reverse('app:resume',kwargs={'ourteam_id':self.pk})
-    def image(self):
-        if self.image_origin:
-            return MEDIA_URL+str(self.image_origin)
-        else:
-            return STATIC_URL+'dashboard/img/default_avatar.png'
-    def header_image(self):
-        if self.image_origin:
-            return MEDIA_URL+str(self.header_image_origin)
-        else:
-            return ''
+    # def image(self):
+    #     if self.image_origin:
+    #         return MEDIA_URL+str(self.image_origin)
+    #     else:
+    #         return STATIC_URL+'dashboard/img/default_avatar.png'
+    # def header_image(self):
+    #     if self.image_origin:
+    #         return MEDIA_URL+str(self.header_image_origin)
+    #     else:
+    #         return ''
     
     def get_edit_url(self):
         return f'{ADMIN_URL}{APP_NAME}/ourteam/{self.pk}/change/'
@@ -560,6 +556,7 @@ class ProfileCustomization(models.Model):
 
     def __str__(self):
         return self.profile.name()
+
 class Comment(models.Model):
     profile=models.ForeignKey("authentication.Profile",null=True,blank=True, verbose_name=_("توسط"), on_delete=models.CASCADE)
     text=models.TextField(_("نظر"))
@@ -640,14 +637,14 @@ class OurWorkCategory(models.Model):
 
 
 class OurWork(Page):
+    category=models.ForeignKey("OurWorkCategory",null=True,blank=True, verbose_name=_("دسته بندی"), on_delete=models.SET_NULL)
+    location=models.CharField(_('موقعیت در نقشه گوگل 400*400'),max_length=500,null=True,blank=True)    
+    
 
     def save(self):
         self.child_class='ourwork'
-        self.app_name=APP_NAME
         super(OurWork,self).save()
-    category=models.ForeignKey("OurWorkCategory",null=True,blank=True, verbose_name=_("دسته بندی"), on_delete=models.SET_NULL)
     
-    location=models.CharField(_('موقعیت در نقشه گوگل 400*400'),max_length=500,null=True,blank=True)    
     
     class Meta:
         verbose_name = _("OurWork")
@@ -685,7 +682,6 @@ class Feature(Page):
 
     def save(self):
         self.child_class='feature'
-        self.app_name=APP_NAME
         super(Feature,self).save()
     
     def get_icon_tag(self):
@@ -766,7 +762,6 @@ class Resume(Page):
 
     def save(self):
         self.child_class='resume'
-        self.app_name=APP_NAME
         super(Resume,self).save()
 
 class GalleryAlbum(Jumbotron):

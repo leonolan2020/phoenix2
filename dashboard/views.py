@@ -4,7 +4,6 @@ from .settings import *
 from .repo import *
 from .forms import *
 from .enums import *
-from .utils import AdminUtility
 from .settings import DEBUG
 from .serializers import * #NotificationSerializer
 if PUSHER_IS_ENABLE:
@@ -17,7 +16,6 @@ TEMPLATE_ROOT='dashboard/'
 
 def getContext(request):
     user=request.user
-    admin_utility=AdminUtility()
     context={}
     context['title']="فونیکس"
     context['DEBUG']=DEBUG
@@ -26,7 +24,6 @@ def getContext(request):
     context['SITE_URL']=SITE_URL
     context['PUSHER_IS_ENABLE']=PUSHER_IS_ENABLE
     if user.is_authenticated:
-        context['admin_utility']=admin_utility
         profile=ProfileRepo(user=user).me    
         context['profile']=profile 
         context['notifications_s']=json.dumps(NotificationSerializer(NotificationRepo(user=request.user).list_unseen(),many=True).data)

@@ -2,12 +2,12 @@ from django.shortcuts import render,redirect,reverse
 from django.views import View
 from .apps import APP_NAME
 from dashboard.settings import ADMIN_URL,MEDIA_URL
-from dashboard.repo import *
+from .repo import *
 from dashboard.enums import *
 from .forms import *
 from authentication.repo import ProfileRepo
 from dashboard.views import getContext as DashboardContext
-
+from dashboard.utils import AdminUtility
 TEMPLATE_ROOT='material/'
 
 
@@ -16,6 +16,7 @@ TEMPLATE_ROOT='material/'
 def getContext(request):
     user=request.user
     context=DashboardContext(request)
+    context['admin_utility']=AdminUtility(app_name=APP_NAME)
     return context
 
 class BasicViews(View):

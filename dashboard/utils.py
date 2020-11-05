@@ -1,8 +1,12 @@
 from .settings import ADMIN_URL,SITE_URL,MEDIA_URL
 from .apps import APP_NAME
 class AdminUtility():
+    def __init__(self,app_name=None):
+        if app_name is None:
+            app_name=APP_NAME
+        self.app_name=app_name
     def get_link(self,class_name,class_title):
-        url=f'{ADMIN_URL}{APP_NAME}/{class_name}/add/'
+        url=f'{ADMIN_URL}{self.app_name}/{class_name}/add/'
         return f"""
          <a target="_blank" href="{url}" title="افزودن {class_title}" >
                      <i class="material-icons text-info">add_circle</i>

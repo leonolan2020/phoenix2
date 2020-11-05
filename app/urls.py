@@ -14,5 +14,9 @@ urlpatterns=[
     path('tag/<int:pk>/',views.BasicViews().features,name='tag'),
     path('contact/',views.BasicViews().contact,name='contact'),
     path('about/',views.BasicViews().about,name='about'),
+    path('blog/<int:pk>/',views.PageViews().blog,name='blog'),
+    path('ourwork/<int:pk>/',views.PageViews().ourwork,name='ourwork'),
+    path('feature/<int:pk>/',views.PageViews().feature,name='feature'),
+
 ]
 
