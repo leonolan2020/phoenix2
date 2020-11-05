@@ -15,17 +15,19 @@ DEBUG = False
 SERVER_ON_LOCAL=False
 SERVER_ON_PARS=False
 
-
+# SERVER_ON_HEROKU=True
 # SERVER_ON_LOCAL=True
-SERVER_ON_PARS=True
+# SERVER_ON_PARS=True
 
 
 if SERVER_ON_HEROKU:
     SECRET_KEY = '-+(&pe9ld9unwos@077r(cg#_)1$^l0c##+%gpy@&95da$=_hp'
 else:
     try:        
-        from .secret_key import SECRET_KEY as SECRET_KEY_FROM_FILE
+        from .secret_key import SECRET_KEY as SECRET_KEY_FROM_FILE,SERVER_ON_LOCAL as SERVER_ON_LOCAL_FROM_FILE,SERVER_ON_PARS as SERVER_ON_PARS_FROM_FILE
         SECRET_KEY=SECRET_KEY_FROM_FILE
+        SERVER_ON_LOCAL=SERVER_ON_LOCAL_FROM_FILE
+        SERVER_ON_PARS=SERVER_ON_PARS_FROM_FILE
     except :
         if SERVER_ON_LOCAL:
             secret_file_content="""SECRET_KEY = 'yj)%c-)__z_null-_l-ned!$6*cs)_=w@g&t=0vj^wg)knwm3z'"""
