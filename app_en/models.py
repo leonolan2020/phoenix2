@@ -5,6 +5,34 @@ from django.utils.translation import gettext as _
 from dashboard import models as DashboardModels
 
 
+class Link(DashboardModels.Link):
+    
+    class Meta:
+        default_related_name=_(APP_NAME+"_"+"Link")
+        verbose_name = _("Link")
+        verbose_name_plural = _("Links")
+
+
+
+class MetaData(DashboardModels.MetaData):
+    
+    class Meta:
+        default_related_name=_(APP_NAME+"_"+"MetaData")
+        verbose_name = _("MetaData")
+        verbose_name_plural = _("MetaDatas")
+
+
+
+class ContactMessage(DashboardModels.ContactMessage):
+    
+    class Meta:
+        default_related_name=_(APP_NAME+"_"+"Technology")
+        verbose_name = _("Technology")
+        verbose_name_plural = _("Technologies")
+
+
+   
+
 class Technology(DashboardModels.Technology):
 
     def save(self):
@@ -17,8 +45,6 @@ class Technology(DashboardModels.Technology):
         default_related_name=_(APP_NAME+"_"+"Technology")
         verbose_name = _("Technology")
         verbose_name_plural = _("Technologies")
-   
-
 
 class Parameter(DashboardModels.Parameter):
     
@@ -87,8 +113,7 @@ class Resume(DashboardModels.Resume):
         return reverse(APP_NAME+':resume',kwargs={'pk':self.pk})
     
     def save(self):
-        default_related_name=_(APP_NAME+"_"+"HomeSlider")
-        self.child_class='blog'
+        self.child_class='resume'
         self.app_name=APP_NAME
         super(Resume,self).save()
 

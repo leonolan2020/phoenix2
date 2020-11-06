@@ -152,7 +152,21 @@
         });
     </script> -->
 
-
+    {% csrf_token %}
+    <script>
+        var csrfmiddlewaretoken = ''
+        $(document).ready(function () {
+        //   md.checkFullPageBackgroundImage();
+    
+          $("#sidebar_active_color_{{sidebar.sidebar_active_color}}").addClass("active")
+          $("#sidebar_bg_color_{{sidebar.sidebar_bg_color}}").addClass("active")
+          // Javascript method's body can be found in assets/js/demos.js
+          csrfmiddlewaretoken = $("input[name='csrfmiddlewaretoken']").val()
+    
+    
+          // $('.sidebar .sidebar-wrapper, .main-panel').perfectScrollbar();
+        });
+      </script>
     {% block script %}
 
     {% endblock  %}

@@ -5,19 +5,30 @@ from django.utils.translation import gettext as _
 from dashboard import models as DashboardModels
 
 
-class ContactMessage(DashboardModels.ContactMessage):
+class MetaData(DashboardModels.MetaData):   
 
-    def save(self):
-        self.child_class='contactmessage'
-        self.app_name=APP_NAME
-        super(ContactMessage,self).save()
+    
+    class Meta:
+        default_related_name=_(APP_NAME+"_"+"MetaData")
+        verbose_name = _("MetaData")
+        verbose_name_plural = _("MetaDatas")
+
+class Link(DashboardModels.Link):   
+
+    
+    class Meta:
+        default_related_name=_(APP_NAME+"_"+"Link")
+        verbose_name = _("Link")
+        verbose_name_plural = _("Links")
+
+
+class ContactMessage(DashboardModels.ContactMessage):   
 
     
     class Meta:
         default_related_name=_(APP_NAME+"_"+"Technology")
         verbose_name = _("Technology")
         verbose_name_plural = _("Technologies")
-   
 
 class Technology(DashboardModels.Technology):
 

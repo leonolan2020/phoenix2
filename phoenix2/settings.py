@@ -51,7 +51,6 @@ INSTALLED_APPS = [
     'authentication',
     'app',
     'app_en',
-    'app_rus',
     'django_cleanup',
     'django_social_share',
     'rest_framework',

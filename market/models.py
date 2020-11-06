@@ -11,7 +11,7 @@ from .enums import ProfileEnum,OrderStatusEnum,MarketPicEnum,MarketParameterEnum
 from .constants import *
 from dashboard.enums import EmployeeEnum,DegreeLevelEnum,TransactionDirectionEnum, IconsEnum, RegionEnum,AddressTitleEnum
 from utility.persian import PersianCalendar
-from dashboard.repo import ParameterRepo
+from app.repo import ParameterRepo
 from authentication.models import Profile
 from dashboard.settings import ADMIN_URL,MEDIA_URL,STATIC_URL
 from PIL import Image

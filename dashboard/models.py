@@ -153,12 +153,14 @@ class MainPic(models.Model):
 
 
 class ContactMessage(models.Model):
-    fname=models.CharField(_("نام"), max_length=50)
-    lname=models.CharField(_("نام خانوادگی"), max_length=50)
+    full_name=models.CharField(_("نام کامل"), max_length=50)
+    mobile=models.CharField(_("شماره تماس"), max_length=50)
     email=models.EmailField(_("ایمیل"), max_length=254)
     subject=models.CharField(_("عنوان پیام"), max_length=50)
     message=models.CharField(_("متن پیام"), max_length=50)
     date_added=models.DateTimeField(_("افزوده شده در"), auto_now=False, auto_now_add=True)
+    app_name=models.CharField(_("اپلیکیشن"), max_length=50)
+
     class Meta:
         verbose_name = _("ContactMessage")
         verbose_name_plural = _("پیام های ارتباط با ما")
@@ -171,6 +173,7 @@ class ContactMessage(models.Model):
 
 
 class Parameter(models.Model):
+
     name=models.CharField(_("نام"), max_length=50,choices=ParametersEnum.choices)
     value=models.CharField(_("مقدار"), max_length=10000)
     
@@ -394,7 +397,8 @@ class OurTeam(models.Model):
     def get_edit_url(self):
         return f'{ADMIN_URL}{APP_NAME}/ourteam/{self.pk}/change/'
     def get_absolute_url(self):
-        return reverse('app:ourteam',kwargs={'pk':self.pk})
+        # return reverse('app:ourteam',kwargs={'pk':self.pk})
+        return self.profile.get_absolute_url()
 
     def __unicode__(self):
         return self.name

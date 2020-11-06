@@ -1,5 +1,5 @@
 from django.urls import path
-from . import views
+from . import views,apis
 from .apps import APP_NAME
 app_name=APP_NAME
 urlpatterns=[
@@ -17,6 +17,7 @@ urlpatterns=[
     path('blog/<int:pk>/',views.PageViews().blog,name='blog'),
     path('ourwork/<int:pk>/',views.PageViews().ourwork,name='ourwork'),
     path('feature/<int:pk>/',views.PageViews().feature,name='feature'),
+    path('add_contact_message/',apis.BasicViews().add_contact_message,name='add_contact_message'),
 
 ]
 

@@ -368,7 +368,7 @@
             <div class="row">
                 <div class="col-md-6" id="app">
                     <p class="description">
-                        شما می توانید با پر کردن فرم زیر پیام خود را برای ما  بفرستید.
+                        شما می توانید با پر کردن فرم زیر پیام خود را برای ما بفرستید.
                         <br><br>
                     </p>
                     {% if add_contact_message_form %}
@@ -379,7 +379,8 @@
                         </div>
                         <div class="form-group bmd-form-group">
                             <label for="exampleInputEmails" class="bmd-label-floating">ایمیل شما</label>
-                            <input v-model="email" type="email" class="form-control ltr text-left" id="exampleInputEmails">
+                            <input v-model="email" type="email" class="form-control ltr text-left"
+                                id="exampleInputEmails">
                             <span class="bmd-help rtl text-right">اطلاعات شما محفوظ خواهد ماند.</span>
                         </div>
                         <div class="form-group bmd-form-group">
@@ -393,7 +394,8 @@
 
                         <div class="form-group label-floating bmd-form-group">
                             <label class="form-control-label bmd-label-floating" for="message">متن پیام</label>
-                            <textarea required v-model="message" class="form-control text-right" rows="6" id="message"></textarea>
+                            <textarea required v-model="message" class="form-control text-right" rows="6"
+                                id="message"></textarea>
                         </div>
                         <div class="submit text-center">
                             <input type="submit" class="btn btn-primary btn-raised btn-round farsi" value="ارسال پیام">
@@ -456,8 +458,8 @@
 
 
 {% block script %}
- <!--  Google Maps Plugin    -->
- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB2Yno10-YTnLjjn_Vtk0V8cdcY5lC4plU"></script>
+<!--  Google Maps Plugin    -->
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB2Yno10-YTnLjjn_Vtk0V8cdcY5lC4plU"></script>
 <!--  Plugin for Sweet Alert -->
 <script src="{% static 'vendor/js/sweetalert2.js' %}"></script>
 <!-- Forms Validations Plugin -->
@@ -475,13 +477,42 @@
         },
         methods: {
             add_contact_message: function () {
-                swal({
-                    title: "ارسال پیام",
-                    text: "پیام شما با موفقیت ارسال شد.",
-                    buttonsStyling: false,
-                    confirmButtonClass: "btn btn-success",
-                    type: "success"
-                }).catch(swal.noop)
+
+                let url = "{% url 'app:add_contact_message' %}"
+
+                var posting = $.post(url,
+                    {
+                        full_name: app.full_name,
+                        mobile: app.mobile,
+                        subject: app.subject,
+                        message: app.message,
+                        email: app.email,
+                        csrfmiddlewaretoken: csrfmiddlewaretoken
+                    }
+                );
+
+                // Put the results in a div
+                posting.done(function (data) {
+                    console.log(data)
+
+                    if (data.result === 'SUCCEED') {
+                        swal({
+                            title: "ارسال پیام",
+                            text: "پیام شما با موفقیت ارسال شد.",
+                            buttonsStyling: false,
+                            confirmButtonClass: "btn btn-success",
+                            type: "success"
+                        }).catch(swal.noop)
+
+                        app.subject = ''
+                        app.message = ''
+                    }
+                })
+
+
+
+
+
             },
         },
     })

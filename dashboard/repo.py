@@ -145,7 +145,7 @@ class MainPicRepo:
             return parameter
         
   
-class MetaDataRepo:
+class MetaDataRepo111111:
     def __init__(self,user=None):
         self.objects=MetaData.objects
         self.user=user
@@ -472,7 +472,7 @@ class ResumeRepo:
             return self.objects.get(pk=resume_id)
         except:
             return None
-class LinkRepo:
+class LinkRepo11:
     def __init__(self,user=None):
         self.user=user
         self.profile=ProfileRepo(user=user).me
