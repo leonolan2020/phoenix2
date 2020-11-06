@@ -30,7 +30,7 @@ class DocumentSerializer(serializers.ModelSerializer):
 class CommentSerializer(serializers.ModelSerializer):
     class Meta:
         model=Comment
-        fields=['id','text','profile_id','profile_name','persian_date_added','persian_date_added_tag','profile_image']
+        fields=['id','text','profile_id','profile_name','persian_date_added','persian_date_added_tag','profile_image','profile_get_absolute_url']
       
 
 class NotificationSerializer(serializers.ModelSerializer):

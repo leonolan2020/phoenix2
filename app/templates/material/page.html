@@ -84,26 +84,34 @@
                         </div>
                     </div>
                     <hr>
+                    {% if page.profile %}
+
                     <div class="card card-profile card-plain">
-                        <div class="row">
+                        <div class="row rtl">
                             <div class="col-md-2">
                                 <div class="card-avatar">
-                                    <a href="#pablo">
-                                        <img class="img" src="../assets/img/faces/card-profile1-square.jpg">
+                                    <a href="{{page.profile.get_absolute_url}}">
+                                        <img class="img" src="{{page.profile.image}}">
                                     </a>
                                     <div class="ripple-container"></div>
                                 </div>
                             </div>
                             <div class="col-md-8">
-                                <h4 class="card-title">Alec Thompson</h4>
-                                <p class="description">I've been trying to figure out the bed design for the master
-                                    bedroom at our Hidden Hills compound...I like good music from Youtube.</p>
+                                <h4 class="card-title farsi">{{page.profile.name}}</h4>
+                                {% if page.profile.bio %}
+                                <p class="description text-center">
+                                    {{page.profile.bio}}
+                                </p>
+                                {% endif %}
+
                             </div>
                             <div class="col-md-2">
-                                <button type="button" class="btn btn-default pull-right btn-round">Follow</button>
+                                <button type="button" class="btn btn-default pull-right btn-round">دنبال کنید</button>
                             </div>
                         </div>
                     </div>
+                    {% endif %}
+
                 </div>
             </div>
         </div>
@@ -111,20 +119,26 @@
             <div class="row">
                 <div class="col-md-8 ml-auto mr-auto">
                     <div class="media-area">
-                        <h3 class="title text-center rtl farsi text-right">3 نظر</h3>
+                        <h3 class="title text-center rtl farsi text-right" v-text="comments.length+' نظر'"></h3>
 
                         <div class="media rtl " v-for="comment in comments">
-                            <a class="float-left" href="#">
+                            <a class="float-left" :href="comment.profile_get_absolute_url">
                                 <div class="avatar">
                                     <img class="media-object" :src="comment.profile_image" alt="...">
                                 </div>
                             </a>
                             <div class="media-body">
-                                <h4 class="media-heading text-right farsi rtl">
-                                    <span class="farsi" v-text="comment.profile_name">
+                                <a :href="comment.profile_get_absolute_url">
+                                    <h4 class="media-heading text-right farsi rtl">
+                                        <span class="farsi" v-text="comment.profile_name">
 
-                                    </span>
-                                    <small v-text="comment.persian_date_added"></small></h4>
+                                        </span>
+                                        <small v-text="comment.persian_date_added">
+
+                                        </small>
+                                    </h4>
+                                </a>
+
                                 <h6 class="text-muted text-right farsi"></h6>
                                 <p v-text="comment.text">
 
@@ -223,7 +237,7 @@
 {% block script %}
 <script src="{% static 'vendor/js/vue.min.js' %}"></script>
 <script>
-    let page_id=parseInt("{{page.id}}") 
+    let page_id = parseInt("{{page.id}}")
     let comment_app = new Vue({
         el: "#comment-app",
         data: {
@@ -240,7 +254,7 @@
                 var posting = $.post(url,
                     {
                         page_id: page_id,
-                        text: comment_app.my_comment,                        
+                        text: comment_app.my_comment,
                         csrfmiddlewaretoken: csrfmiddlewaretoken
                     }
                 );
@@ -257,13 +271,13 @@
                         //     confirmButtonClass: "btn btn-success",
                         //     type: "success"
                         // }).catch(swal.noop)
-                        
+
                         comment_app.comments.push(data.comment)
                         comment_app.my_comment = ''
                     }
                 })
 
-                
+
             },
         },
     })

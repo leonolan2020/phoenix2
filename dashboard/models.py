@@ -318,8 +318,12 @@ class Comment(models.Model):
         return f'{ADMIN_URL}{APP_NAME}/blog/{self.pk}/change/'
     def get_absolute_url(self):
         return reverse("app:blog", kwargs={"blog_id": self.pk})
+    
     def profile_name(self):
         return self.profile.name()
+    
+    def profile_get_absolute_url(self):
+        return self.profile.get_absolute_url()
     def profile_image(self):
         return self.profile.image()
     def profile_id(self):
@@ -422,7 +426,7 @@ class GalleryAlbum(Jumbotron):
     
     photos=models.ManyToManyField("GalleryPhoto", verbose_name=_("Photos"),blank=True)
     def get_tag(self):
-        s= """<div class="row leo-rtl mb-3">"""
+        s= """<div class="row rtl mb-3">"""
         for pic in self.photos.all():
             s+=f"""<div class="col-lg-3">
             <a target="_blank" href="{pic.image()}"><img src="{pic.image()}" width="100%"></a>

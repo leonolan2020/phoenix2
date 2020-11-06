@@ -15,6 +15,6 @@ div{
 
     /* direction: rtl; */
 }
-.leo-rtl{
+.rtl{
     direction: rtl !important;
 }
