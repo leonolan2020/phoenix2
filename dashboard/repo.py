@@ -66,17 +66,23 @@ class CommentRepo:
             my_comment.save()
             page.comments.add(my_comment)
             page.save()
-            return my_comment
+            return page.comments.all()
 
     def delete(self,comment_id):
         try:
+
             comment=Comment.objects.get(pk=comment_id)
+            print(comment)
+            page=comment.page_for_comment.first()
+            print(page)
+
             if comment.profile==self.profile:
                 comment.delete()
-                return True
+                return page.comments.all()
         except:
             pass
-        return False
+
+        return None
     def count(self,object_id):
         object_=self.objects.get(pk=object_id) or None
         if object_ is not None:

@@ -176,8 +176,25 @@ class PageViews(APIView):
                 level=3
                 text=add_comment_form.cleaned_data['text']
                 page_id=add_comment_form.cleaned_data['page_id']                
-                comment=CommentRepo(user=user).add(page_id=page_id,text=text)
-                if comment is not None:                    
-                    comment_s=CommentSerializer(comment).data
-                    return JsonResponse({'comment':comment_s,'result':SUCCEED})
+                comments=CommentRepo(user=user).add(page_id=page_id,text=text)
+                if comments is not None:                    
+                    comments_s=CommentSerializer(comments,many=True).data
+                    return JsonResponse({'comments':comments_s,'result':SUCCEED})
+        return JsonResponse({'result':FAILED,'level':level})
+    
+    def delete_comment(self,request,*args, **kwargs):
+        level=1  
+        user=request.user
+        profile=ProfileRepo(user=user).me
+        
+        if request.method=='POST' and profile is not None:
+            level=2
+            delete_comment_form=DeleteCommentForm(request.POST)
+            if delete_comment_form.is_valid():
+                level=3
+                comment_id=delete_comment_form.cleaned_data['comment_id']
+                comments=CommentRepo(user=user).delete(comment_id=comment_id)
+                if comments is not None:                    
+                    comments_s=CommentSerializer(comments,many=True).data
+                    return JsonResponse({'comments':comments_s,'result':SUCCEED})
         return JsonResponse({'result':FAILED,'level':level})

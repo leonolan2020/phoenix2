@@ -28,6 +28,7 @@ urlpatterns=[
     path('add_link/',apis.PageViews().add_link,name='add_link'),
     path('add_image/',apis.PageViews().add_image,name='add_image'),
     path('add_comment/',apis.PageViews().add_comment,name='add_comment'),
+    path('delete_comment/',apis.PageViews().delete_comment,name='delete_comment'),
     path('download/<int:document_id>/',views.BasicViews().download,name='download'),
     path('add_document/',apis.PageViews().add_document,name='add_document'),
     path('document/<int:pk>/',views.BasicViews().download,name='document'),

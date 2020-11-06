@@ -120,42 +120,12 @@
                 <div class="col-md-8 ml-auto mr-auto">
                     <div class="media-area">
                         <h3 class="title text-center rtl farsi text-right" v-text="comments.length+' نظر'"></h3>
+<template v-for="comment in comments">
+     <comment-component :comment="comment">
+                        </comment-component>
 
-                        <div class="media rtl " v-for="comment in comments">
-                            <a class="float-left" :href="comment.profile_get_absolute_url">
-                                <div class="avatar">
-                                    <img class="media-object" :src="comment.profile_image" alt="...">
-                                </div>
-                            </a>
-                            <div class="media-body">
-                                <a :href="comment.profile_get_absolute_url">
-                                    <h4 class="media-heading text-right farsi rtl">
-                                        <span class="farsi" v-text="comment.profile_name">
-
-                                        </span>
-                                        <small v-text="comment.persian_date_added">
-
-                                        </small>
-                                    </h4>
-                                </a>
-
-                                <h6 class="text-muted text-right farsi"></h6>
-                                <p v-text="comment.text">
-
-
-                                </p>
-                                <div class="media-footer">
-                                    <a href="#pablo" class="btn btn-primary btn-link float-right" rel="tooltip" title=""
-                                        data-original-title="Reply to Comment">
-                                        <i class="material-icons">reply</i> پاسخ
-                                    </a>
-                                    <a href="#pablo" class="btn btn-danger btn-link float-right">
-                                        <i class="material-icons">favorite</i> 243
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-
+</template>
+                       
                     </div>
                     <h3 class="title text-center farsi">دیدگاه خود را وارد کنید</h3>
                     <div class="media media-post rtl">
@@ -170,7 +140,7 @@
                                     <label class="form-control-label bmd-label-floating" for="exampleBlogPost">
                                         نظر شما
                                     </label>
-                                    <textarea v-model="my_comment" class="form-control farsi" rows="5"
+                                    <textarea v-model="text" class="form-control farsi" rows="5"
                                         id="exampleBlogPost"></textarea>
                                 </div>
                                 <div class="media-footer">
@@ -235,16 +205,35 @@
 {% endblock %}
 
 {% block script %}
-<script src="{% static 'vendor/js/vue.min.js' %}"></script>
 <script>
+
+    let comments = JSON.parse(`{{comments_s|escapejs}}`)
     let page_id = parseInt("{{page.id}}")
+    let add_comment_url = "{% url 'dashboard:add_comment' %}"
+    let delete_comment_url = "{% url 'dashboard:delete_comment' %}"
+
+    let profile_id = parseInt("{{profile.id}}")
+    var comment_template = `{% include 'material/includes/comment.html' %}`
+
+</script>
+<script src="{% static 'vendor/js/vue.min.js' %}"></script>
+<script src="{% static 'dashboard/leo/comment-component.js' %}"></script>
+<script>
+
+
+
+
+
     let comment_app = new Vue({
         el: "#comment-app",
         data: {
-            my_comment: '',
-            comments: JSON.parse(`{{comments_s|escapejs}}`),
+            text: '',
+            comments: comments,
+            confirm_delete_comment: false,
+
         },
         methods: {
+
             add_comment: function () {
 
 
@@ -254,7 +243,7 @@
                 var posting = $.post(url,
                     {
                         page_id: page_id,
-                        text: comment_app.my_comment,
+                        text: comment_app.text,
                         csrfmiddlewaretoken: csrfmiddlewaretoken
                     }
                 );
@@ -272,8 +261,8 @@
                         //     type: "success"
                         // }).catch(swal.noop)
 
-                        comment_app.comments.push(data.comment)
-                        comment_app.my_comment = ''
+                        comment_app.comments=(data.comments)
+                        comment_app.text = ''
                     }
                 })
 
@@ -281,5 +270,14 @@
             },
         },
     })
+
+
+   
+
+
+
+
 </script>
+<script src="{% static 'leo/js/comment-component.js1' %}"></script>
+
 {% endblock %}
