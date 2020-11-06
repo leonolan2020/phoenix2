@@ -206,78 +206,20 @@
 
 {% block script %}
 <script>
+let comments = JSON.parse(`{{comments_s|escapejs}}`)
+   let page_id = parseInt("{{page.id}}")
+   let add_comment_url = "{% url 'dashboard:add_comment' %}"
+   let delete_comment_url = "{% url 'dashboard:delete_comment' %}"
 
-    let comments = JSON.parse(`{{comments_s|escapejs}}`)
-    let page_id = parseInt("{{page.id}}")
-    let add_comment_url = "{% url 'dashboard:add_comment' %}"
-    let delete_comment_url = "{% url 'dashboard:delete_comment' %}"
-
-    let profile_id = parseInt("{{profile.id}}")
-    var comment_template = `{% include 'material/includes/comment.html' %}`
-
-</script>
-<script src="{% static 'vendor/js/vue.min.js' %}"></script>
-<script src="{% static 'dashboard/leo/comment-component.js' %}"></script>
-<script>
-
-
-
-
-
-    let comment_app = new Vue({
-        el: "#comment-app",
-        data: {
-            text: '',
-            comments: comments,
-            confirm_delete_comment: false,
-
-        },
-        methods: {
-
-            add_comment: function () {
-
-
-
-                let url = "{% url 'dashboard:add_comment' %}"
-
-                var posting = $.post(url,
-                    {
-                        page_id: page_id,
-                        text: comment_app.text,
-                        csrfmiddlewaretoken: csrfmiddlewaretoken
-                    }
-                );
-
-                // Put the results in a div
-                posting.done(function (data) {
-                    console.log(data)
-
-                    if (data.result === 'SUCCEED') {
-                        // swal({
-                        //     title: "ارسال نظر",
-                        //     text: "نظر شما با موفقیت ارسال شد.",
-                        //     buttonsStyling: false,
-                        //     confirmButtonClass: "btn btn-success",
-                        //     type: "success"
-                        // }).catch(swal.noop)
-
-                        comment_app.comments=(data.comments)
-                        comment_app.text = ''
-                    }
-                })
-
-
-            },
-        },
-    })
-
+   let profile_id = parseInt("{{profile.id}}")
+   var comment_template = `{% include 'material/includes/comment.html' %}`
 
    
-
-
-
-
+  
 </script>
-<script src="{% static 'leo/js/comment-component.js1' %}"></script>
+
+<script src="{% static 'vendor/js/vue.min.js' %}"></script>
+<script src="{% static 'dashboard/leo/comment-app.js' %}"></script>
+
 
 {% endblock %}
