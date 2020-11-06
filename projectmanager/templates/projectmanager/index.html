@@ -124,14 +124,14 @@
                   <label for="exampleInput1" class="bmd-label-floating">نام پیمانکار جدید</label>
                   {% csrf_token %}
                   <input type="hidden" name="parent_id" value="0">
-                 
+
                   <form @submit.prevent="add_contractor">
-                     <input v-model="title_contractor" type="text" class="form-control" id="exampleInput1" name="title"
-                    required="" aria-required="true">
+                    <input v-model="title_contractor" type="text" class="form-control" id="exampleInput1" name="title"
+                      required="" aria-required="true">
                   </form>
 
                 </div>
-               
+
 
               </div>
               {% endif %}
@@ -211,10 +211,13 @@
 
         // Put the results in a div
         posting.done(function (data) {
+          console.log(data)
           // word_app.word = (data.word);
           // word_app.definitions = (data.definitions);
-          app.title_project = ""
-          app.projects.push(data)
+          if (data.result === 'SUCCEED') {
+            app.title_project = ""
+            app.projects.push(data.project)
+          }
         })
       },
 
