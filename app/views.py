@@ -10,7 +10,7 @@ from .forms import *
 from authentication.repo import ProfileRepo
 from dashboard.views import getContext as DashboardContext
 from dashboard.utils import AdminUtility
-
+from dashboard.repo import TagRepo
 import json
 TEMPLATE_ROOT='material/'
 
@@ -81,6 +81,14 @@ class BasicViews(View):
     def features(self,request,*args,**kwargs):
         context=getContext(request)
         return render(request,TEMPLATE_ROOT+'features.html',context)
+    def tag(self,request,pk,*args,**kwargs):
+        tag_id=pk
+        tag=TagRepo(user=request.user).tag(tag_id=tag_id)
+        pages=tag.pages.all()
+        context=getContext(request)
+        context['list_title']=tag.title
+        context['pages']=pages
+        return render(request,TEMPLATE_ROOT+'pages.html',context)
 
 class ProfileViews(View):
     def profile(self,request,profile_id=0,*args,**kwargs):
@@ -100,6 +108,9 @@ class ExampleViews(View):
     def sections(self,request,*args,**kwargs):
         context=getContext(request)
         return render(request,TEMPLATE_ROOT+'examples/sections.html',context)
+
+
+
 
 
 class PageViews(View):
