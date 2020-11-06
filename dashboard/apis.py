@@ -162,3 +162,22 @@ class PageViews(APIView):
                     link_s=LinkSerializer(links,many=True).data
                     return JsonResponse({'links':link_s,'result':SUCCEED})
         return JsonResponse({'result':FAILED,'level':level})
+
+
+    def add_comment(self,request,*args, **kwargs):
+        level=1  
+        user=request.user
+        profile=ProfileRepo(user=user).me
+        
+        if request.method=='POST' and profile is not None:
+            level=2
+            add_comment_form=AddCommentForm(request.POST)
+            if add_comment_form.is_valid():
+                level=3
+                text=add_comment_form.cleaned_data['text']
+                page_id=add_comment_form.cleaned_data['page_id']                
+                comment=CommentRepo(user=user).add(page_id=page_id,text=text)
+                if comment is not None:                    
+                    comment_s=CommentSerializer(comment).data
+                    return JsonResponse({'comment':comment_s,'result':SUCCEED})
+        return JsonResponse({'result':FAILED,'level':level})

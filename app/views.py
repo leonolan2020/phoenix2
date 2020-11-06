@@ -10,6 +10,7 @@ from .forms import *
 from authentication.repo import ProfileRepo
 from dashboard.views import getContext as DashboardContext
 from dashboard.utils import AdminUtility
+
 import json
 TEMPLATE_ROOT='material/'
 
@@ -109,7 +110,9 @@ class PageViews(View):
         context['add_link_form']=AddLinkForm()
         context['add_document_form']=AddDocumentForm()
         context['add_image_form']=AddImageForm()
-
+        context['add_comment_form']=AddCommentForm()
+        comments_s=json.dumps(CommentSerializer(page.comments.all(),many=True).data)
+        context['comments_s']=comments_s
         context['images_s']=json.dumps(GalleryPhotoSerializer(page.images.all(),many=True).data)
         context['tags_s']=json.dumps(TagSerializer(page.tags.all(),many=True).data)
         context['links_s']=json.dumps(LinkSerializer(page.links.all(),many=True).data)

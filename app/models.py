@@ -139,8 +139,6 @@ class Blog(DashboardModels.Blog):
     def get_absolute_url(self):
         return reverse(APP_NAME+':blog',kwargs={'pk':self.pk})
 
-
-
 class MainPic(models.Model):
     name=models.CharField(_("جای تصویر"), max_length=50,choices=MainPicEnum.choices)    
     image_origin=models.ImageField(_("تصویر"), upload_to=IMAGE_FOLDER+'MainPic/', height_field=None, width_field=None, max_length=None,null=True,blank=True)

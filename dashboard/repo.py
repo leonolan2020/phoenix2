@@ -55,18 +55,18 @@ class LikeRepo:
                     
 
 class CommentRepo:
-    def __init__(self,object_type=None,user=None):
-        if object_type=='Page':
-            self.objects=Page.objects
+    def __init__(self,user=None):
+        self.objects=Comment.objects
         self.user=user
         self.profile=ProfileRepo(user=user).me
-    def add(self,text,object_id):
-        
-        object_=self.objects.get(pk=object_id) or None
-        my_comment=Comment.objects.create(profile=self.profile,text=text)
-        my_comment.save()
-        object_.comments.add(my_comment)
-        return my_comment
+    def add(self,text,page_id):        
+        page=PageRepo(user=self.user).page(page_id=page_id)
+        if page is not None and self.profile is not None:
+            my_comment=Comment(profile=self.profile,text=text)
+            my_comment.save()
+            page.comments.add(my_comment)
+            page.save()
+            return my_comment
 
     def delete(self,comment_id):
         try:

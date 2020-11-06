@@ -141,6 +141,7 @@ class Page(models.Model):
     links=models.ManyToManyField("Link",related_name="pages", verbose_name=_("لینک ها"),blank=True)
     tags=models.ManyToManyField("Tag",related_name="pages", verbose_name=_("برچسب ها"),blank=True)
     documents=models.ManyToManyField("Document",related_name="pages", verbose_name=_("دانلود ها"),blank=True)
+    comments=models.ManyToManyField("Comment",related_name="pages", verbose_name=_("نطر ها"),blank=True)
 
 
     images=models.ManyToManyField("GalleryPhoto",related_name="pages", verbose_name=_("تصویر ها"),blank=True)

@@ -107,37 +107,33 @@
                 </div>
             </div>
         </div>
-        <div class="section section-comments">
+        <div class="section section-comments" id="comment-app">
             <div class="row">
                 <div class="col-md-8 ml-auto mr-auto">
                     <div class="media-area">
                         <h3 class="title text-center rtl farsi text-right">3 نظر</h3>
 
-                        <div class="media rtl">
-                            <a class="float-left" href="#pablo">
+                        <div class="media rtl " v-for="comment in comments">
+                            <a class="float-left" href="#">
                                 <div class="avatar">
-                                    <img class="media-object" src="{{profile.image}}" alt="...">
+                                    <img class="media-object" :src="comment.profile_image" alt="...">
                                 </div>
                             </a>
                             <div class="media-body">
                                 <h4 class="media-heading text-right farsi rtl">
-                                    <span class="farsi">
-                                        {{profile.name}}
+                                    <span class="farsi" v-text="comment.profile_name">
+
                                     </span>
-                                    <small>· 7 minutes ago</small></h4>
+                                    <small v-text="comment.persian_date_added"></small></h4>
                                 <h6 class="text-muted text-right farsi"></h6>
-                                <p>
-                                    ریشه‌ی مدیریت پروژه به روش‌ها 
-                                    و فرآیندهایی برمی‌گردد که حدود صد سال پیش
-                                    در کسب‌و‌کار توسعه پیدا کردند.
-                                    با این حال، در سال‌های اخیر،
-                                    مدیریت پروژه رشد چشمگیری داشته
+                                <p v-text="comment.text">
+
 
                                 </p>
                                 <div class="media-footer">
                                     <a href="#pablo" class="btn btn-primary btn-link float-right" rel="tooltip" title=""
                                         data-original-title="Reply to Comment">
-                                        <i class="material-icons">reply</i> Reply
+                                        <i class="material-icons">reply</i> پاسخ
                                     </a>
                                     <a href="#pablo" class="btn btn-danger btn-link float-right">
                                         <i class="material-icons">favorite</i> 243
@@ -147,23 +143,27 @@
                         </div>
 
                     </div>
-                    <h3 class="title text-center">Post your comment</h3>
-                    <div class="media media-post">
-                        <a class="author float-left" href="#pablo">
+                    <h3 class="title text-center farsi">دیدگاه خود را وارد کنید</h3>
+                    <div class="media media-post rtl">
+                        <a class="author float-left" href="{{profile.get_absolute_url}}">
                             <div class="avatar">
-                                <img class="media-object" alt="64x64"
-                                    src="../assets/img/faces/card-profile6-square.jpg">
+                                <img class="media-object" alt="64x64" src="{{profile.image}}">
                             </div>
                         </a>
                         <div class="media-body">
-                            <div class="form-group label-floating bmd-form-group">
-                                <label class="form-control-label bmd-label-floating" for="exampleBlogPost"> Write some
-                                    nice stuff or nothing...</label>
-                                <textarea class="form-control" rows="5" id="exampleBlogPost"></textarea>
-                            </div>
-                            <div class="media-footer">
-                                <a href="#pablo" class="btn btn-primary btn-round btn-wd float-right">Post Comment</a>
-                            </div>
+                            <form @submit.prevent="add_comment">
+                                <div class="form-group label-floating bmd-form-group">
+                                    <label class="form-control-label bmd-label-floating" for="exampleBlogPost">
+                                        نظر شما
+                                    </label>
+                                    <textarea v-model="my_comment" class="form-control farsi" rows="5"
+                                        id="exampleBlogPost"></textarea>
+                                </div>
+                                <div class="media-footer">
+                                    <button type="submit" class="btn btn-primary btn-round btn-wd float-right">ارسال
+                                        نظر</button>
+                                </div>
+                            </form>
                         </div>
                     </div> <!-- end media-post -->
                 </div>
@@ -218,4 +218,54 @@
     </div>
 </div>
 {% endif %}
+{% endblock %}
+
+{% block script %}
+<script src="{% static 'vendor/js/vue.min.js' %}"></script>
+<script>
+    let page_id=parseInt("{{page.id}}") 
+    let comment_app = new Vue({
+        el: "#comment-app",
+        data: {
+            my_comment: '',
+            comments: JSON.parse(`{{comments_s|escapejs}}`),
+        },
+        methods: {
+            add_comment: function () {
+
+
+
+                let url = "{% url 'dashboard:add_comment' %}"
+
+                var posting = $.post(url,
+                    {
+                        page_id: page_id,
+                        text: comment_app.my_comment,                        
+                        csrfmiddlewaretoken: csrfmiddlewaretoken
+                    }
+                );
+
+                // Put the results in a div
+                posting.done(function (data) {
+                    console.log(data)
+
+                    if (data.result === 'SUCCEED') {
+                        // swal({
+                        //     title: "ارسال نظر",
+                        //     text: "نظر شما با موفقیت ارسال شد.",
+                        //     buttonsStyling: false,
+                        //     confirmButtonClass: "btn btn-success",
+                        //     type: "success"
+                        // }).catch(swal.noop)
+                        
+                        comment_app.comments.push(data.comment)
+                        comment_app.my_comment = ''
+                    }
+                })
+
+                
+            },
+        },
+    })
+</script>
 {% endblock %}
