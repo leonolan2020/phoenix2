@@ -151,6 +151,7 @@ class ShopView(View):
             parent={
                 'get_breadcrumb':None,
                 'name':'فروشگاه',
+                'get_edit_btn':MarketPicRepo(user=user).get(MarketPicEnum.SHOP_HEADER).get_edit_btn(),
                 'description':MarketParameterRepo(user=user).get(MarketParameterEnum.SHOP_DESCRIPTION).value,
                 'image_header':MarketPicRepo(user=user).get(MarketPicEnum.SHOP_HEADER).image(),
             }          

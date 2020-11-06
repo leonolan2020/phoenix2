@@ -17,6 +17,7 @@ from dashboard.settings import ADMIN_URL,MEDIA_URL,STATIC_URL
 from PIL import Image
 from tinymce import models as tinymce_models
 from dashboard.constants import FORCE_RESIZE_IMAGE
+from dashboard import models as DashboardModels
 import re
 import sys
 IMAGE_FOLDER=APP_NAME+'/images/'
@@ -692,42 +693,25 @@ class ShopRegion(models.Model):
 
 
 
-class MarketParameter(models.Model):
-    name=models.CharField(_("نام"), max_length=50,choices=MarketParameterEnum.choices)
-    value=models.CharField(_("مقدار"), max_length=10000)
+class MarketParameter(DashboardModels.Parameter):
     
-    def get_edit_btn(self):
-        return f"""
-         <a target="_blank" title="ویرایش {self.name}" class="btn btn-info btn-link" href="{self.get_edit_url()}">
-                            <i class="material-icons">settings</i>
-                        </a>
-        """
     class Meta:
         verbose_name = _("Parameter")
         verbose_name_plural = _("پارامتر ها")
 
-    def __str__(self):
-        return f'{self.name} : {self.value}'
-
+    
     def get_edit_url(self):
         return f'{ADMIN_URL}{APP_NAME}/parameter/{self.pk}/change/'
 
 
 
 
-class MarketPic(models.Model):
-    name=models.CharField(_("جای تصویر"), max_length=50,choices=MarketPicEnum.choices)    
-    image_origin=models.ImageField(_("تصویر"), upload_to=IMAGE_FOLDER+'MainPic/', height_field=None, width_field=None, max_length=None,null=True,blank=True)
-
+class MarketPic(DashboardModels.MainPic):
+    
     class Meta:
         verbose_name = _("MainPic")
         verbose_name_plural = _("تصویر های اصلی فروشگاه")
-    def image(self):
-        if self.image_origin is not None:
-            return f'{MEDIA_URL}{str(self.image_origin)}'
-        return None
-    def __str__(self):
-        return self.name
+    
 
     def get_absolute_url(self):
         return reverse("MainPic_detail", kwargs={"pk": self.pk})
