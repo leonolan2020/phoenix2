@@ -10,6 +10,11 @@ from django.utils.translation import gettext as _
 from tinymce import models as tinymce_models
 IMAGE_FOLDER=APP_NAME+'/images/'
 
+
+
+
+
+
 class Icon(models.Model):
     icon_title=models.CharField(_("عنوان آیکون"), max_length=50)    
     icon_class=models.CharField(_("کلاس آیکون"), max_length=50 ,null=True,blank=True)    
@@ -111,110 +116,6 @@ class CountDownItem(models.Model):
 
 
 
-class MetaData(models.Model):    
-    for_home=models.BooleanField(_("نمایش در صفحه اصلی"),default=False)
-    key=models.CharField(_("key name"), max_length=50,default='name')
-    value=models.CharField(_("key value"), max_length=50,default='description')
-    content=models.CharField(_("content"), max_length=2000)
-    class Meta:
-        verbose_name = _("MetaData")
-        verbose_name_plural = _("متا دیتا - کلمات کلیدی سئو")
-
-    def __str__(self):
-        return ('*** '  if self.for_home else '')+f'{self.key} : {self.value}: {self.content[:20]}'
-
-
-
-class MainPic(models.Model):
-    name=models.CharField(_("جای تصویر"), max_length=50,choices=MainPicEnum.choices)    
-    image_origin=models.ImageField(_("تصویر"), upload_to=IMAGE_FOLDER+'MainPic/', height_field=None, width_field=None, max_length=None,null=True,blank=True)
-    def get_edit_btn(self):
-        return f"""
-            <a class="" href="{self.get_edit_url()}">
-            <i class="material-icons">settings</i>
-            ویرایش تصویر
-            </a>
-        """
-    class Meta:
-        verbose_name = _("MainPic")
-        verbose_name_plural = _("تصویر های اصلی سایت")
-    def image(self):
-        if self.image_origin is not None:
-            return f'{MEDIA_URL}{str(self.image_origin)}'
-        return None
-    def __str__(self):
-        return self.name
-
-    def get_absolute_url(self):
-        return reverse("MainPic_detail", kwargs={"pk": self.pk})
-   
-    def get_edit_url(self):
-        return f'{ADMIN_URL}{APP_NAME}/mainpic/{self.pk}/change/'
-
-
-class ContactMessage(models.Model):
-    full_name=models.CharField(_("نام کامل"), max_length=50)
-    mobile=models.CharField(_("شماره تماس"), max_length=50)
-    email=models.EmailField(_("ایمیل"), max_length=254)
-    subject=models.CharField(_("عنوان پیام"), max_length=50)
-    message=models.CharField(_("متن پیام"), max_length=50)
-    date_added=models.DateTimeField(_("افزوده شده در"), auto_now=False, auto_now_add=True)
-    app_name=models.CharField(_("اپلیکیشن"), max_length=50)
-
-    class Meta:
-        verbose_name = _("ContactMessage")
-        verbose_name_plural = _("پیام های ارتباط با ما")
-
-    def __str__(self):
-        return self.email+"   @  "+PersianCalendar().from_gregorian(self.date_added)
-
-    def get_absolute_url(self):
-        return reverse("ContactMessage_detail", kwargs={"pk": self.pk})
-
-
-class Parameter(models.Model):
-
-    name=models.CharField(_("نام"), max_length=50,choices=ParametersEnum.choices)
-    value=models.CharField(_("مقدار"), max_length=10000)
-    
-    def get_edit_btn(self):
-        return f"""
-         <a target="_blank" title="ویرایش {self.name}" class="btn btn-info btn-link" href="{self.get_edit_url()}">
-                            <i class="material-icons">settings</i>
-                        </a>
-        """
-    class Meta:
-        verbose_name = _("Parameter")
-        verbose_name_plural = _("پارامتر ها")
-
-    def __str__(self):
-        return f'{self.name} : {self.value}'
-
-    def get_edit_url(self):
-        return f'{ADMIN_URL}{APP_NAME}/parameter/{self.pk}/change/'
-
-class FAQ(models.Model):
-    for_home=models.BooleanField(_("نمایش در صفحه خانه"),default=False)
-    color=models.CharField(_("رنگ"),choices=ColorEnum.choices,default=ColorEnum.UNSET, max_length=50)
-    
-    icon=models.ForeignKey("icon",null=True,blank=True,on_delete=models.SET_NULL)
-    priority=models.IntegerField(_("ترتیب"))
-    question=models.CharField(_("سوال"), max_length=200)
-    answer=models.CharField(_("پاسخ"), max_length=5000)
-    
-    class Meta:
-        verbose_name = _("FAQ")
-        verbose_name_plural = _("پرسش های متداول")
-
-    def __str__(self):
-        return self.question
-
-    def get_edit_url(self):
-        return f'{ADMIN_URL}{APP_NAME}/faq/{self.pk}/change/'
-    def get_absolute_url(self):
-        return reverse("app:faq")
-
-
 class Page(models.Model):
     image_origin=models.ImageField(_("تصویر"),null=True,blank=True, upload_to=IMAGE_FOLDER+'Page/Main/', height_field=None, width_field=None, max_length=None)
     header_image_origin=models.ImageField(_("تصویر سربرگ"),null=True,blank=True, upload_to=IMAGE_FOLDER+'Page/Header/', height_field=None, width_field=None, max_length=None)
@@ -229,7 +130,7 @@ class Page(models.Model):
     short_description=models.CharField(_("شرح کوتاه"),max_length=1000,blank=True,null=True)
     description=tinymce_models.HTMLField(_("شرح کامل"),max_length=10000,null=True,blank=True)
     child_class=models.CharField(_('child_class'),null=True,blank=True,max_length=50)
-    app_name=models.CharField(_('app_name'),null=True,blank=True,max_length=50)
+    # app_name=models.CharField(_('app_name'),null=True,blank=True,max_length=50)
     date_added=models.DateTimeField(_('date_added'),null=True,blank=True,auto_now=False,auto_now_add=True)
     archive=models.BooleanField(_("بایگانی شود؟"),default=False)
     for_home=models.BooleanField(_("در صفحه اصلی نمایش داده شود؟"),default=False)
@@ -267,146 +168,7 @@ class Page(models.Model):
         verbose_name = 'Page'
         verbose_name_plural = 'Pages'
         
-    def get_edit_url(self):
-        return f'{ADMIN_URL}{self.app_name}/{self.child_class}/{self.pk}/change/'
 
-    def get_absolute_url(self):
-        return reverse(f'{self.app_name}:{self.child_class}',kwargs={'pk':self.pk})
-    
-class Blog(Page):
-
-    def save(self):
-        self.child_class='blog'
-        super(Blog,self).save()
-
-    class Meta:
-        verbose_name = _("Blog")
-        verbose_name_plural = _("مقالات")
-   
-    def __str__(self):
-        return self.title
-   
-
-class Technology(Page):
-
-    def save(self):
-        self.child_class='technology'
-        super(Technology,self).save()
-
-    
-    class Meta:
-        verbose_name = _("Technology")
-        verbose_name_plural = _("تکنولوژی")
-   
-    def __str__(self):
-        if self.title:
-            return self.title
-        return str(self.priority)
-        
-
-class Link(Icon):
-    title=models.CharField(_("عنوان"), max_length=200)    
-    for_home=models.BooleanField(_("نمایش در پایین صفحه سایت"),default=False)
-    for_nav=models.BooleanField(_("نمایش در منوی بالای سایت"),default=False)
-    priority=models.IntegerField(_("ترتیب"),default=100)
-    url=models.CharField(_("لینک"), max_length=2000,default="#")    
-    profile_adder=models.ForeignKey("authentication.Profile", verbose_name=_("پروفایل"), on_delete=models.CASCADE)
-    
-    def get_link(self):
-        return f"""
-
-            <a target="_blank" href="{self.get_absolute_url()}">
-            {self.get_icon_tag()}
-            {self.title}</a>
-        """
-    def get_link_icon_tag(self):
-        if self.url:
-            icon=self.get_icon_tag()
-            return f'<a title="{self.title}" href="{self.url}">{icon}</a>'
-        else:
-            return self.get_icon_tag()
-    
-    def to_link_tag(self):
-        return """
-          <a class="btn  btn-round btn-block btn-{color}" href="{url}">
-          <i class="material-icons">{icon}</i>
-          {title}</a>
-        """.format(color=self.color,icon=self.icon,url=self.url,title=self.title)
-    
-    class Meta:
-        verbose_name = _("Link")
-        verbose_name_plural = _("لینک ها")
-
-    def __str__(self):
-        return self.title+('*' if self.for_home else '')
-
-    def get_absolute_url(self):
-        return self.url
-
-    def get_edit_url(self):
-        return f'{ADMIN_URL}{APP_NAME}/link/{self.pk}/change/'
-
-
-
-class SocialLink(Link):
-    profile=models.ForeignKey("authentication.Profile",null=True,blank=True, verbose_name=_("profile"), on_delete=models.PROTECT)
-    
-    def get_link(self):
-        return f"""
-                <a href="{self.url}" class="btn btn-just-icon btn-link {self.icon_class}">
-                {self.get_icon_tag()}
-                </a>
-        """
-   
-    class Meta:
-        verbose_name = _("SocialLink")
-        verbose_name_plural = _("شبکه اجتماعی")
-
-    def __str__(self):
-        return self.icon_title
-
-    def get_absolute_url(self):
-        return self.link
-
-
-class OurTeam(models.Model):
-    profile=models.ForeignKey("authentication.Profile", verbose_name=_("پروفایل"), on_delete=models.CASCADE)
-    job=models.CharField(_("سمت"), max_length=100)
-    description=models.CharField(_("توضیحات"), max_length=500)
-    priority=models.IntegerField(_("ترتیب"),default=1000)
-    # image_origin=models.ImageField(_("تصویر"), upload_to=IMAGE_FOLDER+'OurTeam/', height_field=None, width_field=None, max_length=None)
-    social_links=models.ManyToManyField("SocialLink", verbose_name=_("social_links"),blank=True)
-    resume_categories=models.ManyToManyField("ResumeCategory", verbose_name=_("ResumeCategories"),blank=True)
-    # header_image_origin=models.ImageField(_("تصویر سربرگ"),null=True,blank=True, upload_to=IMAGE_FOLDER+'OurTeam/Header/', height_field=None, width_field=None, max_length=None)
-    
-    def __str__(self):
-        return self.profile.name()
-    def get_resume_url(self):
-        return reverse('app:resume',kwargs={'ourteam_id':self.pk})
-    # def image(self):
-    #     if self.image_origin:
-    #         return MEDIA_URL+str(self.image_origin)
-    #     else:
-    #         return STATIC_URL+'dashboard/img/default_avatar.png'
-    # def header_image(self):
-    #     if self.image_origin:
-    #         return MEDIA_URL+str(self.header_image_origin)
-    #     else:
-    #         return ''
-    
-    def get_edit_url(self):
-        return f'{ADMIN_URL}{APP_NAME}/ourteam/{self.pk}/change/'
-    def get_absolute_url(self):
-        # return reverse('app:ourteam',kwargs={'pk':self.pk})
-        return self.profile.get_absolute_url()
-
-    def __unicode__(self):
-        return self.name
-    class Meta:
-        db_table = 'OurTeam'
-        managed = True
-        verbose_name = 'OurTeam'
-        verbose_name_plural = 'تیم ما'
 
 
 class Document(Icon):
@@ -452,32 +214,6 @@ class Document(Icon):
 
     def get_edit_url(self):
         return f'{ADMIN_URL}{APP_NAME}/document/{self.pk}/change/'
-
-
-class HomeSlider(models.Model):
-    image_banner=models.ImageField(_("تصویر اسلایدر  1333*2000 "), upload_to=IMAGE_FOLDER+'Banner/', height_field=None, width_field=None, max_length=None)
-    title=models.CharField(_("عنوان"),null=True,blank=True,max_length=500)
-    body=models.TextField(_("بدنه"),null=True,blank=True,max_length=2000)
-    text_color=models.CharField(_("رنگ متن"),default="#fff",max_length=20)
-    
-    priority=models.IntegerField(_("ترتیب"),default=100)
-    archive=models.BooleanField(_("بایگانی شود؟"),default=False)
-    tag_number=models.IntegerField(_("عدد برچسب"),default=100)
-    tag_text=models.CharField(_("متن برچسب"), max_length=100,blank=True,null=True)
-    
-
-    class Meta:
-        verbose_name = _("HomeSlider")
-        verbose_name_plural = _("اسلایدر های صفحه اصلی")
-    def image(self):
-        return MEDIA_URL+str(self.image_banner)
-    def __str__(self):
-        return str(self.priority)
-
-    def get_absolute_url(self):
-        return reverse("HomeSlider_detail", kwargs={"pk": self.pk})
-    def get_edit_url(self):
-        return f'{ADMIN_URL}{APP_NAME}/homeslider/{self.pk}/change/'
 
 
 
@@ -640,6 +376,348 @@ class OurWorkCategory(models.Model):
         return f'{ADMIN_URL}app/ourworkcategory/{self.pk}/change/'
 
 
+class Color(models.Model):
+    name=models.CharField(_('نام رنگ'),max_length=50)
+    color=models.CharField(_('کد رنگ'),max_length=50)
+    class Meta:
+        verbose_name = _("Color")
+        verbose_name_plural = _("رنگ ها")
+        
+    def __str__(self):
+        return self.name
+
+
+class ResumeCategory(models.Model):
+    profile=models.ForeignKey("authentication.profile", verbose_name=_("profile"), on_delete=models.CASCADE)
+    title=models.CharField(_("title"),choices=ResumeCategoryEnum.choices,default=ResumeCategoryEnum.EDUCATION, max_length=50)
+    resumes=models.ManyToManyField("Resume", verbose_name=_("resume"))
+    priority=models.IntegerField(_("priority"),default=100)
+    icon=models.ForeignKey("Icon",verbose_name='icon',on_delete=models.SET_NULL,null=True,blank=True)
+
+    def get_icon(self):
+        if self.icon is not None:
+            return self.icon.get_icon_tag()
+        return f"""
+               <i class="material-icons">palette</i>
+            """
+    class Meta:
+        verbose_name = _("ResumeCategory")
+        verbose_name_plural = _("دسته بندی رزومه")
+
+    def __str__(self):
+        return f'{self.profile.name()} -> {self.title}'
+
+    def get_absolute_url(self):
+        return reverse("ResumeCategory_detail", kwargs={"pk": self.pk})
+    def get_edit_url(self):
+        return (f'{ADMIN_URL}{APP_NAME}/resumecategory/{self.pk}/change')
+
+class GalleryAlbum(Jumbotron):
+    image_origin=models.ImageField(_("Big Image 345*970 "), upload_to=IMAGE_FOLDER+'Gallery/Album/',null=True,blank=True, height_field=None, width_field=None, max_length=None)
+    for_home=models.BooleanField(_("Show on homepage"),default=False)
+    archive=models.BooleanField(_("Archive?"),default=False)
+    priority=models.IntegerField(_("Priority"),default=100)
+    thumbnail_origin=models.ImageField(_("Thumbnail Image"), upload_to=IMAGE_FOLDER+'Gallery/Album/Thumbnail/',null=True,blank=True, height_field=None, width_field=None, max_length=None)
+    
+    photos=models.ManyToManyField("GalleryPhoto", verbose_name=_("Photos"),blank=True)
+    def get_tag(self):
+        s= """<div class="row leo-rtl mb-3">"""
+        for pic in self.photos.all():
+            s+=f"""<div class="col-lg-3">
+            <a target="_blank" href="{pic.image()}"><img src="{pic.image()}" width="100%"></a>
+            </div>"""
+        s+="</div>"
+        return s
+    def image(self):
+        return MEDIA_URL+str(self.image_origin)
+    def thumbnail(self):
+        return MEDIA_URL+str(self.thumbnail_origin)
+    
+    class Meta:
+        verbose_name = _("GalleryAlbum")
+        verbose_name_plural = _("آلبوم های تصاویر")
+
+    def __str__(self):
+        return self.title
+    
+    def get_edit_url(self):
+        return f'{ADMIN_URL}{APP_NAME}/galleryalbum/{self.pk}/change/'
+   
+   
+    def __unicode__(self):
+        return self.title
+    def get_absolute_url(self):
+        return reverse("OurService_detail", kwargs={"pk": self.pk})
+
+
+class GalleryPhoto(models.Model):
+    image_title=models.CharField(_("عنوان تصویر"),max_length=100,null=True,blank=True)
+    image_description=models.CharField(_("شرح تصویر"),max_length=500,null=True,blank=True)
+    thumbnail_origin=models.ImageField(_("Thumbnail Image"), upload_to=IMAGE_FOLDER+'Gallery/Photo/Thumbnail/',null=True,blank=True, height_field=None, width_field=None, max_length=None)
+    image_origin=models.ImageField(_("Big Image 345*970 "), upload_to=IMAGE_FOLDER+'Gallery/Photo/', height_field=None, width_field=None, max_length=None)
+    archive=models.BooleanField(_("Archive?"),default=False)
+    priority=models.IntegerField(_("Priority"),default=100)    
+    location=models.CharField(_("موقعیت مکانی تصویر"), max_length=50,null=True,blank=True)
+    profile=models.ForeignKey("authentication.profile",null=True,blank=True, verbose_name=_("پروفایل"), on_delete=models.SET_NULL)
+    date_added=models.DateTimeField(_("افزوده شده در"), auto_now=False, auto_now_add=True)
+
+    def image(self):
+        return MEDIA_URL+str(self.image_origin)
+    def thumbnail(self):
+        return MEDIA_URL+str(self.thumbnail_origin)
+    def persian_date_added(self):
+        return PersianCalendar().from_gregorian(self.date_added)
+    class Meta:
+        verbose_name = _("GalleryPhoto")
+        verbose_name_plural = _("تصاویر")
+
+    def __str__(self):
+        return 'image ('+str(self.pk)+')'
+
+    def get_absolute_url(self):
+        return MEDIA_URL+str(self.image_origin)
+    def get_edit_url(self):
+        return f'{ADMIN_URL}{APP_NAME}/galleryphoto/{self.pk}/change/'
+
+# the classes above will be derived in another modules
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+class MetaData(models.Model):    
+    for_home=models.BooleanField(_("نمایش در صفحه اصلی"),default=False)
+    key=models.CharField(_("key name"), max_length=50,default='name')
+    value=models.CharField(_("key value"), max_length=50,default='description')
+    content=models.CharField(_("content"), max_length=2000)
+    class Meta:
+        verbose_name = _("MetaData")
+        verbose_name_plural = _("متا دیتا - کلمات کلیدی سئو")
+
+    def __str__(self):
+        return ('*** '  if self.for_home else '')+f'{self.key} : {self.value}: {self.content[:20]}'
+
+
+
+class MainPic(models.Model):
+    name=models.CharField(_("جای تصویر"), max_length=50,choices=MainPicEnum.choices)    
+    image_origin=models.ImageField(_("تصویر"), upload_to=IMAGE_FOLDER+'MainPic/', height_field=None, width_field=None, max_length=None,null=True,blank=True)
+    def get_edit_btn(self):
+        return f"""
+            <a class="" href="{self.get_edit_url()}">
+            <i class="material-icons">settings</i>
+            ویرایش تصویر
+            </a>
+        """
+    class Meta:
+        verbose_name = _("MainPic")
+        verbose_name_plural = _("تصویر های اصلی سایت")
+    def image(self):
+        if self.image_origin is not None:
+            return f'{MEDIA_URL}{str(self.image_origin)}'
+        return None
+    def __str__(self):
+        return self.name
+
+class Parameter(models.Model):
+
+    name=models.CharField(_("نام"), max_length=50,choices=ParametersEnum.choices)
+    value=models.CharField(_("مقدار"), max_length=10000)
+    
+    def get_edit_btn(self):
+        return f"""
+         <a target="_blank" title="ویرایش {self.name}" class="btn btn-info btn-link" href="{self.get_edit_url()}">
+                            <i class="material-icons">settings</i>
+                        </a>
+        """
+    class Meta:
+        verbose_name = _("Parameter")
+        verbose_name_plural = _("پارامتر ها")
+
+    def __str__(self):
+        return f'{self.name} : {self.value}'
+
+ 
+
+class ContactMessage(models.Model):
+    full_name=models.CharField(_("نام کامل"), max_length=50)
+    mobile=models.CharField(_("شماره تماس"), max_length=50)
+    email=models.EmailField(_("ایمیل"), max_length=254)
+    subject=models.CharField(_("عنوان پیام"), max_length=50)
+    message=models.CharField(_("متن پیام"), max_length=50)
+    date_added=models.DateTimeField(_("افزوده شده در"), auto_now=False, auto_now_add=True)
+    app_name=models.CharField(_("اپلیکیشن"), max_length=50)
+
+    class Meta:
+        verbose_name = _("ContactMessage")
+        verbose_name_plural = _("پیام های ارتباط با ما")
+
+    def __str__(self):
+        return self.email+"   @  "+PersianCalendar().from_gregorian(self.date_added)
+
+   
+    
+class FAQ(models.Model):
+    for_home=models.BooleanField(_("نمایش در صفحه خانه"),default=False)
+    color=models.CharField(_("رنگ"),choices=ColorEnum.choices,default=ColorEnum.UNSET, max_length=50)
+    
+    icon=models.ForeignKey("icon",null=True,blank=True,on_delete=models.SET_NULL)
+    priority=models.IntegerField(_("ترتیب"))
+    question=models.CharField(_("سوال"), max_length=200)
+    answer=models.CharField(_("پاسخ"), max_length=5000)
+    
+    class Meta:
+        verbose_name = _("FAQ")
+        verbose_name_plural = _("پرسش های متداول")
+
+    def __str__(self):
+        return self.question
+
+    def get_edit_url(self):
+        return f'{ADMIN_URL}{APP_NAME}/faq/{self.pk}/change/'
+    def get_absolute_url(self):
+        return reverse("app:faq")
+
+
+
+
+
+
+    
+class Blog(Page):
+
+    def save(self):
+        self.child_class='blog'
+        super(Blog,self).save()
+
+    class Meta:
+        verbose_name = _("Blog")
+        verbose_name_plural = _("مقالات")
+   
+    def __str__(self):
+        return self.title
+   
+
+class Technology(Page):
+
+    def save(self):
+        self.child_class='technology'
+        super(Technology,self).save()
+
+    
+    class Meta:
+        verbose_name = _("Technology")
+        verbose_name_plural = _("تکنولوژی")
+   
+    def __str__(self):
+        if self.title:
+            return self.title
+        return str(self.priority)
+        
+
+class Link(Icon):
+    title=models.CharField(_("عنوان"), max_length=200)    
+    for_home=models.BooleanField(_("نمایش در پایین صفحه سایت"),default=False)
+    for_nav=models.BooleanField(_("نمایش در منوی بالای سایت"),default=False)
+    priority=models.IntegerField(_("ترتیب"),default=100)
+    url=models.CharField(_("لینک"), max_length=2000,default="#")    
+    profile_adder=models.ForeignKey("authentication.Profile", verbose_name=_("پروفایل"), on_delete=models.CASCADE)
+    
+    def get_link(self):
+        return f"""
+
+            <a target="_blank" href="{self.get_absolute_url()}">
+            {self.get_icon_tag()}
+            {self.title}</a>
+        """
+    def get_link_icon_tag(self):
+        if self.url:
+            icon=self.get_icon_tag()
+            return f'<a title="{self.title}" href="{self.url}">{icon}</a>'
+        else:
+            return self.get_icon_tag()
+    
+    def to_link_tag(self):
+        return """
+          <a class="btn  btn-round btn-block btn-{color}" href="{url}">
+          <i class="material-icons">{icon}</i>
+          {title}</a>
+        """.format(color=self.color,icon=self.icon,url=self.url,title=self.title)
+    
+    class Meta:
+        verbose_name = _("Link")
+        verbose_name_plural = _("لینک ها")
+
+    def __str__(self):
+        return self.title+('*' if self.for_home else '')
+
+
+
+
+class OurTeam(models.Model):
+    profile=models.ForeignKey("authentication.Profile", verbose_name=_("پروفایل"), on_delete=models.CASCADE)
+    job=models.CharField(_("سمت"), max_length=100)
+    description=models.CharField(_("توضیحات"), max_length=500)
+    priority=models.IntegerField(_("ترتیب"),default=1000)
+    social_links=models.ManyToManyField("SocialLink", verbose_name=_("social_links"),blank=True)
+    resume_categories=models.ManyToManyField("ResumeCategory", verbose_name=_("ResumeCategories"),blank=True)
+    
+    def __str__(self):
+        return self.profile.name()
+    
+    
+    
+    
+    
+    def __unicode__(self):
+        return self.name
+    class Meta:
+        db_table = 'OurTeam'
+        managed = True
+        verbose_name = 'OurTeam'
+        verbose_name_plural = 'تیم ما'
+
+
+
+
+
+
+class HomeSlider(models.Model):
+    image_banner=models.ImageField(_("تصویر اسلایدر  1333*2000 "), upload_to=IMAGE_FOLDER+'Banner/', height_field=None, width_field=None, max_length=None)
+    title=models.CharField(_("عنوان"),null=True,blank=True,max_length=500)
+    body=models.TextField(_("بدنه"),null=True,blank=True,max_length=2000)
+    text_color=models.CharField(_("رنگ متن"),default="#fff",max_length=20)
+    
+    priority=models.IntegerField(_("ترتیب"),default=100)
+    archive=models.BooleanField(_("بایگانی شود؟"),default=False)
+    tag_number=models.IntegerField(_("عدد برچسب"),default=100)
+    tag_text=models.CharField(_("متن برچسب"), max_length=100,blank=True,null=True)
+    
+
+    class Meta:
+        verbose_name = _("HomeSlider")
+        verbose_name_plural = _("اسلایدر های صفحه اصلی")
+    def image(self):
+        return MEDIA_URL+str(self.image_banner)
+    def __str__(self):
+        return str(self.priority)
+
+    
+    
+
+
+
+
 class OurWork(Page):
     category=models.ForeignKey("OurWorkCategory",null=True,blank=True, verbose_name=_("دسته بندی"), on_delete=models.SET_NULL)
     location=models.CharField(_('موقعیت در نقشه گوگل 400*400'),max_length=500,null=True,blank=True)    
@@ -718,41 +796,7 @@ class Feature(Page):
         return self.title
 
 
-class Color(models.Model):
-    name=models.CharField(_('نام رنگ'),max_length=50)
-    color=models.CharField(_('کد رنگ'),max_length=50)
-    class Meta:
-        verbose_name = _("Color")
-        verbose_name_plural = _("رنگ ها")
-        
-    def __str__(self):
-        return self.name
 
-
-class ResumeCategory(models.Model):
-    profile=models.ForeignKey("authentication.profile", verbose_name=_("profile"), on_delete=models.CASCADE)
-    title=models.CharField(_("title"),choices=ResumeCategoryEnum.choices,default=ResumeCategoryEnum.EDUCATION, max_length=50)
-    resumes=models.ManyToManyField("Resume", verbose_name=_("resume"))
-    priority=models.IntegerField(_("priority"),default=100)
-    icon=models.ForeignKey("Icon",verbose_name='icon',on_delete=models.SET_NULL,null=True,blank=True)
-
-    def get_icon(self):
-        if self.icon is not None:
-            return self.icon.get_icon_tag()
-        return f"""
-               <i class="material-icons">palette</i>
-            """
-    class Meta:
-        verbose_name = _("ResumeCategory")
-        verbose_name_plural = _("دسته بندی رزومه")
-
-    def __str__(self):
-        return f'{self.profile.name()} -> {self.title}'
-
-    def get_absolute_url(self):
-        return reverse("ResumeCategory_detail", kwargs={"pk": self.pk})
-    def get_edit_url(self):
-        return (f'{ADMIN_URL}{APP_NAME}/resumecategory/{self.pk}/change')
 
 
 class Resume(Page):
@@ -768,72 +812,8 @@ class Resume(Page):
         self.child_class='resume'
         super(Resume,self).save()
 
-class GalleryAlbum(Jumbotron):
-    image_origin=models.ImageField(_("Big Image 345*970 "), upload_to=IMAGE_FOLDER+'Gallery/Album/',null=True,blank=True, height_field=None, width_field=None, max_length=None)
-    for_home=models.BooleanField(_("Show on homepage"),default=False)
-    archive=models.BooleanField(_("Archive?"),default=False)
-    priority=models.IntegerField(_("Priority"),default=100)
-    thumbnail_origin=models.ImageField(_("Thumbnail Image"), upload_to=IMAGE_FOLDER+'Gallery/Album/Thumbnail/',null=True,blank=True, height_field=None, width_field=None, max_length=None)
-    
-    photos=models.ManyToManyField("GalleryPhoto", verbose_name=_("Photos"),blank=True)
-    def get_tag(self):
-        s= """<div class="row leo-rtl mb-3">"""
-        for pic in self.photos.all():
-            s+=f"""<div class="col-lg-3">
-            <a target="_blank" href="{pic.image()}"><img src="{pic.image()}" width="100%"></a>
-            </div>"""
-        s+="</div>"
-        return s
-    def image(self):
-        return MEDIA_URL+str(self.image_origin)
-    def thumbnail(self):
-        return MEDIA_URL+str(self.thumbnail_origin)
-    
-    class Meta:
-        verbose_name = _("GalleryAlbum")
-        verbose_name_plural = _("آلبوم های تصاویر")
-
-    def __str__(self):
-        return self.title
-    
-    def get_edit_url(self):
-        return f'{ADMIN_URL}{APP_NAME}/galleryalbum/{self.pk}/change/'
-   
-   
-    def __unicode__(self):
-        return self.title
-    def get_absolute_url(self):
-        return reverse("OurService_detail", kwargs={"pk": self.pk})
 
 
-class GalleryPhoto(models.Model):
-    image_title=models.CharField(_("عنوان تصویر"),max_length=100,null=True,blank=True)
-    image_description=models.CharField(_("شرح تصویر"),max_length=500,null=True,blank=True)
-    thumbnail_origin=models.ImageField(_("Thumbnail Image"), upload_to=IMAGE_FOLDER+'Gallery/Photo/Thumbnail/',null=True,blank=True, height_field=None, width_field=None, max_length=None)
-    image_origin=models.ImageField(_("Big Image 345*970 "), upload_to=IMAGE_FOLDER+'Gallery/Photo/', height_field=None, width_field=None, max_length=None)
-    archive=models.BooleanField(_("Archive?"),default=False)
-    priority=models.IntegerField(_("Priority"),default=100)    
-    location=models.CharField(_("موقعیت مکانی تصویر"), max_length=50,null=True,blank=True)
-    profile=models.ForeignKey("authentication.profile",null=True,blank=True, verbose_name=_("پروفایل"), on_delete=models.SET_NULL)
-    date_added=models.DateTimeField(_("افزوده شده در"), auto_now=False, auto_now_add=True)
-
-    def image(self):
-        return MEDIA_URL+str(self.image_origin)
-    def thumbnail(self):
-        return MEDIA_URL+str(self.thumbnail_origin)
-    def persian_date_added(self):
-        return PersianCalendar().from_gregorian(self.date_added)
-    class Meta:
-        verbose_name = _("GalleryPhoto")
-        verbose_name_plural = _("تصاویر")
-
-    def __str__(self):
-        return 'image ('+str(self.pk)+')'
-
-    def get_absolute_url(self):
-        return MEDIA_URL+str(self.image_origin)
-    def get_edit_url(self):
-        return f'{ADMIN_URL}{APP_NAME}/galleryphoto/{self.pk}/change/'
 
 
 class Tag(models.Model):
@@ -873,4 +853,28 @@ class Tag(models.Model):
         return reverse('projectmanager:tag',kwargs={'pk':self.pk})
     def get_edit_url(self):
         return f'{ADMIN_URL}app/tag/{self.pk}/change/'
+
+
+
+
+
+
+
+
+class SocialLink(Link):
+    profile=models.ForeignKey("authentication.Profile",null=True,blank=True, verbose_name=_("profile"), on_delete=models.PROTECT)
+    
+    def get_link(self):
+        return f"""
+                <a href="{self.url}" class="btn btn-just-icon btn-link {self.icon_class}">
+                {self.get_icon_tag()}
+                </a>
+        """
+   
+    class Meta:
+        verbose_name = _("SocialLink")
+        verbose_name_plural = _("شبکه اجتماعی")
+
+    def __str__(self):
+        return self.icon_title
 

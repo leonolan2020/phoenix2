@@ -1,18 +1,18 @@
-import pusher
+import datetime
 import json
+import pusher
+from .enums import MainPicEnum
 from .forms import *
+from .repo import *
+from .serializers import *
 from django.http import HttpResponse,JsonResponse,Http404
 from django.shortcuts import render,redirect,reverse
 from django.views import View
-from utility.excel import ReportWorkBook,ReportSheet
+from dashboard.serializers import CommentSerializer
 from dashboard.settings import *
 from dashboard.views import getContext as app_getContext
-from .repo import *
-from .enums import MarketPicEnum
-from .serializers import *
-from dashboard.serializers import CommentSerializer
+from utility.excel import ReportWorkBook,ReportSheet
 # from authentication.forms import UploadProfileImageForm,EditProfileForm,ChangeProfileForm
-import datetime
 if PUSHER_IS_ENABLE:
     from leopusher.models import PusherChannelNameEnum
 
@@ -70,8 +70,33 @@ def getContext(request):
         pass
     else:
         pass
-    my_channels_s=[]
-    context['my_channels_s']=json.dumps(my_channels_s)
+    
+    parameter_repo=ParameterRepo(user=request.user)
+    main_pic_repo=MainPicRepo(user=request.user)
+    link_repo=LinkRepo(user=request.user)
+    context['app']={
+        'theme_color':parameter_repo.get(ParametersEnum.THEME_COLOR),
+        'nav_items':link_repo.get_nav_items(),
+        'about_us_short':parameter_repo.get(ParametersEnum.ABOUT_US_SHORT),
+        'GOOGLE_SEARCH_CONSOLE_TAG':parameter_repo.get(ParametersEnum.GOOGLE_SEARCH_CONSOLE_TAG),
+        'NAV_TEXT_COLOR':parameter_repo.get(ParametersEnum.NAV_TEXT_COLOR),
+        'NAV_BACK_COLOR':parameter_repo.get(ParametersEnum.NAV_BACK_COLOR),
+        'slogan':parameter_repo.get(ParametersEnum.SLOGAN),
+        'logo':main_pic_repo.get(name=MainPicEnum.LOGO),
+        'favicon':main_pic_repo.get(name=MainPicEnum.FAVICON),
+        'loading':main_pic_repo.get(name=MainPicEnum.LOADING),
+        'pretitle':parameter_repo.get(ParametersEnum.PRE_TILTE),
+        'title':parameter_repo.get(ParametersEnum.TITLE),
+        'address':parameter_repo.get(ParametersEnum.ADDRESS),    
+        'mobile':parameter_repo.get(ParametersEnum.MOBILE),           
+        'email':parameter_repo.get(ParametersEnum.EMAIL),      
+        'tel':parameter_repo.get(ParametersEnum.TEL),
+        'url':parameter_repo.get(ParametersEnum.URL),
+        'meta_data_items':MetaDataRepo().list_for_home(),
+        'our_team_title':OurTeamRepo(user=user).get_title(),
+        'our_team_link':OurTeamRepo(user=user).get_link(),
+    }
+
     
     context['search_form']=SearchForm()
     parent_categories=CategoryRepo(user=user).list_master()
@@ -151,9 +176,9 @@ class ShopView(View):
             parent={
                 'get_breadcrumb':None,
                 'name':'فروشگاه',
-                'get_edit_btn':MarketPicRepo(user=user).get(MarketPicEnum.SHOP_HEADER).get_edit_btn(),
-                'description':MarketParameterRepo(user=user).get(MarketParameterEnum.SHOP_DESCRIPTION).value,
-                'image_header':MarketPicRepo(user=user).get(MarketPicEnum.SHOP_HEADER).image(),
+                'get_edit_btn':MainPicRepo(user=user).get(MainPicEnum.SHOP_HEADER).get_edit_btn(),
+                'description':ParameterRepo(user=user).get(ParametersEnum.SHOP_DESCRIPTION).value,
+                'image_header':MainPicRepo(user=user).get(MainPicEnum.SHOP_HEADER).image(),
             }          
             products=product_repo.list_for_home()
         else:     

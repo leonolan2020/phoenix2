@@ -4,10 +4,13 @@ from .apps import APP_NAME
 from dashboard.settings import ADMIN_URL,MEDIA_URL
 from .repo import *
 from dashboard.enums import *
+from dashboard.forms import AddTagForm,AddDocumentForm,AddCommentForm,AddLinkForm,AddImageForm
+from dashboard.serializers import TagSerializer,DocumentSerializer,CommentSerializer,LinkSerializer,GalleryPhotoSerializer
 from .forms import *
 from authentication.repo import ProfileRepo
 from dashboard.views import getContext as DashboardContext
 from dashboard.utils import AdminUtility
+import json
 TEMPLATE_ROOT='material/'
 
 
@@ -99,34 +102,46 @@ class ExampleViews(View):
 
 
 class PageViews(View):
-    def get_page_context(self,request,pk,page_type,*args, **kwargs):
-        pass
+    def getPageContext(self,request,page,*args, **kwargs):
+        context=getContext(request)
+
+        context['add_tag_form']=AddTagForm()
+        context['add_link_form']=AddLinkForm()
+        context['add_document_form']=AddDocumentForm()
+        context['add_image_form']=AddImageForm()
+
+        context['images_s']=json.dumps(GalleryPhotoSerializer(page.images.all(),many=True).data)
+        context['tags_s']=json.dumps(TagSerializer(page.tags.all(),many=True).data)
+        context['links_s']=json.dumps(LinkSerializer(page.links.all(),many=True).data)
+        context['documents_s']=json.dumps(DocumentSerializer(page.documents.all(),many=True).data)
+        
+        return context
 
     def resume(self,request,pk,*args, **kwargs):
         user=request.user
-        context=getContext(request)
         resume=ResumeRepo(user=user).resume(resume_id=pk)
+        context=self.getPageContext(request=request,page=resume)        
         context['page']=resume
         context['resume']=resume
         return render(request,TEMPLATE_ROOT+'resume.html',context)
     def blog(self,request,pk,*args, **kwargs):
         user=request.user
-        context=getContext(request)
         blog=BlogRepo(user=user).blog(blog_id=pk)
+        context=self.getPageContext(request=request,page=blog)
         context['page']=blog
         context['blog']=blog
         return render(request,TEMPLATE_ROOT+'blog.html',context)
     def feature(self,request,pk,*args, **kwargs):
-        user=request.user
-        context=getContext(request)
+        user=request.user        
         feature=FeatureRepo(user=user).feature(feature_id=pk)
+        context=self.getPageContext(request=request,page=feature)  
         context['page']=feature
         context['feature']=feature
         return render(request,TEMPLATE_ROOT+'feature.html',context)
     def ourwork(self,request,pk,*args, **kwargs):
         user=request.user
-        context=getContext(request)
         ourwork=OurWorkRepo(user=user).ourwork(ourwork_id=pk)
+        context=self.getPageContext(request=request,page=ourwork) 
         context['page']=ourwork
         context['ourwork']=ourwork
         return render(request,TEMPLATE_ROOT+'ourwork.html',context)

@@ -1,4 +1,14 @@
+import re
+import sys
 from .apps import APP_NAME
+from .constants import *
+from .enums import ProfileEnum,OrderStatusEnum,MainPicEnum,ParametersEnum
+# from app.repo import ParameterRepo
+from authentication.models import Profile
+from dashboard import models as DashboardModels
+from dashboard.enums import EmployeeEnum,DegreeLevelEnum,TransactionDirectionEnum, IconsEnum, RegionEnum,AddressTitleEnum
+from dashboard.constants import FORCE_RESIZE_IMAGE
+from dashboard.settings import ADMIN_URL,MEDIA_URL,STATIC_URL
 from django.db import models
 from django.db.models import Avg, Max, Min
 from django.conf import settings
@@ -7,19 +17,9 @@ from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.utils import timezone
 from django.utils.translation import gettext as _
 from io import BytesIO
-from .enums import ProfileEnum,OrderStatusEnum,MarketPicEnum,MarketParameterEnum
-from .constants import *
-from dashboard.enums import EmployeeEnum,DegreeLevelEnum,TransactionDirectionEnum, IconsEnum, RegionEnum,AddressTitleEnum
-from utility.persian import PersianCalendar
-from app.repo import ParameterRepo
-from authentication.models import Profile
-from dashboard.settings import ADMIN_URL,MEDIA_URL,STATIC_URL
 from PIL import Image
 from tinymce import models as tinymce_models
-from dashboard.constants import FORCE_RESIZE_IMAGE
-from dashboard import models as DashboardModels
-import re
-import sys
+from utility.persian import PersianCalendar
 IMAGE_FOLDER=APP_NAME+'/images/'
 
 class ProductUnit(models.Model):
@@ -312,22 +312,23 @@ class Product(models.Model):
         if self.origin_price:
             return self.origin_price
         return 0
-    def share_mail(self):
-        obj={
-            'title':self.name+' در فروشگاه '+ParameterRepo().title(),
-            'url':self.get_absolute_url(),
-            'text':self.name,
-            'text_to_view':'share'
+    # def share_mail(self):
+    #     obj={
+    #         'title':self.name+' در فروشگاه '+ParameterRepo().title(),
+    #         'url':self.get_absolute_url(),
+    #         'text':self.name,
+    #         'text_to_view':'share'
 
 
 
-        }
-        return obj
+    #     }
+    #     return obj
     
     def image_header(self):
         if self.image_header_origin is not None and self.image_header_origin and len(str(self.image_header_origin))>0 :
             return MEDIA_URL+str(self.image_header_origin)
         return f'{STATIC_URL}one-tech/images/default_product.png'
+    
     def thumbnail(self):
         try:           
             return self.images.all()[0].thumbnail()
@@ -339,35 +340,7 @@ class Product(models.Model):
             return self.images.all()[0].image()
         except:
             return f'{STATIC_URL}one-tech/images/default_product.png'
-    def save_temp(self):
-        if not self.image:
-            super(Product,self).save()             
-        elif str(self.image)==str(Product.objects.get(pk=self.id).image):
-            super(Product,self).save()
-        elif self.image and FORCE_RESIZE_IMAGE:
-            if not self.thumbnail:
-                self.thumbnail=self.image
-            #Opening the uploaded image
-            image = Image.open(self.image)
-            thumbnail= Image.open(self.thumbnail)
-            output = BytesIO()
-            output2 = BytesIO()
-
-            #Resize/modify the image
-            image = image.resize( (PRODUCT_IMAGE_WIDTH,PRODUCT_IMAGE_HEIGHT),Image.ANTIALIAS )
-            thumbnail = thumbnail.resize( (PRODUCT_THUMBNAIL_WIDTH,PRODUCT_THUMBNAIL_HEIGHT),Image.ANTIALIAS )
-
-            #after modifications, save it to the output
-            image.save(output, format='JPEG', quality=95)
-            thumbnail.save(output2, format='JPEG', quality=95)
-            output.seek(0)
-            output2.seek(0)
-
-            #change the imagefield value to be the newley modifed image value
-            self.image = InMemoryUploadedFile(output,'ImageField', "%s.jpg" %self.image.name.split('.')[0], IMAGE_FOLDER+'Product/image/jpeg', sys.getsizeof(output), None)
-            self.thumbnail = InMemoryUploadedFile(output2,'ImageField', "%s.jpg" %self.thumbnail.name.split('.')[0], IMAGE_FOLDER+'Product/thumbnail/jpeg', sys.getsizeof(output2), None)
-            
-        super(Product,self).save()
+    
     class Meta:
         verbose_name = _("Product")
         verbose_name_plural = _("کالا ها و محصولات")
@@ -692,30 +665,74 @@ class ShopRegion(models.Model):
         return reverse("ShopRegion_detail", kwargs={"pk": self.pk})
 
 
-
-class MarketParameter(DashboardModels.Parameter):
+class OurTeam(DashboardModels.OurTeam):
     
+
+    
+    class Meta:
+        default_related_name=_(APP_NAME+"_"+"OurTeam")
+        verbose_name = _("OurTeam")
+        verbose_name_plural = _("OurTeams")
+
+class MetaData(DashboardModels.MetaData):   
+
+    
+    class Meta:
+        default_related_name=_(APP_NAME+"_"+"MetaData")
+        verbose_name = _("MetaData")
+        verbose_name_plural = _("MetaDatas")
+class Link(DashboardModels.Link):
+    
+    class Meta:
+        verbose_name = _("Link")
+        verbose_name_plural = _("لینک ها")
+
+    
+    def get_edit_url(self):
+        return f'{ADMIN_URL}{APP_NAME}/link/{self.pk}/change/'
+
+
+
+class MainPic(models.Model):
+    name=models.CharField(_("جای تصویر"), max_length=50,choices=MainPicEnum.choices)    
+    image_origin=models.ImageField(_("تصویر"), upload_to=IMAGE_FOLDER+'MainPic/', height_field=None, width_field=None, max_length=None,null=True,blank=True)
+    def get_edit_btn(self):
+        return f"""
+            <a class="" href="{self.get_edit_url()}">
+            <i class="material-icons">settings</i>
+            ویرایش تصویر
+            </a>
+        """
+    class Meta:
+        verbose_name = _("MainPic")
+        verbose_name_plural = _("تصویر های اصلی سایت")
+    def image(self):
+        if self.image_origin is not None:
+            return f'{MEDIA_URL}{str(self.image_origin)}'
+        return None
+    def __str__(self):
+        return self.name
+
+    def get_edit_url(self):
+        return f'{ADMIN_URL}{APP_NAME}/mainpic/{self.pk}/change/'
+
+class Parameter(models.Model):
+
+    name=models.CharField(_("نام"), max_length=50,choices=ParametersEnum.choices)
+    value=models.CharField(_("مقدار"), max_length=10000)
+    
+    def get_edit_btn(self):
+        return f"""
+         <a target="_blank" title="ویرایش {self.name}" class="btn btn-info btn-link" href="{self.get_edit_url()}">
+                            <i class="material-icons">settings</i>
+                        </a>
+        """
     class Meta:
         verbose_name = _("Parameter")
         verbose_name_plural = _("پارامتر ها")
 
-    
+    def __str__(self):
+        return f'{self.name} : {self.value}'
+
     def get_edit_url(self):
         return f'{ADMIN_URL}{APP_NAME}/parameter/{self.pk}/change/'
-
-
-
-
-class MarketPic(DashboardModels.MainPic):
-    
-    class Meta:
-        verbose_name = _("MainPic")
-        verbose_name_plural = _("تصویر های اصلی فروشگاه")
-    
-
-    def get_absolute_url(self):
-        return reverse("MainPic_detail", kwargs={"pk": self.pk})
-   
-    def get_edit_url(self):
-        return f'{ADMIN_URL}{APP_NAME}/mainpic/{self.pk}/change/'
-

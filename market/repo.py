@@ -1,6 +1,7 @@
 import datetime
 from .apps import APP_NAME
-from .models import *
+from .models import OurTeam,Link,Product,Category,Shop,Supplier,Shipper,Customer
+from .models import Employee,Parameter,MainPic,MetaData,Brand
 from django.contrib.auth import login,logout,authenticate
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login,logout
@@ -14,25 +15,40 @@ from authentication.models import Profile
 from dashboard.models import Comment
 from utility.persian import PersianCalendar
 from authentication.repo import ProfileRepo
-from dashboard.repo import RegionRepo
+from dashboard import repo as DashboardRepo
 # from leopusher.mypusher import MyPusherChannel
 from dashboard.settings import DEBUG
 from dashboard.repo import NotificationRepo,ProfileTransactionRepo
 
 
 
+class MetaDataRepo:
+    def __init__(self,user=None):
+        self.objects=MetaData.objects
+        self.user=user
+    def list(self):
+        return self.objects.all()
+    def list_for_home(self):
+        return self.objects.filter(for_home=True)
 
 
-class MarketParameterRepo:
+class OurTeamRepo(DashboardRepo.OurTeamRepo):
+    def __init__(self,user=None):
+        self.user=user
+        self.objects=OurTeam.objects
+    
+
+
+class ParameterRepo:
     
     def __init__(self,user=None):
-        self.objects=MarketParameter.objects
+        self.objects=Parameter.objects
     
     def set(self,name,value='--'):
         if value is None:
             value='--'
         self.objects.filter(name=name).delete()
-        MarketParameter(name=name,value=value).save()
+        Parameter(name=name,value=value).save()
     
     def init(self,name,value=None):
         if value is None:
@@ -52,9 +68,9 @@ class MarketParameterRepo:
 
 
 
-class MarketPicRepo:
+class MainPicRepo:
     def __init__(self,user=None):
-        self.objects=MarketPic.objects
+        self.objects=MainPic.objects
     def get(self,name):
         try:
             parameter=self.objects.get(name=name)
@@ -64,6 +80,32 @@ class MarketPicRepo:
             return parameter
         
   
+
+class LinkRepo:
+    def __init__(self,user=None):
+        self.user=user
+        self.profile=ProfileRepo(user=user).me
+        self.objects=Link.objects.order_by('priority')
+    def add(self,title,url,priority):
+        link=Link(title=title,url=url,priority=priority)
+        link.save()
+        return link
+    def delete(self,link_id,class_session_id):
+        link=self.get(link_id=link_id)
+        link.delete()
+    def search(self,search_for):
+        return self.objects.filter(Q(name__contains=search_for) | Q(link__contains=search_for))
+    def get(self,link_id):
+        try:
+            return self.objects.get(pk=link_id)            
+        except:
+            return None
+    def list(self):
+        return self.objects.order_by('priority')
+    def list_for_home(self):
+        return self.objects.filter(for_home=True).order_by('priority')
+    def get_nav_items(self):
+        return self.objects.filter(for_nav=True).order_by('priority')
 
 
 

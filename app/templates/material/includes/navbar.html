@@ -1,4 +1,5 @@
-<nav class="navbar navbar-color-on-scroll navbar-transparent    fixed-top  navbar-expand-lg " color-on-scroll="100"
+<nav class="navbar navbar-color-on-scroll navbar-transparent fixed-top  navbar-expand-lg " 
+color-on-scroll="100"
     id="sectionsNav">
     <div class="container">
 
@@ -167,7 +168,7 @@
         </div>
 
         <div class="navbar-translate">
-            <a class="navbar-brand" href="{% url 'app:home' %}">
+            <a class="navbar-brand" href="{{app.url.value}}">
                 {{app.title.value}} </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" aria-expanded="false"
                 aria-label="Toggle navigation">

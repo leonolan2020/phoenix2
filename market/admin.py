@@ -2,7 +2,7 @@ from django.contrib import admin
 from .models import *
 
 
-admin.site.register(MarketPic)
+admin.site.register(MainPic)
 admin.site.register(ProductInStock)
 admin.site.register(WareHouse)
 admin.site.register(Brand)
@@ -18,4 +18,5 @@ admin.site.register(Shipper)
 admin.site.register(Supplier)
 admin.site.register(Order)
 admin.site.register(OrderLine)
-admin.site.register(MarketParameter)
+admin.site.register(Parameter)
+admin.site.register(Link)

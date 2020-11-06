@@ -56,6 +56,9 @@ class Parameter(DashboardModels.Parameter):
         verbose_name_plural = _("Parameters")
    
 
+    def get_edit_url(self):
+        return super(Parameter,self).get_edit_url(app_name=APP_NAME)
+
 class HomeSlider(DashboardModels.HomeSlider):
     
 

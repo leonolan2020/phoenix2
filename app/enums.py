@@ -1,7 +1,3 @@
-from django.utils.translation import gettext as _
-from django.db.models import TextChoices
-
-
 from django.db.models import TextChoices
 from django.utils.translation import gettext as _
 from enum import Enum
@@ -34,17 +30,13 @@ class ParametersEnum(TextChoices):
     URL='لینک',_('لینک')
     VIDEO_LINK='لینک ویدیو',_('لینک ویدیو')
     VIDEO_TITLE='عنوان ویدیو',_('عنوان ویدیو')
-    SHOP_DESCRIPTION='SHOP_DESCRIPTION',_('SHOP_DESCRIPTION')
-
+    
 
 
 
 
 
 class MainPicEnum(TextChoices):    
-    CART_HEADER='سربرگ سبد خرید',_('سربرگ سبد خرید')   
-    SHOP_HEADER='سربرگ فروشگاه',_('سربرگ فروشگاه')  
-
     FAVICON='آیکون سایت',_('آیکون سایت')     
     CAROUSEL='سایت',_('سایت')    
     FAQ='سوالات',_('سوالات')     
@@ -62,28 +54,4 @@ class MainPicEnum(TextChoices):
     PAGE_HEADER_DEFAULT='سربرگ پیش فرض برای صفحات',_('سربرگ پیش فرض برای صفحات')
     ABOUT_HEADER='سربرگ درباره ما',_('سربرگ درباره ما')
     TAG_HEADER='سربرگ برچسب',_('سربرگ برچسب')
-
-
-class OrderStatusEnum(TextChoices):
-    PROCESSING = 'درحال پردازش', _('درحال پردازش')
-    COMPLETED = 'کامل شده', _('کامل شده')
-    CANCELED = 'کنسل شده', _('کنسل شده')
-    PENDING = 'درحال انتظار', _('درحال انتظار')
-    SHIPPED = 'ارسال شده', _('ارسال شده')
-    DELIVERED = 'تحویل شده', _('تحویل شده')
-    PACKING = 'درحال بسته بندی', _('درحال بسته بندی')
-    ACCEPTED='پذیرفته شده' , _('پذیرفته شده')
-    PACKED = 'بسته بندی شده', _('بسته بندی شده')
-    ON_HOLD = 'معلق', _('معلق')
-    CONFIRMED = 'تایید مشتری', _('تایید مشتری')
-
-
-class ProfileEnum(TextChoices):
-    SUPPLIER='فروشنده',_('فروشنده')
-    SHIPPER='دلیوری',_('دلیوری')
-    CUSTOMER='مشتری',_('مشتری')
-    # CUSTOMER='',_('')
-    # CUSTOMER='',_('')
-
-
-    
+   
