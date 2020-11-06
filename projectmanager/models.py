@@ -79,7 +79,8 @@ class ManagerPage(DashboardPage):
 	def save(self):
 		self.app_name=APP_NAME
 		super(ManagerPage,self).save()
-
+	def get_absolute_url(self):
+		return reverse(APP_NAME+':'+self.child_class,kwargs={'pk':self.pk})
 
 class Project(ManagerPage):
 	# priority2=models.IntegerField(_("priority"),default=100)
