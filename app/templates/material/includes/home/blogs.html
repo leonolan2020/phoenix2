@@ -12,9 +12,9 @@
                         مقالات برگزیده
 
                         {% if perms.dashboard.add_ourteam %}
-                       
-                            {{admin_utility.get_add_blog|safe}}
-                       
+
+                        {{admin_utility.get_add_blog|safe}}
+
                         {% endif %}
 
                     </h2>
@@ -43,7 +43,7 @@
                                 <p class="author">
 
                                     <a href="{{blog.profile.get_absolute_url}}">
-                                       <i class="fa fa-user"></i>
+                                        <i class="fa fa-user"></i>
                                         <b>{{blog.profile.name}}</b>
                                     </a>
                                 </p>
@@ -120,6 +120,67 @@
 
 
                 </div>
+            </div>
+
+            <div class="row rtl">
+                {% for blog in blogs %}
+
+
+                <div class="col-md-4">
+                    <div class="rotating-card-container" style="margin-bottom: 30px;">
+                        <div class="card card-rotate">
+                            <div class="front" style="width: 395px;">
+                                <div class="card-body1">
+                                    <img class="rounded w-100" src="{{blog.thumbnail}}" alt="">
+                                </div>
+                            </div>
+                            <div class="back" style="width: 395px;">
+                                <div class="card-body">
+                                    <h5 class="card-title">
+                                        {{blog.title}}
+                                    </h5>
+                                    {% if blog.short_description %}
+                                    <p class="card-description text-center">
+                                        {{blog.short_description}}
+                                    </p>
+                                    {% endif %}
+                                    <p class="card-description text-center">
+                                       
+                                        {{blog.persian_date_added_tag|safe}}
+                                        
+                                    </p>
+
+                                    {% if blog.profile %}
+                                    <p class="card-description text-center">
+                                        <a href="{{blog.profile.get_absolute_url}}">
+
+                                            <img alt="64x64" src="{{blog.profile.image}}" width="32"
+                                                class="rounded-circle shadow">
+
+                                            <b> {{blog.profile.name}}</b>
+                                        </a>
+                                    </p>
+                                    {% endif %}
+                                    <div class="footer text-center">
+                                        <a href="{{blog.get_absolute_url}}" class="btn btn-rose btn-round">
+                                            <i class="material-icons">subject</i> بیشتر
+                                        </a>
+                                        <a href="#pablo" class="btn btn-just-icon btn-round btn-twitter">
+                                            <i class="fa fa-twitter"></i>
+                                        </a>
+                                        <a href="#pablo" class="btn btn-just-icon btn-round btn-dribbble">
+                                            <i class="fa fa-dribbble"></i>
+                                        </a>
+                                        <a href="#pablo" class="btn btn-just-icon btn-round btn-facebook">
+                                            <i class="fa fa-facebook"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
             </div>
         </div>
     </div>
