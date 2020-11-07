@@ -139,8 +139,11 @@ class PageViews(View):
         context=self.getManagerPageContext(request=request,page=organizationunit)
         context['organizationunit']=organizationunit
         context['page']=organizationunit
+        if user.has_perm(APP_NAME+'.add_organizationunit'):
+            context['add_organizationunit_form']=AddOrganizationUnitForm()
+        context['organizationunits_s']=json.dumps(OrganizationUnitSerializer(organizationunit.childs(),many=True).data)
         context['page_type']='واحد سازمانی'
-        return render(request,TEMPLATE_ROOT+'event.html',context)
+        return render(request,TEMPLATE_ROOT+'org-unit.html',context)
     def contractor(self,request,pk,*args, **kwargs):
         contractor_id=pk
         user=request.user

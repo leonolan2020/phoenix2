@@ -113,3 +113,20 @@ class PageViews(APIView):
                         EventSerializer(project.events.order_by('-event_date'),many=True).data
                         return JsonResponse({'result':SUCCEED,'start_date':project.persian_start_date(),'percent':project.percent,'end_date':project.persian_end_date()})
         return JsonResponse({'result':FAILED,'log':log})
+    def add_organizationunit(self,request):
+        log=1
+        user=request.user
+        if request.method=='POST':
+            log=2
+            add_organizationunit_form=AddOrganizationUnitForm(request.POST)
+            if add_organizationunit_form.is_valid():
+                log=3
+                title=add_organizationunit_form.cleaned_data['title']
+                parent_id=add_organizationunit_form.cleaned_data['parent_id']
+                organizationunit=OrganizationUnitRepo(user=user).add(title=title,parent_id=parent_id)
+                if organizationunit is not None:
+                    log=4
+                    organizationunit_s=OrganizationUnitSerializer(organizationunit).data
+                    return JsonResponse({'result':SUCCEED,'organizationunit':organizationunit_s})
+        return JsonResponse({'result':FAILED,'log':log})
+    

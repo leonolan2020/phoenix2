@@ -12,7 +12,6 @@
 
 
 {% block content %}
-
 <p class="text-center text-secondary">
     {{page_type}}
 </p>
@@ -36,6 +35,11 @@
     </a>
 
 </div>
+
+{% block child_content %}
+
+{% endblock  %}
+
 {% endif %}
 <div id="app">
 
@@ -257,7 +261,7 @@
 
 
 
-                            
+
 
                             {% endverbatim %}
                         </template>
@@ -491,9 +495,6 @@
     </div>
 </div>
 
-{% block child_content %}
-
-{% endblock  %}
 
 {% endblock  %}
 

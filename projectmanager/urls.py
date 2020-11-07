@@ -19,6 +19,7 @@ urlpatterns = [
     path('add_project/',apis.PageViews().add_project,name='add_project'),
     path('add_location/',apis.PageViews().add_location,name='add_location'),
     path('add_document/',apis.PageViews().add_document,name='add_document'),
+    path('add_organizationunit/',apis.PageViews().add_organizationunit,name='add_organizationunit'),
     path('add_event/',apis.PageViews().add_event,name='add_event'),
     path('add_contractor/',apis.PageViews().add_contractor,name='add_contractor'),
     path('edit_project_timing/',apis.PageViews().edit_project_timing,name='edit_project_timing'),

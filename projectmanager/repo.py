@@ -106,7 +106,19 @@ class OrganizationUnitRepo():
             return self.objects.get(pk=organizationunit_id)
         except:
             return None 
-
+    def add(self,title,parent_id):
+        if parent_id==0:
+            parent=None
+        else:
+            parent=self.organizationunit(organizationunit_id=parent_id)
+        icon=Icon(color=ColorEnum.PRIMARY,icon_material='dashboard',icon_title='آیکون '+title)
+        icon.save()
+        
+        organizationunit=OrganizationUnit(parent=parent,icon=icon,title=title,short_description='',description='')
+        organizationunit.save()
+        if organizationunit is not None:
+            return organizationunit
+    
 class ProjectRepo:
     def __init__(self,user=None):
         self.objects=Project.objects

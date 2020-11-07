@@ -19,7 +19,7 @@ class EventSerializer(serializers.ModelSerializer):
 class OrganizationUnitSerializer(serializers.ModelSerializer):
     class Meta:
         model=OrganizationUnit        
-        fields=['id','title','parent_title','caption']
+        fields=['id','title','get_link','parent_title','caption']
 class ArchiveDocumentSerializer(serializers.ModelSerializer):
     class Meta:
         model=ArchiveDocument        

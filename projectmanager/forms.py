@@ -15,6 +15,9 @@ class AddMaterialCategoryForm(forms.Form):
     title=forms.CharField(max_length=50,required=True)
     parent_id=forms.IntegerField(required=True)
 
+class AddOrganizationUnitForm(forms.Form):
+    title=forms.CharField(max_length=50,required=True)
+    parent_id=forms.IntegerField(required=True)
 class SearchForm(forms.Form):
     action=f'{SITE_URL}{APP_NAME}/search/'
     search_for=forms.CharField(max_length=50, required=True)
