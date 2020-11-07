@@ -1,16 +1,17 @@
-from django.shortcuts import render,redirect,reverse
-from django.views import View
 from .apps import APP_NAME
-from dashboard.settings import ADMIN_URL,MEDIA_URL
-from .repo import *
+from authentication.repo import ProfileRepo
 from dashboard.enums import *
 from dashboard.forms import AddTagForm,AddDocumentForm,AddCommentForm,AddLinkForm,AddImageForm
-from dashboard.serializers import TagSerializer,DocumentSerializer,CommentSerializer,LinkSerializer,GalleryPhotoSerializer
-from .forms import *
-from authentication.repo import ProfileRepo
-from dashboard.views import getContext as DashboardContext
-from dashboard.utils import AdminUtility
 from dashboard.repo import TagRepo
+from dashboard.serializers import TagSerializer,DocumentSerializer,CommentSerializer,LinkSerializer,GalleryPhotoSerializer
+from dashboard.settings import ADMIN_URL,MEDIA_URL
+from dashboard.utils import AdminUtility
+from dashboard.views import getContext as DashboardContext
+from django.shortcuts import render,redirect,reverse
+from django.views import View
+from django.http import Http404
+from .repo import *
+from .forms import *
 from .enums import MainPicEnum
 import json
 TEMPLATE_ROOT='material/'
@@ -118,6 +119,9 @@ class ExampleViews(View):
 
 class PageViews(View):
     def getPageContext(self,request,page,*args, **kwargs):
+        if page is None:
+            raise Http404
+            pass
         context=getContext(request)
 
         context['add_tag_form']=AddTagForm()

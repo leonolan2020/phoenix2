@@ -6,6 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>404</title>
+    <link rel="stylesheet" href="{% static 'leo/css/font-farsi.css' %}">
 </head>
 
 <body>
@@ -90,8 +91,8 @@
 
             <div class="text">
                 <article>
-                    <p>متاسفانه<br>صفحه مورد نظر شما پیدا نشد.</p>
-                   <a href="{% url 'app:home' %}">
+                    <p class="farsi">متاسفانه<br>صفحه مورد نظر شما پیدا نشد.</p>
+                   <a  class="farsi" href="{% url 'app:home' %}">
                     <button> برو به {{app.title.value}}</button></a>
                 </article>
             </div>
