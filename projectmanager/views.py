@@ -72,6 +72,8 @@ class BasicViews(View):
     def archive_documents(self,request,*args, **kwargs):
         user=request.user
         context=getContext(request)
+        if user.has_perm(APP_NAME+'.add_document'):
+            context['add_document_form']=AddArchiveDocumentForm()
         archive_documents=ArchiveDocumentRepo(user=user).list_roots()
         archive_documents_s=json.dumps(ArchiveDocumentSerializer(archive_documents,many=True).data)
         context['archive_documents_s']=archive_documents_s

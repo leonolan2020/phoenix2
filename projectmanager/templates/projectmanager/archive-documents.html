@@ -77,14 +77,14 @@
 
                                 </template>
                             </div>
-                            {% if add_project_form %}
+                            {% if add_document_form %}
                             <div class="mt-5 mx-5">
                                 <div class="form-group bmd-form-group">
-                                    <label for="exampleInput1" class="bmd-label-floating">نام پروژه جدید</label>
+                                    <label for="exampleInput1" class="bmd-label-floating">نام سند جدید</label>
                                     {% csrf_token %}
                                     <input type="hidden" name="parent_id" value="0">
-                                    <form @submit.prevent="add_project">
-                                        <input v-model="title_project" type="text" class="form-control"
+                                    <form @submit.prevent="add_document">
+                                        <input v-model="document_title" type="text" class="form-control"
                                             id="exampleInput1" name="title" required="" aria-required="true">
                                     </form>
 
@@ -205,12 +205,12 @@
         },
         methods: {
             add_document: function () {
-                let url = "{% url 'projectmanager:add_project' %}"
+                let url = "{% url 'projectmanager:add_document' %}"
 
                 var posting = $.post(url,
                     {
                         parent_id: 0,
-                        title: app.title_project,
+                        title: app.document_title,
                         csrfmiddlewaretoken: csrfmiddlewaretoken
                     }
                 );
@@ -219,8 +219,8 @@
                 posting.done(function (data) {
                     // word_app.word = (data.word);
                     // word_app.definitions = (data.definitions);
-                    app.title_project = ""
-                    app.projects.push(data)
+                    app.document_title = ""
+                    app.archive_documents.push(data.document)
                 })
             },
 

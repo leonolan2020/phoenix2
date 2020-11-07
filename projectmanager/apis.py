@@ -22,6 +22,22 @@ class PageViews(APIView):
                     project_s=ProjectSerializer(project).data
                     return JsonResponse({'result':SUCCEED,'project':project_s})
         return JsonResponse({'result':FAILED,'log':log})
+    def add_document(self,request):
+        log=1
+        user=request.user
+        if request.method=='POST':
+            log=2
+            add_document_form=AddArchiveDocumentForm(request.POST)
+            if add_document_form.is_valid():
+                log=3
+                title=add_document_form.cleaned_data['title']
+                parent_id=add_document_form.cleaned_data['parent_id']
+                document=ArchiveDocumentRepo(user=user).add(title=title,parent_id=parent_id)
+                if document is not None:
+                    log=4
+                    document_s=ArchiveDocumentSerializer(document).data
+                    return JsonResponse({'result':SUCCEED,'document':document_s})
+        return JsonResponse({'result':FAILED,'log':log})
     def add_location(self,request):
         log=1
         user=request.user

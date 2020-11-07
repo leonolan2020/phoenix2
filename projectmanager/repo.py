@@ -78,7 +78,20 @@ class ArchiveDocumentRepo:
             return self.objects.get(pk=archivedocument_id)
         except:
             return None
-
+    def add(self,title,parent_id):
+        if parent_id==0:
+            parent=None
+        else:
+            parent=self.archivedocument(archivedocument_id=parent_id)
+        icon=Icon(color=ColorEnum.PRIMARY,icon_material='dashboard',icon_title='آیکون '+title)
+        icon.save()
+        
+        archivedocument=ArchiveDocument(parent=parent,icon=icon,title=title,short_description='',description='')
+        archivedocument.save()
+        if archivedocument is not None:
+            return archivedocument
+    
+    
   
 class OrganizationUnitRepo():
     def __init__(self,user=None):
