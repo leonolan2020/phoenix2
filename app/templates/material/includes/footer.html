@@ -1,110 +1,129 @@
 {% load static %}
 <footer class="footer footer-black footer-big">
-    <div class="container">
-        <div class="content">
-            <div class="row rtl">
-                <div class="col-md-4">
-                    <h5 class="text-right farsi">
-                    <span class="farsi">
-                      درباره ما
+  <div class="container">
+    <div class="content">
+      <div class="row rtl">
+        <div class="col-md-4">
+          <h4 class="text-right text-light">
+            <span class="farsi  text-light">
+              {{app.title.value}}
 
-                    </span>
-                    
-                    </h5>
-                    <p>
+            </span>
 
-                        {{app.about_us_short.value}}
-                        {{app.about_us_short.get_edit_btn|safe}}
+          </h4>
+          <h5 class="text-right">
+            <i class="fa fa-tel"></i>
+             <span class="farsi ">
+ 
+ 
+               تلفن :
+               {{app.tel.value}}
+             </span>
+           </h5>
 
-                    </p>
-                </div>
-                <div class="col-md-4">
-                  <h5 class="text-right farsi">
-                    <span class="farsi">
-                      لینک های جدید
 
-                    </span>
-                    
-                    </h5>
-                    <div class="social-feed">
-                        <div class="feed-line">
-                            <i class="fa fa-twitter"></i>
-                            <p>How to handle ethical disagreements with your clients.</p>
-                        </div>
-                        <div class="feed-line">
-                            <i class="fa fa-twitter"></i>
-                            <p>The tangible benefits of designing at 1x pixel density.</p>
-                        </div>
-                        <div class="feed-line">
-                            <i class="fa fa-facebook-square"></i>
-                            <p>A collection of 25 stunning sites that you can use for inspiration.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                  <h5 class="text-right farsi">
-                    <span class="farsi">
-                      شبکه های اجتماعی
+           <h5 class="text-right">
+            <i class="fa fa-tel"></i>
+             <span class="farsi ">
+ 
+ 
+               ایمیل :
+               {{app.email.value}}
+             </span>
+           </h5>
 
-                    </span>
-                    
-                    </h5>
-                    <div class="gallery-feed">
-                        <img src="{% static 'material/img/card-profile6-square.jpg' %}" class="img img-raised rounded" alt="">
-                        <img src="{% static 'material/img/christian.jpg' %}" class="img img-raised rounded" alt="">
-                        <img src="{% static 'material/img/card-profile4-square.jpg' %}" class="img img-raised rounded" alt="">
-                        <img src="{% static 'material/img/card-profile1-square.jpg' %}" class="img img-raised rounded" alt="">
-                        <img src="{% static 'material/img/marc.jpg' %}" class="img img-raised rounded" alt="">
-                        <img src="{% static 'material/img/kendall.jpg' %}" class="img img-raised rounded" alt="">
-                        <img src="{% static 'material/img/card-profile5-square.jpg' %}" class="img img-raised rounded" alt="">
-                        <img src="{% static 'material/img/card-profile2-square.jpg' %}" class="img img-raised rounded" alt="">
 
-                    </div>
-                </div>
-            </div>
+           <h5 class="text-right">
+            <i class="fa fa-tel"></i>
+             <span class="farsi ">
+ 
+ 
+               آدرس :
+               {{app.address.value}}
+             </span>
+           </h5>
+
+
         </div>
-        <hr>
-        <div class="text-center">
-          
-                <button class="btn btn-just-icon btn-round btn-twitter mx-2">
-                    <i class="fa fa-twitter"></i>
-                  <div class="ripple-container"></div>
-                </button>
+        <div class="col-md-4">
+          <h5 class="text-right farsi">
+            <span class="farsi">
+              درباره ما
 
-                  <button class="btn btn-just-icon btn-round bg-info mx-2">
-                    <i class="fa fa-telegram"></i>
-                  <div class="ripple-container"></div>
-                </button>
+            </span>
 
-                  <button class="btn btn-just-icon btn-round btn-whatsapp mx-2 bg-success">
-                    <i class="fa fa-whatsapp"></i>
-                  <div class="ripple-container"></div>
-                </button>
+          </h5>
+          <p>
 
-                <button class="btn btn-just-icon btn-round btn-pinterest mx-2">
-                    <i class="fa fa-pinterest"></i>
-                  <div class="ripple-container"></div>
-                </button>
+            {{app.about_us_short.value}}
+            {{app.about_us_short.get_edit_btn|safe}}
 
-
-
-                <button class="btn btn-just-icon btn-round btn-facebook mx-2">
-                    <i class="fa fa-facebook"></i>
-                  <div class="ripple-container"></div>
-                </button>
-
-
-
-                <button class="btn btn-just-icon btn-round btn-linkedin mx-2">
-                    <i class="fa fa-linkedin"></i>
-                  <div class="ripple-container"></div>
-                </button>
-
-
-           
-                
+          </p>
         </div>
-        <hr>
-       {% include 'material/includes/last-footer.html' %}
+        <div class="col-md-4">
+          <h5 class="text-right farsi">
+            <span class="farsi">
+              شبکه های اجتماعی
+
+            </span>
+
+          </h5>
+          <div class="gallery-feed">
+            <img src="{% static 'material/img/card-profile6-square.jpg' %}" class="img img-raised rounded" alt="">
+            <img src="{% static 'material/img/christian.jpg' %}" class="img img-raised rounded" alt="">
+            <img src="{% static 'material/img/card-profile4-square.jpg' %}" class="img img-raised rounded" alt="">
+            <img src="{% static 'material/img/card-profile1-square.jpg' %}" class="img img-raised rounded" alt="">
+            <img src="{% static 'material/img/marc.jpg' %}" class="img img-raised rounded" alt="">
+            <img src="{% static 'material/img/kendall.jpg' %}" class="img img-raised rounded" alt="">
+            <img src="{% static 'material/img/card-profile5-square.jpg' %}" class="img img-raised rounded" alt="">
+            <img src="{% static 'material/img/card-profile2-square.jpg' %}" class="img img-raised rounded" alt="">
+
+          </div>
+        </div>
+      </div>
     </div>
+    <hr>
+    <div class="text-center">
+
+      <button class="btn btn-just-icon btn-round btn-twitter mx-2">
+        <i class="fa fa-twitter"></i>
+        <div class="ripple-container"></div>
+      </button>
+
+      <button class="btn btn-just-icon btn-round bg-info mx-2">
+        <i class="fa fa-telegram"></i>
+        <div class="ripple-container"></div>
+      </button>
+
+      <button class="btn btn-just-icon btn-round btn-whatsapp mx-2 bg-success">
+        <i class="fa fa-whatsapp"></i>
+        <div class="ripple-container"></div>
+      </button>
+
+      <button class="btn btn-just-icon btn-round btn-pinterest mx-2">
+        <i class="fa fa-pinterest"></i>
+        <div class="ripple-container"></div>
+      </button>
+
+
+
+      <button class="btn btn-just-icon btn-round btn-facebook mx-2">
+        <i class="fa fa-facebook"></i>
+        <div class="ripple-container"></div>
+      </button>
+
+
+
+      <button class="btn btn-just-icon btn-round btn-linkedin mx-2">
+        <i class="fa fa-linkedin"></i>
+        <div class="ripple-container"></div>
+      </button>
+
+
+
+
+    </div>
+    <hr>
+    {% include 'material/includes/last-footer.html' %}
+  </div>
 </footer>

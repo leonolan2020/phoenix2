@@ -10,10 +10,12 @@
                 <h1 class="title farsi text-center">
                     {{page.title}}
                 </h1>
+                {% if page.short_description %}
                 <h4 class=" farsi text-center">
 
                     {{page.short_description|safe}}
                 </h4>
+                {% endif %}
                 <br>
                 {% if perms.dashboard.change_page %}
                 <a href="{{page.get_edit_url}}" class="btn btn-info btn-round btn-lg">
@@ -62,34 +64,34 @@
         <div class="section section-blog-info">
             <div class="row">
                 <div class="col-md-8 ml-auto mr-auto">
-                    <div class="row rtl"  id="app">
+                    <div class="row rtl" id="app">
                         <div class="col-md-12">
                             <div class="blog-tags text-right">
                                 برچسب ها:
-                            
-                                
+
+
                                 <div class="bootstrap-tagsinput primary-badge">
                                     <template v-for="tag in tags">
-            
+
                                         {% verbatim %}
                                         <span class="tag badge mx-2">
                                             <a :href="tag.get_absolute_url" class="text-light">
                                                 {{tag.title}}
                                             </a>
-            
+
                                             <span @click="remove_tag(tag.id)" data-role="remove"></span>
                                         </span>
-            
-            
-            
-            
+
+
+
+
                                         {% endverbatim %}
                                     </template>
-            
-            
+
+
                                     <form class="d-inline mx-2" v-on:submit.prevent="add_tag">
-                                        <span class="bmd-form-group"><input v-model="tag_title" type="text" class="form-control"
-                                                placeholder="تگ جدید"></span>
+                                        <span class="bmd-form-group"><input v-model="tag_title" type="text"
+                                                class="form-control" placeholder="تگ جدید"></span>
                                     </form>
                                 </div>
 
@@ -145,12 +147,12 @@
                 <div class="col-md-8 ml-auto mr-auto">
                     <div class="media-area">
                         <h3 class="title text-center rtl farsi text-right" v-text="comments.length+' نظر'"></h3>
-<template v-for="comment in comments">
-     <comment-component :comment="comment">
-                        </comment-component>
+                        <template v-for="comment in comments">
+                            <comment-component :comment="comment">
+                            </comment-component>
 
-</template>
-                       
+                        </template>
+
                     </div>
                     <h3 class="title text-center farsi">دیدگاه خود را وارد کنید</h3>
                     <div class="media media-post rtl">
@@ -231,21 +233,21 @@
 
 {% block script %}
 <script>
-let comments = JSON.parse(`{{comments_s|escapejs}}`)
-   let page_id = parseInt("{{page.id}}")
-   let add_comment_url = "{% url 'dashboard:add_comment' %}"
-   let delete_comment_url = "{% url 'dashboard:delete_comment' %}"
+    let comments = JSON.parse(`{{comments_s|escapejs}}`)
+    let page_id = parseInt("{{page.id}}")
+    let add_comment_url = "{% url 'dashboard:add_comment' %}"
+    let delete_comment_url = "{% url 'dashboard:delete_comment' %}"
 
-   let profile_id = parseInt("{{profile.id}}")
-   var comment_template = `{% include 'material/includes/comment.html' %}`
+    let profile_id = parseInt("{{profile.id}}")
+    var comment_template = `{% include 'material/includes/comment.html' %}`
 
-  var tags= JSON.parse(`{{tags_s|escapejs}}`)
-  var links= JSON.parse(`{{links_s|escapejs}}`)
-  var documents= JSON.parse(`{{documents_s|escapejs}}`)
-  var images= JSON.parse(`{{images_s|escapejs}}`)
-  let add_tag_url = "{% url 'dashboard:add_tag' %}"
-  let remove_tag_url = "{% url 'dashboard:remove_tag' %}"
-  
+    var tags = JSON.parse(`{{tags_s|escapejs}}`)
+    var links = JSON.parse(`{{links_s|escapejs}}`)
+    var documents = JSON.parse(`{{documents_s|escapejs}}`)
+    var images = JSON.parse(`{{images_s|escapejs}}`)
+    let add_tag_url = "{% url 'dashboard:add_tag' %}"
+    let remove_tag_url = "{% url 'dashboard:remove_tag' %}"
+
 </script>
 
 <script src="{% static 'vendor/js/vue.min.js' %}"></script>

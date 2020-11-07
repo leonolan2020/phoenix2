@@ -82,6 +82,9 @@ class ManagerPage(DashboardPage):
 	def get_absolute_url(self):
 		return reverse(APP_NAME+':'+self.child_class,kwargs={'pk':self.pk})
 
+	def get_edit_url(self):
+		return f'{ADMIN_URL}{APP_NAME}/{self.child_class}/{self.pk}/change/'
+
 class Project(ManagerPage):
 	# priority2=models.IntegerField(_("priority"),default=100)
 	percent=models.IntegerField(_('درصد پیشرفت'),default=0,validators=[MinValueValidator(0), MaxValueValidator(100)])

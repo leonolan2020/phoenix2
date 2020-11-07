@@ -144,7 +144,7 @@ class Page(models.Model):
     short_description = models.CharField(
         _("شرح کوتاه"), max_length=1000, blank=True, null=True)
     description = tinymce_models.HTMLField(
-        _("شرح کامل"), max_length=10000, null=True, blank=True)
+        _("شرح کامل"), max_length=100000, null=True, blank=True)
     child_class = models.CharField(
         _('child_class'), null=True, blank=True, max_length=50)
     # app_name=models.CharField(_('app_name'),null=True,blank=True,max_length=50)
