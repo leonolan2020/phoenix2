@@ -315,6 +315,16 @@
                         project_app.start_date = data.start_date
                         project_app.end_date = data.end_date
                         project_app.percent = data.percent
+
+
+
+                        swal({
+                        title: "زمان بندی پروژه",
+                        text: "زمان بندی پروژه با موفقیت اصلاح شد.",
+                        buttonsStyling: false,
+                        confirmButtonClass: "btn btn-success",
+                        type: "success"
+                    }).catch(swal.noop)
                     }
                 })
             
