@@ -9,7 +9,7 @@
 
 
 {% if tag %}
-  <div class="page-header header-filter header-small" data-parallax="true"
+<div class="page-header header-filter header-small" data-parallax="true"
 	style="background-image: url(&quot;{{tag.header_image}}&quot;); transform: translate3d(0px, 0px, 0px);">
 	<div class="container">
 		<div class="row">
@@ -31,7 +31,7 @@
 
 
 
-<div class="main main-raised">
+<div class="main main-raised mb-5">
 
 
 	<div class="blogs-3">
@@ -60,17 +60,31 @@
 								<h3 class="card-title farsi text-right">
 									<a href=" {{page.get_app_url}}">{{page.title}}</a>
 								</h3>
+								{% if page.short_description %}
 								<p class="card-description">
 									{{page.short_description}}
-
-
-									<a href="{{page.get_app_url}}">ادامه مطلب </a>
 								</p>
+								{% endif %}
+
 								<p class="author">
-									by
-									<a href=" {{page.profile.get_absolute_url}}">
+									{% if page.profile %}
+									<a href="{{page.profile.get_absolute_url}}">
+
+										<img alt="64x64" src="{{page.profile.image}}" width="32"
+											class="rounded-circle shadow">
+
 										<b> {{page.profile.name}}</b>
-									</a>, 2 days ago
+									</a>
+
+									{% endif %}
+
+
+								</p>
+								<!-- <p><a href="{{page.get_app_url}}">ادامه مطلب </a></p> -->
+								<p>
+									<span class="mx-3">
+										{{page.persian_date_added_tag|safe}}
+									</span>
 								</p>
 							</div>
 						</div>
