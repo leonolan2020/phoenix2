@@ -169,7 +169,8 @@ class Page(models.Model):
         verbose_name = 'Page'
         verbose_name_plural = 'Pages'
         
-
+    def get_app_url(self):
+        return reverse('app:'+self.child_class,kwargs={'pk':self.pk})
 
 
 class Document(Icon):
@@ -833,9 +834,9 @@ class Tag(models.Model):
             {self.icon.get_icon_tag() if self.icon else ''}
             {self.title}</a>
         """
-    def image(self):
-        if self.image_header is None:
-            return None
+    def header_image(self):
+        if self.image_header is None or not self.image_header:
+            return STATIC_URL+'dashboard/img/tag.jpg'
         return MEDIA_URL+str(self.image_header)
 
     def get_inner_link(self):
@@ -857,11 +858,16 @@ class Tag(models.Model):
     def get_manager_tag_url(self):
         return reverse('projectmanager:tag',kwargs={'pk':self.pk})
     def get_edit_url(self):
-        return f'{ADMIN_URL}app/tag/{self.pk}/change/'
+        return f'{ADMIN_URL}{APP_NAME}/tag/{self.pk}/change/'
 
 
 
-
+    def get_edit_btn(self):
+        return f"""
+            <a href="{self.get_edit_url()}" title="ویرایش">
+            <i class="material-icons">settings</i>
+            </a>
+        """
 
 
 

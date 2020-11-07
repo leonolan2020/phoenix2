@@ -11,6 +11,7 @@ from authentication.repo import ProfileRepo
 from dashboard.views import getContext as DashboardContext
 from dashboard.utils import AdminUtility
 from dashboard.repo import TagRepo
+from .enums import MainPicEnum
 import json
 TEMPLATE_ROOT='material/'
 
@@ -88,6 +89,8 @@ class BasicViews(View):
         context=getContext(request)
         context['list_title']=tag.title
         context['pages']=pages
+        context['tag']=tag
+        context['header']=MainPicRepo(user=request.user).get(MainPicEnum.TAG_HEADER)
         return render(request,TEMPLATE_ROOT+'pages.html',context)
 
 class ProfileViews(View):

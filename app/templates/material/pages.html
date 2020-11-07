@@ -8,76 +8,81 @@
 {% block content %}
 
 
+{% if tag %}
+  <div class="page-header header-filter header-small" data-parallax="true"
+	style="background-image: url(&quot;{{tag.header_image}}&quot;); transform: translate3d(0px, 0px, 0px);">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-8 ml-auto mr-auto text-center">
+				<h2 class="title farsi">
 
-<div class="page-header header-filter header-small" data-parallax="true"
-    style="background-image: url(&quot;{{header.image}}&quot;); transform: translate3d(0px, 0px, 0px);">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-8 ml-auto mr-auto text-center">
-                <h2 class="title farsi">
+					{{tag.title}}
 
-                    {{list_title}}
-
-                </h2>
-            </div>
-        </div>
-    </div>
+				</h2>
+				<div class="text-center">
+					{{tag.get_edit_btn|safe}}
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
+{% endif %}
+
 
 
 
 <div class="main main-raised">
 
 
-    <div class="blogs-3">
-        <div class="container">
-            <div class="row rtl">
-                <div class="col-md-10 ml-auto mr-auto">
-                    <h2 class="title farsi text-right"> {{list_title}}</h2>
-                    <br>
-                    {% for page in pages %}
-                         <div class="card card-plain card-blog">
-                        <div class="row rtl">
-                            <div class="col-md-4">
-                                <div class="card-header card-header-image">
-                                   <a href=" {{page.get_absolute_url}}">
-                                       <img class="img img-raised" src="{{page.thumbnail}}">
+	<div class="blogs-3">
+		<div class="container">
+			<div class="row rtl">
+				<div class="col-md-10 ml-auto mr-auto">
+					<h2 class="title farsi text-right"> {{list_title}}</h2>
+					<br>
+					{% for page in pages %}
+					<div class="card card-plain card-blog">
+						<div class="row rtl">
+							<div class="col-md-4">
+								<div class="card-header card-header-image">
+									<a href=" {{page.get_app_url}}">
+										<img class="img img-raised" src="{{page.thumbnail}}">
 
-                                   </a>
-                                   
-                                    <div class="colored-shadow"
-                                        style="background-image: url(&quot;{{page.thumbnail}}&quot;); opacity: 1;">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-8">
-                                <h6 class="card-category text-info text-right">Enterprise</h6>
-                                <h3 class="card-title farsi text-right">
-                                    <a href=" {{page.get_absolute_url}}">{{page.title}}</a>
-                                </h3>
-                                <p class="card-description">
-                                    {{page.short_description}}
-                                    
+									</a>
 
-                                    <a href="{{page.get_absolute_url}}">ادامه مطلب </a>
-                                </p>
-                                <p class="author">
-                                    by
-                                    <a href=" {{page.profile.get_absolute_url}}">
-                                        <b> {{page.profile.name}}</b>
-                                    </a>, 2 days ago
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    {% endfor %}
-                 
-                    
-                </div>
-            </div>
-        </div>
-    </div>
+									<div class="colored-shadow"
+										style="background-image: url(&quot;{{page.thumbnail}}&quot;); opacity: 1;">
+									</div>
+								</div>
+							</div>
+							<div class="col-md-8">
+								<h6 class="card-category text-info text-right">Enterprise</h6>
+								<h3 class="card-title farsi text-right">
+									<a href=" {{page.get_app_url}}">{{page.title}}</a>
+								</h3>
+								<p class="card-description">
+									{{page.short_description}}
+
+
+									<a href="{{page.get_app_url}}">ادامه مطلب </a>
+								</p>
+								<p class="author">
+									by
+									<a href=" {{page.profile.get_absolute_url}}">
+										<b> {{page.profile.name}}</b>
+									</a>, 2 days ago
+								</p>
+							</div>
+						</div>
+					</div>
+
+					{% endfor %}
+
+
+				</div>
+			</div>
+		</div>
+	</div>
 
 
 </div>
