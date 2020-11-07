@@ -189,7 +189,7 @@ class OrganizationUnit(ManagerPage):
 		</strong>
 		<small>
 		<small>
-		{self.short_description if self.short_description else ''}
+		{self.short_description if self.short_description and self.short_description is not None else ''}
 		</small>		
 		</small>
 		
