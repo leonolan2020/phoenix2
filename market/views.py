@@ -9,6 +9,7 @@ from django.http import HttpResponse,JsonResponse,Http404
 from django.shortcuts import render,redirect,reverse
 from django.views import View
 from dashboard.serializers import CommentSerializer
+from dashboard.repo import SocialLinkRepo
 from dashboard.settings import *
 from dashboard.views import getContext as app_getContext
 from utility.excel import ReportWorkBook,ReportSheet
@@ -75,6 +76,7 @@ def getContext(request):
     main_pic_repo=MainPicRepo(user=request.user)
     link_repo=LinkRepo(user=request.user)
     context['app']={
+        'social_links':SocialLinkRepo(user=user).list_for_app(app_name=APP_NAME),
         'theme_color':parameter_repo.get(ParametersEnum.THEME_COLOR),
         'nav_items':link_repo.get_nav_items(),
         'about_us_short':parameter_repo.get(ParametersEnum.ABOUT_US_SHORT),

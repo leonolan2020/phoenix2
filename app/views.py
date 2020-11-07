@@ -2,7 +2,7 @@ from .apps import APP_NAME
 from authentication.repo import ProfileRepo
 from dashboard.enums import *
 from dashboard.forms import AddTagForm,AddDocumentForm,AddCommentForm,AddLinkForm,AddImageForm
-from dashboard.repo import TagRepo
+from dashboard.repo import TagRepo,SocialLinkRepo
 from dashboard.serializers import TagSerializer,DocumentSerializer,CommentSerializer,LinkSerializer,GalleryPhotoSerializer
 from dashboard.settings import ADMIN_URL,MEDIA_URL
 from dashboard.utils import AdminUtility
@@ -26,6 +26,7 @@ def getContext(request):
     main_pic_repo=MainPicRepo(user=request.user)
     link_repo=LinkRepo(user=request.user)
     context['app']={
+        'social_links':SocialLinkRepo(user=user).list_for_app(app_name=APP_NAME),
         'theme_color':parameter_repo.get(ParametersEnum.THEME_COLOR),
         'GOOGLE_API_KEY':parameter_repo.get(ParametersEnum.GOOGLE_API_KEY),
         'nav_items':link_repo.get_nav_items(),

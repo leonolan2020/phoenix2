@@ -4,7 +4,12 @@
     <div class="content">
       <div class="row rtl">
         <div class="col-md-4">
-          <h4 class="text-right text-light">
+         <div class="text-center">
+
+           <img src="{{app.logo.image}}" class="rounded-circle shadow" width="64" alt="" srcset="">
+          </div>
+         
+          <h4 class="text-center text-light">
             <span class="farsi  text-light">
               {{app.title.value}}
 
@@ -13,47 +18,54 @@
           </h4>
           <h5 class="text-right">
             <i class="fa fa-tel"></i>
-             <span class="farsi ">
- 
- 
-               تلفن :
-               {{app.tel.value}}
-             </span>
-           </h5>
 
 
-           <h5 class="text-right">
+
+            <i class="material-icons text-success">phone</i>
+            <span class="farsi ltr">
+              {{app.tel.value}}
+
+            </span>
+          </h5>
+
+
+          <h5 class="text-right">
+
+
+
+
+            <i class="material-icons text-rose">alternate_email</i>
+
+            <span class=" farsi ltr">
+
+
+              {{app.email.value}}
+
+            </span>
+          </h5>
+
+
+          <h5 class="text-right">
             <i class="fa fa-tel"></i>
-             <span class="farsi ">
- 
- 
-               ایمیل :
-               {{app.email.value}}
-             </span>
-           </h5>
 
 
-           <h5 class="text-right">
-            <i class="fa fa-tel"></i>
-             <span class="farsi ">
- 
- 
-               آدرس :
-               {{app.address.value}}
-             </span>
-           </h5>
+            <i class="material-icons text-info">place</i>
+            <span class="farsi ">
+              {{app.address.value}}
+            </span>
+          </h5>
 
 
         </div>
         <div class="col-md-4">
-          <h5 class="text-right farsi">
+          <h5 class="text-center farsi">
             <span class="farsi">
               درباره ما
 
             </span>
 
           </h5>
-          <p>
+          <p class="text-center">
 
             {{app.about_us_short.value}}
             {{app.about_us_short.get_edit_btn|safe}}
@@ -61,8 +73,8 @@
           </p>
         </div>
         <div class="col-md-4">
-          <h5 class="text-right farsi">
-            <span class="farsi">
+          <h5 class="text-center farsi">
+            <span class="farsi text-center">
               شبکه های اجتماعی
 
             </span>
@@ -82,48 +94,23 @@
         </div>
       </div>
     </div>
-    <hr>
+    <!-- <hr> -->
     <div class="text-center">
 
-      <button class="btn btn-just-icon btn-round btn-twitter mx-2">
-        <i class="fa fa-twitter"></i>
+      {% for social_link in app.social_links %}
+        <a href="{{social_link.url}}" class="btn btn-just-icon btn-round {{social_link.icon_class}} mx-2">
+       {{social_link.get_icon_tag|safe}}
         <div class="ripple-container"></div>
-      </button>
+        </a>
+      {% endfor %}
+      
 
-      <button class="btn btn-just-icon btn-round bg-info mx-2">
-        <i class="fa fa-telegram"></i>
-        <div class="ripple-container"></div>
-      </button>
-
-      <button class="btn btn-just-icon btn-round btn-whatsapp mx-2 bg-success">
-        <i class="fa fa-whatsapp"></i>
-        <div class="ripple-container"></div>
-      </button>
-
-      <button class="btn btn-just-icon btn-round btn-pinterest mx-2">
-        <i class="fa fa-pinterest"></i>
-        <div class="ripple-container"></div>
-      </button>
-
-
-
-      <button class="btn btn-just-icon btn-round btn-facebook mx-2">
-        <i class="fa fa-facebook"></i>
-        <div class="ripple-container"></div>
-      </button>
-
-
-
-      <button class="btn btn-just-icon btn-round btn-linkedin mx-2">
-        <i class="fa fa-linkedin"></i>
-        <div class="ripple-container"></div>
-      </button>
 
 
 
 
     </div>
-    <hr>
+    <!-- <hr> -->
     {% include 'material/includes/last-footer.html' %}
   </div>
 </footer>

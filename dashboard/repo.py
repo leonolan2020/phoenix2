@@ -392,8 +392,8 @@ class SocialLinkRepo:
     
     def list(self):
         return self.objects.order_by('priority')
-    def list_for_home(self):
-        return self.objects.filter(for_home=True).order_by('priority')
+    def list_for_app(self,app_name):
+        return self.objects.filter(app_name=app_name).order_by('priority')
 
 
 class FeatureRepo:

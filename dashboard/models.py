@@ -946,6 +946,7 @@ class Tag(models.Model):
 
 
 class SocialLink(Link):
+    app_name=models.CharField(_('اپلیکیشن'),max_length=50,null=True,blank=True)
     profile = models.ForeignKey("authentication.Profile", null=True,
                                 blank=True, verbose_name=_("profile"), on_delete=models.PROTECT)
 
