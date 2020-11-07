@@ -59,11 +59,11 @@
 
 
 
-                <div v-html="current_location">
+                <div v-if="current_location" v-html="current_location">
 
                 </div>
                 <div class="">
-                    <a href="https://www.google.com/maps">استفاده از نقشه</a>
+                    <a target="_blank" href="https://www.google.com/maps">استفاده از نقشه</a>
                 </div>
                 {% if add_location_form %}
                 <form @submit.prevent="add_location">
