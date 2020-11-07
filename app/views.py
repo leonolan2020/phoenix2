@@ -67,6 +67,8 @@ class BasicViews(View):
         context=getContext(request)
         user=request.user
         context['body_class']='about-us'
+        ourteams=OurTeamRepo(user=user).list()
+        context['ourteams']=ourteams
         context['about_header']=MainPicRepo(user=user).get(MainPicEnum.ABOUT_HEADER)
         context['about_text']=ParameterRepo(user=user).get(ParametersEnum.ABOUT_US_TITLE)
         return render(request,TEMPLATE_ROOT+'about.html',context)
