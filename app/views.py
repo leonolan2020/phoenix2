@@ -99,6 +99,7 @@ class BasicViews(View):
         context['list_title']=tag.title
         context['pages']=pages
         context['tag']=tag
+        context['meta_data_items']=[tag.title,'tag']
         context['header']=MainPicRepo(user=request.user).get(MainPicEnum.TAG_HEADER)
         return render(request,TEMPLATE_ROOT+'pages.html',context)
 

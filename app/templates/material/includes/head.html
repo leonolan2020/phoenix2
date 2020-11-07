@@ -16,8 +16,8 @@
 
 {% if app.GOOGLE_SEARCH_CONSOLE_TAG %}{{app.GOOGLE_SEARCH_CONSOLE_TAG.value|safe}}{% endif %}
 <!-- keywords -->
-<meta name="description" content="Author:Hossein Moghimi ,{% for meta_data in app.meta_data_items %}{{meta_data.content}} , {% endfor %}" />
-<meta name="robots" content="Author:Hossein Moghimi ,{% for meta_data in app.meta_data_items %}{{meta_data.content}} , {% endfor %}" />
+<meta name="description" content="Author:Hossein Moghimi ,{% for meta_data in app.meta_data_items %}{{meta_data.content}} , {% endfor %}{% for meta_data in meta_data_items %}{{meta_data}} , {% endfor %}" />
+<meta name="robots" content="Author:Hossein Moghimi ,{% for meta_data in app.meta_data_items %}{{meta_data.content}} , {% endfor %}{% for meta_data in meta_data_items %}{{meta_data}} , {% endfor %}" />
 <!--  end keywords -->
 
 
@@ -28,7 +28,7 @@
 <link rel="canonical" href="https://www.creative-tim.com/product/material-kit-pro" />
 <!--  Social tags      -->
 <meta name="keywords"
-    content="bootstrap 4, bootstrap 4 uit kit, bootstrap 4 kit, material, material kit, creative tim, html kit, html css template, web template, bootstrap, bootstrap 4, css3 template, frontend, responsive bootstrap template, bootstrap ui kit, responsive ui kit, premium bootstrap 4 ui kit, premium template, bootstrap 4 template">
+    content="{% for meta_data in app.meta_data_items %}{{meta_data.content}} , {% endfor %}{% for meta_data in meta_data_items %}{{meta_data}} , {% endfor %}">
 <!-- <meta name="description111"
     content="Start Your Development With A Badass Bootstrap 4 UI Kit inspired by Material Design"> -->
 <!-- Schema.org markup for Google+ -->
