@@ -62,7 +62,9 @@
                 <div v-html="current_location">
 
                 </div>
-
+                <div class="">
+                    <a href="https://www.google.com/maps">استفاده از نقشه</a>
+                </div>
                 {% if add_location_form %}
                 <form @submit.prevent="add_location">
                     <input placeholder="موقعیت" type="text" class="form-control" v-model="location">
@@ -292,7 +294,7 @@
         },
         methods: {
             edit_project_timing: function () {
-           
+
 
                 let url = "{% url 'projectmanager:edit_project_timing' %}"
 
@@ -319,15 +321,15 @@
 
 
                         swal({
-                        title: "زمان بندی پروژه",
-                        text: "زمان بندی پروژه با موفقیت اصلاح شد.",
-                        buttonsStyling: false,
-                        confirmButtonClass: "btn btn-success",
-                        type: "success"
-                    }).catch(swal.noop)
+                            title: "زمان بندی پروژه",
+                            text: "زمان بندی پروژه با موفقیت اصلاح شد.",
+                            buttonsStyling: false,
+                            confirmButtonClass: "btn btn-success",
+                            type: "success"
+                        }).catch(swal.noop)
                     }
                 })
-            
+
 
             },
             add_project: function () {
