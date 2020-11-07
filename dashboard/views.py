@@ -87,7 +87,8 @@ def getContext(request):
     # link_repo=LinkRepo(user=request.user)
     context['app']={
         'theme_color':parameter_repo.get(ParametersEnum.THEME_COLOR),
-        # 'nav_items':link_repo.get_nav_items(),
+        'GOOGLE_API_KEY':parameter_repo.get(ParametersEnum.GOOGLE_API_KEY),
+        # 'GOOGLE_API_KEY':link_repo.GOOGLE_API_KEY(),
         'about_us_short':parameter_repo.get(ParametersEnum.ABOUT_US_SHORT),
         'GOOGLE_SEARCH_CONSOLE_TAG':parameter_repo.get(ParametersEnum.GOOGLE_SEARCH_CONSOLE_TAG),
         'NAV_TEXT_COLOR':parameter_repo.get(ParametersEnum.NAV_TEXT_COLOR),

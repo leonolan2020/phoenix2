@@ -27,6 +27,7 @@ def getContext(request):
     link_repo=LinkRepo(user=request.user)
     context['app']={
         'theme_color':parameter_repo.get(ParametersEnum.THEME_COLOR),
+        'GOOGLE_API_KEY':parameter_repo.get(ParametersEnum.GOOGLE_API_KEY),
         'nav_items':link_repo.get_nav_items(),
         'about_us_short':parameter_repo.get(ParametersEnum.ABOUT_US_SHORT),
         'GOOGLE_SEARCH_CONSOLE_TAG':parameter_repo.get(ParametersEnum.GOOGLE_SEARCH_CONSOLE_TAG),
@@ -53,6 +54,11 @@ def getContext(request):
 class BasicViews(View):
     def contact(self,request,*args, **kwargs):
         context=getContext(request)
+
+        parameter_repo=ParameterRepo(user=request.user)
+        context['GOOGLE_GPS_X']=parameter_repo.get(ParametersEnum.GOOGLE_GPS_X).value
+        context['GOOGLE_GPS_Y']=parameter_repo.get(ParametersEnum.GOOGLE_GPS_Y).value
+        
         context['body_class']='contact-page'
         context['add_contact_message_form']=AddContactMessageForm()
         return render(request,TEMPLATE_ROOT+'contact.html',context)

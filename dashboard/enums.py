@@ -126,6 +126,9 @@ class IconFlatEnum(TextChoices):
     
 
 class ParametersEnum(TextChoices):
+    GOOGLE_API_KEY='GOOGLE_API_KEY',_('GOOGLE_API_KEY')
+    GOOGLE_GPS_X='GOOGLE_GPS_X',_('GOOGLE_GPS_X')
+    GOOGLE_GPS_Y='GOOGLE_GPS_Y',_('GOOGLE_GPS_Y')
     ABOUT_US='درباره ما کامل',_('درباره ما کامل')
     ABOUT_US_SHORT='درباره ما کوتاه',_('درباره ما کوتاه')
     ABOUT_US_TITLE='عنوان درباره ما',_('عنوان درباره ما')
