@@ -185,13 +185,18 @@ class OrganizationUnit(ManagerPage):
 	def caption(self):
 		return f"""
 		<strong>
+		<a href="{self.get_absolute_url()}">
 		{self.title}
+		</a>
 		</strong>
+		<br>
 		<small>
 		<small>
 		{self.short_description if self.short_description and self.short_description is not None else ''}
+		
 		</small>		
 		</small>
+
 		
 		"""
 
