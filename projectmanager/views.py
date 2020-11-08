@@ -17,7 +17,8 @@ TUTORIAL_ROOT=TEMPLATE_ROOT+'tutorial/'
 def getContext(request):
     user=request.user
     if not user.is_authenticated:
-        raise Http404
+        # raise Http404
+        pass
     context=DashboardContext(request)
     context['admin_utility']=AdminUtility()
     context['search_form']=SearchForm()
@@ -31,6 +32,10 @@ class TutorialViews(View):
         user=request.user
         context=getContext(request)
         return render(request,TUTORIAL_ROOT+'add-project-location.html',context)
+    def add_project(self,request,*args, **kwargs):
+        user=request.user
+        context=getContext(request)
+        return render(request,TUTORIAL_ROOT+'add-project.html',context)
 
 class BasicViews(View):
     def tag(self,request,pk,*args,**kwargs):
