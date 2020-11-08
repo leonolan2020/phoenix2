@@ -727,7 +727,7 @@ class Link(Icon):
     def get_link(self):
         return f"""
 
-            <a target="_blank" href="{self.get_absolute_url()}">
+            <a target="_blank" href="{self.url}">
             {self.get_icon_tag()}
             {self.title}</a>
         """
