@@ -16,6 +16,7 @@ urlpatterns = [
 
     path('',include('authentication.urls')),
     path('market/',include('market.urls')),
+    path('tutorial/',include('tutorial.urls')),
     path('pusher/',include('leopusher.urls')),
     path('authentication/',include('authentication.urls')),
     path('dashboard/',include('dashboard.urls')),

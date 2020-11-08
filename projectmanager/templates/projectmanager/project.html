@@ -4,24 +4,57 @@
 {% block child_content %}
 <div class="row rtl" id="project-app">
     <div class="col-md-6">
-        <div class="card">
-            <div class="card-header ">
-                <h4 class="card-title farsi text-right">زیرمجموعه ها -
-                    <small class="description">پروژه های جزیی</small>
-                </h4>
+        <div class="card card-stats">
+            <div class="card-header card-header-warning card-header-icon">
+              <div class="card-icon">
+                <i class="material-icons">weekend</i>
+              </div>
+              <p class="card-category">{{project.title}}</p>
+              <h3 class="card-title">زیرمجموعه ها</h3>
             </div>
+      
             <div class="card-body ">
+<div class="text-right">
+<p>برای نمایش نمودار زمان بندی از نمودار گانت استفاده کنید
+    <a target="_blank" href="{{project.get_guantt_url}}" class="btn btn-info btn-round ">
+        <i class="material-icons">analytics</i>
+        نمایش نمودار گانت</a>
+</p>
+</div>
 
 
 
-
-                {% for child_page in page.childs.all %}
-                {{child_page.get_link|safe}}
-                {% endfor %}
                 <template v-for="project in projects">
+
+
                     <div v-html="project.get_link"></div>
+                    <p :class="'mx-3 text-'+project.color" >
+                        <small >
+                            <span class="text-secondary1" v-text="project.persian_start_date"></span>
+                            ~
+                            <span class="text-secondary1" v-text="project.persian_end_date"></span>
 
 
+                        </small>
+
+<span :class="'mx-3 text-'+project.color" v-text="project.percent+' % کامل شده است.'">
+
+</span>
+
+
+                    </p>
+
+
+
+
+                    <div :class="'progress progress-line-'+project.color">
+                        <div :class="'progress-bar progress-bar-'+project.color" role="progressbar" :aria-valuenow="project.percent"
+                            aria-valuemin="0" aria-valuemax="100" :style="'width: '+project.percent+'%;'">
+                            <span class="sr-only">{% verbatim %}{{project.percent}}{% endverbatim %}% Complete</span>
+                        </div>
+                    </div>
+
+                    <hr>
                 </template>
                 {% if add_project_form %}
                 <form class="mt-5 mx-5" @submit.prevent="add_project">
@@ -74,6 +107,11 @@
                 {% endif %}
 
 
+            </div>
+            <div class="card-footer">
+                <a target="_blank" href="{% url 'projectmanager:tutorial_add_project_location' %}">
+                    <i class="material-icons">help</i>
+                    راهنما</a>
             </div>
         </div>
 
@@ -185,23 +223,39 @@
                     </div>
                     <div class="timeline-panel">
                         <div class="timeline-heading">
-                            <span class="badge badge-pill badge-danger">
-                                <input type="text" v-model="event_title" class="form-control text-light"
-                                    placeholder="عنوان رویداد" id="event-title">
-                            </span>
-                            <div class="text-secondary" style="float: right;">
-                                <small>
-                                </small>
+
+                        </div>
+                        <form @submit.prevent="add_event">
+
+                            <div class="timeline-body">
+
+                                <div class="form-group bmd-form-group my-3">
+                                    <label for="exampleInput1d1" class="bmd-label-floating">عنوان رویداد</label>
+                                    <input v-model="event_title" type="text" class="form-control" id="exampleInput1d1">
+                                    <!-- <span class="bmd-help">عنوان رویداد را بنویسید.</span> -->
+                                </div>
+
+
+
+                                <div class="form-group bmd-form-group my-3">
+                                    <label for="exampleInput1d" class="bmd-label-floating">شرح رویداد</label>
+                                    <input v-model="event_description" type="text" class="form-control"
+                                        id="exampleInput1d">
+                                    <span class="bmd-help text-warning">شرح رویداد را به صورت خلاصه بنویسید.</span>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <date-picker v-model="selected_date"></date-picker>
+
+                                    </div>
+                                </div>
+
+
+
+
+
                             </div>
-                        </div>
-                        <div class="timeline-body">
-                            <date-picker v-model="selected_date"></date-picker>
-
-
-                            <input type="text" v-model="event_description" class="form-control" placeholder="شرح رویداد"
-                                id="event-description">
-
-                        </div>
+                        </form>
                         <button @click="add_event" class="btn btn-light btn-sm btn-round"
                             href="{{event.get_absolute_url}}">
                             <i class="material-icons">description</i>
@@ -211,6 +265,7 @@
                                 </small>
                             </small>
                         </button>
+
                     </div>
                 </li>
 
@@ -280,7 +335,7 @@
             start_date: "{{project.persian_start_date}}",
             end_date: "{{project.persian_end_date}}",
             percent: parseInt("{{project.percent}}"),
-            projects: [],
+            projects: JSON.parse(`{{projects_s|escapejs}}`),
             project_title: '',
             location: '',
             event_title: '',

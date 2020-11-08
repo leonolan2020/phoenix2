@@ -137,7 +137,7 @@ class Page(models.Model):
     icon = models.ForeignKey(
         "icon", null=True, blank=True, on_delete=models.SET_NULL)
     color = models.CharField(_("color class"), blank=True, null=True,
-                             choices=ColorEnum.choices, default=ColorEnum.DEFAULT, max_length=50)
+                             choices=ColorEnum.choices, default=ColorEnum.PRIMARY, max_length=50)
 
     # category=models.CharField(_("دسته بندی"),null=True,blank=True,max_length=100)
 
@@ -147,7 +147,7 @@ class Page(models.Model):
         _("شرح کامل"), max_length=100000, null=True, blank=True)
     child_class = models.CharField(
         _('child_class'), null=True, blank=True, max_length=50)
-    # app_name=models.CharField(_('app_name'),null=True,blank=True,max_length=50)
+    app_name=models.CharField(_('app_name'),null=True,blank=True,max_length=50)
     date_added = models.DateTimeField(
         _('date_added'), null=True, blank=True, auto_now=False, auto_now_add=True)
     archive = models.BooleanField(_("بایگانی شود؟"), default=False)
@@ -195,6 +195,9 @@ class Page(models.Model):
 
     def get_app_url(self):
         return reverse('app:'+self.child_class, kwargs={'pk': self.pk})
+
+    def get_absolute_url(self):
+        return reverse(self.app_name+':'+self.child_class, kwargs={'pk': self.pk})
 
     def persian_date_added_tag(self):
         value = self.date_added
@@ -931,7 +934,7 @@ class Tag(models.Model):
     def get_absolute_url(self):
         return reverse('app:tag', kwargs={'pk': self.pk})
 
-    def get_manager_tag_url(self):
+    def get_projectmanager_url(self):
         return reverse('projectmanager:tag', kwargs={'pk': self.pk})
 
     def get_edit_url(self):

@@ -1,0 +1,77 @@
+{% extends "projectmanager/tutorial/index.html" %}
+{% load static %}
+
+{% block content_child %}
+<div class="card card-stats">
+    <div class="card-header card-header-success card-header-icon">
+        <div class="card-icon">
+            <i class="material-icons">store</i>
+        </div>
+        <p class="card-category">راهنما</p>
+        <h3 class="card-title">افزودن لوکیشن برای پروژه ها </h3>
+    </div>
+    <div class="card-body">
+
+
+
+
+        <ol>
+            <li>
+                ابتدا به لینک زیر بروید:
+                <br>
+                <a target="_blank" href="https://www.google.com/maps">https://www.google.com/maps</a>
+
+            </li>
+
+            <li>
+                سپس نقطه مورد نظر را پیدا کنید.
+                و روی آن نقطه یک کلیک کنید
+
+            </li>
+
+            <li>
+                سپس
+                <br>
+
+                <img src="{% static 'projectmanager/tutorial/-1.png' %}" alt="">
+
+            </li>
+
+            <li>
+                و در منوی کناری
+                <br>
+                <img src="{% static 'projectmanager/tutorial/0.png' %}" alt="">
+
+            </li>
+
+
+            <li>
+                سپس
+                <br>
+                <img src="{% static 'projectmanager/tutorial/1.png' %}" alt="">
+
+            </li>
+
+            <li>
+                تکه کد کپی شده را در قسمت مورد نظر قرار داده و تایید کنید.
+            </li>
+        </ol>
+
+
+
+    </div>
+    <div class="card-footer">
+        <div class="stats">
+            <i class="material-icons">date_range</i> Last 24 Hours
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}
+
+{% block script_child %}
+<script>
+    $("#nav-item-projectmanager-tutorial").addClass("active")
+</script>
+{% endblock  %}

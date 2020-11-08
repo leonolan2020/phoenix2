@@ -17,7 +17,7 @@ class LinkSerializer(serializers.ModelSerializer):
 class TagSerializer(serializers.ModelSerializer):
     class Meta:
         model=Tag
-        fields=['id','title','get_absolute_url','get_link']
+        fields=['id','title','get_absolute_url','get_projectmanager_url','get_link']
 
 
 class DocumentSerializer(serializers.ModelSerializer):

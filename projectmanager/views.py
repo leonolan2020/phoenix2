@@ -1,17 +1,19 @@
-from django.shortcuts import render,redirect,reverse
-from django.views import View
+import json
 from .apps import APP_NAME
-from django.http import Http404,JsonResponse
-from dashboard.views import getContext as DashboardContext
+from .forms import *
 from .repo import *
 from .serializers import *
-from .forms import *
-from dashboard.forms import AddDocumentForm,AddTagForm,AddLinkForm,AddImageForm
-import json
-from utility.excel import ReportWorkBook,ReportSheet
-from dashboard.serializers import TagSerializer,DocumentSerializer,LinkSerializer,GalleryPhotoSerializer
 from .utils import AdminUtility
+from dashboard.repo import TagRepo
+from dashboard.forms import AddDocumentForm,AddTagForm,AddLinkForm,AddImageForm
+from dashboard.serializers import TagSerializer,DocumentSerializer,LinkSerializer,GalleryPhotoSerializer
+from dashboard.views import getContext as DashboardContext
+from django.shortcuts import render,redirect,reverse
+from django.http import Http404,JsonResponse
+from django.views import View
+from utility.excel import ReportWorkBook,ReportSheet
 TEMPLATE_ROOT='projectmanager/'
+TUTORIAL_ROOT=TEMPLATE_ROOT+'tutorial/'
 def getContext(request):
     user=request.user
     if not user.is_authenticated:
@@ -20,8 +22,29 @@ def getContext(request):
     context['admin_utility']=AdminUtility()
     context['search_form']=SearchForm()
     return context
+class TutorialViews(View): 
+    def home(self,request,*args, **kwargs):
+        user=request.user
+        context=getContext(request)
+        return render(request,TUTORIAL_ROOT+'index.html',context)
+    def add_project_location(self,request,*args, **kwargs):
+        user=request.user
+        context=getContext(request)
+        return render(request,TUTORIAL_ROOT+'add-project-location.html',context)
 
 class BasicViews(View):
+    def tag(self,request,pk,*args,**kwargs):
+        tag_id=pk
+        tag=TagRepo(user=request.user).tag(tag_id=tag_id)
+        pages=tag.pages.all().filter(app_name=APP_NAME)
+        # print(pages)
+        # print(100*'#')
+        context=getContext(request)
+        context['search_for']=tag.title
+        context['pages']=pages
+        return render(request,'dashboard/'+'search.html',context)
+
+
     def search(self,request,*args, **kwargs):
         if request.method=='POST':
             search_form=SearchForm(request.POST)
@@ -116,6 +139,8 @@ class PageViews(View):
         context['contractors_s']=json.dumps(ContractorSerializer(project.contractors.all(),many=True).data)
         context['project']=project
         context['page']=project
+        projects_s=json.dumps(ProjectSerializer(project.childs(),many=True).data)
+        context['projects_s']=projects_s
         context['edit_project_timing_form']=EditProjectTimingForm()
         if user.has_perm(APP_NAME+'.change_project'):
             context['add_location_form']=AddLocationForm()

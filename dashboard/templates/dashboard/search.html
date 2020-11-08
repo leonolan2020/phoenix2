@@ -3,36 +3,64 @@
 {% load to_persian_date %}
 
 {% block head %}
-  
+
 {% endblock  %}
 
 
 {% block ofbar %}
-  
+
 {% endblock  %}
 
 
 {% block content %}
-  <div class="row">
-      <div class="col-md-6">
-          {% for page in pages %}
-            {{page.get_link|safe}}
-          {% endfor %}
+<div class="row">
+  <div class="col-md-12">
+    <div class="card card-stats">
+      <div class="card-header card-header-warning card-header-icon">
+        <div class="card-icon">
+          <i class="material-icons">weekend</i>
+        </div>
+        <p class="card-category">جستجو برای</p>
+        <h3 class="card-title">{{search_for}}</h3>
       </div>
-      <div class="col-md-6"></div>
-      <div class="col-md-6"></div>
-      <div class="col-md-6"></div>
+
+
+      <div class="card-body">
+        {% for page in pages %}        
+        <div>
+          <a href="{{page.get_absolute_url}}">
+            <h4 class="title text-right">
+              {{page.title}}
+              {% if page.short_description %}
+              <small>
+                <small class="text-secondary mx-3">
+                  {{page.short_description|safe}}
+
+                </small>
+              </small>
+              {% endif %}
+
+            </h4>
+          </a>
+
+
+        </div>
+
+        {% endfor %} </div>
+    </div>
   </div>
+  
+</div>
 {% endblock  %}
 
 
 
 {% block modal %}
-  
+
 {% endblock  %}
 
 
 
 {% block script %}
-  
+
 {% endblock  %}
