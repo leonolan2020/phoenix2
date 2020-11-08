@@ -1,7 +1,8 @@
+import random
 from .models import Project,Event,OrganizationUnit as OrganizationUnit,Contractor,ManagerPage,ArchiveDocument
 from authentication.repo import ProfileRepo
 from dashboard.models import Icon
-from dashboard.enums import ColorEnum
+from dashboard.enums import ColorEnum,IconsEnum
 from django.db.models import Q,F
 import datetime
 class ManagerPageRepo:
@@ -191,12 +192,16 @@ class ProjectRepo:
             parent=None
         else:
             parent=self.project(project_id=parent_id)
-        icon=Icon(color=ColorEnum.PRIMARY,icon_material='dashboard',icon_title='آیکون '+title)
+        color=random.choices(ColorEnum.choices)[0][0]
+        if color==ColorEnum.LIGHT:
+            color=ColorEnum.PRIMARY
+        icon=Icon(color=color,icon_material=random.choices(IconsEnum.choices)[0][0],icon_title='آیکون '+title)
         icon.save()
         start_date=datetime.datetime.now().date()
         end_date=(start_date+ datetime.timedelta(days=2))
-        percent=5
-        project=Project(percent=percent,start_date=start_date,end_date=end_date,parent=parent,icon=icon,title=title,short_description='',description='')
+        percent=random.choices(range(5))[0]
+
+        project=Project(percent=percent,color=color,start_date=start_date,end_date=end_date,parent=parent,icon=icon,title=title,short_description='',description='')
         project.save()
         if project is not None:
             return project

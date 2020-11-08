@@ -83,7 +83,7 @@ class Jumbotron(models.Model):
 
 class Card(models.Model):
     color = models.CharField(
-        _("رنگ"), choices=ColorEnum.choices, default=ColorEnum.UNSET, max_length=50)
+        _("رنگ"), choices=ColorEnum.choices, default=ColorEnum.PRIMARY, max_length=50)
     icon = models.ForeignKey(
         "icon", null=True, blank=True, on_delete=models.SET_NULL)
     jumbotron = models.ForeignKey(
@@ -292,7 +292,7 @@ class Notification(models.Model):
         _('تاریخ دیده شده'), auto_now_add=False, auto_now=False, null=True, blank=True)
 
     color = models.CharField(
-        _("رنگ"), choices=ColorEnum.choices, default=ColorEnum.UNSET, max_length=50)
+        _("رنگ"), choices=ColorEnum.choices, default=ColorEnum.PRIMARY, max_length=50)
 
     icon = models.ForeignKey(
         "icon", null=True, blank=True, on_delete=models.SET_NULL)
@@ -662,7 +662,7 @@ class ContactMessage(models.Model):
 class FAQ(models.Model):
     for_home = models.BooleanField(_("نمایش در صفحه خانه"), default=False)
     color = models.CharField(
-        _("رنگ"), choices=ColorEnum.choices, default=ColorEnum.UNSET, max_length=50)
+        _("رنگ"), choices=ColorEnum.choices, default=ColorEnum.PRIMARY, max_length=50)
 
     icon = models.ForeignKey(
         "icon", null=True, blank=True, on_delete=models.SET_NULL)

@@ -113,10 +113,7 @@ class Project(ManagerPage):
 			return 'summer'
 		
 		if self.color==ColorEnum.PRIMARY:
-			return 'summer'
-		
-		if self.color==ColorEnum.DEFAULT:
-			return 'sports'
+			return 'summer'	
 		
 		
 		if self.color==ColorEnum.SECONDARY:

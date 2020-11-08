@@ -30,10 +30,10 @@ class ColorEnum(TextChoices):
     SECONDARY = 'secondary', _('secondary')
     INFO = 'info', _('info')
     LIGHT = 'light', _('light')
-    DARK = 'dark', _('dark')    
     ROSE = 'rose', _('rose')
-    DEFAULT='DEFAULT',_('DEFAULT')
-    UNSET='UNSET',_('UNSET')
+    DARK = 'dark', _('dark')    
+    # DEFAULT='primary',_('primary')
+    # UNSET='UNSET',_('UNSET')
 
 
 class RegionEnum(TextChoices):
