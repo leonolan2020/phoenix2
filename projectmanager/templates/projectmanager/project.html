@@ -6,21 +6,21 @@
     <div class="col-md-6">
         <div class="card card-stats">
             <div class="card-header card-header-warning card-header-icon">
-              <div class="card-icon">
-                <i class="material-icons">weekend</i>
-              </div>
-              <p class="card-category">{{project.title}}</p>
-              <h3 class="card-title">زیرمجموعه ها</h3>
+                <div class="card-icon">
+                    <i class="material-icons">weekend</i>
+                </div>
+                <p class="card-category">{{project.title}}</p>
+                <h3 class="card-title">زیرمجموعه ها</h3>
             </div>
-      
+
             <div class="card-body ">
-<div class="text-right">
-<p>برای نمایش نمودار زمان بندی از نمودار گانت استفاده کنید
-    <a target="_blank" href="{{project.get_guantt_url}}" class="btn btn-info btn-round ">
-        <i class="material-icons">analytics</i>
-        نمایش نمودار گانت</a>
-</p>
-</div>
+                <div class="text-right">
+                    <p>برای نمایش نمودار زمان بندی از نمودار گانت استفاده کنید
+                        <a target="_blank" href="{{project.get_guantt_url}}" class="btn btn-info btn-round ">
+                            <i class="material-icons">analytics</i>
+                            نمایش نمودار گانت</a>
+                    </p>
+                </div>
 
 
 
@@ -28,8 +28,8 @@
 
 
                     <div v-html="project.get_link"></div>
-                    <p :class="'mx-3 text-'+project.color" >
-                        <small >
+                    <p :class="'mx-3 text-'+project.color">
+                        <small>
                             <span class="text-secondary1" v-text="project.persian_start_date"></span>
                             ~
                             <span class="text-secondary1" v-text="project.persian_end_date"></span>
@@ -37,9 +37,9 @@
 
                         </small>
 
-<span :class="'mx-3 text-'+project.color" v-text="project.percent+' % کامل شده است.'">
+                        <span :class="'mx-3 text-'+project.color" v-text="project.percent+' % کامل شده است.'">
 
-</span>
+                        </span>
 
 
                     </p>
@@ -48,8 +48,9 @@
 
 
                     <div :class="'progress progress-line-'+project.color">
-                        <div :class="'progress-bar progress-bar-'+project.color" role="progressbar" :aria-valuenow="project.percent"
-                            aria-valuemin="0" aria-valuemax="100" :style="'width: '+project.percent+'%;'">
+                        <div :class="'progress-bar progress-bar-'+project.color" role="progressbar"
+                            :aria-valuenow="project.percent" aria-valuemin="0" aria-valuemax="100"
+                            :style="'width: '+project.percent+'%;'">
                             <span class="sr-only">{% verbatim %}{{project.percent}}{% endverbatim %}% Complete</span>
                         </div>
                     </div>
@@ -323,10 +324,20 @@
 
 <script>
     $("#nav-item-projectmanager-projects").addClass('active')
+    let projects = JSON.parse(`{{projects_s|escapejs}}`)
+
+    let events = JSON.parse(`{{events_s|escapejs}}`)
+    let contractors = JSON.parse(`{{contractors_s|escapejs}}`)
+    let current_location=`{{project.location|escapejs}}`
 
 
-    let project_id = JSON.parse("{{page.id}}")
+
+    let project_id = parseInt("{{project.id}}")
     var current_date = '{{current_date}}'
+
+
+</script>
+<script>
     let project_app = new Vue({
         el: "#project-app",
         data: {
@@ -334,14 +345,14 @@
             start_date: "{{project.persian_start_date}}",
             end_date: "{{project.persian_end_date}}",
             percent: parseInt("{{project.percent}}"),
-            projects: JSON.parse(`{{projects_s|escapejs}}`),
+            projects: projects,
             project_title: '',
             location: '',
             event_title: '',
             event_description: '',
-            current_location: `{{project.location|escapejs}}`,
-            events: JSON.parse(`{{events_s|escapejs}}`),
-            contractors: JSON.parse(`{{contractors_s|escapejs}}`),
+            current_location: current_location,
+            events: events,
+            contractors: contractors,
         },
         components: {
             DatePicker: VuePersianDatetimePicker

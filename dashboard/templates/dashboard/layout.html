@@ -530,7 +530,8 @@ The above copyright notice and this permission notice shall be included in all c
     }
   </script>
 
-
+{% if profile %}
+  
   <!-- profile_customization_form -->
   <script>
     let url_profile_customization_form = "{% url 'dashboard:profile_customization' %}"
@@ -546,6 +547,7 @@ The above copyright notice and this permission notice shall be included in all c
     } 
 
   </script>
+{% endif %}
 
 
   {% if PUSHER_IS_ENABLE %}
