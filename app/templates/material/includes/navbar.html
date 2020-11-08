@@ -139,7 +139,7 @@ color-on-scroll="100"
 
 
 
-                        <a href="./examples/blog-post.html" class="dropdown-item">
+                        <a href="{{profile.get_manage_url}}" class="dropdown-item">
                             <i class="material-icons">art_track</i> تنظیمات
                         </a>
                         <a href="{% url 'authentication:logout' %}" class="dropdown-item text-danger">

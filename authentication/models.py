@@ -28,7 +28,8 @@ class Profile(models.Model):
     # def social_links(self):
         # return SocialLink
     # =models.ManyToManyField("dashboard.sociallink",blank=True, verbose_name=_("شبکه های اجتماعی"))
-    
+    def get_manage_url(self):
+        return reverse(APP_NAME+':profile',kwargs={'profile_id':self.pk})
     def name(self):
         return self.first_name+' '+self.last_name
     # def get_my_qrcode(self):
