@@ -29,23 +29,35 @@
             </div>
             <div class="card-body">
                 <!-- <form action="{% url 'pusher:send_channel' %}" method="POST"> -->
-                <form>
+                <form @submit.prevent="send_message">
                     {% csrf_token %}
                     <div class="row">
                         <div class="col-md-8">
                             <div class="form-group bmd-form-group is-filled">
                                 <label class="bmd-label-floating">کانال</label>
-                                <select name="channel_event" id="channel_event" v-model="channel_event"
-                                    class="form-control">
-                                    
-                                    <option v-for="channel_event in channel_events" :value="channel_event">
-                                      {% verbatim %}
-                                        
+                                <div class="dropdown show">
+                                    <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        {% verbatim %}
+                                          نام کانال : 
                                         {{channel_event.title}}
-                                      {% endverbatim %}
-                                    </option>
-                                   
-                                </select>
+                                      {% endverbatim %} 
+                                    </a>
+                                  
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                      <button @click="channel_event=channel_event1" v-for="channel_event1 in channel_events" :value="channel_event1" class="dropdown-item" href="#">
+                                        {% verbatim %}
+                                          
+                                        {{channel_event1.title}}
+                                      {% endverbatim %} 
+                                      </button>
+                                    
+                                      
+                                  
+
+                                    </div>
+                                  </div>
+
+                               
                             </div>
                         </div>
 
@@ -53,7 +65,7 @@
                        
 
 
-                        <div class="col-md-12">
+                        <div class="col-md-12 mt-3">
                             <div class="form-group bmd-form-group is-filled">
                                 <label class="bmd-label-floating">عنوان</label>
                                 <input v-model="title" name="title" type="text" class="form-control">
@@ -210,20 +222,21 @@
 
 
     });
-let icons={{icons_s|safe}}
-let channel_events={{channel_events_s |safe}}
+let icons=JSON.parse(`{{icons_s|escapejs}}`)
+let channel_events=JSON.parse(`{{channel_events_s |escapejs}}`)
 </script>
 <script>
     $("#nav-item-pusher").addClass("active");
     let manager_app = new Vue({
         el: "#manager-app",
         data: {
+            channel_event_title:'',
             channel_events:channel_events,
             icons:icons,
             title: 'سلام',
             body: 'خسته نباشید',
             event_name: 'notify',
-            channel_event: 0,
+            channel_event: channel_events[0],
             channel_name: 'NOTIFICATION',
             color: 'info',
             icon: 'notification_important',
