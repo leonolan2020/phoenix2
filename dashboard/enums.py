@@ -57,6 +57,7 @@ class AddressTitleEnum(TextChoices):
     
 
 class EmployeeEnum(TextChoices):
+    CEO='سرپرست',_('سرپرست')  
     GUARD='نگهبان',_('نگهبان')      
     MANAGER='مدیر',_('مدیر')      
     TECHNICAL='فنی',_('فنی')    
