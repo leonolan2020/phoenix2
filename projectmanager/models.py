@@ -19,39 +19,39 @@ IMAGE_FOLDER = APP_NAME+'/images/'
 
 
 class ManagerPage(DashboardPage):
-	parent = models.ForeignKey("ManagerPage", verbose_name=_(
-	    "parent"), null=True, blank=True, on_delete=models.SET_NULL)
+    parent = models.ForeignKey("ManagerPage", verbose_name=_(
+        "parent"), null=True, blank=True, on_delete=models.SET_NULL)
 
-	def get_download_url(self):
-		return reverse('projectmanager:download_page', kwargs={'pk': self.pk})
+    def get_download_url(self):
+        return reverse('projectmanager:download_page', kwargs={'pk': self.pk})
 
-	def get_breadcrumb_url(self):
-		if self.parent is None:
-			return f"""<div class="d-inline"><a href="{self.get_absolute_url()}">&nbsp;{self.title}&nbsp;</a></div>"""
-		else:
-			return self.parent.get_breadcrumb_url()+f"""<span class="text-secondary">&nbsp;/&nbsp;</span><div class="d-inline"><a  href="{self.get_absolute_url()}">&nbsp;{self.title}&nbsp;</a></div>"""
+    def get_breadcrumb_url(self):
+        if self.parent is None:
+            return f"""<div class="d-inline"><a href="{self.get_absolute_url()}">&nbsp;{self.title}&nbsp;</a></div>"""
+        else:
+            return self.parent.get_breadcrumb_url()+f"""<span class="text-secondary">&nbsp;/&nbsp;</span><div class="d-inline"><a  href="{self.get_absolute_url()}">&nbsp;{self.title}&nbsp;</a></div>"""
 
-	def childs(self):
-		return ManagerPage.objects.filter(parent=self)
+    def childs(self):
+        return ManagerPage.objects.filter(parent=self)
 
-	def persian_date_added(self):
-		return PersianCalendar().from_gregorian(self.date_added)
+    def persian_date_added(self):
+        return PersianCalendar().from_gregorian(self.date_added)
 
-	def get_link(self):
-		icon = self.icon
-		if self.icon is None:
-			icon = """
+    def get_link(self):
+        icon = self.icon
+        if self.icon is None:
+            icon = """
         <div class="em15 text-primary" style="font-size:1.5em;">
             <i class="material-icons text-primary" style="font-size:1.5em;">settings</i>
         </div>
         """
-		else:
-			icon = f"""
+        else:
+            icon = f"""
          <div class="em15 {self.icon.icon_class}"  style="font-size:1.5em;">
                       {self.icon.get_icon_tag(icon_style='font-size: 1.5em')}
           </div>
         """
-		return f"""
+        return f"""
 
 
          <div class="media mb-2">
@@ -74,81 +74,81 @@ class ManagerPage(DashboardPage):
 
         """
 
-	class Meta:
-		verbose_name = _("Page")
-		verbose_name_plural = _("Pages")
+    class Meta:
+        verbose_name = _("Page")
+        verbose_name_plural = _("Pages")
 
-	def save(self):
-		self.app_name = APP_NAME
-		super(ManagerPage, self).save()
+    def save(self):
+        self.app_name = APP_NAME
+        super(ManagerPage, self).save()
 
-	def get_absolute_url(self):
-		return reverse(APP_NAME+':'+self.child_class, kwargs={'pk': self.pk})
+    def get_absolute_url(self):
+        return reverse(APP_NAME+':'+self.child_class, kwargs={'pk': self.pk})
 
-	def get_edit_url(self):
-		return f'{ADMIN_URL}{APP_NAME}/{self.child_class}/{self.pk}/change/'
+    def get_edit_url(self):
+        return f'{ADMIN_URL}{APP_NAME}/{self.child_class}/{self.pk}/change/'
 
 
 class Project(ManagerPage):
-	# priority2=models.IntegerField(_("priority"),default=100)
-	percent = models.IntegerField(_('درصد پیشرفت'), default=0, validators=[
-	                              MinValueValidator(0), MaxValueValidator(100)])
-	start_date = models.DateField(
-	    _("شروع"), null=True, blank=True, auto_now=False, auto_now_add=False)
-	end_date = models.DateField(_("پایان"), null=True,
-	                            blank=True, auto_now=False, auto_now_add=False)
+    # priority2=models.IntegerField(_("priority"),default=100)
+    percent = models.IntegerField(_('درصد پیشرفت'), default=0, validators=[
+                                  MinValueValidator(0), MaxValueValidator(100)])
+    start_date = models.DateField(
+        _("شروع"), null=True, blank=True, auto_now=False, auto_now_add=False)
+    end_date = models.DateField(_("پایان"), null=True,
+                                blank=True, auto_now=False, auto_now_add=False)
 
-	def persian_start_date(self):
-		return PersianCalendar().from_gregorian_date(self.start_date)
+    def persian_start_date(self):
+        return PersianCalendar().from_gregorian_date(self.start_date)
 
-	def persian_end_date(self):
-		return PersianCalendar().from_gregorian_date(self.end_date)
+    def persian_end_date(self):
+        return PersianCalendar().from_gregorian_date(self.end_date)
 
-	def get_resource(self):
-		return self.color
-		if self.color == ColorEnum.SUCCESS:
-			return 'spring'
+    def get_resource(self):
+        return self.color
+        if self.color == ColorEnum.SUCCESS:
+            return 'spring'
 
-		if self.color == ColorEnum.DANGER:
-			return 'sports'
+        if self.color == ColorEnum.DANGER:
+            return 'sports'
 
-		if self.color == ColorEnum.WARNING:
-			return 'winter'
+        if self.color == ColorEnum.WARNING:
+            return 'winter'
 
-		if self.color == ColorEnum.INFO:
-			return 'autumn'
+        if self.color == ColorEnum.INFO:
+            return 'autumn'
 
-		if self.color == ColorEnum.ROSE:
-			return 'summer'
+        if self.color == ColorEnum.ROSE:
+            return 'summer'
 
-		if self.color == ColorEnum.PRIMARY:
-			return 'summer'
+        if self.color == ColorEnum.PRIMARY:
+            return 'summer'
 
-		if self.color == ColorEnum.SECONDARY:
-			return 'autumn'
+        if self.color == ColorEnum.SECONDARY:
+            return 'autumn'
 
-	events = models.ManyToManyField(
-	    "Event", blank=True, verbose_name=_("رویداد ها"))
-	contractors = models.ManyToManyField(
-	    "Contractor", blank=True, verbose_name=_("پیمانکار ها"))
-	organization_units = models.ManyToManyField(
-	    "OrganizationUnit", blank=True, verbose_name=_("واحد های سازمانی"))
-	location = models.TextField(
-	    _('موقعیت در نقشه گوگل مپ'), null=True, blank=True)
+    events = models.ManyToManyField(
+        "Event", blank=True, verbose_name=_("رویداد ها"))
+    contractors = models.ManyToManyField(
+        "Contractor", blank=True, verbose_name=_("پیمانکار ها"))
+    organization_units = models.ManyToManyField(
+        "OrganizationUnit", blank=True, verbose_name=_("واحد های سازمانی"))
+    location = models.TextField(
+        _('موقعیت در نقشه گوگل مپ'), null=True, blank=True)
 
-	def save(self):
-		self.child_class = 'project'
-		super(Project, self).save()
+    def save(self):
+        self.child_class = 'project'
+        super(Project, self).save()
 
-	def get_guantt_url(self):
-		return reverse('projectmanager:guantt', kwargs={'pk': self.pk})
+    def get_guantt_url(self):
+        return reverse('projectmanager:guantt', kwargs={'pk': self.pk})
 
-	def childs(self):
-		return Project.objects.filter(parent=self).order_by('start_date')
+    def childs(self):
+        return Project.objects.filter(parent=self).order_by('start_date')
 
-	class Meta:
-		verbose_name = _("Project")
-		verbose_name_plural = _("Projects")
+    class Meta:
+        verbose_name = _("Project")
+        verbose_name_plural = _("Projects")
 
 
 class Employee(models.Model):
@@ -207,7 +207,7 @@ class Employee(models.Model):
         verbose_name_plural = _("Employees - کارکنان")
 
     def get_absolute_url(self):
-        return reverse('app:profile', kwargs={'profile_id': self.profile.pk})
+        return self.profile.get_absolute_url()
 
     def get_edit_url(self):
         if self.profile is not None:
@@ -215,35 +215,35 @@ class Employee(models.Model):
 
 
 class Assignment(ManagerPage):
-	assign_to = models.ForeignKey(
-	    "Employee", verbose_name="کاربر مربوط", on_delete=models.PROTECT)
-	status = models.CharField(_('status'), max_length=50,
-	                          choices=AssignmentStatusEnum.choices, default=AssignmentStatusEnum.DEFAULT)
+    assign_to = models.ForeignKey(
+        "Employee", verbose_name="کاربر مربوط", on_delete=models.PROTECT)
+    status = models.CharField(_('status'), max_length=50,
+                              choices=AssignmentStatusEnum.choices, default=AssignmentStatusEnum.DEFAULT)
 
-	def save(self):
-		self.child_class='assignment'
-		self.app_name=APP_NAME
-		super(Assignment,self).save()
-	class Meta:
-		verbose_name = _("Assignment")
-		verbose_name_plural = _("Assignments - تکلیف ها")
+    def save(self):
+        self.child_class = 'assignment'
+        self.app_name = APP_NAME
+        super(Assignment, self).save()
 
-	def __str__(self):
-		return f'{self.title} - {self.assign_to.profile.name()}'
+    class Meta:
+        verbose_name = _("Assignment")
+        verbose_name_plural = _("Assignments - تکلیف ها")
 
-
-
+    def __str__(self):
+        return f'{self.title} - {self.assign_to.profile.name()}'
 
 
 class OrganizationUnit(ManagerPage):
 
-	def parent_title(self):
-		if self.parent is not None:
-			return self.parent.title
-	def childs(self):
-		return OrganizationUnit.objects.filter(parent=self)
-	def get_template(self):
-		template= f"""
+    def parent_title(self):
+        if self.parent is not None:
+            return self.parent.title
+
+    def childs(self):
+        return OrganizationUnit.objects.filter(parent=self)
+
+    def get_template(self):
+        template = f"""
 		<div>
 		<h4 class="mt-4">
 			<a class="text-{self.color} mb-2" href="{self.get_absolute_url()}">
@@ -251,8 +251,8 @@ class OrganizationUnit(ManagerPage):
 				{self.title}</a>  
 			</h4>
 		"""
-		for employee in self.employee_set.all():
-		    template+=f"""
+        for employee in self.employee_set.all():
+            template += f"""
 		        <div class="">
 		            <small>
 		                <a class="d-inline mr-5 text-secondary" href="{employee.profile.get_absolute_url()}">
@@ -263,55 +263,68 @@ class OrganizationUnit(ManagerPage):
 		            </small>
 		        </div>
 		    	"""
-		template+="""
+        template += """
 		<hr>
 		<div class="mr-5">
 		"""
-		for work_unit1 in self.childs():
-			template+=work_unit1.get_template()
-		template+="""
+        for work_unit1 in self.childs():
+            template += work_unit1.get_template()
+        template += """
 		</div>
 		"""
 
+        template += '</div>'
+        return template
 
-		template+='</div>'
-		return template
-
-	def caption(self):
-		return f"""
+    def caption(self):
+        caption = f"""
 		<strong>
 		<a href="{self.get_absolute_url()}">
 		{self.title}
 		</a>
 		</strong>
-	
-		<small>
-		<small>
-		
-		</small>		
-		</small>
+	"""
+        for employee in self.employee_set.all():
+            caption += f"""
+
+			<div>
+			<small>
+
+			<small style="direction:rtl;">
+			<i class="fa fa-user"></i>
+			<a href="{employee.get_absolute_url()}">
+			
+				{employee.profile.name()}
+				</a>
+			</small>
+			</small>		
+			</div>
+			"""
+        caption += """
 
 		
 		"""
+        return caption
 
-	class Meta:
-		verbose_name = _("OrganizationUnit")
-		verbose_name_plural = _("OrganizationUnits")
+    class Meta:
+        verbose_name = _("OrganizationUnit")
+        verbose_name_plural = _("OrganizationUnits")
 
-	def save(self):
-		self.child_class='organizationunit'
-		super(OrganizationUnit,self).save()
+    def save(self):
+        self.child_class = 'organizationunit'
+        super(OrganizationUnit, self).save()
 
 
 class Event(ManagerPage):
-	event_date=models.DateTimeField(_("event_date"), auto_now=False, auto_now_add=False)
+    event_date = models.DateTimeField(
+        _("event_date"), auto_now=False, auto_now_add=False)
 
-	def persian_event_date(self):
-		return PersianCalendar().from_gregorian(self.event_date)
+    def persian_event_date(self):
+        return PersianCalendar().from_gregorian(self.event_date)
 
-	def get_tag(self):
-		event=self
-		return f"""
+    def get_tag(self):
+        event = self
+        return f"""
 		 <div class="timeline-badge {event.color}">
                     {event.icon.get_icon_tag(color=ColorEnum.LIGHT)}
                 </div>
@@ -338,41 +351,33 @@ class Event(ManagerPage):
                     </a>
                 </div>
 		"""
-	class Meta:
-		verbose_name = _("Event")
-		verbose_name_plural = _("Events")
 
-	def save(self):
-		self.child_class='event'
-		super(Event,self).save()
+    class Meta:
+        verbose_name = _("Event")
+        verbose_name_plural = _("Events")
+
+    def save(self):
+        self.child_class = 'event'
+        super(Event, self).save()
 
 
 class Contractor(ManagerPage):
 
-	
+    class Meta:
+        verbose_name = _("Contractor")
+        verbose_name_plural = _("Contractors")
 
-	class Meta:
-		verbose_name = _("Contractor")
-		verbose_name_plural = _("Contractors")
-
-	def save(self):
-		self.child_class='contractor'
-		super(Contractor,self).save()
-
+    def save(self):
+        self.child_class = 'contractor'
+        super(Contractor, self).save()
 
 
 class ArchiveDocument(ManagerPage):
-	
 
-	class Meta:
-		verbose_name = _("ArchiveDocument")
-		verbose_name_plural = _("اسناد آرشیوی")
+    class Meta:
+        verbose_name = _("ArchiveDocument")
+        verbose_name_plural = _("اسناد آرشیوی")
 
-	def save(self):
-		self.child_class='archivedocument'
-		super(ArchiveDocument,self).save()
-
-
-
-
-
+    def save(self):
+        self.child_class = 'archivedocument'
+        super(ArchiveDocument, self).save()
