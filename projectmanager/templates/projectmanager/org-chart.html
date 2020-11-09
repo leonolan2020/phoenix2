@@ -2,7 +2,9 @@
 <html>
 
 <head>
-
+<title>
+  چارت سازمانی
+</title>
   {% include "projectmanager/includes/head-google.html" %}
 
 <style>
@@ -61,12 +63,12 @@
       // data.addRow([{'v':name, 'f':caption}, manager, tooltip])
 
       org_units.forEach(element => {
-        console.log(element)
-        name = element.title
+        // console.log(element)
+        id = element.id.toString(10)
         caption = element.caption
-        manager = element.parent_title
+        manager = element.parent_id?element.parent_id.toString(10):null
         tooltip = element.title
-        data.addRow([{ 'v': name, 'f': caption }, manager, tooltip])
+        data.addRow([{ 'v': id, 'f': caption }, manager, tooltip])
       });
 
 
