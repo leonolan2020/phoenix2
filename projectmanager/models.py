@@ -235,15 +235,15 @@ class Assignment(ManagerPage):
 
 class OrganizationUnit(ManagerPage):
 
-    def parent_title(self):
-        if self.parent is not None:
-            return self.parent.title
+	def parent_title(self):
+		if self.parent is not None:
+			return self.parent.title
 
-    def childs(self):
-        return OrganizationUnit.objects.filter(parent=self)
+	def childs(self):
+		return OrganizationUnit.objects.filter(parent=self)
 
-    def get_template(self):
-        template = f"""
+	def get_template(self):
+		template = f"""
 		<div>
 		<h4 class="mt-4">
 			<a class="text-{self.color} mb-2" href="{self.get_absolute_url()}">
@@ -251,8 +251,8 @@ class OrganizationUnit(ManagerPage):
 				{self.title}</a>  
 			</h4>
 		"""
-        for employee in self.employee_set.all():
-            template += f"""
+		for employee in self.employee_set.all():
+			template += f"""
 		        <div class="">
 		            <small>
 		                <a class="d-inline mr-5 text-secondary" href="{employee.profile.get_absolute_url()}">
@@ -263,29 +263,33 @@ class OrganizationUnit(ManagerPage):
 		            </small>
 		        </div>
 		    	"""
-        template += """
+		template += """
 		<hr>
 		<div class="mr-5">
 		"""
-        for work_unit1 in self.childs():
-            template += work_unit1.get_template()
-        template += """
+		for work_unit1 in self.childs():
+			template += work_unit1.get_template()
+		template += """
 		</div>
 		"""
 
-        template += '</div>'
-        return template
+		template += '</div>'
+		return template
 
-    def caption(self):
-        caption = f"""
+	def caption(self):
+		icon=self.icon.get_icon_tag(color=ColorEnum.PRIMARY) if self.icon is not None else ''
+		icon=''
+		caption = f"""
 		<strong>
 		<a href="{self.get_absolute_url()}">
+		
+			{icon}
 		{self.title}
 		</a>
 		</strong>
 	"""
-        for employee in self.employee_set.all():
-            caption += f"""
+		for employee in self.employee_set.all():
+			caption += f"""
 
 			<div>
 			<small>
@@ -300,19 +304,16 @@ class OrganizationUnit(ManagerPage):
 			</small>		
 			</div>
 			"""
-        caption += """
+		caption += """ """
+		return caption
 
-		
-		"""
-        return caption
+	class Meta:
+		verbose_name = _("OrganizationUnit")
+		verbose_name_plural = _("OrganizationUnits")
 
-    class Meta:
-        verbose_name = _("OrganizationUnit")
-        verbose_name_plural = _("OrganizationUnits")
-
-    def save(self):
-        self.child_class = 'organizationunit'
-        super(OrganizationUnit, self).save()
+	def save(self):
+		self.child_class = 'organizationunit'
+		super(OrganizationUnit, self).save()
 
 
 class Event(ManagerPage):
