@@ -901,7 +901,9 @@ class Resume(Page):
         return f"""
                <i class="material-icons">palette</i>
             """
-    
+    def get_edit_url(self):
+        return f'{ADMIN_URL}{APP_NAME}/resume/{self.pk}/change/'
+      
 class Tag(models.Model):
     priority = models.IntegerField(_("ترتیب"), default=100)
     image_header = models.ImageField(_("تصویر سربرگ"), null=True, blank=True,
