@@ -9,6 +9,7 @@ from dashboard.utils import AdminUtility
 from dashboard.views import getContext as DashboardContext
 from django.shortcuts import render,redirect,reverse
 from django.views import View
+from dashboard.repo import ResumeRepo as DashboardResumeRepo
 from django.http import Http404
 from .repo import *
 from .forms import *
@@ -158,7 +159,7 @@ class PageViews(View):
 
     def resume(self,request,pk,*args, **kwargs):
         user=request.user
-        resume=ResumeRepo(user=user).resume(resume_id=pk)
+        resume=DashboardResumeRepo(user=user).resume(resume_id=pk)
         context=self.getPageContext(request=request,page=resume)        
         context['page']=resume
         context['resume']=resume

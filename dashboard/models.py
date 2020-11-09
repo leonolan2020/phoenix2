@@ -905,6 +905,8 @@ class Resume(Page):
             """
     def get_edit_url(self):
         return f'{ADMIN_URL}{APP_NAME}/resume/{self.pk}/change/'
+    def get_absolute_url(self):
+        return reverse(f'{self.app_name}:resume',kwargs={'pk':self.pk})
       
 class Tag(models.Model):
     priority = models.IntegerField(_("ترتیب"), default=100)
