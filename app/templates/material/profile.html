@@ -85,7 +85,7 @@
                             <li class="nav-item " id="resumecategory_{{resumecategory.pk}}">
                                 <a class="nav-link" href="#resumecategory{{resumecategory.pk}}" role="tab"
                                     data-toggle="tab" aria-selected="true">
-                                    {{resumecategory.get_icon|safe}}
+                                    {{resumecategory.get_icon_tag|safe}}
                                     {{resumecategory.title}}
                                 </a>
                             </li>
@@ -493,6 +493,12 @@
         </li>
     </ul>
 </nav>
+
+<script>
+let categories=JSON.parse(`{{resumecategories_s|escapejs}}`)
+
+</script>
+
 
 
 {% for resumecategory in selected_profile.resumecategory_set.all %}

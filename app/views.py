@@ -3,7 +3,7 @@ from authentication.repo import ProfileRepo
 from dashboard.enums import *
 from dashboard.forms import AddTagForm,AddDocumentForm,AddCommentForm,AddLinkForm,AddImageForm
 from dashboard.repo import TagRepo,SocialLinkRepo
-from dashboard.serializers import TagSerializer,DocumentSerializer,CommentSerializer,LinkSerializer,GalleryPhotoSerializer
+from dashboard.serializers import ResumeCategorySerializer,TagSerializer,DocumentSerializer,CommentSerializer,LinkSerializer,GalleryPhotoSerializer
 from dashboard.settings import ADMIN_URL,MEDIA_URL
 from dashboard.utils import AdminUtility
 from dashboard.views import getContext as DashboardContext
@@ -113,6 +113,10 @@ class ProfileViews(View):
         context=getContext(request)
         context['body_class']='profile-page'
         context['selected_profile']=selected_profile
+        resumecategories=selected_profile.resumecategory_set.all()
+        resumecategories_s=json.dumps(ResumeCategorySerializer(resumecategories,many=True).data)
+        context['resumecategories_s']=resumecategories_s
+
         return render(request,TEMPLATE_ROOT+'profile.html',context)
 
 class ExampleViews(View):

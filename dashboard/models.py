@@ -470,7 +470,7 @@ class ResumeCategory(models.Model):
     icon = models.ForeignKey("Icon", verbose_name='icon',
                              on_delete=models.SET_NULL, null=True, blank=True)
 
-    def get_icon(self):
+    def get_icon_tag(self):
         if self.icon is not None:
             return self.icon.get_icon_tag()
         return f"""
@@ -895,7 +895,13 @@ class Resume(Page):
         self.child_class = 'resume'
         super(Resume, self).save()
 
-
+    def get_icon_tag(self):
+        if self.icon is not None:
+            return self.icon.get_icon_tag()
+        return f"""
+               <i class="material-icons">palette</i>
+            """
+    
 class Tag(models.Model):
     priority = models.IntegerField(_("ترتیب"), default=100)
     image_header = models.ImageField(_("تصویر سربرگ"), null=True, blank=True,

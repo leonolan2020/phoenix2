@@ -1,12 +1,23 @@
 from rest_framework import serializers
-from .models import Comment,Blog,Link,Notification,Tag,Document,GalleryPhoto
+from .models import Comment,Blog,Link,Notification,Tag,Document,GalleryPhoto,Resume,ResumeCategory
 from authentication.models import Profile
 from authentication.serializers import ProfileSerializer
+
+class ResumeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=Resume
+        fields=['id','get_icon_tag','color','title','short_description','description','image','persian_date_added_tag','get_absolute_url']
+
+class ResumeCategorySerializer(serializers.ModelSerializer):
+    resumes=ResumeSerializer(many=True)
+    class Meta:
+        model=ResumeCategory
+        fields=['id','resumes','title','get_icon_tag']
 
 class BlogSerializer(serializers.ModelSerializer):
     class Meta:
         model=Blog
-        fields=['id','pretitle','icon','color','title','short_desc','description','image','persian_date_added','get_absolute_url']
+        fields=['id','pretitle','icon','color','title','short_description','description','image','persian_date_added_tag','get_absolute_url']
 
 class LinkSerializer(serializers.ModelSerializer):
     class Meta:
