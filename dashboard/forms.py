@@ -36,6 +36,15 @@ class AddDocumentForm(forms.Form):
     page_id=forms.IntegerField(required=True)
     title=forms.CharField(max_length=100,required=True)
 
+class AddResumeCategoryForm(forms.Form):
+    profile_id=forms.IntegerField(required=True)
+    title=forms.CharField(max_length=100,required=True)
+
+class AddResumeForm(forms.Form):
+    category_id=forms.IntegerField(required=True)
+    title=forms.CharField(max_length=100,required=True)
+    app_name=forms.CharField(max_length=100,required=True)
+
 class DeleteCommentForm(forms.Form):
     comment_id=forms.IntegerField(required=True)
 class AddCommentForm(forms.Form):

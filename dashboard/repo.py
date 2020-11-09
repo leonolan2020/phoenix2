@@ -439,7 +439,15 @@ class ResumeCategoryRepo:
     def list(self,ourteam_id):
         return self.objects.filter(our_team_id=ourteam_id)
 
-
+    def add(self,title,profile_id):
+        resume_category=self.objects.filter(profile_id=profile_id).filter(title=title)
+        if len(resume_category)>0:
+            return None
+        icon=Icon(icon_material='dashboard',color=ColorEnum.PRIMARY,icon_title='آیکون '+title)
+        icon.save()
+        resume_category=ResumeCategory(profile_id=profile_id,title=title,icon=icon)
+        resume_category.save()
+        return resume_category
 class GalleryPhotoRepo:    
     def __init__(self,user=None):
         self.user=user
@@ -476,6 +484,19 @@ class ResumeRepo:
     def resume(self,resume_id):
         try:
             return self.objects.get(pk=resume_id)
+        except:
+            return None
+    def add(self,title,category_id,app_name):
+        
+        try:
+            category=ResumeCategory.objects.get(pk=category_id)
+            icon=Icon(icon_material='dashboard',color=ColorEnum.PRIMARY,icon_title='آیکون '+title)
+            icon.save()
+            resume=Resume(title=title,icon=icon,app_name=app_name)
+            resume.save()
+            category.resumes.add(resume)
+            category.save()
+            return resume
         except:
             return None
 class LinkRepo11:

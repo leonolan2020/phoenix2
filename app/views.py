@@ -1,7 +1,7 @@
 from .apps import APP_NAME
 from authentication.repo import ProfileRepo
 from dashboard.enums import *
-from dashboard.forms import AddTagForm,AddDocumentForm,AddCommentForm,AddLinkForm,AddImageForm
+from dashboard.forms import AddResumeForm,AddResumeCategoryForm,AddTagForm,AddDocumentForm,AddCommentForm,AddLinkForm,AddImageForm
 from dashboard.repo import TagRepo,SocialLinkRepo
 from dashboard.serializers import ResumeCategorySerializer,TagSerializer,DocumentSerializer,CommentSerializer,LinkSerializer,GalleryPhotoSerializer
 from dashboard.settings import ADMIN_URL,MEDIA_URL
@@ -106,13 +106,17 @@ class BasicViews(View):
 
 class ProfileViews(View):
     def profile(self,request,profile_id=0,*args,**kwargs):
+        context=getContext(request)
         if profile_id==0:
             selected_profile=ProfileRepo(user=request.user).me
         else:
             selected_profile=ProfileRepo(user=request.user).get(profile_id=profile_id)
-        context=getContext(request)
         context['body_class']='profile-page'
         context['selected_profile']=selected_profile
+
+        if selected_profile is not None:
+            context['add_resume_category_form']=AddResumeCategoryForm()
+            context['add_resume_form']=AddResumeForm()
         resumecategories=selected_profile.resumecategory_set.all()
         resumecategories_s=json.dumps(ResumeCategorySerializer(resumecategories,many=True).data)
         context['resumecategories_s']=resumecategories_s

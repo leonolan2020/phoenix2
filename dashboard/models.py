@@ -175,6 +175,8 @@ class Page(models.Model):
     def image(self):
         if self.image_origin:
             return MEDIA_URL+str(self.image_origin)
+        else:
+            return STATIC_URL+'/material/img/bg7.jpg'
 
     def thumbnail(self):
         if self.thumbnail_origin:

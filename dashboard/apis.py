@@ -137,6 +137,48 @@ class PageViews(APIView):
         return JsonResponse({'result':FAILED,'level':level})
 
 
+    def add_resume_category(self,request,*args, **kwargs):  
+        level=1  
+        user=request.user
+        profile=ProfileRepo(user=user).me
+        
+        if request.method=='POST' and profile is not None:
+            level=2
+            add_resume_category_form=AddResumeCategoryForm(request.POST)
+            if add_resume_category_form.is_valid():
+                level=3
+                title=add_resume_category_form.cleaned_data['title']
+                profile_id=add_resume_category_form.cleaned_data['profile_id']
+                
+                resume_category=ResumeCategoryRepo(user=user).add(profile_id=profile_id,title=title)
+                if resume_category is not None:
+                                      
+                    resume_category_s=ResumeCategorySerializer(resume_category).data
+                    return JsonResponse({'resume_category':resume_category_s,'result':SUCCEED})
+
+        return JsonResponse({'result':FAILED,'level':level})
+    def add_resume(self,request,*args, **kwargs):  
+        level=1  
+        user=request.user
+        profile=ProfileRepo(user=user).me
+        
+        if request.method=='POST' and profile is not None:
+            level=2
+            add_resume_form=AddResumeForm(request.POST)
+            if add_resume_form.is_valid():
+                level=3
+                title=add_resume_form.cleaned_data['title']
+                category_id=add_resume_form.cleaned_data['category_id']
+                app_name=add_resume_form.cleaned_data['app_name']
+                
+                resume=ResumeRepo(user=user).add(app_name=app_name,category_id=category_id,title=title)
+                if resume is not None:
+                                      
+                    resume_s=ResumeSerializer(resume).data
+                    return JsonResponse({'resume':resume_s,'result':SUCCEED})
+
+        return JsonResponse({'result':FAILED,'level':level})
+
     def add_link(self,request,*args, **kwargs):  
         level=1  
         user=request.user

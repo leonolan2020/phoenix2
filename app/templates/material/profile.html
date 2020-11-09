@@ -198,7 +198,7 @@
                             <div class="row rtl">
                                 <div class="col-3"></div>
                                 <div class="col-3">
-            
+
                                     <input type="text" placeholder="نام رزومه جدید" v-model="new_resume_title"
                                         class="form-control">
                                 </div>
@@ -441,32 +441,80 @@
 
 <script>
     let resumecategories = JSON.parse(`{{resumecategories_s|escapejs}}`)
+    let profile_id = parseInt("{{selected_profile.id}}")
+    let url_add_resume_category = "{% url 'dashboard:add_resume_category' %}"
+    let url_add_resume = "{% url 'dashboard:add_resume' %}"
+
     let app = new Vue({
         el: "#app",
         data: {
             new_resumecategory_title: '',
             resumecategories: resumecategories,
-            new_resume_title:'',
+            new_resume_title: '',
         },
         methods: {
             add_category: function () {
-                this.resumecategories.push({
-                    title: this.new_resumecategory_title,
-                    get_icon_tag: '<i class="material-icons">dashboard</i>',
-                    resumes: [],//[{ title: 'sss', thumbnail: '/' }, { title: 'ffff', thumbnail: '/' }]
-                })
-            },
-            add_resume: function (id) {
-                this.resumecategories.forEach(element => {
-                    if(element.id==id){
-                        element.resumes.push(
-                            
-                                { title: this.new_resume_title, thumbnail: '/media/dashboard/images/Page/Main/control.jpg' } 
-                            
-                        )
+
+
+
+
+                let title = this.new_resumecategory_title
+
+
+                var posting = $.post(url_add_resume_category,
+                    {
+                        profile_id: profile_id,
+                        title: title,
+                        csrfmiddlewaretoken: csrfmiddlewaretoken
+                    }
+                );
+
+                // Put the results in a div
+                posting.done(function (data) {
+                    console.log(data)
+
+                    if (data.result === 'SUCCEED') {
+                        app.resumecategories.push(data.resume_category)
+                        app.new_resumecategory_title = ''
                     }
                 })
-               
+
+
+            },
+            add_resume: function (category_id) {
+
+
+
+
+                let title = this.new_resume_title
+
+
+                var posting = $.post(url_add_resume,
+                    {
+                        category_id: category_id,
+                        title: title,
+                        app_name: 'app',
+                        csrfmiddlewaretoken: csrfmiddlewaretoken
+                    }
+                );
+
+                // Put the results in a div
+                posting.done(function (data) {
+                    console.log(data)
+
+                    if (data.result === 'SUCCEED') {
+
+                        app.resumecategories.forEach(element => {
+                            if (element.id == category_id) {
+                                element.resumes.push(data.resume)
+                            }
+                        })
+
+
+                        app.new_resume_title = ''
+                    }
+                })
+
             }
         }
     })
