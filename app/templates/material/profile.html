@@ -69,6 +69,21 @@
                     {{profile.bio}}
                 </p>
                 {% endif %}
+                <div class="row rtl">
+                    <div class="col-3"></div>
+                    <div class="col-3">
+
+                        <input type="text" placeholder="نام دسته بندی جدید" v-model="new_resumecategory_title"
+                            class="form-control">
+                    </div>
+                    <div class="col-3">
+                        <button class="btn btn-info" @click="add_category">
+                            افزودن دسته بندی
+                        </button>
+                    </div>
+                    <div class="col-3"></div>
+                </div>
+
             </div>
             <div class="row rtl">
                 <div class="col-12">
@@ -81,20 +96,21 @@
 
                             <!-- {% if forloop.first %}active show{% endif %} -->
 
-                            <li class="nav-item " v-for="resumecategory in resumecategories" :id="'resumecategory_'+resumecategory.id">
+                            <li class="nav-item " v-for="resumecategory in resumecategories"
+                                :id="'resumecategory_'+resumecategory.id">
                                 <a class="nav-link" :href="'#resumecategory'+resumecategory.id" role="tab"
                                     data-toggle="tab" aria-selected="true">
                                     <div v-html="resumecategory.get_icon_tag"></div>
-                                  {% verbatim %}
-                                  {{resumecategory.title}}
-                                    
-                                  {% endverbatim %}
+                                    {% verbatim %}
+                                    {{resumecategory.title}}
+
+                                    {% endverbatim %}
                                 </a>
                             </li>
 
 
 
-                         
+
 
 
                             <li class="nav-item">
@@ -116,119 +132,21 @@
             </div>
             <div class="tab-content tab-space">
 
-         
+
                 <!-- {% if forloop.first %}active show{% endif %} -->
-                <div v-for="resumecategory in resumecategories" class="tab-pane work " :id="'resumecategory'+resumecategory.id">
+                <div v-for="resumecategory in resumecategories" class="tab-pane work "
+                    :id="'resumecategory'+resumecategory.id">
                     <div class="row">
                         <div class="col-md-7 ml-auto mr-auto ">
                             <!-- <h4 class="title farsi text-right">رزومه</h4> -->
-                           
+
 
 
 
                             <div class="row collections rtl">
 
 
-                             
-                                <div v-for="resume in resumecategory.resumes" class="col-md-6">
-                                    <div class="rotating-card-container manual-flip" style="margin-bottom: 30px;">
-                                        <div class="card card-rotate">
-                                            <div class="front front-background"
-                                                style="background-image: url(&quot;{{resume.thumbnail}}&quot;); width: 289.984px;">
-                                                <div class="card-body">
-                                                    <h6 class="card-category farsi"> {{resume.pretitle}}</h6>
-                                                    <a href="#pablo">
-                                                        <h3 class="card-title farsi">
-                                                            {{resume.title}}
-                                                        </h3>
-                                                    </a>
-                                                    <p class="card-description">
-                                                        {{resume.posttitle}}
-                                                    </p>
-                                                    <div class="stats text-center">
-                                                        <button type="button" name="button"
-                                                            class="btn btn-danger btn-fill btn-round btn-rotate">
-                                                            <i class="material-icons">refresh</i> بررسی بیشتر
-                                                            <div class="ripple-container"></div></button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="back back-background"
-                                                style="background-image: url(&quot;{{resume.thumbnail}}&quot;); width: 289.984px;">
-                                                <div class="card-body">
-                                                    <h5 class="card-title farsi">
-                                                        {{resume.title}}
-                                                    </h5>
-                                                    <div class="card-description">
-                                                        {{resume.short_description|safe}}
 
-                                                    </div>
-                                                    <div class="stats text-center">
-                                                        <a href="{{resume.get_absolute_url}}" title="جزییات"
-                                                            class="btn btn-info btn-just-icon btn-fill btn-round">
-                                                            <i class="material-icons">subject</i>
-                                                        </a>
-                                                        <a href="{{resume.get_edit_url}}"
-                                                            class="btn btn-success btn-just-icon btn-fill btn-round btn-wd">
-                                                            <i class="material-icons">mode_edit</i>
-                                                        </a>
-                                                        <a href="#pablo"
-                                                            class="btn btn-danger btn-just-icon btn-fill btn-round">
-                                                            <i class="material-icons">delete</i>
-                                                        </a>
-                                                        <br>
-                                                        <br>
-                                                        <button type="button" name="button"
-                                                            class="btn btn-success btn-fill btn-round btn-rotate farsi">
-                                                            <i class="material-icons">refresh</i> بازگشت
-                                                            <div class="ripple-container"></div></button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-
-                                <!-- <div class="col-md-6 col-lg-4">
-                                    <div class="rotating-card-container" style="margin-bottom: 30px;">
-                                        <div class="card card-rotate card-background">
-                                            <div class="front front-background" style="background-image: url(&quot;/static/material/img/card-blog5.jpg&quot;); width: 350px;">
-                                                <div class="card-body">
-                                                    <h6 class="card-category">Full Background Card</h6>
-                                                    <a href="#pablo">
-                                                        <h3 class="card-title">This Background Card Will Rotate on Hover</h3>
-                                                    </a>
-                                                    <p class="card-description">
-                                                        Don't be scared of the truth because we need to restart the human
-                                                        foundation in truth And I love you like Kanye loves Kanye I love Rick
-                                                        Owens’ bed design but the back is...
-                                                    </p>
-                                                </div>
-                                            </div>
-                                            <div class="back back-background" style="background-image: url(&quot;/static/material/img/card-blog5.jpg&quot;); width: 350px;">
-                                                <div class="card-body">
-                                                    <h5 class="card-title">
-                                                        Manage Post
-                                                    </h5>
-                                                    <p class="card-description">As an Admin, you have shortcuts to edit, view or
-                                                        delete the posts.</p>
-                                                    <div class="footer text-center">
-                                                        <a href="#pablo" class="btn btn-info btn-just-icon btn-fill btn-round">
-                                                            <i class="material-icons">subject</i>
-                                                        </a>
-                                                        <a href="#pablo" class="btn btn-success btn-just-icon btn-fill btn-round btn-wd">
-                                                            <i class="material-icons">mode_edit</i>
-                                                        </a>
-                                                        <a href="#pablo" class="btn btn-danger btn-just-icon btn-fill btn-round">
-                                                            <i class="material-icons">delete</i>
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div> -->
 
 
                                 <div v-for="resume in resumecategory.resumes" class="col-md-6">
@@ -244,8 +162,9 @@
                                         </div>
                                         <div class="card-body ">
                                             <h4 class="card-title farsi" v-text="resume.title"></h4>
-                                            <p class="card-category text-center text-gray" v-text="resume.short_description">
-                                             
+                                            <p class="card-category text-center text-gray"
+                                                v-text="resume.short_description">
+
                                             </p>
                                         </div>
                                         <div class="card-footer justify-content-center">
@@ -262,30 +181,46 @@
                                                 <div class="ripple-container"></div>
                                             </a>
 
-                                          
+
                                             <a href="#pablo" class="btn btn-danger btn-just-icon btn-fill btn-round">
                                                 <i class="material-icons">delete</i>
-                                            <div class="ripple-container"></div></a>
+                                                <div class="ripple-container"></div>
+                                            </a>
 
                                         </div>
                                     </div>
                                 </div>
 
-                          
+
 
 
                             </div>
-                            <p class="text-center">
+                            <div class="row rtl">
+                                <div class="col-3"></div>
+                                <div class="col-3">
+            
+                                    <input type="text" placeholder="نام رزومه جدید" v-model="new_resume_title"
+                                        class="form-control">
+                                </div>
+                                <div class="col-3">
+                                    <button class="btn btn-info" @click="add_resume(resumecategory.id)">
+                                        افزودن رزومه
+                                    </button>
+                                </div>
+                                <div class="col-3"></div>
+                            </div>
 
-                                <a class="btn btn-info" href="{{resumecategory.get_edit_url}}">
+                            <!-- <p class="text-center">
+
+                                <a class="btn btn-info" :href="resumecategory.get_edit_url">
                                     اصلاح {{resumecategory.title}}
                                 </a>
-                            </p>
+                            </p> -->
                         </div>
                         <div class="col-md-2 mr-auto ml-auto stats">
                             <h4 class="title">
                                 {% verbatim %}
-                                  {{resumecategory.title}}
+                                {{resumecategory.title}}
                                 {% endverbatim %}
                             </h4>
                             <ul class="list-unstyled">
@@ -306,8 +241,8 @@
                     </div>
                 </div>
 
-         
-                
+
+
 
 
 
@@ -499,7 +434,7 @@
 </nav>
 <script src="{% static 'vendor/js/vue.min.js' %}"></script>
 <script>
-let categories=JSON.parse(`{{resumecategories_s|escapejs}}`)
+    let categories = JSON.parse(`{{resumecategories_s|escapejs}}`)
 
 </script>
 
@@ -509,8 +444,31 @@ let categories=JSON.parse(`{{resumecategories_s|escapejs}}`)
     let app = new Vue({
         el: "#app",
         data: {
+            new_resumecategory_title: '',
             resumecategories: resumecategories,
+            new_resume_title:'',
         },
+        methods: {
+            add_category: function () {
+                this.resumecategories.push({
+                    title: this.new_resumecategory_title,
+                    get_icon_tag: '<i class="material-icons">dashboard</i>',
+                    resumes: [],//[{ title: 'sss', thumbnail: '/' }, { title: 'ffff', thumbnail: '/' }]
+                })
+            },
+            add_resume: function (id) {
+                this.resumecategories.forEach(element => {
+                    if(element.id==id){
+                        element.resumes.push(
+                            
+                                { title: this.new_resume_title, thumbnail: '/media/dashboard/images/Page/Main/control.jpg' } 
+                            
+                        )
+                    }
+                })
+               
+            }
+        }
     })
 </script>
 

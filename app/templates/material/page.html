@@ -124,7 +124,11 @@
                                 </div>
                             </div>
                             <div class="col-md-8">
-                                <h4 class="card-title farsi">{{page.profile.name}}</h4>
+                                <a href="{{page.profile.get_absolute_url}}">
+
+
+                                    <h4 class="card-title farsi">{{page.profile.name}}</h4>
+                                </a>
                                 {% if page.profile.bio %}
                                 <p class="description text-center">
                                     {{page.profile.bio}}
