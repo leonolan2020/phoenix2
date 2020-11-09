@@ -474,7 +474,7 @@ class ResumeCategory(models.Model):
 
     def get_icon_tag(self):
         if self.icon is not None:
-            return self.icon.get_icon_tag()
+            return self.icon.get_icon_tag(color='--')
         return f"""
                <i class="material-icons">palette</i>
             """
