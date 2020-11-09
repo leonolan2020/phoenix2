@@ -187,6 +187,8 @@ class Page(models.Model):
     def header_image(self):
         if self.header_image_origin:
             return MEDIA_URL+str(self.header_image_origin)
+        else:
+            return STATIC_URL+'material/img/bg7.jpg'
 
     def __str__(self):
         return f'page({self.pk}) - {self.title}'
