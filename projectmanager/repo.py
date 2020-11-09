@@ -5,6 +5,8 @@ from dashboard.models import Icon
 from dashboard.enums import ColorEnum,IconsEnum
 from django.db.models import Q,F
 import datetime
+
+
 class ManagerPageRepo:
     def __init__(self,user=None):
         self.objects=ManagerPage.objects
@@ -18,6 +20,7 @@ class ManagerPageRepo:
             return self.objects.get(pk=page_id)
         except :
             return None
+
 
 class ContractorRepo:
     def __init__(self,user=None):
@@ -38,6 +41,7 @@ class ContractorRepo:
             return self.objects.get(pk=contractor_id)
         except:
             return None
+
 
 class EventRepo:
     def __init__(self,user=None):
@@ -67,6 +71,7 @@ class EventRepo:
             project.save()
             return event
 
+
 class ArchiveDocumentRepo:
     def __init__(self,user=None):
         self.objects=ArchiveDocument.objects
@@ -91,9 +96,8 @@ class ArchiveDocumentRepo:
         archivedocument.save()
         if archivedocument is not None:
             return archivedocument
-    
-    
-  
+
+
 class OrganizationUnitRepo():
     def __init__(self,user=None):
         self.objects=OrganizationUnit.objects
@@ -112,14 +116,15 @@ class OrganizationUnitRepo():
             parent=None
         else:
             parent=self.organizationunit(organizationunit_id=parent_id)
-        icon=Icon(color=ColorEnum.PRIMARY,icon_material='dashboard',icon_title='آیکون '+title)
+        icon=Icon(color=ColorEnum.PRIMARY,icon_material='apartment',icon_title='آیکون '+title)
         icon.save()
         
         organizationunit=OrganizationUnit(parent=parent,icon=icon,title=title,short_description='',description='')
         organizationunit.save()
         if organizationunit is not None:
             return organizationunit
-    
+
+
 class ProjectRepo:
     def __init__(self,user=None):
         self.objects=Project.objects
@@ -205,5 +210,4 @@ class ProjectRepo:
         project.save()
         if project is not None:
             return project
-             
-              
+

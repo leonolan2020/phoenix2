@@ -15,7 +15,11 @@
       </div>
       <div class="card-body">
         <div class="my-3">
-          <a class="btn btn-success btn-round" href="{% url 'projectmanager:organizationchart' %}">چارت سازمانی</a>
+          <a class="btn btn-success btn-round" href="{% url 'projectmanager:organizationchart' %}">
+            <i class="material-icons">
+              corporate_fare
+            </i>
+            چارت سازمانی</a>
 
         </div>
         {% for org_unit in organization_units %}
