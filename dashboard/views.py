@@ -5,6 +5,7 @@ from .repo import *
 from .forms import *
 from .enums import *
 from .settings import DEBUG
+from projectmanager.repo import ProjectRepo,AssignmentRepo
 from .serializers import * #NotificationSerializer
 if PUSHER_IS_ENABLE:
     from leopusher.repo import PusherChannelEventRepo
@@ -118,7 +119,12 @@ class BasicViews(View):
         download=DocumentRepo(user=request.user).get(document_id=document_id).download()
         return download
     def home(self,request,*args,**kwargs):
+        user=request.user
         context=getContext(request)
+        assignments=AssignmentRepo(user=user).my_assignments()
+        context['assignments']=assignments
+        my_projects=ProjectRepo(user=user).my_projects()
+        context['my_projects']=ProjectRepo(user=user).my_projects()
         return render(request,TEMPLATE_ROOT+'index.html',context)
 
     def search(self,request,*args, **kwargs):

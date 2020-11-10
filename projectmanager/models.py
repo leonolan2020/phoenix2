@@ -97,7 +97,15 @@ class Project(ManagerPage):
         _("شروع"), null=True, blank=True, auto_now=False, auto_now_add=False)
     end_date = models.DateField(_("پایان"), null=True,
                                 blank=True, auto_now=False, auto_now_add=False)
-
+    # organization_units=models.ManyToManyField("OrganizationUnit",verbose_name=_('organization_units'),blank=True)
+    events = models.ManyToManyField(
+        "Event", blank=True, verbose_name=_("رویداد ها"))
+    contractors = models.ManyToManyField(
+        "Contractor", blank=True, verbose_name=_("پیمانکار ها"))
+    organization_units = models.ManyToManyField(
+        "OrganizationUnit", blank=True, verbose_name=_("واحد های سازمانی"))
+    location = models.TextField(
+        _('موقعیت در نقشه گوگل مپ'), null=True, blank=True)
     def persian_start_date(self):
         return PersianCalendar().from_gregorian_date(self.start_date)
 
@@ -127,14 +135,7 @@ class Project(ManagerPage):
         if self.color == ColorEnum.SECONDARY:
             return 'autumn'
 
-    events = models.ManyToManyField(
-        "Event", blank=True, verbose_name=_("رویداد ها"))
-    contractors = models.ManyToManyField(
-        "Contractor", blank=True, verbose_name=_("پیمانکار ها"))
-    organization_units = models.ManyToManyField(
-        "OrganizationUnit", blank=True, verbose_name=_("واحد های سازمانی"))
-    location = models.TextField(
-        _('موقعیت در نقشه گوگل مپ'), null=True, blank=True)
+    
 
     def save(self):
         self.child_class = 'project'
@@ -215,10 +216,10 @@ class Employee(models.Model):
 
 
 class Assignment(ManagerPage):
-    assign_to = models.ForeignKey(
-        "Employee", verbose_name="کاربر مربوط", on_delete=models.PROTECT)
-    status = models.CharField(_('status'), max_length=50,
-                              choices=AssignmentStatusEnum.choices, default=AssignmentStatusEnum.DEFAULT)
+    
+    project_for = models.ForeignKey("Project",related_name='project_assignments',null=True,blank=True, verbose_name="پروژه مربوط", on_delete=models.PROTECT)
+    assign_to = models.ForeignKey("Employee", verbose_name="کاربر مربوط", on_delete=models.PROTECT)
+    status = models.CharField(_('status'), max_length=50,choices=AssignmentStatusEnum.choices, default=AssignmentStatusEnum.DEFAULT)
 
     def save(self):
         self.child_class = 'assignment'

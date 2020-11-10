@@ -15,9 +15,9 @@
                 <div class="card-icon">
                     <i class="material-icons">apartment</i>
                 </div>
-                <p class="card-category">اطلاعات پرسنلی</p>
+                <p class="card-category"> {{profile.name}}</p>
                 <h3 class="card-title">
-                    {{profile.name}}
+                    اطلاعات پرسنلی
                 </h3>
             </div>
             <div class="card-body">
@@ -43,8 +43,81 @@
 
 
     </div>
-    <div class="col-md-4"></div>
-    <div class="col-md-4"></div>
+    <div class="col-md-4">
+
+        <div class="card card-stats">
+            <div class="card-header card-header-danger card-header-icon">
+                <div class="card-icon">
+                    <i class="material-icons">add_task</i>
+                </div>
+                <p class="card-category"> {{profile.name}}</p>
+                <h3 class="card-title">
+                    وظایف پرسنلی
+
+
+                </h3>
+            </div>
+            <div class="card-body">
+
+                {% for assignment in assignments %}
+                <div class="mb-2">
+                    <a href="{{assignment.get_absolute_url}}">
+                       
+                            {{assignment.title}}
+                      
+                       
+                    </a>
+
+                    <a class="mx-2" href="{{assignment.project_for.get_absolute_url}}">
+
+                        {{assignment.project_for.title}}
+                    </a>
+
+                </div>
+                {% endfor %}
+            </div>
+            <div class="card-footer">
+                <div class="stats">
+
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+    <div class="col-md-4">
+
+        <div class="card card-stats">
+            <div class="card-header card-header-info card-header-icon">
+                <div class="card-icon">
+                    <i class="material-icons">book_online</i>
+                </div>
+                <p class="card-category"> {{profile.name}}</p>
+                <h3 class="card-title">
+                    پروژه های مرتبط
+
+                </h3>
+            </div>
+            <div class="card-body">
+
+                {% for project in my_projects %}
+                <div class="mb-2">
+                    <a href="{{project.get_absolute_url}}">
+                        {{project.title}}
+
+                    </a>
+                </div>
+                {% endfor %}
+            </div>
+            <div class="card-footer">
+                <div class="stats">
+
+                </div>
+            </div>
+        </div>
+
+
+    </div>
 </div>
 <div class="row">
     <div class="col-md-12">

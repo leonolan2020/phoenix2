@@ -1,15 +1,34 @@
 import random
-from .models import Project,Event,OrganizationUnit ,Employee,Contractor,ManagerPage,ArchiveDocument
+from .models import Assignment,Project,Event,OrganizationUnit ,Employee,Contractor,ManagerPage,ArchiveDocument
 from authentication.repo import ProfileRepo
 from dashboard.models import Icon
 from dashboard.enums import ColorEnum,IconsEnum
 from django.db.models import Q,F
 from authentication.models import Profile
 import datetime
+class AssignmentRepo:
+    def __init__(self,user):
+        self.objects=Assignment.objects
+        self.user=user
+        self.profile=ProfileRepo(user=user).me
+    def assignment(self,assignment_id):
+        try:
+            return self.objects.get(pk=assignment_id)
+        except:
+            return None
+    def my_assignments(self):
+        me=EmployeeRepo(user=self.user).me
+        assignments=self.objects.filter(assign_to=me)
+        return assignments
 class EmployeeRepo:
     def __init__(self,user):
         self.objects=Employee.objects
         self.user=user
+        self.profile=ProfileRepo(user=user).me
+        try:
+            self.me=self.objects.get(profile=self.profile)
+        except:
+            self.me=None
     def add(self,role,org_unit_id,first_name,last_name):
         profile=Profile(first_name=first_name,last_name=last_name)
         profile.save()
@@ -40,6 +59,11 @@ class ContractorRepo:
     def __init__(self,user=None):
         self.objects=Contractor.objects
         self.user=user
+        self.profile=ProfileRepo(user=user).me
+        try:
+            self.me=self.objects.get(profile=self.profile)
+        except:
+            self.me=None
     def list(self):
         return self.objects.all()
     def add(self,title):
@@ -144,18 +168,18 @@ class ProjectRepo:
         self.objects=Project.objects
         self.user=user
         self.profile=ProfileRepo(user=self.user).me
-        # self.me_employee=EmployeeRepo(user=self.user).me
-        # self.me_contractor=ContractorRepo(user=self.user).me
+        self.me_employee=EmployeeRepo(user=self.user).me
+        self.me_contractor=ContractorRepo(user=self.user).me
         #must be deleted
         # print('me_employee')
         # print(self.me_employee)
         # print('me_contractor')
         # print(self.me_contractor)
-    # def my_projects(self):
-    #     if self.me_contractor is not None:
-    #         return self.me_contractor.project_set.all()
-    #     if self.me_employee is not None:
-    #         return self.me_employee.work_unit.project_set.all()
+    def my_projects(self):
+        if self.me_contractor is not None:
+            return self.me_contractor.project_set.all()
+        if self.me_employee is not None:
+            return self.me_employee.work_unit.project_set.all()
     def list_roots(self):
         return self.objects.filter(parent=None).order_by('-priority')
     def list(self):

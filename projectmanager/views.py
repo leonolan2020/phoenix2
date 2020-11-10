@@ -162,6 +162,16 @@ class PageViews(View):
         context['page']=event
         context['page_type']='رویداد'
         return render(request,TEMPLATE_ROOT+'event.html',context)
+    def assignment(self,request,pk,*args, **kwargs):
+        assignment_id=pk
+        user=request.user
+        assignment=AssignmentRepo(user=user).assignment(assignment_id=assignment_id)
+        context=self.getManagerPageContext(request,page=assignment)
+        context['assignment']=assignment
+        context['page']=assignment
+        context['page_type']='تکلیف'
+        return render(request,TEMPLATE_ROOT+'assignment.html',context)
+
     def organizationunit(self,request,pk,*args, **kwargs):
         organizationunit_id=pk
         user=request.user
@@ -177,6 +187,10 @@ class PageViews(View):
         employees_s=json.dumps(EmployeeSerializer(organizationunit.employee_set.all(),many=True).data)
         context['employees_s']=employees_s
         
+        projects_s=json.dumps(ProjectSerializer(organizationunit.project_set.all(),many=True).data)
+        context['projects_s']=projects_s
+
+
         context['organizationunits_s']=json.dumps(OrganizationUnitSerializer(organizationunit.childs(),many=True).data)
         context['page_type']='واحد سازمانی'
         return render(request,TEMPLATE_ROOT+'org-unit.html',context)
