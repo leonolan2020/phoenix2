@@ -129,4 +129,23 @@ class PageViews(APIView):
                     organizationunit_s=OrganizationUnitSerializer(organizationunit).data
                     return JsonResponse({'result':SUCCEED,'organizationunit':organizationunit_s})
         return JsonResponse({'result':FAILED,'log':log})
-    
+    def add_employee(self,request):
+        log=1
+        user=request.user
+        if request.method=='POST':
+            log=2
+            add_employee_form=AddEmployeeForm(request.POST)
+            if add_employee_form.is_valid():
+                log=3
+                first_name=add_employee_form.cleaned_data['first_name']
+                last_name=add_employee_form.cleaned_data['last_name']
+                org_unit_id=add_employee_form.cleaned_data['org_unit_id']
+                role=add_employee_form.cleaned_data['role']
+
+
+                employee=EmployeeRepo(user=user).add(role=role,org_unit_id=org_unit_id,first_name=first_name,last_name=last_name,)
+                if employee is not None:
+                    log=4
+                    employee_s=EmployeeSerializer(employee).data
+                    return JsonResponse({'result':SUCCEED,'employee':employee_s})
+        return JsonResponse({'result':FAILED,'log':log})

@@ -37,7 +37,9 @@ urlpatterns = [
     path('download_page/<int:pk>/',
          views.DownloadViews().get_page, name='download_page'),
 
-
+    path('add_employee/', apis.PageViews().add_employee,
+         name='add_employee'),
+     
     path('tutorial/add_project_location/', views.TutorialViews().add_project_location,
          name='tutorial_add_project_location'),
     path('tutorial/add_project/', views.TutorialViews().add_project,

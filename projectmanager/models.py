@@ -287,7 +287,7 @@ class OrganizationUnit(ManagerPage):
 		{self.title}
 		</a>
 		</strong>
-	"""
+	    """
 		for employee in self.employee_set.all():
 			caption += f"""
 
@@ -315,6 +315,8 @@ class OrganizationUnit(ManagerPage):
 		self.child_class = 'organizationunit'
 		super(OrganizationUnit, self).save()
 
+	def employees(self):
+		return self.employee_set.all()
 
 class Event(ManagerPage):
     event_date = models.DateTimeField(

@@ -3,55 +3,131 @@
 {% load static %}
 {% block child_content %}
 <div class="row rtl" id="org-unit-app">
-  <div class="col-md-6">
-    <div class="card
+	<div class="col-md-6">
+		<div class="card
     card-stats">
-    <div class="card-header card-header-info card-header-icon">
-        <div class="card-icon">
-            <i class="material-icons">description</i>
-        </div>
-        <p class="card-category">{{page.title}}</p>
-        <h3 class="card-title">واحد های زیر مجموعه</h3>
-    </div>
-     
-      <div class="card-body ">
+			<div class="card-header card-header-info card-header-icon">
+				<div class="card-icon">
+					<i class="material-icons">description</i>
+				</div>
+				<p class="card-category">{{page.title}}</p>
+				<h3 class="card-title">واحد های زیر مجموعه</h3>
+			</div>
+
+			<div class="card-body ">
 
 
 
 
 
-        <template v-for="organizationunit in organizationunits">
-          <div v-html="organizationunit.get_link"></div>
+				<template v-for="organizationunit in organizationunits">
+					<div v-html="organizationunit.get_link"></div>
 
 
-        </template>
-        {% if add_organizationunit_form %}
-        <form class="mt-5 mx-5" @submit.prevent="add_organizationunit">
-          <div class="form-group bmd-form-group">
-            <label for="exampleInput1" class="bmd-label-floating">نام پروژه زیرمجموعه جدید</label>
+				</template>
+				{% if add_organizationunit_form %}
+				<form class="mt-5 mx-5" @submit.prevent="add_organizationunit">
+					<div class="form-group bmd-form-group">
+						<label for="exampleInput1" class="bmd-label-floating">نام واحد زیرمجموعه جدید</label>
 
-            <input type="hidden" name="parent_id" value="{{page.id}}">
-            <input v-model="organizationunit_title" type="text" class="form-control" name="title" required=""
-              aria-required="true">
-
-
-          </div>
-          <button type="submit" class="btn btn-rose btn-round">افزودن</button>
-        </form>
-        {% endif %}
+						<input type="hidden" name="parent_id" value="{{page.id}}">
+						<input v-model="organizationunit_title" type="text" class="form-control" name="title"
+							required="" aria-required="true">
 
 
-      </div>
-    </div>
+					</div>
+
+
+					<button type="submit" class="btn btn-rose btn-round">افزودن</button>
+				</form>
+				{% endif %}
+
+
+			</div>
+		</div>
 
 
 
 
 
 
-  </div>
+	</div>
+
+	<div class="col-md-6">
+		<div class="card
+  card-stats">
+			<div class="card-header card-header-rose card-header-icon">
+				<div class="card-icon">
+					<i class="material-icons">engineering</i>
+				</div>
+				<p class="card-category">{{page.title}}</p>
+				<h3 class="card-title">پرسنل مجموعه</h3>
+			</div>
+
+			<div class="card-body ">
 
 
+
+
+
+				<template v-for="employee in employees">
+					<div class="media mb-3">
+						<a :href="employee.get_absolute_url">
+
+							<img :src="employee.profile.image" width="48" alt="" class="mx-3 rounded-circle">
+						</a>
+						<div class="media-body">
+							<a :href="employee.get_absolute_url">
+								<h5 class="mt-0 mb-0" v-html="employee.profile.name"></h5>
+							</a>
+							<div class="text-secondary" v-html="employee.role"></div>
+						</div>
+					</div>
+				</template>
+				{% if add_employee_form %}
+					<div class="form-group bmd-form-group mt-3">
+						<label for="exampleInput1" class="bmd-label-floating">نام پرسنل جدید</label>
+						<input v-model="new_employee_fname" type="text" class="form-control" name="title" required=""
+							aria-required="true">
+					</div>
+
+
+					<div class="form-group bmd-form-group">
+						<label for="exampleInput1" class="bmd-label-floating">نام خانوادگی پرسنل جدید</label>
+						<input v-model="new_employee_lname" type="text" class="form-control" name="title" required=""
+							aria-required="true">
+					</div>
+					<div class="">
+						<div class="dropdown show">
+
+							<a href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true"
+								aria-expanded="false" class="btn btn-secondary dropdown-toggle">
+
+								نقش :
+								 نقش پرسنل جدید را انتخاب کنید
+
+								<div class="ripple-container"></div>
+							</a>
+							<div aria-labelledby="dropdownMenuLink" class="dropdown-menu">
+
+								<button v-if="new_employee_fname && new_employee_lname" @click="add_employee(role)" v-for="role in roles" class="dropdown-item" v-text="role">
+
+
+								
+
+								</button>
+							</div>
+						</div>
+
+					</div>
+
+				
+				{% endif %}
+
+
+			</div>
+		</div>
+	</div>
 
 
 </div>
@@ -66,45 +142,84 @@
 
 <script>
 
-  $("#nav-item-projectmanager-organizationunits").addClass('active')
+	$("#nav-item-projectmanager-organizationunits").addClass('active')
+	let employees = JSON.parse(`{{employees_s|escapejs}}`)
+	let organizationunits = JSON.parse(`{{organizationunits_s|escapejs}}`)
+	let org_unit_id = parseInt("{{organizationunit.id}}")
+	var current_date = '{{current_date}}'
+	let url_add_organizationunit = "{% url 'projectmanager:add_organizationunit' %}"
+	let url_add_employee = "{% url 'projectmanager:add_employee' %}"
+	let roles = JSON.parse(`{{roles_s|escapejs}}`)
 
-  let org_unit_id = JSON.parse("{{organizationunit.id}}")
-  var current_date = '{{current_date}}'
-  let org_unit_app = new Vue({
-    el: "#org-unit-app",
-    data: {
-      selected_date: current_date,
-      organizationunits: JSON.parse(`{{organizationunits_s|escapejs}}`),
-      organizationunit_title: '',
-    },
-    components: {
-      DatePicker: VuePersianDatetimePicker
-    },
-    methods: {
-      add_organizationunit: function () {
-        let url = "{% url 'projectmanager:add_organizationunit' %}"
+	
+	let org_unit_app = new Vue({
+		el: "#org-unit-app",
+		data: {
+			selected_date: current_date,
+			organizationunits: organizationunits,
+			organizationunit_title: '',
+			employees: employees,
+			new_employee_fname: '',
+			new_employee_lname: '',
+			new_employee_role: '',
+			roles:roles,
+		},
+		components: {
+			DatePicker: VuePersianDatetimePicker
+		},
+		methods: {
+			add_organizationunit: function () {
+				let url = url_add_organizationunit
 
-        var posting = $.post(url,
-          {
-            parent_id: org_unit_id,
-            title: org_unit_app.organizationunit_title,
-            csrfmiddlewaretoken: csrfmiddlewaretoken
-          }
-        );
+				var posting = $.post(url,
+					{
+						parent_id: org_unit_id,
+						title: org_unit_app.organizationunit_title,
+						csrfmiddlewaretoken: csrfmiddlewaretoken
+					}
+				);
 
-        // Put the results in a div
-        posting.done(function (data) {
+				// Put the results in a div
+				posting.done(function (data) {
 
-          // word_app.word = (data.word);
-          // word_app.definitions = (data.definitions);
-          if (data.result === 'SUCCEED') {
-            org_unit_app.organizationunit_title = ""
-            org_unit_app.organizationunits.push(data.organizationunit)
-          }
-        })
-      },
-    },
-  })
+					// word_app.word = (data.word);
+					// word_app.definitions = (data.definitions);
+					if (data.result === 'SUCCEED') {
+						org_unit_app.organizationunit_title = ""
+						org_unit_app.organizationunits.push(data.organizationunit)
+					}
+				})
+			},
+			add_employee: function (role) {
+				let url = url_add_employee
+
+
+				var posting = $.post(url,
+					{
+						role: role,
+						first_name: org_unit_app.new_employee_fname,
+						last_name: org_unit_app.new_employee_lname,
+						org_unit_id: org_unit_id,
+						csrfmiddlewaretoken: csrfmiddlewaretoken
+					}
+				);
+
+				// Put the results in a div
+				posting.done(function (data) {
+
+					// word_app.word = (data.word);
+					// word_app.definitions = (data.definitions);
+					if (data.result === 'SUCCEED') {
+						org_unit_app.new_employee_fname = ""
+						org_unit_app.new_employee_lname = ""
+						org_unit_app.employees.push(data.employee)
+					}
+				})
+
+
+			},
+		},
+	})
 </script>
 
 

@@ -1,6 +1,6 @@
 from rest_framework import serializers 
 from .models import *
-
+from authentication.serializers import ProfileSerializer
 
 class ProjectSerializer(serializers.ModelSerializer):
     class Meta:
@@ -15,6 +15,11 @@ class EventSerializer(serializers.ModelSerializer):
     class Meta:
         model=Event        
         fields=['get_tag']
+class EmployeeSerializer(serializers.ModelSerializer):
+    profile=ProfileSerializer()
+    class Meta:
+        model=Employee        
+        fields=['id','role','get_absolute_url','profile']
 
 class OrganizationUnitSerializer(serializers.ModelSerializer):
     class Meta:

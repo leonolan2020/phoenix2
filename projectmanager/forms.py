@@ -7,6 +7,12 @@ class AddMaterialRequestForm(forms.Form):
     quantity=forms.IntegerField(required=True)
     unit_name=forms.CharField(max_length=50, required=True)
     project_id=forms.IntegerField(required=True)
+
+class AddEmployeeForm(forms.Form):
+    first_name=forms.CharField(max_length=50,required=True)
+    last_name=forms.CharField(max_length=50,required=True)
+    role=forms.CharField(max_length=50,required=True)
+    org_unit_id=forms.IntegerField(required=True)
     
 class AddMaterialForm(forms.Form):
     title=forms.CharField(max_length=50,required=True)

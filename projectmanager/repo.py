@@ -1,11 +1,25 @@
 import random
-from .models import Project,Event,OrganizationUnit as OrganizationUnit,Contractor,ManagerPage,ArchiveDocument
+from .models import Project,Event,OrganizationUnit ,Employee,Contractor,ManagerPage,ArchiveDocument
 from authentication.repo import ProfileRepo
 from dashboard.models import Icon
 from dashboard.enums import ColorEnum,IconsEnum
 from django.db.models import Q,F
+from authentication.models import Profile
 import datetime
+class EmployeeRepo:
+    def __init__(self,user):
+        self.objects=Employee.objects
+        self.user=user
+    def add(self,role,org_unit_id,first_name,last_name):
+        profile=Profile(first_name=first_name,last_name=last_name)
+        profile.save()
+        work_unit=OrganizationUnitRepo(user=self.user).organizationunit(organizationunit_id=org_unit_id)
+        if work_unit is not None:
+            employee=Employee(profile=profile,work_unit=work_unit,role=role)
+            employee.save()
+            return employee
 
+                
 
 class ManagerPageRepo:
     def __init__(self,user=None):

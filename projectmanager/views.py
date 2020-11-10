@@ -171,6 +171,12 @@ class PageViews(View):
         context['page']=organizationunit
         if user.has_perm(APP_NAME+'.add_organizationunit'):
             context['add_organizationunit_form']=AddOrganizationUnitForm()
+        if user.has_perm(APP_NAME+'.add_employee'):
+            context['add_employee_form']=AddEmployeeForm()
+        context['roles_s']=json.dumps(list(x for x in EmployeeEnum))
+        employees_s=json.dumps(EmployeeSerializer(organizationunit.employee_set.all(),many=True).data)
+        context['employees_s']=employees_s
+        
         context['organizationunits_s']=json.dumps(OrganizationUnitSerializer(organizationunit.childs(),many=True).data)
         context['page_type']='واحد سازمانی'
         return render(request,TEMPLATE_ROOT+'org-unit.html',context)
