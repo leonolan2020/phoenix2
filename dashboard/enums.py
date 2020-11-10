@@ -1,6 +1,7 @@
 from django.db.models import TextChoices
 from django.utils.translation import gettext as _
 from enum import Enum
+from projectmanager.enums import EmployeeEnum
 
 
 class DegreeLevelEnum(TextChoices):
@@ -56,15 +57,6 @@ class AddressTitleEnum(TextChoices):
     GARDEN = 'باغ', _('باغ')
     
 
-class EmployeeEnum(TextChoices):
-    CEO='سرپرست',_('سرپرست')  
-    GUARD='نگهبان',_('نگهبان')      
-    MANAGER='مدیر',_('مدیر')      
-    TECHNICAL='فنی',_('فنی')    
-    DEFAULT='تایید نشده',_('تایید نشده')
-    ACCOUNTANT='حسابدار',_('حسابدار')
-    CASHIER='صندوقدار',_('صندوقدار')
-    
     
 class TransactionDirectionEnum(TextChoices):
     TO_PROFILE='تحویل به ',_('تحویل به ')

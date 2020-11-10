@@ -6,6 +6,7 @@ from dashboard.constants import *
 from dashboard.enums import *
 from django.core.validators import MinValueValidator, MaxValueValidator
 from dashboard.enums import ColorEnum
+from .enums import StatusColor
 import os
 from django.http import Http404, HttpResponse
 from django.db import models
@@ -24,6 +25,8 @@ class ManagerPage(DashboardPage):
 
     def get_download_url(self):
         return reverse('projectmanager:download_page', kwargs={'pk': self.pk})
+    def get_presentation_url(self):
+        return reverse('projectmanager:presentation', kwargs={'pk': self.pk})
 
     def get_breadcrumb_url(self):
         if self.parent is None:
@@ -233,6 +236,9 @@ class Assignment(ManagerPage):
     def __str__(self):
         return f'{self.title} - {self.assign_to.profile.name()}'
 
+    def get_status_color(self):
+        return StatusColor(self.status)
+
 
 class OrganizationUnit(ManagerPage):
 
@@ -327,6 +333,7 @@ class OrganizationUnit(ManagerPage):
 
 	def employees(self):
 		return self.employee_set.all()
+
 
 class Event(ManagerPage):
     event_date = models.DateTimeField(

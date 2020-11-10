@@ -112,6 +112,8 @@ class ProfileViews(View):
             selected_profile=ProfileRepo(user=request.user).me
         else:
             selected_profile=ProfileRepo(user=request.user).get(profile_id=profile_id)
+        if selected_profile is None:
+            raise Http404
         context['body_class']='profile-page'
         context['selected_profile']=selected_profile
 

@@ -61,17 +61,28 @@
 
                 {% for assignment in assignments %}
                 <div class="mb-2">
-                    <a href="{{assignment.get_absolute_url}}">
-                       
-                            {{assignment.title}}
-                      
-                       
-                    </a>
+                  <p>
+                    <span class="badge badge-{{assignment.get_status_color}}">{{assignment.status}}</span>
 
+                    <a href="{{assignment.get_absolute_url}}">
+
+                        {{assignment.title}}
+
+
+                    </a>
+                    
+<span class="small text-secondary">
+&nbsp;    
+&nbsp;    
+    برای پروژه
+    &nbsp;    
+
+</span>
                     <a class="mx-2" href="{{assignment.project_for.get_absolute_url}}">
 
                         {{assignment.project_for.title}}
                     </a>
+                </p>
 
                 </div>
                 {% endfor %}

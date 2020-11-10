@@ -59,7 +59,8 @@ class AuthenticationView(View):
             selected_profile=ProfileRepo(user=request.user).me
         else:
             selected_profile=ProfileRepo(user=request.user).get(profile_id=profile_id)
-
+        if selected_profile is None:
+            raise Http404
         context=getContext(request)
         context['login_form']=LoginForm()
         context['upload_profile_image_form']=UploadProfileImageForm()

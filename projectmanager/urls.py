@@ -12,6 +12,7 @@ urlpatterns = [
 	path('organization_chart/', views.BasicViews().organizationchart,name='organizationchart'),
 	path('search/', views.BasicViews().search, name='search'),
 	path('assignment/<int:pk>/', views.PageViews().assignment, name='assignment'),
+	path('presentation/<int:pk>/', views.PageViews().presentation, name='presentation'),
 	path('guantt/<int:pk>/', views.PageViews().guantt, name='guantt'),
 	path('project/<int:pk>/', views.PageViews().project, name='project'),
 	path('organizationunit/<int:pk>/',views.PageViews().organizationunit, name='organizationunit'),

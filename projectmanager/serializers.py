@@ -29,3 +29,7 @@ class ArchiveDocumentSerializer(serializers.ModelSerializer):
     class Meta:
         model=ArchiveDocument        
         fields=['get_link']
+class AssignmentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=ArchiveDocument        
+        fields=['color','get_absolute_url','title','id']

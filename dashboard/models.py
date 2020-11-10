@@ -26,7 +26,7 @@ class Icon(models.Model):
                              default=ColorEnum.SECONDARY, max_length=50)
     width = models.IntegerField(_("عرض آیکون"), null=True, blank=True)
     height = models.IntegerField(_("ارتفاع آیکون"), null=True, blank=True)
-
+    
     def get_icon_tag(self, icon_style='', color=None):
         if color is None:
             self.color = self.color
@@ -40,6 +40,21 @@ class Icon(models.Model):
             return f'<i   style="{icon_style}" style="position:inherit !important;" class="text-{self.color} {self.icon_fa}"></i>'
         if self.icon_svg is not None and len(self.icon_svg) > 0:
             return f'<span  style="{icon_style}" class="text-{self.color}">{self.icon_svg}</span>'
+
+
+
+
+    def get_icon_tag_pure(self,icon_style=''):
+        
+        if self.image_origin is not None and self.image_origin:
+            return f'<img src="{MEDIA_URL}{str(self.image_origin)}" alt="{self.title}" height="{self.height}" width="{self.width}">'
+        if self.icon_material is not None and len(self.icon_material) > 0:
+            return f'<i style="{icon_style}" class=" material-icons">{self.icon_material}</i>'
+        if self.icon_fa is not None and len(self.icon_fa) > 0:
+            return f'<i   style="{icon_style}" class="{self.icon_fa}"></i>'
+        if self.icon_svg is not None and len(self.icon_svg) > 0:
+            return f'<span  style="{icon_style}" class="">{self.icon_svg}</span>'
+
 
     class Meta:
         verbose_name = _("Icon")
@@ -134,8 +149,7 @@ class Page(models.Model):
                                          'Page/Thumbnail/', height_field=None, width_field=None, max_length=None)
 
     title = models.CharField(_('title'), max_length=200)
-    icon = models.ForeignKey(
-        "icon", null=True, blank=True, on_delete=models.SET_NULL)
+    icon = models.ForeignKey("icon", null=True, blank=True, on_delete=models.SET_NULL)
     color = models.CharField(_("color class"), blank=True, null=True,
                              choices=ColorEnum.choices, default=ColorEnum.PRIMARY, max_length=50)
 
@@ -175,20 +189,21 @@ class Page(models.Model):
     def image(self):
         if self.image_origin:
             return MEDIA_URL+str(self.image_origin)
+        
         else:
-            return STATIC_URL+'/material/img/bg7.jpg'
+            return STATIC_URL+f'/projectmanager/img/{self.child_class}.jpg'
 
     def thumbnail(self):
         if self.thumbnail_origin:
             return MEDIA_URL+str(self.thumbnail_origin)
         else:
-            return self.image()
+            return STATIC_URL+f'/projectmanager/img/{self.child_class}.jpg'
 
     def header_image(self):
         if self.header_image_origin:
             return MEDIA_URL+str(self.header_image_origin)
         else:
-            return STATIC_URL+'material/img/bg7.jpg'
+            return STATIC_URL+f'/projectmanager/img/{self.child_class}.jpg'
 
     def __str__(self):
         return f'page({self.pk}) - {self.title}'
@@ -644,6 +659,8 @@ class Parameter(models.Model):
     def __str__(self):
         return f'{self.name} : {self.value}'
 
+    def get_edit_url(self):
+        return f'{ADMIN_URL}{APP_NAME}/parameter/{self.pk}/change/'
 
 class ContactMessage(models.Model):
     full_name = models.CharField(_("نام کامل"), max_length=50)

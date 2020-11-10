@@ -148,7 +148,36 @@
         </div>
 
 
+        <div class="card card-stats">
+            <div class="card-header card-header-danger card-header-icon">
+                <div class="card-icon">
+                    <i aria-hidden="true" class="material-icons">settings</i>
+                </div>
+                <p class="card-category">
+                    {{project.title}}
+                </p>
+                <h3 class="card-title">وظیفه ها</h3>
+            </div>
+            <div class="card-body">
+                <template v-for="assignment in assignments" v-html="assignment.get_link">
+                    <p class="mr-4">
 
+                        <a :class="'text-'+assignment.color" :href="assignment.get_absolute_url">
+                            <i class="mx-2 text-success material-icons">engineering</i>
+                            {% verbatim %}
+                            {{assignment.title}}
+                            {% endverbatim %}
+
+                        </a>
+                    </p>
+                </template>
+
+            </div>
+            <div class="card-footer">
+                <div class="stats"><i class="material-icons">date_range</i> Last 24 Hours
+                </div>
+            </div>
+        </div>
 
 
         <div class="card card-stats">
@@ -336,7 +365,8 @@
     let contractors = JSON.parse(`{{contractors_s|escapejs}}`)
     let current_location=`{{project.location|escapejs}}`
 
-
+    
+    let assignments=JSON.parse(`{{assignments_s|escapejs}}`)
     let organizationunits=JSON.parse(`{{organizationunits_s|escapejs}}`)
     let project_id = parseInt("{{project.id}}")
     var current_date = '{{current_date}}'
@@ -360,6 +390,7 @@
             events: events,
             contractors: contractors,
             organizationunits:organizationunits,
+            assignments:assignments,
         },
         components: {
             DatePicker: VuePersianDatetimePicker

@@ -119,6 +119,14 @@ class PageViews(View):
         context['links_s']=json.dumps(LinkSerializer(page.links.all(),many=True).data)
         context['documents_s']=json.dumps(DocumentSerializer(page.documents.all(),many=True).data)
         return context
+    def presentation(self,request,pk,*args, **kwargs):
+        page_id=pk
+        user=request.user
+        page=ManagerPageRepo(user=user).page(page_id=page_id)
+        context=self.getManagerPageContext(request,page=page)
+        context['page']=page
+        return render(request,'material/page.html',context)
+
     def archivedocument(self,request,pk,*args, **kwargs):
         archivedocument_id=pk
         user=request.user
@@ -144,6 +152,11 @@ class PageViews(View):
         context['contractors_s']=json.dumps(ContractorSerializer(project.contractors.all(),many=True).data)
         context['project']=project
         context['page']=project
+
+        assignments_s=json.dumps(AssignmentSerializer(project.project_assignments.all(),many=True).data)
+        context['assignments_s']=assignments_s
+
+
         organizationunits_s=json.dumps(OrganizationUnitSerializer(project.organization_units.all(),many=True).data)
         context['organizationunits_s']=organizationunits_s
         projects_s=json.dumps(ProjectSerializer(project.childs(),many=True).data)
