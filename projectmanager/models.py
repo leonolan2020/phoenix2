@@ -277,7 +277,15 @@ class OrganizationUnit(ManagerPage):
 		template += '</div>'
 		return template
 
+	def employees_caption(self):
+		caption=""
+		for employee in self.employee_set.all():
+			caption += f"""{employee.profile.name()} ( {employee.role} )
+			"""
+		return caption
+
 	def caption(self):
+		show_employees=False
 		icon=self.icon.get_icon_tag(color=ColorEnum.PRIMARY) if self.icon is not None else ''
 		icon=''
 		caption = f"""
@@ -289,22 +297,23 @@ class OrganizationUnit(ManagerPage):
 		</a>
 		</strong>
 	    """
-		for employee in self.employee_set.all():
-			caption += f"""
+		if show_employees:
+			for employee in self.employee_set.all():
+				caption += f"""
 
-			<div>
-			<small>
+                <div>
+                <small>
 
-			<small style="direction:rtl;">
-			<i class="fa fa-user"></i>
-			<a href="{employee.get_absolute_url()}">
-			
-				{employee.profile.name()}
-				</a>
-			</small>
-			</small>		
-			</div>
-			"""
+                <small style="direction:rtl;">
+                <i class="fa fa-user"></i>
+                <a href="{employee.get_absolute_url()}">
+                
+                    {employee.profile.name()}
+                    </a>
+                </small>
+                </small>		
+                </div>
+                """
 		caption += """ """
 		return caption
 

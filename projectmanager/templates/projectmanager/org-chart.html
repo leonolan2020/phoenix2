@@ -67,7 +67,7 @@
         id = element.id.toString(10)
         caption = element.caption
         manager = element.parent_id?element.parent_id.toString(10):null
-        tooltip = element.title
+        tooltip = element.employees_caption
         data.addRow([{ 'v': id, 'f': caption }, manager, tooltip])
       });
 

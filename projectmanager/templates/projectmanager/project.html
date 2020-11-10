@@ -150,6 +150,36 @@
 
 
 
+
+        <div class="card card-stats">
+            <div class="card-header card-header-success card-header-icon">
+                <div class="card-icon">
+                    <i aria-hidden="true" class="material-icons">engineering</i>
+                </div>
+                <p class="card-category">
+                    {{project.title}}
+                </p>
+                <h3 class="card-title">واحد های سازمانی مرتبط</h3>
+            </div>
+            <div class="card-body px-5 pt-5">
+                <template v-for="organizationunit in organizationunits" v-html="organizationunit.get_link">
+                  
+                    <div class="mb-3" v-html="organizationunit.get_link">
+
+                    </div>
+                </template>
+
+            </div>
+            <div class="card-footer">
+                <div class="stats"><i class="material-icons">date_range</i> Last 24 Hours
+                </div>
+            </div>
+        </div>
+
+
+
+
+
     </div>
     <div class="col-md-6">
 
@@ -331,7 +361,7 @@
     let current_location=`{{project.location|escapejs}}`
 
 
-
+    let organizationunits=JSON.parse(`{{organizationunits_s|escapejs}}`)
     let project_id = parseInt("{{project.id}}")
     var current_date = '{{current_date}}'
 
@@ -353,6 +383,7 @@
             current_location: current_location,
             events: events,
             contractors: contractors,
+            organizationunits:organizationunits,
         },
         components: {
             DatePicker: VuePersianDatetimePicker

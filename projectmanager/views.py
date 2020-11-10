@@ -144,6 +144,8 @@ class PageViews(View):
         context['contractors_s']=json.dumps(ContractorSerializer(project.contractors.all(),many=True).data)
         context['project']=project
         context['page']=project
+        organizationunits_s=json.dumps(OrganizationUnitSerializer(project.organization_units.all(),many=True).data)
+        context['organizationunits_s']=organizationunits_s
         projects_s=json.dumps(ProjectSerializer(project.childs(),many=True).data)
         context['projects_s']=projects_s
         context['edit_project_timing_form']=EditProjectTimingForm()

@@ -24,7 +24,7 @@ class EmployeeSerializer(serializers.ModelSerializer):
 class OrganizationUnitSerializer(serializers.ModelSerializer):
     class Meta:
         model=OrganizationUnit        
-        fields=['id','title','get_link','parent_id','parent_title','caption']
+        fields=['id','title','employees_caption','get_link','parent_id','parent_title','caption']
 class ArchiveDocumentSerializer(serializers.ModelSerializer):
     class Meta:
         model=ArchiveDocument        
