@@ -119,7 +119,7 @@ class BasicViews(View):
         return download
     def home(self,request,*args,**kwargs):
         context=getContext(request)
-        return render(request,TEMPLATE_ROOT+'dashboard.html',context)
+        return render(request,TEMPLATE_ROOT+'index.html',context)
 
     def search(self,request,*args, **kwargs):
         if request.method=='POST':
