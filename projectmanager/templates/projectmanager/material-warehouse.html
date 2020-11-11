@@ -1,0 +1,79 @@
+{% extends "projectmanager/page.html" %}
+{% load static %}
+
+{% block child_content %}
+<div id="material-warehouse-app">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header card-header-icon card-header-rose">
+                    <div class="card-icon">
+                        <i class="material-icons">assignment</i>
+                    </div>
+                    <h4 class="card-title ">متریال موجود</h4>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead class=" text-primary">
+                                <tr>
+                                    <th>
+                                        شناسه
+                                    </th>
+                                    <th>
+                                        نام
+                                    </th>
+                                    <th>
+                                        سریال
+                                    </th>
+                                    <th>
+                                        ردیف
+                                    </th>
+                                    <th>
+                                        ستون
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+<tr v-for="material_in_stock in material_in_stocks">
+    <td v-text="material_in_stock.material_object.material.id"></td>
+    <td >
+        <a :href="material_in_stock.material_object.material.get_absolute_url">
+
+            <span v-text="material_in_stock.material_object.material.title"></span>
+        </a>
+    </td>
+    <td v-text="material_in_stock.material_object.serial_no"></td>
+    <td v-text="material_in_stock.row"></td>
+    <td v-text="material_in_stock.col"></td>
+</tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+
+{% block child_script %}
+<script src="{% static 'vendor/js/vue.min.js' %}"></script>
+<script>
+    let material_in_stocks=JSON.parse(`{{material_in_stocks_s|escapejs}}`)
+</script>
+<script>
+    let material_warehouse_app = new Vue(
+        {
+            el: "#material-warehouse-app",
+            data:{
+                material_in_stocks:material_in_stocks,
+            },
+            methods:{
+
+            },
+        }
+    )
+</script>
+{% endblock %}

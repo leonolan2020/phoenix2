@@ -18,19 +18,26 @@
 
 
 <div class="page-header header-filter header-small" data-parallax="true"
-    style="background-image: url('{{about_header.image}}');">
+    style="background-image: url('{% if about_header.image %}{{about_header.image}}{% else %}{% static 'dashboard/img/pages/about.jpg' %}{% endif %}');">
     <div class="container">
         <div class="row">
             <div class="col-md-8 ml-auto mr-auto text-center">
                 <h1 class="title farsi">درباره ما</h1>
                 <div>
 
+                    {% if perms.app.change_mainpic %}
+
                     {{about_header.get_edit_btn|safe}}
+                    {% endif %}
                 </div>
                 <h4 class="farsi">
                     {{about_text.value}}
                 </h4>
+
+                {% if perms.app.change_parameter %}
+
                 {{about_text.get_edit_btn|safe}}
+                {% endif %}
             </div>
         </div>
     </div>
@@ -55,7 +62,9 @@
                 <div class="col-md-8 ml-auto mr-auto text-center">
                     <h2 class="title farsi">تیم همکاران ما</h2>
                     <h5 class="description ">
-                        با ارائه طیف گسترده‏‌ای از معتبرترین برندها در گروه‌‏های مختلف و با همکاری نزدیک با وارد‏کنندگان و توزیع‏ کنندگان اصلی این کالاها در ایران، تلاش می‏‌کند تا نیازهای متفاوت مشتریان با کاربری‏‌های متفاوت آنان را برآورده سازد.
+                        با ارائه طیف گسترده‏‌ای از معتبرترین برندها در گروه‌‏های مختلف و با همکاری نزدیک با وارد‏کنندگان
+                        و توزیع‏ کنندگان اصلی این کالاها در ایران، تلاش می‏‌کند تا نیازهای متفاوت مشتریان با کاربری‏‌های
+                        متفاوت آنان را برآورده سازد.
                     </h5>
                 </div>
             </div>
@@ -70,10 +79,10 @@
                             </a>
                         </div>
                         <div class="card-body">
-                          <a href="{{ourteam.profile.get_absolute_url}}">
+                            <a href="{{ourteam.profile.get_absolute_url}}">
 
-                              <h4 class="card-title farsi">{{ourteam.profile.name}}</h4>
-                          </a>  
+                                <h4 class="card-title farsi">{{ourteam.profile.name}}</h4>
+                            </a>
                             <h6 class="category text-muted">{{ourteam.job}}</h6>
                             <p class="card-description text-center">
                                 {{ourteam.description}}

@@ -191,19 +191,19 @@ class Page(models.Model):
             return MEDIA_URL+str(self.image_origin)
         
         else:
-            return STATIC_URL+f'/projectmanager/img/{self.child_class}.jpg'
+            return STATIC_URL+f'/dashboard/img/pages/{self.child_class}.jpg'
 
     def thumbnail(self):
         if self.thumbnail_origin:
             return MEDIA_URL+str(self.thumbnail_origin)
         else:
-            return STATIC_URL+f'/projectmanager/img/{self.child_class}.jpg'
+            return STATIC_URL+f'/dashboard/img/pages/{self.child_class}.jpg'
 
     def header_image(self):
         if self.header_image_origin:
             return MEDIA_URL+str(self.header_image_origin)
         else:
-            return STATIC_URL+f'/projectmanager/img/{self.child_class}.jpg'
+            return STATIC_URL+f'/dashboard/img/pages/{self.child_class}.jpg'
 
     def __str__(self):
         return f'page({self.pk}) - {self.title}'
@@ -634,7 +634,7 @@ class MainPic(models.Model):
         verbose_name_plural = _("تصویر های اصلی سایت")
 
     def image(self):
-        if self.image_origin is not None:
+        if self.image_origin and self.image_origin is not None:
             return f'{MEDIA_URL}{str(self.image_origin)}'
         return None
 

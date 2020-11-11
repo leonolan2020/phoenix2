@@ -1,0 +1,17 @@
+{% extends 'material/profile.html' %}
+{% load static %}
+
+{% block content_employee %}
+<p class="text-center">
+	
+	<a href="{{employee.work_unit.get_absolute_url}}">
+		{{employee.work_unit.title}}
+
+	</a>
+	<span class="text-secondary mx-2">
+
+		{{employee.role}}
+	</span>
+</p>
+
+{% endblock  %}

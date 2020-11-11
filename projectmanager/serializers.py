@@ -15,6 +15,22 @@ class EventSerializer(serializers.ModelSerializer):
     class Meta:
         model=Event        
         fields=['get_tag']
+class MaterialSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=Material        
+        fields=['id','title','get_absolute_url']
+
+class MaterialObjectSerializer(serializers.ModelSerializer):
+    material=MaterialSerializer()
+    class Meta:
+        model=MaterialObject        
+        fields=['id','material','serial_no']
+        
+class MaterialInStockSerializer(serializers.ModelSerializer):
+    material_object=MaterialObjectSerializer()
+    class Meta:
+        model=MaterialInStock        
+        fields=['id','material_object','row','col']
 class EmployeeSerializer(serializers.ModelSerializer):
     profile=ProfileSerializer()
     class Meta:

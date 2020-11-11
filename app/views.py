@@ -56,13 +56,18 @@ def getContext(request):
 class BasicViews(View):
     def contact(self,request,*args, **kwargs):
         context=getContext(request)
+        user=request.user
 
         parameter_repo=ParameterRepo(user=request.user)
         context['GOOGLE_GPS_X']=parameter_repo.get(ParametersEnum.GOOGLE_GPS_X).value
         context['GOOGLE_GPS_Y']=parameter_repo.get(ParametersEnum.GOOGLE_GPS_Y).value
-        
+        context['location']=parameter_repo.get(ParametersEnum.LOCATION)
         context['body_class']='contact-page'
         context['add_contact_message_form']=AddContactMessageForm()
+        context['contact_header']=MainPicRepo(user=user).get(MainPicEnum.CONTACT_HEADER)
+        context['contact_text']=ParameterRepo(user=user).get(ParametersEnum.CONTACT_US)
+        
+
         return render(request,TEMPLATE_ROOT+'contact.html',context)
 
     def about(self,request,*args, **kwargs):

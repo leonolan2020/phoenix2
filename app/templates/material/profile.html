@@ -69,22 +69,29 @@
                     {{profile.bio}}
                 </p>
                 {% endif %}
-                <div class="row rtl">
-                    <div class="col-3"></div>
-                    <div class="col-3">
-
-                        <input type="text" placeholder="نام دسته بندی جدید" v-model="new_resumecategory_title"
-                            class="form-control">
-                    </div>
-                    <div class="col-3">
-                        <button class="btn btn-info" @click="add_category">
-                            افزودن دسته بندی
-                        </button>
-                    </div>
-                    <div class="col-3"></div>
-                </div>
+               
 
             </div>
+            <div>
+                {% block content_employee %}
+                  
+                {% endblock  %}
+            </div>
+            <div class="row rtl">
+                <div class="col-3"></div>
+                <div class="col-3">
+
+                    <input type="text" placeholder="نام دسته بندی جدید" v-model="new_resumecategory_title"
+                        class="form-control">
+                </div>
+                <div class="col-3">
+                    <button class="btn btn-info" @click="add_category">
+                        افزودن دسته بندی
+                    </button>
+                </div>
+                <div class="col-3"></div>
+            </div>
+            
             <div class="row rtl">
                 <div class="col-12">
                     <div class="profile-tabs">

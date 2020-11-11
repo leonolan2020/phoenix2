@@ -153,7 +153,7 @@ class MainPic(models.Model):
         verbose_name = _("MainPic")
         verbose_name_plural = _("تصویر های اصلی سایت")
     def image(self):
-        if self.image_origin is not None:
+        if self.image_origin is not None and self.image_origin:
             return f'{MEDIA_URL}{str(self.image_origin)}'
         return None
     def __str__(self):

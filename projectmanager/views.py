@@ -6,6 +6,8 @@ from .serializers import *
 from app.views import PageViews as AppPageViews
 from .utils import AdminUtility
 from dashboard.repo import TagRepo
+from dashboard.forms import AddResumeCategoryForm,AddResumeForm
+from dashboard.serializers import ResumeCategorySerializer
 from dashboard.forms import AddDocumentForm,AddTagForm,AddLinkForm,AddImageForm
 from dashboard.serializers import TagSerializer,DocumentSerializer,LinkSerializer,GalleryPhotoSerializer
 from dashboard.views import getContext as DashboardContext
@@ -120,6 +122,32 @@ class PageViews(View):
         context['links_s']=json.dumps(LinkSerializer(page.links.all(),many=True).data)
         context['documents_s']=json.dumps(DocumentSerializer(page.documents.all(),many=True).data)
         return context
+
+    def materialwarehouse(self,request,pk,*args, **kwargs):
+        user=request.user
+        materialwarehouse_id=pk
+        material_warehouse_repo=MaterialWareHouseRepo(user=user)
+        materialwarehouse=material_warehouse_repo.materialwarehouse(materialwarehouse_id=materialwarehouse_id)
+        context=self.getManagerPageContext(request,materialwarehouse)
+        context['page_type']='انبار متریال'
+        context['page']=materialwarehouse
+        material_in_stocks=material_warehouse_repo.list_materials_in_stock(materialwarehouse_id=materialwarehouse_id)
+        material_in_stocks_s=json.dumps(MaterialInStockSerializer(material_in_stocks,many=True).data)
+        context['material_in_stocks_s']=material_in_stocks_s
+        context['materialwarehouse']=materialwarehouse
+        return render(request,TEMPLATE_ROOT+'material-warehouse.html',context)
+
+    def material(self,request,pk,*args, **kwargs):
+        user=request.user
+        material_id=pk
+        material_repo=MaterialRepo(user=user)
+        material=material_repo.material(material_id=material_id)
+        context=self.getManagerPageContext(request,material)
+        context['page_type']='متریال'
+        context['page']=material
+        context['material']=material
+        return render(request,TEMPLATE_ROOT+'material.html',context)
+
     def presentation(self,request,pk,*args, **kwargs):
         page_id=pk
         user=request.user
@@ -233,3 +261,26 @@ class DownloadViews(View):
         report_work_book.sheets.append(ReportSheet(data=lines_s,table_headers=None,title='سفارش شماره '+str(page_id)))
         response=report_work_book.to_excel()    
         return response
+
+
+class EmployeeViews(View):
+    def employee(self,request,pk,*args, **kwargs):
+        user=request.user
+        employee_id=pk
+        employee=EmployeeRepo(user=user).employee(employee_id=employee_id)
+        if employee is None:
+            raise Http404
+        context=getContext(request=request)
+        selected_profile=employee.profile
+        context['body_class']='profile-page'
+        context['selected_profile']=selected_profile
+
+        if selected_profile is not None:
+            context['add_resume_category_form']=AddResumeCategoryForm()
+            context['add_resume_form']=AddResumeForm()
+        resumecategories=selected_profile.resumecategory_set.all()
+        resumecategories_s=json.dumps(ResumeCategorySerializer(resumecategories,many=True).data)
+        context['resumecategories_s']=resumecategories_s
+
+        context['employee']=employee
+        return render(request,TEMPLATE_ROOT+'employee.html',context)
