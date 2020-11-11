@@ -354,6 +354,49 @@ class PageRepo:
             page.save()
             return page
 
+    def add_tag(self,page_id,tag_title):
+        page=self.page(page_id=page_id)
+        if page is None:
+            return None
+        tag=TagRepo(user=self.user).get_by_title(title=tag_title)
+        if tag is None:
+            icon=Icon(icon_title='tag',icon_fa='fa fa-tag')
+            icon.save()
+            tag=Tag(title=tag_title,icon=icon)
+            tag.save()
+        page.tags.add(tag)  
+        page.save()
+        return page
+
+    def add_document(self,page_id,file1,title):
+        profile=ProfileRepo(user=self.user).me
+        if profile is None:
+            return None
+
+        page=self.page(page_id=page_id)
+        if page is None:
+            return None
+        document=Document(profile=profile,title=title,icon_title='tag',icon_material='get_app',file=file1)
+        document.save()
+        page.documents.add(document)  
+        page.save()
+        return page
+
+    def add_image(self,page_id,location,image_title,image_description,image,thumbnail):
+        profile=ProfileRepo(user=self.user).me
+        if profile is None:
+            return None
+
+        page=self.page(page_id=page_id)
+        if page is None:
+            return None
+        image=GalleryPhoto(profile=profile,image_title=image_title,
+        image_description=image_description,thumbnail_origin=thumbnail,
+        image_origin=image,location=location)
+        image.save()
+        page.images.add(image)  
+        page.save()
+        return page
 
 class NotificationRepo:
 
