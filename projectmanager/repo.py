@@ -20,6 +20,7 @@ class AssignmentRepo:
         me=EmployeeRepo(user=self.user).me
         assignments=self.objects.filter(assign_to=me)
         return assignments
+
 class EmployeeRepo:
     def __init__(self,user):
         self.objects=Employee.objects
@@ -248,4 +249,12 @@ class ProjectRepo:
         project.save()
         if project is not None:
             return project
-
+                
+    def edit_location(self,project_id,location):
+        project=self.project(project_id=project_id)
+        if project is not None:
+            location=location.replace('width="600"','width="100%"')
+            location=location.replace('height="450"','height="400"')
+            project.location=location
+            project.save()
+            return project

@@ -401,3 +401,5 @@ class ArchiveDocument(ManagerPage):
     def save(self):
         self.child_class = 'archivedocument'
         super(ArchiveDocument, self).save()
+
+

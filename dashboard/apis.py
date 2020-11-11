@@ -47,15 +47,10 @@ class PageViews(APIView):
                 tag_id=remove_tag_form.cleaned_data['tag_id']
                 page_id=remove_tag_form.cleaned_data['page_id']
                 user=request.user
-                page=PageRepo(user=user).page(page_id=page_id)
-                tag=TagRepo(user=user).tag(tag_id=tag_id)
-                if page is not None and tag is not None:
-                    page.tags.remove(tag)  
-                    page.save()
-                    tags=page.tags.all()                  
-                    tags_s=TagSerializer(tags,many=True).data
+                page=PageRepo(user=user).remove_tag(page_id=page_id,tag_id=tag_id)
+                if page is not None:
+                    tags_s=TagSerializer(page.tags.all(),many=True).data
                     return JsonResponse({'tags':tags_s,'result':SUCCEED})
-
         return JsonResponse({'result':FAILED})
 
     def add_tag(self,request,*args, **kwargs):        
@@ -193,13 +188,9 @@ class PageViews(APIView):
                 url=add_link_form.cleaned_data['url']
                 page_id=add_link_form.cleaned_data['page_id']
                 
-                page=PageRepo(user=user).page(page_id=page_id)
+                page=PageRepo(user=user).add_link(page_id=page_id,url=url,title=title)
                 if page is not None:
-                    level=4
-                    link=Link(profile_adder=profile,title=title,icon_title='tag',icon_material='link',url=url)
-                    link.save()
-                    page.links.add(link)  
-                    page.save()
+                    level=4                    
                     links=page.links.all()                  
                     link_s=LinkSerializer(links,many=True).data
                     return JsonResponse({'links':link_s,'result':SUCCEED})

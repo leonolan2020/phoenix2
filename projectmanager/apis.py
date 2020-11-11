@@ -48,13 +48,12 @@ class PageViews(APIView):
                 log=3
                 location=add_location_form.cleaned_data['location']
                 project_id=add_location_form.cleaned_data['page_id']
-                project=ProjectRepo(user=user).project(project_id=project_id)
+                location=location.replace('width="600"','width="100%"')
+                location=location.replace('height="450"','height="400"')                    
+                # project=ProjectRepo(user=user).project(project_id=project_id)
+                project=ProjectRepo(user=user).edit_location(project_id=project_id,location=location)
                 if project is not None:
-                    log=4
-                    location=location.replace('width="600"','width="100%"')
-                    location=location.replace('height="450"','height="400"')
-                    project.location=location
-                    project.save()
+                    log=4                    
                     return JsonResponse({'result':SUCCEED,'location':location})
         return JsonResponse({'result':FAILED,'log':log})
     def add_contractor(self,request):

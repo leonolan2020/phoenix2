@@ -335,6 +335,25 @@ class PageRepo:
         pages=self.objects.filter(title__contains=search_for)
         return pages
 
+    def add_link(self,page_id,title,url):
+        profile=ProfileRepo(user=self.user).me
+        if profile is None:
+            return None
+        page=self.page(page_id=page_id)
+        if page is not None:
+            link=Link(profile_adder=profile,title=title,icon_title='tag',icon_material='link',url=url)
+            link.save()
+            page.links.add(link)  
+            page.save()
+            return page
+    def remove_tag(self,page_id,tag_id):
+        page=self.page(page_id=page_id)
+        tag=TagRepo(user=self.user).tag(tag_id=tag_id)
+        if page is not None and tag is not None:
+            page.tags.remove(tag)  
+            page.save()
+            return page
+
 
 class NotificationRepo:
 
