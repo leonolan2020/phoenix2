@@ -3,6 +3,7 @@ from .apps import APP_NAME
 from .forms import *
 from .repo import *
 from .serializers import *
+from app.views import PageViews as AppPageViews
 from .utils import AdminUtility
 from dashboard.repo import TagRepo
 from dashboard.forms import AddDocumentForm,AddTagForm,AddLinkForm,AddImageForm
@@ -123,7 +124,9 @@ class PageViews(View):
         page_id=pk
         user=request.user
         page=ManagerPageRepo(user=user).page(page_id=page_id)
-        context=self.getManagerPageContext(request,page=page)
+        context=AppPageViews().getPageContext(request=request,page=page)
+
+        # context=self.getManagerPageContext(request,page=page)
         context['page']=page
         return render(request,'material/page.html',context)
 

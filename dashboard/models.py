@@ -576,7 +576,10 @@ class GalleryPhoto(models.Model):
         return MEDIA_URL+str(self.image_origin)
 
     def thumbnail(self):
-        return MEDIA_URL+str(self.thumbnail_origin)
+        if self.thumbnail_origin:
+            return MEDIA_URL+str(self.thumbnail_origin)
+        else:
+            return self.image()#STATIC_URL+'material/img/Pattern-Randomized.svg'
 
     def persian_date_added(self):
         return PersianCalendar().from_gregorian(self.date_added)
