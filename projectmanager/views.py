@@ -193,6 +193,9 @@ class PageViews(View):
         context['assignments_s']=assignments_s
 
 
+        material_requests_s=json.dumps(MaterialRequestSerializer(project.material_requests(),many=True).data)
+        context['material_requests_s']=material_requests_s
+
         organizationunits_s=json.dumps(OrganizationUnitSerializer(project.organization_units.all(),many=True).data)
         context['organizationunits_s']=organizationunits_s
         projects_s=json.dumps(ProjectSerializer(project.childs(),many=True).data)

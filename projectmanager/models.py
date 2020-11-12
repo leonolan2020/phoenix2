@@ -6,7 +6,7 @@ from dashboard.constants import *
 from dashboard.enums import *
 from django.core.validators import MinValueValidator, MaxValueValidator
 from dashboard.enums import ColorEnum
-from .enums import StatusColor
+from .enums import StatusColor,MaterialRequestStatusEnum
 import os
 from django.http import Http404, HttpResponse
 from django.db import models
@@ -155,7 +155,8 @@ class Project(ManagerPage):
     class Meta:
         verbose_name = _("Project")
         verbose_name_plural = _("Projects")
-
+    def material_requests(self):
+        return MaterialRequest.objects.filter(project=self)
 
 class Employee(models.Model):
     profile = models.ForeignKey("authentication.Profile", related_name='employee_set_m', verbose_name=_(
@@ -581,3 +582,44 @@ class MaterialInStock(models.Model):
     def get_edit_url(self):
         return f'{ADMIN_URL}{APP_NAME}/materialinstock/{self.pk}/change'    
 
+
+class MaterialRequest(models.Model):
+    material=models.ForeignKey("Material", verbose_name=_("متریال"), on_delete=models.PROTECT)
+    quantity=models.IntegerField(_("تعداد"))
+    project=models.ForeignKey("Project", verbose_name=_("پروژه"), on_delete=models.PROTECT)
+    description=models.CharField(_("توضیحات"),null=True,blank=True,default='', max_length=50)
+    profile=models.ForeignKey("authentication.Profile", verbose_name=_("تحویل گیرنده"), on_delete=models.PROTECT)
+    date_added=models.DateTimeField(_("تاریخ درخواست"), auto_now=False, auto_now_add=True)
+    date_delivered=models.DateTimeField(_("تاریخ درخواست"),null=True,blank=True, auto_now=False, auto_now_add=False)
+    status=models.CharField(_("وضعیت"),choices=MaterialRequestStatusEnum.choices,default=MaterialRequestStatusEnum.DEFAULT, max_length=50)
+
+    class_name='materialrequest'
+
+    class Meta:
+        verbose_name = _("MaterialRequest")
+        verbose_name_plural = _("درخواست های متریال")
+    def persian_date_delivered(self):
+        return PersianCalendar().from_gregorian(self.date_delivered)
+    def persian_date_added(self):
+        return PersianCalendar().from_gregorian(self.date_added)
+    def __str__(self):
+        return f'{self.project.title} ___  {self.material.title} #{self.quantity} {self.material.unit_name}'
+
+    def get_absolute_url(self):
+        return reverse(f'{APP_NAME}:{self.class_name}', kwargs={"pk": self.pk})
+    def get_edit_url(self):
+        return f'{ADMIN_URL}{APP_NAME}/{self.class_name}/{self.pk}/change/'
+    def get_status_color(self):
+        if self.status==MaterialRequestStatusEnum.DEFAULT:
+            return 'rose'
+        if self.status==MaterialRequestStatusEnum.IN_PROGRESS:
+            return 'info'
+        if self.status==MaterialRequestStatusEnum.ACCEPTED:
+            return 'success'
+        if self.status==MaterialRequestStatusEnum.DELIVERED:
+            return 'success'
+        if self.status==MaterialRequestStatusEnum.DENIED:
+            return 'danger'
+
+    def get_status_tag(self):
+        return f"""<span class="badge badge-{self.get_status_color()}">{self.status}</span>"""

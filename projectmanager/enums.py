@@ -11,6 +11,13 @@ class EmployeeEnum(TextChoices):
     CASHIER='صندوقدار',_('صندوقدار')
     
     
+class MaterialRequestStatusEnum(TextChoices):
+    DEFAULT='DEFAULT',_('DEFAULT')
+    DELIVERED='تحویل شده',_('تحویل شده')
+    IN_PROGRESS='در حال بررسی',_('درحال بررسی')
+    DENIED='رد شده',_('ردشده')
+    ACCEPTED='پذیرفته شده',_('پذیرفته شده')
+    PURCHASING='درحال خرید',_('درحال خرید')
 
 
 class AssignmentStatusEnum(TextChoices):

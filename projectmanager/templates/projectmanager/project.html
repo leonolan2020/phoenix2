@@ -74,7 +74,7 @@
 
             </div>
         </div>
-
+        <!-- موقعیت در نقشه -->
         <div class="card card-stats">
             <div class="card-header card-header-warning card-header-icon">
                 <div class="card-icon">
@@ -112,96 +112,6 @@
                 <a target="_blank" href="{% url 'projectmanager:tutorial_add_project_location' %}">
                     <i class="material-icons">help</i>
                     راهنما</a>
-            </div>
-        </div>
-
-
-        <div class="card card-stats">
-            <div class="card-header card-header-success card-header-icon">
-                <div class="card-icon">
-                    <i aria-hidden="true" class="material-icons">engineering</i>
-                </div>
-                <p class="card-category">
-                    {{project.title}}
-                </p>
-                <h3 class="card-title">پیمانکاران</h3>
-            </div>
-            <div class="card-body">
-                <template v-for="contractor in contractors" v-html="contractor.get_link">
-                    <p class="mr-4">
-
-                        <a :class="'text-'+contractor.color" :href="contractor.get_absolute_url">
-                            <i class="mx-2 text-success material-icons">engineering</i>
-                            {% verbatim %}
-                            {{contractor.title}}
-                            {% endverbatim %}
-
-                        </a>
-                    </p>
-                </template>
-
-            </div>
-            <div class="card-footer">
-                <div class="stats"><i class="material-icons">date_range</i> Last 24 Hours
-                </div>
-            </div>
-        </div>
-
-
-        <div class="card card-stats">
-            <div class="card-header card-header-danger card-header-icon">
-                <div class="card-icon">
-                    <i aria-hidden="true" class="material-icons">settings</i>
-                </div>
-                <p class="card-category">
-                    {{project.title}}
-                </p>
-                <h3 class="card-title">وظیفه ها</h3>
-            </div>
-            <div class="card-body">
-                <template v-for="assignment in assignments" v-html="assignment.get_link">
-                    <p class="mr-4">
-
-                        <a :class="'text-'+assignment.color" :href="assignment.get_absolute_url">
-                            <i class="mx-2 text-success material-icons">engineering</i>
-                            {% verbatim %}
-                            {{assignment.title}}
-                            {% endverbatim %}
-
-                        </a>
-                    </p>
-                </template>
-
-            </div>
-            <div class="card-footer">
-                <div class="stats"><i class="material-icons">date_range</i> Last 24 Hours
-                </div>
-            </div>
-        </div>
-
-
-        <div class="card card-stats">
-            <div class="card-header card-header-success card-header-icon">
-                <div class="card-icon">
-                    <i aria-hidden="true" class="material-icons">engineering</i>
-                </div>
-                <p class="card-category">
-                    {{project.title}}
-                </p>
-                <h3 class="card-title">واحد های سازمانی مرتبط</h3>
-            </div>
-            <div class="card-body px-5 pt-5">
-                <template v-for="organizationunit in organizationunits" v-html="organizationunit.get_link">
-                  
-                    <div class="mb-3" v-html="organizationunit.get_link">
-
-                    </div>
-                </template>
-
-            </div>
-            <div class="card-footer">
-                <div class="stats"><i class="material-icons">date_range</i> Last 24 Hours
-                </div>
             </div>
         </div>
 
@@ -270,6 +180,98 @@
             </div>
 
         </div>
+
+
+        <!-- پیمانکاران -->
+        <div class="card card-stats">
+            <div class="card-header card-header-success card-header-icon">
+                <div class="card-icon">
+                    <i aria-hidden="true" class="material-icons">engineering</i>
+                </div>
+                <p class="card-category">
+                    {{project.title}}
+                </p>
+                <h3 class="card-title">پیمانکاران</h3>
+            </div>
+            <div class="card-body">
+                <template v-for="contractor in contractors" v-html="contractor.get_link">
+                    <p class="mr-4">
+
+                        <a :class="'text-'+contractor.color" :href="contractor.get_absolute_url">
+                            <i class="mx-2 text-success material-icons">engineering</i>
+                            {% verbatim %}
+                            {{contractor.title}}
+                            {% endverbatim %}
+
+                        </a>
+                    </p>
+                </template>
+
+            </div>
+            <div class="card-footer">
+                <div class="stats"><i class="material-icons">date_range</i> Last 24 Hours
+                </div>
+            </div>
+        </div>
+
+        <!-- وظیفه ها -->
+        <div class="card card-stats">
+            <div class="card-header card-header-danger card-header-icon">
+                <div class="card-icon">
+                    <i aria-hidden="true" class="material-icons">settings</i>
+                </div>
+                <p class="card-category">
+                    {{project.title}}
+                </p>
+                <h3 class="card-title">وظیفه ها</h3>
+            </div>
+            <div class="card-body">
+                <template v-for="assignment in assignments" v-html="assignment.get_link">
+                    <p class="mr-4">
+
+                        <a :class="'text-'+assignment.color" :href="assignment.get_absolute_url">
+                            <i class="mx-2 text-success material-icons">engineering</i>
+                            {% verbatim %}
+                            {{assignment.title}}
+                            {% endverbatim %}
+
+                        </a>
+                    </p>
+                </template>
+
+            </div>
+            <div class="card-footer">
+                <div class="stats"><i class="material-icons">date_range</i> Last 24 Hours
+                </div>
+            </div>
+        </div>
+
+        <!-- واحد های سازمانی مرتبط -->
+        <div class="card card-stats">
+            <div class="card-header card-header-success card-header-icon">
+                <div class="card-icon">
+                    <i aria-hidden="true" class="material-icons">engineering</i>
+                </div>
+                <p class="card-category">
+                    {{project.title}}
+                </p>
+                <h3 class="card-title">واحد های سازمانی مرتبط</h3>
+            </div>
+            <div class="card-body px-5 pt-5">
+                <template v-for="organizationunit in organizationunits" v-html="organizationunit.get_link">
+
+                    <div class="mb-3" v-html="organizationunit.get_link">
+
+                    </div>
+                </template>
+
+            </div>
+            <div class="card-footer">
+                <div class="stats"><i class="material-icons">date_range</i> Last 24 Hours
+                </div>
+            </div>
+        </div>
+
 
 
         <div>
@@ -343,9 +345,84 @@
 
 
 
+    <div class="col-12">
 
-    
-    
+        <!-- متریال های درخواست شده -->
+        <div class="card card-stats">
+            <div class="card-header card-header-warning card-header-icon">
+                <div class="card-icon">
+                    <i class="material-icons">place</i>
+                </div>
+                <p class="card-category">
+                    {{project.title}}
+                </p>
+                <h3 class="card-title">متریال های درخواست شده</h3>
+            </div>
+
+
+            <div class="card-body ">
+
+
+
+
+
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead class=" text-primary">
+                            <tr>
+                                <th>
+                                    شناسه
+                                </th>
+                                <th>
+                                    متریال
+                                </th>
+                                <th>
+                                    وضعیت
+                                </th>
+                                <th>
+                                    تعداد/مقدار
+                                </th>
+                                <th>
+                                    واحد
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="material_request in material_requests">
+                                <td>
+                                    <a :href="material_request.get_edit_url">
+<i class="material-icons">settings</i>
+                                        <span v-text="material_request.id"></span>
+                                    </a>
+
+                                </td>
+                                <td>
+                                    <a :href="material_request.material.get_absolute_url">
+
+                                        <span v-text="material_request.material.title"></span>
+                                    </a>
+                                </td>
+                                <td>
+                                    <div v-html="material_request.get_status_tag">sss</div>
+                                </td>
+                                <td v-text="material_request.quantity"></td>
+                                <td v-text="material_request.material.unit_name"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+
+            </div>
+            <div class="card-footer">
+                <a target="_blank" href="{% url 'projectmanager:tutorial_add_project_location' %}">
+                    <i class="material-icons">help</i>
+                    راهنما</a>
+            </div>
+        </div>
+    </div>
+
+
 
 </div>
 
@@ -363,11 +440,12 @@
 
     let events = JSON.parse(`{{events_s|escapejs}}`)
     let contractors = JSON.parse(`{{contractors_s|escapejs}}`)
-    let current_location=`{{project.location|escapejs}}`
+    let current_location = `{{project.location|escapejs}}`
+    let material_requests = JSON.parse(`{{material_requests_s|escapejs}}`)
 
-    
-    let assignments=JSON.parse(`{{assignments_s|escapejs}}`)
-    let organizationunits=JSON.parse(`{{organizationunits_s|escapejs}}`)
+
+    let assignments = JSON.parse(`{{assignments_s|escapejs}}`)
+    let organizationunits = JSON.parse(`{{organizationunits_s|escapejs}}`)
     let project_id = parseInt("{{project.id}}")
     var current_date = '{{current_date}}'
 
@@ -387,10 +465,11 @@
             event_title: '',
             event_description: '',
             current_location: current_location,
-            events: events,
             contractors: contractors,
-            organizationunits:organizationunits,
-            assignments:assignments,
+            events: events,
+            organizationunits: organizationunits,
+            material_requests: material_requests,
+            assignments: assignments,
         },
         components: {
             DatePicker: VuePersianDatetimePicker

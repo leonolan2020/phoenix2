@@ -8,6 +8,19 @@ from authentication.models import Profile
 import datetime
 
 
+class MaterialRequestRepo:
+	def __init__(self, user=None):
+		self.objects = MaterialRequest.objects
+		self.user = user
+	def list(self):
+		return self.objects.all()
+	def materialrequest(self, materialrequest_id):
+		try:
+			return self.objects.get(pk=materialrequest_id)
+		except:
+			return None
+	
+
 class MaterialWareHouseRepo:
 	def __init__(self, user=None):
 		self.objects = MaterialWareHouse.objects

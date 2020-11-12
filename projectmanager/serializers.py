@@ -18,7 +18,7 @@ class EventSerializer(serializers.ModelSerializer):
 class MaterialSerializer(serializers.ModelSerializer):
     class Meta:
         model=Material        
-        fields=['id','title','get_absolute_url']
+        fields=['id','title','get_absolute_url','unit_name']
 
 class MaterialObjectSerializer(serializers.ModelSerializer):
     material=MaterialSerializer()
@@ -26,6 +26,12 @@ class MaterialObjectSerializer(serializers.ModelSerializer):
         model=MaterialObject        
         fields=['id','material','serial_no']
 
+class MaterialRequestSerializer(serializers.ModelSerializer):
+    material=MaterialSerializer()
+    profile=ProfileSerializer()
+    class Meta:
+        model=MaterialRequest      
+        fields=['id','material','profile','get_edit_url','get_status_tag','quantity','persian_date_added','persian_date_delivered']
 class MaterialWareHouseSerializer(serializers.ModelSerializer):
     class Meta:
         model=MaterialWareHouse        
