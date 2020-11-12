@@ -25,6 +25,11 @@ class MaterialObjectSerializer(serializers.ModelSerializer):
     class Meta:
         model=MaterialObject        
         fields=['id','material','serial_no']
+
+class MaterialWareHouseSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=MaterialWareHouse        
+        fields=['id','get_link']
         
 class MaterialInStockSerializer(serializers.ModelSerializer):
     material_object=MaterialObjectSerializer()

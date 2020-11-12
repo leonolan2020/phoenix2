@@ -30,6 +30,7 @@ urlpatterns = [
 	path('add_organizationunit/', apis.PageViews().add_organizationunit,name='add_organizationunit'),
 	path('add_event/', apis.PageViews().add_event, name='add_event'),
 	path('add_contractor/', apis.PageViews().add_contractor, name='add_contractor'),
+	path('add_materialwarehouse/', apis.PageViews().add_materialwarehouse, name='add_materialwarehouse'),
 	path('edit_project_timing/', apis.PageViews().edit_project_timing,name='edit_project_timing'),
 	path('tag/<int:pk>/', views.BasicViews().tag, name='tag'),
 	path('archivedocument/<int:pk>/',views.PageViews().archivedocument, name='archivedocument'),

@@ -56,6 +56,17 @@ class PageViews(APIView):
                     log=4                    
                     return JsonResponse({'result':SUCCEED,'location':location})
         return JsonResponse({'result':FAILED,'log':log})
+    def add_materialwarehouse(self,request):
+        user=request.user
+        if request.method=='POST':
+            add_materialwarehouse_form=AddMaterialWareHouseForm(request.POST)
+            if add_materialwarehouse_form.is_valid():
+                title=add_materialwarehouse_form.cleaned_data['title']
+                parent_id=add_materialwarehouse_form.cleaned_data['parent_id']
+                materialwarehouse=MaterialWareHouseRepo(user=user).add(title=title,parent_id=parent_id)
+                if materialwarehouse is not None:
+                    materialwarehouse_s=MaterialWareHouseSerializer(materialwarehouse).data
+                    return JsonResponse({'result':SUCCEED,'materialwarehouse':materialwarehouse_s})
     def add_contractor(self,request):
         user=request.user
         if request.method=='POST':
@@ -65,7 +76,7 @@ class PageViews(APIView):
                 contractor=ContractorRepo(user=user).add(title=title)
                 if contractor is not None:
                     contractor_s=ContractorSerializer(contractor).data
-                    return JsonResponse(contractor_s)
+                    return JsonResponse({'result':SUCCEED,'contractor':contractor_s})
     def add_event(self,request):
         log=1
         user=request.user

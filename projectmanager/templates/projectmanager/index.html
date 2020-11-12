@@ -160,6 +160,31 @@
                 انبار و انطباق تعدادی با اقلام مهندسی شده (MTO) و نهیاتا کنترل تحویل بر اساس جبه های کاری تعریف شده در
                 سایت همه جزء قابلیت های این نرم افزار می باشند.
               </p>
+              <template v-for="materialwarehouse in materialwarehouses">
+                <div v-html="materialwarehouse.get_link"></div>
+
+
+              </template>
+
+
+              {% if add_materialwarehouse_form %}
+              <div class="mt-5 mx-5">
+                <div class="form-group bmd-form-group">
+                  <label for="exampleInput1" class="bmd-label-floating">نام انبار جدید</label>
+                  {% csrf_token %}
+                  <input type="hidden" name="parent_id" value="0">
+
+                  <form @submit.prevent="add_materialwarehouse">
+                    <input v-model="title_materialwarehouse" type="text" class="form-control" id="exampleInput1"
+                      name="title" required="" aria-required="true">
+                  </form>
+
+                </div>
+
+
+              </div>
+              {% endif %}
+
             </div>
           </div>
         </div>
@@ -186,22 +211,51 @@
 <script>
   $("#nav-item-projectmanager-projects").addClass('active')
   $("#projectmanagerPages").addClass('show')
+  let materialwarehouses = JSON.parse(`{{materialwarehouses_s|escapejs}}`)
+  let contractors = JSON.parse(`{{contractors_s|escapejs}}`)
+  let projects = JSON.parse(`{{projects_s|escapejs}}`)
+  let url_add_project = "{% url 'projectmanager:add_project' %}"
+  let url_add_contractor = "{% url 'projectmanager:add_contractor' %}"
+  let url_add_materialwarehouse = "{% url 'projectmanager:add_materialwarehouse' %}"
+
 </script>
 <script>
   var app = new Vue({
     el: "#app",
     data: {
-      projects: JSON.parse(`{{projects_s|escapejs}}`),
-      contractors: JSON.parse(`{{contractors_s|escapejs}}`),
+      projects: projects,
+      contractors: contractors,
+      materialwarehouses: materialwarehouses,
       title_project: '',
       title_contractor: '',
+      title_materialwarehouse: '',
 
     },
     methods: {
-      add_project: function () {
-        let url = "{% url 'projectmanager:add_project' %}"
+      add_materialwarehouse: function () {
 
-        var posting = $.post(url,
+        var posting = $.post(url_add_materialwarehouse,
+          {
+            parent_id: 0,
+            title: app.title_materialwarehouse,
+            csrfmiddlewaretoken: csrfmiddlewaretoken
+          }
+        );
+
+        // Put the results in a div
+        posting.done(function (data) {
+          console.log(data)
+          // word_app.word = (data.word);
+          // word_app.definitions = (data.definitions);
+          if (data.result === 'SUCCEED') {
+            app.title_materialwarehouse = ""
+            app.materialwarehouses.push(data.materialwarehouse)
+          }
+        })
+      },
+      add_project: function () {
+
+        var posting = $.post(url_add_project,
           {
             parent_id: 0,
             title: app.title_project,
@@ -222,9 +276,8 @@
       },
 
       add_contractor: function () {
-        let url = "{% url 'projectmanager:add_contractor' %}"
 
-        var posting = $.post(url,
+        var posting = $.post(url_add_contractor,
           {
             parent_id: 0,
             title: app.title_contractor,
@@ -236,8 +289,10 @@
         posting.done(function (data) {
           // word_app.word = (data.word);
           // word_app.definitions = (data.definitions);
-          app.title_contractor = ""
-          app.contractors.push(data)
+          if (data.result === 'SUCCEED') {
+            app.title_contractor = ""
+            app.contractors.push(data.contractor)
+          }
         })
       },
 

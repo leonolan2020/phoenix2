@@ -74,8 +74,13 @@ class BasicViews(View):
         context['contractors']=contractors
         if user.has_perm(APP_NAME+'.add_project'):
             context['add_project_form']=AddProjectForm()
+        if user.has_perm(APP_NAME+'.add_materialwarehouse'):
+            context['add_materialwarehouse_form']=AddMaterialWareHouseForm()
         if user.has_perm(APP_NAME+'.add_contracotr'):
             context['add_contracotr_form']=AddContractorForm()
+        materialwarehouses=MaterialWareHouseRepo(user=user).list()
+        materialwarehouses_s=json.dumps(MaterialWareHouseSerializer(materialwarehouses,many=True).data)
+        context['materialwarehouses_s']=materialwarehouses_s
         projects_s=json.dumps(ProjectSerializer(projects,many=True).data)
         context['projects_s']=projects_s
         contractors_s=json.dumps(ContractorSerializer(contractors,many=True).data)

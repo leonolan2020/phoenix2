@@ -9,19 +9,28 @@ import datetime
 
 
 class MaterialWareHouseRepo:
-    def __init__(self, user=None):
-        self.objects = MaterialWareHouse.objects
-        self.user = user
+	def __init__(self, user=None):
+		self.objects = MaterialWareHouse.objects
+		self.user = user
+	def list(self):
+		return self.objects.all()
+	def materialwarehouse(self, materialwarehouse_id):
+		try:
+			return self.objects.get(pk=materialwarehouse_id)
+		except:
+			return None
+	def list_materials_in_stock(self,materialwarehouse_id):
+		materialwarehouse=self.materialwarehouse(materialwarehouse_id=materialwarehouse_id)
+		if materialwarehouse is not None:
+			return MaterialInStock.objects.filter(warehouse=materialwarehouse)
+	def add(self,parent_id,title):
+		parent=self.materialwarehouse(materialwarehouse_id=parent_id)
+		icon = Icon(icon_material='engineering',icon_title='آیکون '+title, color=ColorEnum.PRIMARY)
+		icon.save()
+		materialwarehouse=MaterialWareHouse(title=title,parent=parent,icon=icon,short_description='',description='')
+		materialwarehouse.save()
+		return materialwarehouse
 
-    def materialwarehouse(self, materialwarehouse_id):
-        try:
-            return self.objects.get(pk=materialwarehouse_id)
-        except:
-            return None
-    def list_materials_in_stock(self,materialwarehouse_id):
-        materialwarehouse=self.materialwarehouse(materialwarehouse_id=materialwarehouse_id)
-        if materialwarehouse is not None:
-            return MaterialInStock.objects.filter(warehouse=materialwarehouse)
 
 class MaterialRepo:
     def __init__(self, user=None):

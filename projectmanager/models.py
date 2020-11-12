@@ -69,7 +69,9 @@ class ManagerPage(DashboardPage):
                       </h4>
                     </a>
                     <div class="description text-secondary">
-                      {self.short_description if self.short_description else '&nbsp;'}
+                        <p>
+                         {self.short_description if self.short_description else '&nbsp;'}
+                        </p>
                    </div>
                   </div>
                 </div>
