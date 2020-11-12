@@ -449,6 +449,7 @@
     let project_id = parseInt("{{project.id}}")
     var current_date = '{{current_date}}'
 
+    let url_add_event = "{% url 'projectmanager:add_event' %}"
 
 </script>
 <script>
@@ -537,15 +538,8 @@
                 })
             },
             add_event: function () {
-                let url = "{% url 'projectmanager:add_event' %}"
-                console.log({
-                    project_id: project_id,
-                    title: project_app.event_title,
-                    short_description: project_app.event_description,
-                    event_date: project_app.selected_date,
-                    csrfmiddlewaretoken: csrfmiddlewaretoken
-                })
-                var posting = $.post(url,
+                
+                var posting = $.post(url_add_event,
                     {
                         project_id: project_id,
                         title: project_app.event_title,
@@ -557,7 +551,7 @@
 
                 // Put the results in a div
                 posting.done(function (data) {
-                    console.log(data)
+                    // console.log(data)
                     // word_app.word = (data.word);
                     // word_app.definitions = (data.definitions);
                     if (data.result === 'SUCCEED') {

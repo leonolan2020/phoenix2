@@ -2,6 +2,7 @@ import json
 from .apps import APP_NAME
 from .forms import *
 from .repo import *
+from .enums import *
 from .serializers import *
 from app.views import PageViews as AppPageViews
 from .utils import AdminUtility
@@ -312,8 +313,10 @@ class MaterialRequestViews(View):
         materialrequest_id=pk
         materialrequest=MaterialRequestRepo(user=user).materialrequest(materialrequest_id=materialrequest_id)
         materialrequest_s=json.dumps(MaterialRequestSerializer(materialrequest).data)
-        print(materialrequest_s)
+        # print(materialrequest_s)
         context['materialrequest_s']=materialrequest_s
-
+        signaturestatuses_s=json.dumps(list(x for x in SignatureStatusEnum))
+        context['signaturestatuses_s']=signaturestatuses_s
+        context['do_signature_form']=DoSignatureForm()
         context['signatures_s']=json.dumps(MaterialRequestSignatureSerializer(materialrequest.signatures(),many=True).data)
         return render(request,TEMPLATE_ROOT+'material-request.html',context)

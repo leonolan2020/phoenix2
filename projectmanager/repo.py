@@ -1,5 +1,5 @@
 import random
-from .models import MaterialRequest,Material,MaterialInStock,MaterialWareHouse, Assignment, Project, Event, OrganizationUnit, Employee, Contractor, ManagerPage, ArchiveDocument
+from .models import MaterialRequestSignature,MaterialRequest,Material,MaterialInStock,MaterialWareHouse, Assignment, Project, Event, OrganizationUnit, Employee, Contractor, ManagerPage, ArchiveDocument
 from authentication.repo import ProfileRepo
 from dashboard.models import Icon
 from dashboard.enums import ColorEnum, IconsEnum
@@ -20,6 +20,16 @@ class MaterialRequestRepo:
 		except:
 			return None
 	
+	def do_signature(self,status,description,materialrequest_id):
+		profile=ProfileRepo(user=self.user).me
+		if profile is not None :
+			materialrequest=self.materialrequest(materialrequest_id=materialrequest_id)
+			if materialrequest is not None:
+				signature=MaterialRequestSignature(profile=profile,status=status,description=description,materialrequest=materialrequest)
+				signature.save()
+				materialrequest.status=status
+				materialrequest.save()
+				return signature
 
 class MaterialWareHouseRepo:
 	def __init__(self, user=None):

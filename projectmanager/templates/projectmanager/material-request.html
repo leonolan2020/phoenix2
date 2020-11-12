@@ -23,8 +23,9 @@
                             data-original-title="نمایش" aria-describedby="tooltip685178">
                             <i class="material-icons">art_track</i>
                         </a>
-                        <a target="_blank" :href="materialrequest.material.get_edit_url" type="button" class="btn btn-success btn-link"
-                            rel="tooltip" data-placement="bottom" title="" data-original-title="ویرایش">
+                        <a target="_blank" :href="materialrequest.material.get_edit_url" type="button"
+                            class="btn btn-success btn-link" rel="tooltip" data-placement="bottom" title=""
+                            data-original-title="ویرایش">
                             <i class="material-icons">edit</i>
                         </a>
                         <button type="button" class="btn btn-danger btn-link" rel="tooltip" data-placement="bottom"
@@ -61,8 +62,51 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-8">
+        <div class="col-md-4">
             <ul class="timeline timeline-simple">
+                {% if do_signature_form %}
+
+                <li class="timeline-inverted">
+                    <div class="'timeline-badge success">
+                        <a href="{{profile.get_absolute_url}}">
+
+                            <img src="{{profile.image}}" width="50" class="rounded-circle" alt="">
+                        </a>
+
+                    </div>
+                    <div class="timeline-panel">
+                        <div class="timeline-heading">
+                            <span class="'badge badge-pill badge-primary">امضا کنید</span>
+                        </div>
+                        <div class="timeline-body">
+
+                            <input type="text" v-model="description" class="form-control" placeholder="متن پاراف" id="">
+                            <div class="dropdown">
+                                <button type="button" id="dropdownMenuButton" data-toggle="dropdown"
+                                    aria-haspopup="true" aria-expanded="false" class="btn btn-success dropdown-toggle">
+
+                                    امضا می کنم
+
+                                    <div class="ripple-container"></div>
+
+                                </button>
+                                <div aria-labelledby="dropdownMenuLink" class="dropdown-menu">
+                                    <button class="dropdown-item" v-for="signaturestatus in signaturestatuses"
+                                        v-text="signaturestatus" @click="do_signature(signaturestatus)"></button>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <h6 class="rtl">
+                            <span class="text-secondary mx-2">{{current_date}}</span>
+                            <i class="ti-time"></i>
+                            <a href="{{profile.get_absolute_url}}">{{profile.name}}</a>
+                        </h6>
+                    </div>
+                </li>
+
+                {% endif %}
                 <li class="timeline-inverted" v-for="signature in signatures">
                     <div :class="'timeline-badge '+signature.get_status_color">
                         <a :href="signature.profile.get_absolute_url">
@@ -73,11 +117,12 @@
                     </div>
                     <div class="timeline-panel">
                         <div class="timeline-heading">
-                            <span :class="'badge badge-pill badge-'+signature.get_status_color" v-text="signature.status"></span>
+                            <span :class="'badge badge-pill badge-'+signature.get_status_color"
+                                v-text="signature.status"></span>
                         </div>
                         <div class="timeline-body">
                             <p v-text="signature.description">
-                          
+
                             </p>
                         </div>
 
@@ -85,12 +130,11 @@
                         <h6 class="rtl">
                             <span class="text-secondary mx-2" v-text="signature.persian_date_added"></span>
                             <i class="ti-time"></i>
-                            <a :href="signature.profile.get_absolute_url"
-                                v-text="signature.profile.name"></a>
+                            <a :href="signature.profile.get_absolute_url" v-text="signature.profile.name"></a>
                         </h6>
                     </div>
                 </li>
-                
+
             </ul>
         </div>
     </div>
@@ -101,7 +145,11 @@
 <script src="{% static 'vendor/js/vue.min.js' %}"></script>
 <script>
     var materialrequest = JSON.parse(`{{materialrequest_s|escapejs}}`)
+    let signaturestatuses = JSON.parse(`{{signaturestatuses_s|escapejs}}`)
     var signatures = JSON.parse(`{{signatures_s|escapejs}}`)
+
+    let url_do_signature = "{% url 'projectmanager:do_signature' %}"
+
 
 </script>
 <!-- <script src="{% static 'projectmanager/js/material_request_app.js' %}"></script> -->
@@ -111,7 +159,40 @@
         data: {
             materialrequest: materialrequest,
             signatures: signatures,
-        }
+            description: '',
+            signaturestatuses: signaturestatuses,
+        },
+        methods: {
+            do_signature: function (signaturestatus) {
+
+
+                var posting = $.post(url_do_signature,
+                    {
+                        materialrequest_id: materialrequest.id,
+                        description: material_request_app.description,
+                        status: signaturestatus,
+                        csrfmiddlewaretoken: csrfmiddlewaretoken
+                    }
+                );
+
+                // Put the results in a div
+                posting.done(function (data) {
+                    // console.log(data)
+                    // word_app.word = (data.word);
+                    // word_app.definitions = (data.definitions);
+                    if (data.result === 'SUCCEED') {
+                        material_request_app.description = ""
+                        material_request_app.signatures.reverse()
+                        material_request_app.signatures.push(data.signature)
+                        material_request_app.signatures.reverse()
+                        material_request_app.materialrequest.get_status_tag = `
+                        <span class="badge badge-pill badge-primary">${data.signature.status}</span>
+                        `
+                    }
+                })
+
+            }
+        },
     })
 
 </script>

@@ -159,3 +159,22 @@ class PageViews(APIView):
                     employee_s=EmployeeSerializer(employee).data
                     return JsonResponse({'result':SUCCEED,'employee':employee_s})
         return JsonResponse({'result':FAILED,'log':log})
+    def do_signature(self,request):
+        log=1
+        user=request.user
+        if request.method=='POST':
+            log=2
+            do_signature_form=DoSignatureForm(request.POST)
+            if do_signature_form.is_valid():
+                log=3
+                materialrequest_id=do_signature_form.cleaned_data['materialrequest_id']
+                description=do_signature_form.cleaned_data['description']
+                status=do_signature_form.cleaned_data['status']
+
+
+                signature=MaterialRequestRepo(user=user).do_signature(status=status,description=description,materialrequest_id=materialrequest_id)
+                if signature is not None:
+                    log=4
+                    signature_s=MaterialRequestSignatureSerializer(signature).data
+                    return JsonResponse({'result':SUCCEED,'signature':signature_s})
+        return JsonResponse({'result':FAILED,'log':log})

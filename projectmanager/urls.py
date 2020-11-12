@@ -25,6 +25,7 @@ urlpatterns = [
 	path('contractor/<int:pk>/', views.PageViews().contractor, name='contractor'),
 	path('organizationunit/<int:pk>/',views.PageViews().organizationunit, name='organizationunit'),
 	path('event/<int:pk>/', views.PageViews().event, name='event'),
+	path('do_signature/', apis.PageViews().do_signature, name='do_signature'),
 	path('add_project/', apis.PageViews().add_project, name='add_project'),
 	path('add_location/', apis.PageViews().add_location, name='add_location'),
 	path('add_document/', apis.PageViews().add_document, name='add_document'),

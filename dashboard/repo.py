@@ -72,9 +72,9 @@ class CommentRepo:
         try:
 
             comment=Comment.objects.get(pk=comment_id)
-            print(comment)
+            # print(comment)
             page=comment.page_for_comment.first()
-            print(page)
+            # print(page)
 
             if comment.profile==self.profile:
                 comment.delete()

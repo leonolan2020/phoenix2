@@ -2,9 +2,13 @@ from django.db.models import TextChoices
 from django.utils.translation import gettext as _
 class SignatureStatusEnum(TextChoices):
     DEFAULT='DEFAULT',_('DEFAULT')
-    SUBMIT='تایید شد',_('تایید شد') 
-    DENIED='رد شد',_('رد شد') 
+    DELIVERED='تحویل شده',_('تحویل شده')
+    IN_PROGRESS='در حال بررسی',_('درحال بررسی')
+    DENIED='رد شده',_('ردشده')
+    ACCEPTED='پذیرفته شده',_('پذیرفته شده')
+    PURCHASING='درحال خرید',_('درحال خرید')
 
+    
 class EmployeeEnum(TextChoices):
     CEO='سرپرست',_('سرپرست')  
     GUARD='نگهبان',_('نگهبان')      
@@ -42,6 +46,18 @@ def StatusColor(status):
         return 'secondary'
     if status==AssignmentStatusEnum.DENIED:
         return 'danger'
+    if status==MaterialRequestStatusEnum.DEFAULT:
+        return 'rose'
+    if status==MaterialRequestStatusEnum.IN_PROGRESS:
+        return 'info'
+    if status==MaterialRequestStatusEnum.ACCEPTED:
+        return 'success'
+    if status==MaterialRequestStatusEnum.DELIVERED:
+        return 'success'
+    if status==MaterialRequestStatusEnum.DENIED:
+        return 'danger'
+    if status==MaterialRequestStatusEnum.PURCHASING:
+        return 'primary'
 
 
     

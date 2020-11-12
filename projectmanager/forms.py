@@ -21,6 +21,11 @@ class AddMaterialCategoryForm(forms.Form):
     title=forms.CharField(max_length=50,required=True)
     parent_id=forms.IntegerField(required=True)
 
+class DoSignatureForm(forms.Form):
+    description=forms.CharField(max_length=500,required=True)
+    status=forms.CharField(max_length=50,required=True)
+    materialrequest_id=forms.IntegerField(required=True)
+    
 class AddOrganizationUnitForm(forms.Form):
     title=forms.CharField(max_length=50,required=True)
     parent_id=forms.IntegerField(required=True)

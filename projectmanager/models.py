@@ -610,18 +610,7 @@ class MaterialRequest(models.Model):
     def get_edit_url(self):
         return f'{ADMIN_URL}{APP_NAME}/{self.class_name}/{self.pk}/change/'
     def get_status_color(self):
-        if self.status==MaterialRequestStatusEnum.DEFAULT:
-            return 'rose'
-        if self.status==MaterialRequestStatusEnum.IN_PROGRESS:
-            return 'info'
-        if self.status==MaterialRequestStatusEnum.ACCEPTED:
-            return 'success'
-        if self.status==MaterialRequestStatusEnum.DELIVERED:
-            return 'success'
-        if self.status==MaterialRequestStatusEnum.DENIED:
-            return 'danger'
-        if self.status==MaterialRequestStatusEnum.PURCHASING:
-            return 'primary'
+        return StatusColor(self.status)
 
     def get_status_tag(self):
         return f"""<span class="badge badge-pill badge-{self.get_status_color()}">{self.status}</span>"""
@@ -646,9 +635,4 @@ class MaterialRequestSignature(models.Model):
         return PersianCalendar().from_gregorian(self.date_added)
     
     def get_status_color(self):
-        if self.status==SignatureStatusEnum.DEFAULT:
-            return 'secondary'
-        if self.status==SignatureStatusEnum.DENIED:
-            return 'danger'
-        if self.status==SignatureStatusEnum.SUBMIT:
-            return 'success'
+        return StatusColor(self.status)

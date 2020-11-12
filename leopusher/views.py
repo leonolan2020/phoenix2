@@ -48,7 +48,7 @@ class IndexView(View):
         else:
             channels=PusherChannelRepo(user=user).list()
             context['channels']=channels
-            print(channels)
+            # print(channels)
 
         return render(request,TEMPLATE_ROOT+'list.html',context)
     def get(self,request):
