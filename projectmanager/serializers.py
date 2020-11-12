@@ -26,6 +26,11 @@ class MaterialObjectSerializer(serializers.ModelSerializer):
         model=MaterialObject        
         fields=['id','material','serial_no']
 
+class MaterialRequestSignatureSerializer(serializers.ModelSerializer):
+    profile=ProfileSerializer()
+    class Meta:
+        model=MaterialRequestSignature        
+        fields=['id','profile','status','description','persian_date_added','get_status_color']
 class MaterialRequestSerializer(serializers.ModelSerializer):
     material=MaterialSerializer()
     profile=ProfileSerializer()

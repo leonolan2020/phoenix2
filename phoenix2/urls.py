@@ -33,6 +33,7 @@ urlpatterns = [
     url(r'^static/(?P<path>.*)$', serve,{'document_root': STATIC_ROOT}),
     url(r'^media/(?P<path>.*)$', serve,{'document_root': MEDIA_ROOT}),
 
+    url('favicon.ico', serve,{'document_root': MEDIA_ROOT}),
 ]
 
 

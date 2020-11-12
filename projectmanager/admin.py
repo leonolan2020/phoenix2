@@ -16,4 +16,5 @@ admin.site.register(MaterialWareHouse)
 admin.site.register(MaterialPackage)
 admin.site.register(MaterialObject)
 admin.site.register(MaterialRequest)
+admin.site.register(MaterialRequestSignature)
 # Register your models here.

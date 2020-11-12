@@ -6,7 +6,7 @@ from dashboard.constants import *
 from dashboard.enums import *
 from django.core.validators import MinValueValidator, MaxValueValidator
 from dashboard.enums import ColorEnum
-from .enums import StatusColor,MaterialRequestStatusEnum
+from .enums import StatusColor,MaterialRequestStatusEnum,SignatureStatusEnum
 import os
 from django.http import Http404, HttpResponse
 from django.db import models
@@ -625,3 +625,30 @@ class MaterialRequest(models.Model):
 
     def get_status_tag(self):
         return f"""<span class="badge badge-pill badge-{self.get_status_color()}">{self.status}</span>"""
+    def signatures(self):
+        return MaterialRequestSignature.objects.filter(materialrequest=self).order_by('-date_added')
+
+
+class MaterialRequestSignature(models.Model):
+    materialrequest=models.ForeignKey("materialrequest", verbose_name=_("درخواست"), on_delete=models.PROTECT)
+    profile=models.ForeignKey("authentication.Profile", verbose_name=_("profile"), on_delete=models.PROTECT)
+    date_added=models.DateTimeField(_("date_added"), auto_now=False, auto_now_add=True)
+    description=models.CharField(_("description"), max_length=200)
+    status=models.CharField(_("status"),choices=SignatureStatusEnum.choices,default=SignatureStatusEnum.DEFAULT, max_length=200)
+    class Meta:
+        verbose_name = _("MaterialRequestSignature")
+        verbose_name_plural = _("امضا ها")
+
+    def __str__(self):
+        return f'{self.profile.name()} : {self.description} @ {PersianCalendar().from_gregorian(self.date_added)}'
+
+    def persian_date_added(self):
+        return PersianCalendar().from_gregorian(self.date_added)
+    
+    def get_status_color(self):
+        if self.status==SignatureStatusEnum.DEFAULT:
+            return 'secondary'
+        if self.status==SignatureStatusEnum.DENIED:
+            return 'danger'
+        if self.status==SignatureStatusEnum.SUBMIT:
+            return 'success'

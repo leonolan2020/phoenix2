@@ -23,7 +23,7 @@
                             data-original-title="نمایش" aria-describedby="tooltip685178">
                             <i class="material-icons">art_track</i>
                         </a>
-                        <a :href="materialrequest.material.get_edit_url" type="button" class="btn btn-success btn-link"
+                        <a target="_blank" :href="materialrequest.material.get_edit_url" type="button" class="btn btn-success btn-link"
                             rel="tooltip" data-placement="bottom" title="" data-original-title="ویرایش">
                             <i class="material-icons">edit</i>
                         </a>
@@ -63,90 +63,34 @@
         </div>
         <div class="col-md-8">
             <ul class="timeline timeline-simple">
-                <li class="timeline-inverted">
-                    <div class="timeline-badge danger">
-                     <a :href="materialrequest.profile.get_absolute_url"  >
+                <li class="timeline-inverted" v-for="signature in signatures">
+                    <div :class="'timeline-badge '+signature.get_status_color">
+                        <a :href="signature.profile.get_absolute_url">
 
-                         <img :src="materialrequest.profile.image" width="50" class="rounded-circle" alt="">
-                     </a>
-                        
+                            <img :src="signature.profile.image" width="50" class="rounded-circle" alt="">
+                        </a>
+
                     </div>
                     <div class="timeline-panel">
                         <div class="timeline-heading">
-                            <span class="badge badge-pill badge-danger">پذیرفته شده</span>
+                            <span :class="'badge badge-pill badge-'+signature.get_status_color" v-text="signature.status"></span>
                         </div>
                         <div class="timeline-body">
-                            <p>
-                            موافقت می شود . از انبار شماره یک تحویل بگیرید.
+                            <p v-text="signature.description">
+                          
                             </p>
                         </div>
-                  
-                        
+
+
                         <h6 class="rtl">
-                            <span class="text-secondary mx-2" v-text="materialrequest.persian_date_added"></span>
-                            <i class="ti-time"></i> 
-                            <a :href="materialrequest.profile.get_absolute_url" v-text="materialrequest.profile.name"></a>
+                            <span class="text-secondary mx-2" v-text="signature.persian_date_added"></span>
+                            <i class="ti-time"></i>
+                            <a :href="signature.profile.get_absolute_url"
+                                v-text="signature.profile.name"></a>
                         </h6>
                     </div>
                 </li>
-                <li class="timeline-inverted">
-                    <div class="timeline-badge success">
-                        <i class="material-icons">extension</i>
-                    </div>
-                    <div class="timeline-panel">
-                        <div class="timeline-heading" v-html="materialrequest.get_status_tag">
-                            
-                        </div>
-                        <div class="timeline-body">
-                            <p>عل فكانت الثقيلة بلا. شيء بخطوط بالرّغم التبرعات عن, يطول بأيدي لم كلّ. معقل الغالي
-                                واتّجه لم وتم, أن الصفحة بالمحور حول, بال مرمى الصفحات قُدُماً و. الأخذ سبتمبر العالم من
-                                ذلك. ان يبق شدّت الأبرياء, الى الربيع، والمانيا كل. ودول الأهداف التقليدي عل أضف, كلا
-                                يقوم الأخذ الآلاف بل.</p>
-                        </div>
-                    </div>
-                </li>
-                <li class="timeline-inverted">
-                    <div class="timeline-badge info">
-                        <i class="material-icons">fingerprint</i>
-                    </div>
-                    <div class="timeline-panel">
-                        <div class="timeline-heading">
-                            <span class="badge badge-pill badge-info">هذا غينيا</span>
-                        </div>
-                        <div class="timeline-body">
-                            <p>جهة المارق والديون التقليدية في, هو وترك المجتمع بريطانيا ذلك, لمّ ما العالم، اليابان،.
-                                ٣٠ فقامت أوروبا مشاركة بعد, ٢٠٠٤ الجو مساعدة ما حدى. في عليها وبحلول معارضة بعض. عن
-                                الأرض وبداية العمليات ولم. الجو جديداً الأوروبيّون أم به،. ثم التي نتيجة الآلاف جعل, عن
-                                المارق السادس قام. ما أخر فقامت الأجل الشرق،, فصل كل وسوء الأرواح. ثم بعد وشعار بأيدي.
-                                قبل وكسبت الغالي الولايات بل, ٣٠ أمّا أخرى لأداء أضف. هو منتصف معزّزة على. بـ أفريقيا
-                                التغييرات مما, أثره،.
-                            </p>
-                            <hr>
-                            <div class="dropdown pull-left">
-                                <button type="button" class="btn btn-round btn-info dropdown-toggle"
-                                    data-toggle="dropdown">
-                                    <i class="material-icons">build</i>
-                                    <span class="caret"></span>
-                                </button>
-                                <ul class="dropdown-menu dropdown-menu-right" role="menu">
-                                    <li>
-                                        <a href="#action" class="google-drive-opener">ان</a>
-                                    </li>
-                                    <li>
-                                        <a href="#action" class="google-drive-opener">إجلاء لفرنسا</a>
-                                    </li>
-                                    <li>
-                                        <a href="#here" class="google-drive-opener">أواخر الأرض بل</a>
-                                    </li>
-                                    <li class="divider"></li>
-                                    <li>
-                                        <a href="#link" class="google-drive-opener">عل اليها</a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </li>
+                
             </ul>
         </div>
     </div>
@@ -157,6 +101,8 @@
 <script src="{% static 'vendor/js/vue.min.js' %}"></script>
 <script>
     var materialrequest = JSON.parse(`{{materialrequest_s|escapejs}}`)
+    var signatures = JSON.parse(`{{signatures_s|escapejs}}`)
+
 </script>
 <!-- <script src="{% static 'projectmanager/js/material_request_app.js' %}"></script> -->
 <script>
@@ -164,7 +110,7 @@
         el: "#material-request-app",
         data: {
             materialrequest: materialrequest,
-
+            signatures: signatures,
         }
     })
 

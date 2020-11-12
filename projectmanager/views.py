@@ -314,4 +314,6 @@ class MaterialRequestViews(View):
         materialrequest_s=json.dumps(MaterialRequestSerializer(materialrequest).data)
         print(materialrequest_s)
         context['materialrequest_s']=materialrequest_s
+
+        context['signatures_s']=json.dumps(MaterialRequestSignatureSerializer(materialrequest.signatures(),many=True).data)
         return render(request,TEMPLATE_ROOT+'material-request.html',context)

@@ -1,5 +1,9 @@
 from django.db.models import TextChoices
 from django.utils.translation import gettext as _
+class SignatureStatusEnum(TextChoices):
+    DEFAULT='DEFAULT',_('DEFAULT')
+    SUBMIT='تایید شد',_('تایید شد') 
+    DENIED='رد شد',_('رد شد') 
 
 class EmployeeEnum(TextChoices):
     CEO='سرپرست',_('سرپرست')  
