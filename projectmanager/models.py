@@ -620,6 +620,8 @@ class MaterialRequest(models.Model):
             return 'success'
         if self.status==MaterialRequestStatusEnum.DENIED:
             return 'danger'
+        if self.status==MaterialRequestStatusEnum.PURCHASING:
+            return 'primary'
 
     def get_status_tag(self):
         return f"""<span class="badge badge-{self.get_status_color()}">{self.status}</span>"""
