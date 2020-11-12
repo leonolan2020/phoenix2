@@ -98,19 +98,18 @@
 						aria-required="true">
 				</div>
 				<div class="">
-					<div class="dropdown show">
+					<div class="dropdown" v-if="new_employee_fname && new_employee_lname">
 
-						<a href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true"
-							aria-expanded="false" class="btn btn-secondary dropdown-toggle">
+						<button class="btn btn-success dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 
 							نقش :
 							نقش پرسنل جدید را انتخاب کنید
 
 							<div class="ripple-container"></div>
-						</a>
+						</button>
 						<div aria-labelledby="dropdownMenuLink" class="dropdown-menu">
 
-							<button v-if="new_employee_fname && new_employee_lname" @click="add_employee(role)"
+							<button @click="add_employee(role)"
 								v-for="role in roles" class="dropdown-item" v-text="role">
 
 
