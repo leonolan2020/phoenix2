@@ -390,8 +390,8 @@
                         <tbody>
                             <tr v-for="material_request in material_requests">
                                 <td>
-                                    <a :href="material_request.get_edit_url">
-<i class="material-icons">settings</i>
+                                    <a :href="material_request.get_absolute_url">
+                                        <i class="material-icons">settings</i>
                                         <span v-text="material_request.id"></span>
                                     </a>
 
@@ -403,7 +403,7 @@
                                     </a>
                                 </td>
                                 <td>
-                                    <div v-html="material_request.get_status_tag">sss</div>
+                                    <div v-html="material_request.get_status_tag"></div>
                                 </td>
                                 <td v-text="material_request.quantity"></td>
                                 <td v-text="material_request.material.unit_name"></td>

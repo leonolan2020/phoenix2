@@ -20,6 +20,7 @@ urlpatterns = [
 	path('presentation/<int:pk>/', views.PageViews().presentation, name='presentation'),
 	path('guantt/<int:pk>/', views.PageViews().guantt, name='guantt'),
 	path('project/<int:pk>/', views.PageViews().project, name='project'),
+	path('materialrequest/<int:pk>/', views.MaterialRequestViews().materialrequest, name='materialrequest'),
 	path('organizationunit/<int:pk>/',views.PageViews().organizationunit, name='organizationunit'),
 	path('contractor/<int:pk>/', views.PageViews().contractor, name='contractor'),
 	path('organizationunit/<int:pk>/',views.PageViews().organizationunit, name='organizationunit'),

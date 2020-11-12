@@ -624,4 +624,4 @@ class MaterialRequest(models.Model):
             return 'primary'
 
     def get_status_tag(self):
-        return f"""<span class="badge badge-{self.get_status_color()}">{self.status}</span>"""
+        return f"""<span class="badge badge-pill badge-{self.get_status_color()}">{self.status}</span>"""

@@ -139,7 +139,19 @@ class PageViews(View):
         material_in_stocks=material_warehouse_repo.list_materials_in_stock(materialwarehouse_id=materialwarehouse_id)
         material_in_stocks_s=json.dumps(MaterialInStockSerializer(material_in_stocks,many=True).data)
         context['material_in_stocks_s']=material_in_stocks_s
+        context['organizationunit']=materialwarehouse
         context['materialwarehouse']=materialwarehouse
+        context['projects_s']="[]"
+        context['organizationunits_s']=json.dumps(OrganizationUnitSerializer(materialwarehouse.childs(),many=True).data)
+        
+        if user.has_perm(APP_NAME+'.add_organizationunit'):
+            context['add_organizationunit_form']=AddOrganizationUnitForm()
+        if user.has_perm(APP_NAME+'.add_employee'):
+            context['add_employee_form']=AddEmployeeForm()
+        context['roles_s']=json.dumps(list(x for x in EmployeeEnum))
+        employees_s=json.dumps(EmployeeSerializer(materialwarehouse.employee_set.all(),many=True).data)
+        context['employees_s']=employees_s
+
         return render(request,TEMPLATE_ROOT+'material-warehouse.html',context)
 
     def material(self,request,pk,*args, **kwargs):
@@ -292,3 +304,14 @@ class EmployeeViews(View):
 
         context['employee']=employee
         return render(request,TEMPLATE_ROOT+'employee.html',context)
+
+class MaterialRequestViews(View):
+    def materialrequest(self,request,pk,*args, **kwargs):
+        user=request.user
+        context=getContext(request)
+        materialrequest_id=pk
+        materialrequest=MaterialRequestRepo(user=user).materialrequest(materialrequest_id=materialrequest_id)
+        materialrequest_s=json.dumps(MaterialRequestSerializer(materialrequest).data)
+        print(materialrequest_s)
+        context['materialrequest_s']=materialrequest_s
+        return render(request,TEMPLATE_ROOT+'material-request.html',context)

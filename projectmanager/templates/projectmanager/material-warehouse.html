@@ -1,7 +1,7 @@
-{% extends "projectmanager/page.html" %}
+{% extends "projectmanager/org-unit.html" %}
 {% load static %}
 
-{% block child_content %}
+{% block org_unit_content %}
 <div id="material-warehouse-app">
     <div class="row">
         <div class="col-12">
@@ -58,7 +58,7 @@
 {% endblock %}
 
 
-{% block child_script %}
+{% block org_unit_script %}
 <script src="{% static 'vendor/js/vue.min.js' %}"></script>
 <script>
     let material_in_stocks=JSON.parse(`{{material_in_stocks_s|escapejs}}`)

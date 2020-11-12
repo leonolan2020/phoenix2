@@ -169,7 +169,9 @@
 
 
 </div>
-
+{% block org_unit_content %}
+  
+{% endblock org_unit_content %}
 {% endblock  %}
 
 {% block child_script %}
@@ -261,7 +263,9 @@ let projects=JSON.parse(`{{projects_s|escapejs}}`)
 	})
 </script>
 
-
+{% block org_unit_script %}
+  
+{% endblock org_unit_script %}
 
 
 
