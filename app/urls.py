@@ -9,6 +9,7 @@ urlpatterns=[
     path('pages/profile/',views.ProfileViews().profile,name='profile'),
     path('pages/profile/<int:profile_id>/',views.ProfileViews().profile,name='selected_profile'),
     path('features/',views.BasicViews().features,name='features'),
+    path('blogs/',views.BasicViews().blogs,name='blogs'),
     path('ourteam/<int:pk>/',views.BasicViews().features,name='ourteam'),
     path('resume/<int:pk>/',views.PageViews().resume,name='resume'),
     path('tag/<int:pk>/',views.BasicViews().tag,name='tag'),

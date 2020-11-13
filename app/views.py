@@ -13,6 +13,7 @@ from dashboard.repo import ResumeRepo as DashboardResumeRepo
 from django.http import Http404
 from .repo import *
 from .forms import *
+from dashboard.serializers import BlogSerializer
 from .enums import MainPicEnum
 import json
 TEMPLATE_ROOT='material/'
@@ -79,6 +80,18 @@ class BasicViews(View):
         context['about_header']=MainPicRepo(user=user).get(MainPicEnum.ABOUT_HEADER)
         context['about_text']=ParameterRepo(user=user).get(ParametersEnum.ABOUT_US_TITLE)
         return render(request,TEMPLATE_ROOT+'about.html',context)
+
+    def blogs(self,request,*args, **kwargs):
+        context=getContext(request)
+        user=request.user
+        context['body_class']='blog-posts'
+        ourteams=OurTeamRepo(user=user).list()
+        context['ourteams']=ourteams
+        context['blogs_header']=MainPicRepo(user=user).get(MainPicEnum.BLOG_HEADER)
+        context['blogs_text']='مقالات'
+        blogs=BlogRepo(user=user).list()
+        context['blogs_s']=json.dumps(BlogSerializer(blogs,many=True).data)
+        return render(request,TEMPLATE_ROOT+'blogs.html',context)
 
     def home(self,request,*args,**kwargs):
         user=request.user

@@ -148,6 +148,7 @@ class Page(models.Model):
     thumbnail_origin = models.ImageField(_("تصویر کوچک"), null=True, blank=True, upload_to=IMAGE_FOLDER +
                                          'Page/Thumbnail/', height_field=None, width_field=None, max_length=None)
 
+    category = models.CharField(_('category'),null=True,blank=True, max_length=200)
     title = models.CharField(_('title'), max_length=200)
     icon = models.ForeignKey("icon", null=True, blank=True, on_delete=models.SET_NULL)
     color = models.CharField(_("color class"), blank=True, null=True,
@@ -217,6 +218,9 @@ class Page(models.Model):
 
     def get_absolute_url(self):
         return reverse(self.app_name+':'+self.child_class, kwargs={'pk': self.pk})
+
+    def get_edit_url(self):
+        return f'{ADMIN_URL}{self.app_name}/{self.child_class}/{self.pk}/change/'
 
     def persian_date_added_tag(self):
         value = self.date_added
@@ -827,8 +831,7 @@ class HomeSlider(models.Model):
 
 
 class OurWork(Page):
-    category = models.ForeignKey("OurWorkCategory", null=True, blank=True, verbose_name=_(
-        "دسته بندی"), on_delete=models.SET_NULL)
+    
     location = models.CharField(
         _('موقعیت در نقشه گوگل 400*400'), max_length=500, null=True, blank=True)
 

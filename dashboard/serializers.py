@@ -17,7 +17,7 @@ class ResumeCategorySerializer(serializers.ModelSerializer):
 class BlogSerializer(serializers.ModelSerializer):
     class Meta:
         model=Blog
-        fields=['id','pretitle','icon','color','title','thumbnail','short_description','description','image','persian_date_added_tag','get_absolute_url']
+        fields=['id','category','icon','color','get_edit_url','title','thumbnail','short_description','description','image','persian_date_added_tag','get_absolute_url']
 
 class LinkSerializer(serializers.ModelSerializer):
     class Meta:

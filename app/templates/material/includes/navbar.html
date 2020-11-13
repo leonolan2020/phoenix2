@@ -80,17 +80,17 @@ color-on-scroll="100"
 
 
 
-                        <a href="./examples/about-us.html" class="dropdown-item">
+                        <a href="{% url 'app:about' %}" class="dropdown-item">
                             <i class="material-icons">account_balance</i> درباره ما
                         </a>
 
                         <a href="./examples/blog-post.html" class="dropdown-item">
                             <i class="material-icons">art_track</i> Blog Post
                         </a>
-                        <a href="./examples/blog-posts.html" class="dropdown-item">
+                        <a href="{% url 'app:blogs' %}" class="dropdown-item">
                             <i class="material-icons">view_quilt</i> مقالات
                         </a>
-                        <a href="./examples/contact-us.html" class="dropdown-item">
+                        <a href="{% url 'app:contact' %}" class="dropdown-item">
                             <i class="material-icons">location_on</i> ارتباط با ما
                         </a>
                         <a href="./examples/landing-page.html" class="dropdown-item">
