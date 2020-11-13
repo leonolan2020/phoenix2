@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Comment,Blog,Link,Notification,Tag,Document,GalleryPhoto,Resume,ResumeCategory
+from .models import OurWork,Comment,Blog,Link,Notification,Tag,Document,GalleryPhoto,Resume,ResumeCategory
 from authentication.models import Profile
 from authentication.serializers import ProfileSerializer
 
@@ -17,6 +17,12 @@ class ResumeCategorySerializer(serializers.ModelSerializer):
 class BlogSerializer(serializers.ModelSerializer):
     class Meta:
         model=Blog
+        fields=['id','category','icon','color','get_edit_url','title','thumbnail','short_description','description','image','persian_date_added_tag','get_absolute_url']
+
+
+class OurWorkSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=OurWork
         fields=['id','category','icon','color','get_edit_url','title','thumbnail','short_description','description','image','persian_date_added_tag','get_absolute_url']
 
 class LinkSerializer(serializers.ModelSerializer):

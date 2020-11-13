@@ -2,13 +2,13 @@
 {% load static %}
 {% block content %}
 <div class="page-header header-filter header-small" data-parallax="true"
-    style="background-image: url(&quot;{{blogs_header.image}}&quot;); transform: translate3d(0px, 0px, 0px);">
+    style="background-image: url(&quot;{{header_image.image}}&quot;); transform: translate3d(0px, 0px, 0px);">
     <div class="container">
         <div class="row">
             <div class="col-md-8 ml-auto mr-auto text-center">
-                <h2 class="title">{{blogs_text}}</h2>
+                <h2 class="title">{{header_text}}</h2>
                 {% if perms.app.change_mainpic %}
-                {{blogs_header.get_edit_btn|safe}}
+                {{header_image.get_edit_btn|safe}}
                 {% endif %}
             </div>
         </div>
@@ -42,42 +42,49 @@
                 </div>
             </div>
             <div class="row rtl">
+                <template v-for="blog in blogs">
+                    <transition name="fade1">
+                        <div v-if="blog.category==selected_category || selected_category=='all'" class="col-md-6">
 
-                <div class="col-md-6" v-for="blog in blogs">
-                    <div class="card card-raised card-background"
-                        :style="'background-image: url(&quot;'+blog.thumbnail+'&quot;)'">
-                        <div class="card-body">
-                            <h6 class="card-category text-info" v-text="blog.category"></h6>
-                            <a :href="blog.get_absolute_url" class="google-drive-opener">
-                                <h3 class="card-title" v-text="blog.title"></h3>
-                            </a>
-                            <p class="card-description text-center" v-text="blog.short_description">
+                            <div class="card card-raised card-background"
+                                :style="'background-image: url(&quot;'+blog.thumbnail+'&quot;)'">
+                                <div class="card-body">
+                                    <h6 class="card-category text-info" v-text="blog.category"></h6>
+                                    <a :href="blog.get_absolute_url" class="google-drive-opener">
+                                        <h3 class="card-title" v-text="blog.title"></h3>
+                                    </a>
+                                    <p class="card-description text-center" v-text="blog.short_description">
 
-                            </p>
+                                    </p>
 
-                            {% if perms.app.change_mainpic %}
-                            <a :href="blog.get_edit_url" class="btn btn-info btn-round google-drive-opener">
-                                <i class="material-icons text-light">format_align_left</i>
-                                <span class="text-light">
+                                    {% if perms.app.change_mainpic %}
+                                    <a :href="blog.get_edit_url" class="btn btn-info btn-round google-drive-opener">
+                                        <i class="material-icons text-light">format_align_left</i>
+                                        <span class="text-light">
 
-                                    ویرایش مقاله
-                                </span>
-                            </a>
-                            <a :href="blog.get_absolute_url" class="btn btn-danger btn-round google-drive-opener">
-                                <i class="material-icons text-light">format_align_left</i>
-                                <span class="text-light">
+                                            ویرایش مقاله
+                                        </span>
+                                    </a>
+                                    <a :href="blog.get_absolute_url"
+                                        class="btn btn-danger btn-round google-drive-opener">
+                                        <i class="material-icons text-light">format_align_left</i>
+                                        <span class="text-light">
 
-                                    ادامه مقاله
-                                </span>
-                            </a>
-                            {% endif %}
+                                            ادامه مقاله
+                                        </span>
+                                    </a>
+                                    {% endif %}
 
 
 
+
+                                </div>
+                            </div>
 
                         </div>
-                    </div>
-                </div>
+                    </transition>
+                </template>
+
             </div>
 
         </div>
@@ -296,14 +303,14 @@
         el: "#blogs-app",
         data: {
             blogs: all_blogs,
+            selected_category: 'all',
         },
         computed: {
             categories: function () {
                 categories_ = []
-                let a = 0
                 all_blogs.forEach(element => {
-                    categories_.push(element.category)
-                    a++
+                    if (element.category)
+                        categories_.push(element.category)
                 })
                 categories_ = categories_.filter(onlyUnique)
                 return categories_
@@ -322,15 +329,16 @@
                 else
                     $("#category" + category).addClass('active')
 
-                if (category === 'all')
-                    this.blogs = all_blogs
-                else {
-                    this.blogs = []
-                    all_blogs.forEach(element => {
-                        if (element.category === category)
-                            this.blogs.push(element)
-                    });
-                }
+                this.selected_category = category
+                // if (category === 'all')
+                //     this.blogs = all_blogs
+                // else {
+                //     this.blogs = []
+                //     all_blogs.forEach(element => {
+                //         if (element.category === category)
+                //             this.blogs.push(element)
+                //     });
+                // }
 
 
             }
@@ -340,3 +348,19 @@
     })
 </script>
 {% endblock script %}
+{% block style %}
+<style>
+    .fade-enter-active,
+    .fade-leave-active {
+        transition: opacity .5s;
+    }
+
+    .fade-enter,
+    .fade-leave-to
+
+    /* .fade-leave-active below version 2.1.8 */
+        {
+        opacity: 0;
+    }
+</style>
+{% endblock style %}

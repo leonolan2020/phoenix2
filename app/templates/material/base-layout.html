@@ -24,6 +24,9 @@
     <!-- End Google Tag Manager -->
 
 
+    {% block style %}
+
+    {% endblock  %}
 
     {% block head %}
 
@@ -43,7 +46,13 @@
         }
 
         .navbar.navbar-transparent {
-            color: {{app.NAV_TEXT_COLOR.value}};
+            color: {
+                    {
+                    app.NAV_TEXT_COLOR.value
+                }
+            }
+
+            ;
 
             background-color: {
                     {
@@ -150,17 +159,17 @@
     <script>
         var csrfmiddlewaretoken = ''
         $(document).ready(function () {
-        //   md.checkFullPageBackgroundImage();
-    
-          $("#sidebar_active_color_{{sidebar.sidebar_active_color}}").addClass("active")
-          $("#sidebar_bg_color_{{sidebar.sidebar_bg_color}}").addClass("active")
-          // Javascript method's body can be found in assets/js/demos.js
-          csrfmiddlewaretoken = $("input[name='csrfmiddlewaretoken']").val()
-    
-    
-          // $('.sidebar .sidebar-wrapper, .main-panel').perfectScrollbar();
+            //   md.checkFullPageBackgroundImage();
+
+            $("#sidebar_active_color_{{sidebar.sidebar_active_color}}").addClass("active")
+            $("#sidebar_bg_color_{{sidebar.sidebar_bg_color}}").addClass("active")
+            // Javascript method's body can be found in assets/js/demos.js
+            csrfmiddlewaretoken = $("input[name='csrfmiddlewaretoken']").val()
+
+
+            // $('.sidebar .sidebar-wrapper, .main-panel').perfectScrollbar();
         });
-      </script>
+    </script>
     {% block script %}
 
     {% endblock  %}

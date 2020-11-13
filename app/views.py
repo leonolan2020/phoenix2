@@ -13,7 +13,7 @@ from dashboard.repo import ResumeRepo as DashboardResumeRepo
 from django.http import Http404
 from .repo import *
 from .forms import *
-from dashboard.serializers import BlogSerializer
+from dashboard.serializers import BlogSerializer,OurWorkSerializer
 from .enums import MainPicEnum
 import json
 TEMPLATE_ROOT='material/'
@@ -85,13 +85,20 @@ class BasicViews(View):
         context=getContext(request)
         user=request.user
         context['body_class']='blog-posts'
-        ourteams=OurTeamRepo(user=user).list()
-        context['ourteams']=ourteams
-        context['blogs_header']=MainPicRepo(user=user).get(MainPicEnum.BLOG_HEADER)
-        context['blogs_text']='مقالات'
+        context['header_image']=MainPicRepo(user=user).get(MainPicEnum.BLOG_HEADER)
+        context['header_text']='مقالات'
         blogs=BlogRepo(user=user).list()
         context['blogs_s']=json.dumps(BlogSerializer(blogs,many=True).data)
         return render(request,TEMPLATE_ROOT+'blogs.html',context)
+    def ourworks(self,request,*args, **kwargs):
+        context=getContext(request)
+        user=request.user
+        context['body_class']='blog-posts'
+        context['header_image']=MainPicRepo(user=user).get(MainPicEnum.OUR_WORK_HEADER)
+        context['header_text']='پروژه ها'
+        ourworks=OurWorkRepo(user=user).list()
+        context['ourworks_s']=json.dumps(OurWorkSerializer(ourworks,many=True).data)
+        return render(request,TEMPLATE_ROOT+'ourworks.html',context)
 
     def home(self,request,*args,**kwargs):
         user=request.user
