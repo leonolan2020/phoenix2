@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User, Group
 from rest_framework import serializers
-from .models import PusherChannel,PusherBeam,PusherChannelEvent
+from .models import ProfileChannelEvent,PusherChannel,PusherBeam,PusherChannelEvent
 
 class PusherChannelSerializer(serializers.ModelSerializer):
     class Meta:
@@ -15,4 +15,11 @@ class PusherChannelEventSerializer(serializers.ModelSerializer):
     channel=PusherChannelSerializer(read_only=True)
     class Meta:
         model=PusherChannelEvent
-        fields=['id','title','channel','event_name']  
+        fields=['id','title','channel','event_name'] 
+class ProfileChannelEventSerializer(serializers.ModelSerializer):
+    channel_event=PusherChannelEventSerializer(read_only=True)
+    class Meta:
+        model=ProfileChannelEvent
+        fields=['id','channel_event']  
+
+

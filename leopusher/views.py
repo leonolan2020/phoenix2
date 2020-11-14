@@ -1,7 +1,7 @@
 from django.views import View
 from django.shortcuts import render,redirect,reverse
 from .repo import PusherChannelEventRepo,PusherChannelRepo,ProfileChannelEventRepo
-
+from .serializers import *
 from dashboard.views import getContext as dashboardContext 
 from .forms import *
 from django.http import JsonResponse
@@ -65,7 +65,8 @@ class IndexView(View):
 class ChannelView(View):
     def chat(self,request,*args, **kwargs):
         context=getContext(request=request)
-
+        channels=ProfileChannelEventRepo(user=request.user).my_channel_events()
+        context['channels_s']=json.dumps(ProfileChannelEventSerializer(channels,many=True).data)
         return render(request,TEMPLATE_ROOT+'chat.html',context)
     def send_channel(self,request):        
         if request.method=='POST':

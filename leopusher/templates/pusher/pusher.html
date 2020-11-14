@@ -272,20 +272,20 @@ let channel_events=JSON.parse(`{{channel_events_s |escapejs}}`)
         let url = '{% url "pusher:send_channel" %}'
         // Send the data using post
         // var getting = $.get(url);
-        // let title = manager_app.title
-        // let body = manager_app.body
-        // let color = manager_app.color
-        // let icon = manager_app.icon
-        // let event_name = manager_app.event_name
-        // let channel_name = manager_app.channel_name
+        // let title = pusher_app.title
+        // let body = pusher_app.body
+        // let color = pusher_app.color
+        // let icon = pusher_app.icon
+        // let event_name = pusher_app.event_name
+        // let channel_name = pusher_app.channel_name
         var posting = $.post(url, {
-            title: manager_app.title,
-            body: manager_app.body,
-            color: manager_app.color,
-            link: manager_app.link,
-            icon: manager_app.icon,
-            event_name: manager_app.channel_event.event_name,
-            channel_name: manager_app.channel_event.channel.channel_name,
+            title: pusher_app.title,
+            body: pusher_app.body,
+            color: pusher_app.color,
+            link: pusher_app.link,
+            icon: pusher_app.icon,
+            event_name: pusher_app.channel_event.event_name,
+            channel_name: pusher_app.channel_event.channel.channel_name,
             csrfmiddlewaretoken: csrfmiddlewaretoken
 
 
