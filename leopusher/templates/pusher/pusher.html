@@ -6,11 +6,8 @@
 
 
 
-<div>
-    <a href="{% url 'pusher:channels' %}">channels</a>
-</div>
 
-<div class="row" id="manager-app">
+<div class="row" id="pusher-app">
   
 
 
@@ -227,8 +224,8 @@ let channel_events=JSON.parse(`{{channel_events_s |escapejs}}`)
 </script>
 <script>
     $("#nav-item-pusher").addClass("active");
-    let manager_app = new Vue({
-        el: "#manager-app",
+    let pusher_app = new Vue({
+        el: "#pusher-app",
         data: {
             channel_event_title:'',
             channel_events:channel_events,

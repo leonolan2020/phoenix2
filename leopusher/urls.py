@@ -13,5 +13,6 @@ urlpatterns = [
     path('channel_event/<int:channel_event_id>',views.IndexView().channels,name='channel_event'),
     path('send_beam/',views.BeamView().send_beam,name='send_beam'),
     path('send_channel/',views.ChannelView().send_channel,name='send_channel'),
+    path('chat/',views.ChannelView().chat,name='chat'),
     
 ]
