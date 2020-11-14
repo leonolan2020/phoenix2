@@ -65,6 +65,7 @@ class IndexView(View):
 class ChannelView(View):
     def chat(self,request,*args, **kwargs):
         context=getContext(request=request)
+        context['get_messages_form']=GetMessagesForm()
         channels=ProfileChannelEventRepo(user=request.user).my_channel_events()
         context['channels_s']=json.dumps(ProfileChannelEventSerializer(channels,many=True).data)
         return render(request,TEMPLATE_ROOT+'chat.html',context)

@@ -1,15 +1,23 @@
+from utility.persian import PersianCalendar
 from django.db import models
 from django.utils.translation import gettext as _
 from .enums import PusherChannelNameEnum
 from django.shortcuts import reverse
 from pusher import Pusher
+from .constants import MESSAGES_PAGE_SIZE
 import json
 import requests
 class PusherChannelEvent(models.Model):
     title=models.CharField(_("title"), max_length=50)
     channel=models.ForeignKey("PusherChannel", verbose_name=_("channel"), on_delete=models.CASCADE)
     event_name=models.CharField(_("event"), max_length=50)
-
+    def messages(self,page=1,all=False,*args, **kwargs):
+        if all:
+            return Message.objects.filter(channelevent=self).order_by('-id')
+        else:
+            start=(page-1)*MESSAGES_PAGE_SIZE
+            end=(page)*MESSAGES_PAGE_SIZE
+            return Message.objects.filter(channelevent=self).order_by('-id')[start:end]
     class Meta:
         verbose_name = _("ChannelEvent")
         verbose_name_plural = _("ChannelEvents")
@@ -87,6 +95,7 @@ class PusherBeamInterest(models.Model):
 class ProfileChannelEvent(models.Model):
     profile=models.ForeignKey("authentication.Profile", verbose_name=_("profile"), on_delete=models.CASCADE)
     channel_event=models.ForeignKey("PusherChannelEvent", verbose_name=_("channel_event"), on_delete=models.CASCADE)
+    
     class Meta:
         verbose_name = _("ProfileChannelEvent")
         verbose_name_plural = _("ProfileChannelEvents")
@@ -97,3 +106,24 @@ class ProfileChannelEvent(models.Model):
     def get_absolute_url(self):
         return reverse("ProfileChannel_detail", kwargs={"pk": self.pk})
  
+
+
+class Message(models.Model):
+    channelevent=models.ForeignKey("PusherChannelEvent", verbose_name=_("کانال"), on_delete=models.CASCADE)
+    profile=models.ForeignKey("authentication.Profile", verbose_name=_("پروفایل"), on_delete=models.CASCADE)
+    text=models.TextField(_("متن پیام"))
+    date_added=models.DateTimeField(_("date_added"), auto_now=False, auto_now_add=True)
+    def persian_date_added(self):
+        return PersianCalendar().from_gregorian(self.date_added)
+
+    def channel_event_id(self):
+        return self.channelevent.id
+    class Meta:
+        verbose_name = _("Message")
+        verbose_name_plural = _("Messages")
+
+    def __str__(self):
+        return f'{self.channelevent.channel.channel_name}@{self.channelevent.event_name}${self.profile.name()}#{self.text}'
+
+    def get_absolute_url(self):
+        return reverse("Message_detail", kwargs={"pk": self.pk})

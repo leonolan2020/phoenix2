@@ -32,92 +32,44 @@
 					<div class="card card-timeline card-plain">
 						<div class="card-body">
 							<ul class="timeline">
-								<li class="timeline-inverted">
+								<li :class="profile_id==message.profile.id?'timeline-inverted': ''"
+									v-for="message in sorted_messages(channel.channel_event.messages)">
 									<div class="timeline-badge danger">
-										<i class="material-icons">card_travel</i>
+
+										<img :src="message.profile.image" class="rounded-circle" width="52" alt="">
 									</div>
 									<div class="timeline-panel">
 										<div class="timeline-heading">
-											<span class="badge badge-pill badge-danger">Some Title</span>
+											<span class="badge badge-pill badge-danger"
+												v-text="message.profile.name"></span>
 										</div>
 										<div class="timeline-body">
-											<p>Wifey made the best Father's Day meal ever. So thankful so happy so
-												blessed. Thank you for making my family We just had fun with the
-												“future” theme !!! It was a fun night all together ... The always rude
-												Kanye Show at 2am Sold Out Famous viewing @ Figueroa and 12th in
-												downtown.</p>
+											<p v-text="message.text"></p>
 										</div>
 										<h6>
-											<i class="ti-time"></i> 11 hours ago via Twitter
+											<i class="ti-time"></i>
+											{% verbatim %}
+											{{message.persian_date_added}}
+											{% endverbatim %}
 										</h6>
 									</div>
 								</li>
-								<li>
-									<div class="timeline-badge success">
-										<i class="material-icons">extension</i>
+
+
+
+
+
+								<li class=""
+									@click="get_messages(channel.channel_event.messages[channel.channel_event.messages.length-1].id)">
+
+									<div title="پیام های قبلی" class="timeline-badge danger" style="cursor: pointer;">
+										<i class="material-icons">cached
+										</i>
 									</div>
-									<div class="timeline-panel">
-										<div class="timeline-heading">
-											<span class="badge badge-pill badge-success">Another One</span>
-										</div>
-										<div class="timeline-body">
-											<p>Thank God for the support of my wife and real friends. I also wanted to
-												point out that it’s the first album to go number 1 off of streaming!!! I
-												love you Ellen and also my number one design rule of anything I do from
-												shoes to music to homes is that Kim has to like it....</p>
-										</div>
-									</div>
+
 								</li>
-								<li class="timeline-inverted">
-									<div class="timeline-badge info">
-										<i class="material-icons">fingerprint</i>
-									</div>
-									<div class="timeline-panel">
-										<div class="timeline-heading">
-											<span class="badge badge-pill badge-info">Another Title</span>
-										</div>
-										<div class="timeline-body">
-											<p>Called I Miss the Old Kanye That’s all it was Kanye And I love you like
-												Kanye loves Kanye Famous viewing @ Figueroa and 12th in downtown LA
-												11:10PM</p>
-											<p>What if Kanye made a song about Kanye Royère doesn't make a Polar bear
-												bed but the Polar bear couch is my favorite piece of furniture we own It
-												wasn’t any Kanyes Set on his goals Kanye</p>
-											<hr>
-										</div>
-										<div class="timeline-footer">
-											<div class="dropdown">
-												<button type="button" class="btn btn-round btn-info dropdown-toggle"
-													data-toggle="dropdown">
-													<i class="material-icons">build</i>
-												</button>
-												<div class="dropdown-menu">
-													<a class="dropdown-item google-drive-opener" href="#">Action</a>
-													<a class="dropdown-item google-drive-opener" href="#">Another
-														action</a>
-													<a class="dropdown-item google-drive-opener" href="#">Something else
-														here</a>
-												</div>
-											</div>
-										</div>
-									</div>
-								</li>
-								<li>
-									<div class="timeline-badge warning">
-										<i class="material-icons">flight_land</i>
-									</div>
-									<div class="timeline-panel">
-										<div class="timeline-heading">
-											<span class="badge badge-pill badge-warning">Another One</span>
-										</div>
-										<div class="timeline-body">
-											<p>Tune into Big Boy's 92.3 I'm about to play the first single from Cruel
-												Winter also to Kim’s hair and makeup Lorraine jewelry and the whole
-												style squad at Balmain and the Yeezy team. Thank you Anna for the invite
-												thank you to the whole Vogue team</p>
-										</div>
-									</div>
-								</li>
+
+
 							</ul>
 						</div>
 					</div>
@@ -135,11 +87,44 @@
 <script src="{% static 'vendor/js/vue.min.js' %}"></script>
 <script>
 	let channels = JSON.parse(`{{channels_s|escapejs}}`)
-
+	let url_get_messages = "{% url 'pusher:get_messages' %}"
+	let profile_id = parseInt(`{{profile.id}}`)
 	let app = new Vue({
 		el: "#app",
 		data: {
 			channels: channels,
+			profile_id: profile_id,
+			has_more: true,
+		},
+		methods: {
+			sorted_messages: function (messages) {
+				return messages
+				// return messages.sort((a, b) => (a.persian_date_added > b.persian_date_added) ? 1 : -1)
+			},
+			get_messages: function (last_id) {
+				console.log(last_id)
+				var posting = $.post(url_get_messages,
+					{
+						last_id: last_id,
+						csrfmiddlewaretoken: csrfmiddlewaretoken
+					}
+				);
+
+				// Put the results in a div
+				posting.done(function (data) {
+					console.log(data)
+
+					if (data.result === 'SUCCEED') {
+						app.channels.forEach(channel => {
+							if (channel.channel_event.id == data.messages[0].channel_event_id) {
+								channel.channel_event.messages=data.messages
+								app.has_more = data.has_more
+							}
+						});
+					}
+				})
+			}
+
 		},
 	})
 </script>

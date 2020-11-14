@@ -1,6 +1,7 @@
-from .models import ProfileChannelEvent,PusherChannel,PusherBeam,PusherChannelEvent,PusherBeamInterest
+from .models import Message,ProfileChannelEvent,PusherChannel,PusherBeam,PusherChannelEvent,PusherBeamInterest
 from authentication.repo import ProfileRepo
 from dashboard.repo import NotificationRepo
+from .constants import MESSAGES_PAGE_SIZE
 class ProfileChannelEventRepo:
     def __init__(self,user):
         self.objects=ProfileChannelEvent.objects
@@ -93,7 +94,21 @@ class PusherChannelEventRepo:
         channel_events=[]
         channel_events=self.objects.filter(id__in=ProfileChannelEvent.objects.filter(profile=self.profile).values('channel_event_id'))
         return channel_events
-
+    def get_last_messages(self,last_id):
+        has_more=False
+        try:
+            message=Message.objects.get(pk=last_id)
+        except:
+            return {
+                'messages':[],
+                'has_more':False
+            }
+        channelevent=message.channelevent
+        messages=channelevent.messages(all=True).order_by('-id')#.filter(id__lte=last_id)[:MESSAGES_PAGE_SIZE]
+        return {            
+            'messages':messages,
+            'has_more':has_more
+        }
 class PusherBeamInterestRepo:
     def add(self,beam_name,interest):
         beam=PusherBeamRepo().get(beam_name=beam_name)
