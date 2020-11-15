@@ -12,8 +12,7 @@ import json
 TEMPLATE_ROOT='pusher/'
 def getContext(request):
     context = dashboardContext(request=request)
-    context["title"] = 'pusher'
-    
+    context["title"] = 'pusher'    
     return context
 
 class BeamView(View):
@@ -62,6 +61,7 @@ class IndexView(View):
         context['channel_events']=channel_events
         context['channel_events_s']=json.dumps(PusherChannelEventSerializer(channel_events,many=True).data)
         return render(request,TEMPLATE_ROOT+'pusher.html',context)
+
 class ChannelView(View):
     
 

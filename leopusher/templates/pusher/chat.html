@@ -34,7 +34,7 @@
 							<ul class="timeline">
 
 
-								<li class="">
+								<li class="timeline-inverted">
 									<div class="timeline-badge danger">
 
 										<img src="{{profile.image}}" class="rounded-circle" width="52" alt="">
@@ -131,12 +131,30 @@
 			new_message: '',
 		},
 		methods: {
+
+			receive_message: function (channel_name, event_name, message) {
+				// console.log('aaa: '+message.text)
+				app.channels.forEach(channel => {
+					if (channel.channel_event.channel.channel_name === channel_name && channel.channel_event.event_name === event_name) {
+
+						channel.channel_event.messages.reverse()
+						channel.channel_event.messages.push(message)
+						channel.channel_event.messages.reverse()
+					}
+				});
+
+
+			},
+
+
+
+
 			sorted_messages: function (messages) {
 				return messages
 				// return messages.sort((a, b) => (a.persian_date_added > b.persian_date_added) ? 1 : -1)
 			},
 			send_message: function (channel_event_id) {
-				console.log(app.new_message)
+				// console.log(app.new_message)
 				var posting = $.post(url_send_messages,
 					{
 						text: app.new_message,
@@ -147,22 +165,22 @@
 
 				// Put the results in a div
 				posting.done(function (data) {
-					console.log(data)
+					// console.log(data)
 
 					if (data.result === 'SUCCEED') {
-						app.channels.forEach(channel => {
-							if (channel.channel_event.id == channel_event_id) {
-								channel.channel_event.messages.reverse()
-								channel.channel_event.messages.push(data.message)
-								channel.channel_event.messages.reverse()
-							}
-						});
+						// app.channels.forEach(channel => {
+						// 	if (channel.channel_event.id == channel_event_id) {
+						// 		channel.channel_event.messages.reverse()
+						// 		channel.channel_event.messages.push(data.message)
+						// 		channel.channel_event.messages.reverse()
+						// 	}
+						// });
 						app.new_message = ''
 					}
-				})	
+				})
 			},
 			get_messages: function (last_id) {
-				console.log(last_id)
+				// console.log(last_id)
 				var posting = $.post(url_get_messages,
 					{
 						last_id: last_id,
@@ -187,5 +205,40 @@
 
 		},
 	})
+</script>
+
+<script src="{% static 'pusher/pusher.min.js'%}"></script>
+<script>
+	my_channel_events = JSON.parse(`{{my_channel_events_s|escapejs}}`)
+
+	my_channel_events.forEach(my_channel_event => {
+
+
+		// Enable pusher logging - don't include this in production
+		Pusher.logToConsole = logToConsole
+
+		var pusher = new Pusher(my_channel_event.channel.key, {
+			cluster: my_channel_event.channel.cluster
+		})
+			.subscribe(my_channel_event.channel.channel_name)
+			.bind(my_channel_event.event_name, function (data) {
+				// ###############################
+				// ###############################
+				// ###############################
+				// ###############################
+				// ###############################
+				channel_name = my_channel_event.channel.channel_name
+				event_name = my_channel_event.event_name
+				message = data.message
+				// console.log(channel_name)
+				// console.log(event_name)
+				// console.log(message)
+
+
+				app.receive_message(channel_name, event_name, message)
+			});
+
+	});
+
 </script>
 {% endblock  %}

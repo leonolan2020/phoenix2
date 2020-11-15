@@ -127,3 +127,20 @@ class Message(models.Model):
 
     def get_absolute_url(self):
         return reverse("Message_detail", kwargs={"pk": self.pk})
+
+    def send(self,message_s):
+        channelevent=self.channelevent
+        try:            
+            pusher_client = Pusher(
+                app_id=channelevent.channel.app_id,
+                key=channelevent.channel.key,
+                secret=channelevent.channel.secret,
+                cluster=channelevent.channel.cluster,
+                ssl=True
+            )
+            channel_name=channelevent.channel.channel_name
+            event_name=channelevent.event_name
+            pusher_client.trigger(channel_name, event_name, {'message':message_s})
+        except :
+            print(self.channelevent.channel.channel_name)
+            print('error in send message ')

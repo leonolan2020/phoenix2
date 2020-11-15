@@ -16,8 +16,10 @@ class ChannelViews(View):
                 text=send_message_form.cleaned_data['text']
                 channelevent_id=send_message_form.cleaned_data['channelevent_id']
                 message=PusherChannelEventRepo(user=request.user).add_message(text=text,channelevent_id=channelevent_id)                                
-                message_s=MessageSerializer(message).data
-                return JsonResponse({'result':SUCCEED,'message':message_s})
+                if message is not None:
+                    message_s=MessageSerializer(message).data
+                    message.send(message_s)
+                    return JsonResponse({'result':SUCCEED,'message':message_s})
         return JsonResponse({'result':FAILED,'log':log})
 
 
