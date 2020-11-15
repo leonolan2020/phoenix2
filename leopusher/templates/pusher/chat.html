@@ -153,7 +153,7 @@
 						app.channels.forEach(channel => {
 							if (channel.channel_event.id == channel_event_id) {
 								channel.channel_event.messages.reverse()
-								channel.channel_event.messages.push(message)
+								channel.channel_event.messages.push(data.message)
 								channel.channel_event.messages.reverse()
 							}
 						});
