@@ -21,6 +21,7 @@ urlpatterns = [
     path('market/',include('market.urls')),
     path('pusher/',include('leopusher.urls')),
     path('authentication/',include('authentication.urls')),
+    path('accounts/',include('authentication.urls')),
     path('dashboard/',include('dashboard.urls')),
     path('app/fa/',include('app.urls')),
     path('app/en/',include('app_en.urls')),

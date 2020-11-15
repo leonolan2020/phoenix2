@@ -73,30 +73,38 @@ class AuthenticationView(View):
         else:
             context=getContext(request)
             context['login_form']=LoginForm()
+            if 'next' in request.GET:
+                back_url=request.GET['next']
+            else:
+                back_url=reverse('dashboard:home')
+            context['back_url']=back_url
             return render(request,TEMPLATE_ROOT+'login.html',context)
 
     def logout(self,request):
         ProfileRepo().logout(request)
         return redirect(reverse('dashboard:home'))
 
-    def login_post(self,request,back_url=None,next1=None):
-        back_url=request.GET.get('next1', '')
-        if back_url is None or not back_url:
-            # back_url=reverse('app:my_profile')
-            back_url=reverse('dashboard:home')
+    def login_post(self,request,next1=None):
+        
         if request.method=='POST':
             login_form=LoginForm(request.POST)
             if login_form.is_valid():
                 username=login_form.cleaned_data['username']
-                password=login_form.cleaned_data['password']                
+                password=login_form.cleaned_data['password']
+                back_url=login_form.cleaned_data['back_url']
+                if back_url is None or not back_url:
+                    back_url=reverse('dashboard:home')     
                 request1=ProfileRepo().login(request=request,username=username,password=password)
                 if request1 is not None and request1.user is not None and request1.user.is_authenticated :
+                    print(back_url)
+                    print(100*'#')
                     return redirect(back_url)
                 else:   
-                    context=getContext(request=request)         
+                    context=getContext(request=request)
                     context['message']='نام کاربری و کلمه عبور صحیح نمی باشد.'
                     context['login_form']=LoginForm()
                     context['register_form']=RegisterForm()
+                    context['back_url']=back_url
                     context['reset_password_form']=ResetPasswordForm()
                     return render(request,TEMPLATE_ROOT+'login.html',context)
         else:      

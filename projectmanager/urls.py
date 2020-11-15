@@ -2,10 +2,11 @@ from .apps import APP_NAME
 from django.urls import path
 from . import views
 from . import apis
+from django.contrib.auth.decorators import login_required
 
 app_name = APP_NAME
 urlpatterns = [
-	path('', views.BasicViews().home, name='home'),
+	path('', login_required(views.BasicViews().home), name='home'),
 	path('tutorial/', views.TutorialViews().home, name='tutorial'),
 	path('archivedocuments/', views.BasicViews().archive_documents,name='archivedocuments'),
 	path('organizationunits/', views.BasicViews().organizationunits,name='organizationunits'),

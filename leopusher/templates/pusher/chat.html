@@ -32,6 +32,38 @@
 					<div class="card card-timeline card-plain">
 						<div class="card-body">
 							<ul class="timeline">
+
+
+								<li class="">
+									<div class="timeline-badge danger">
+
+										<img src="{{profile.image}}" class="rounded-circle" width="52" alt="">
+									</div>
+									<div class="timeline-panel">
+										<div class="timeline-heading">
+											<span class="badge badge-pill badge-danger">{{profile.name}}</span>
+										</div>
+										<div class="timeline-body">
+
+											<div class="form-group bmd-form-group">
+												<label for="exampleInput1" class="bmd-label-floating">پیام جدید</label>
+
+
+												<input type="hidden" name="parent_id" value="0">
+												<form @submit.prevent="send_message(channel.channel_event.id)">
+													<input type="text" id="exampleInput1" v-model="new_message"
+														required="required" aria-required="true" class="form-control">
+												</form>
+											</div>
+										</div>
+										<h6>
+											<i class="ti-time"></i>
+											{{current_date}} تاریخ
+										</h6>
+									</div>
+								</li>
+
+
 								<li :class="profile_id==message.profile.id?'timeline-inverted': ''"
 									v-for="message in sorted_messages(channel.channel_event.messages)">
 									<div class="timeline-badge danger">
@@ -95,11 +127,33 @@
 			channels: channels,
 			profile_id: profile_id,
 			has_more: true,
+			new_message: '',
 		},
 		methods: {
 			sorted_messages: function (messages) {
 				return messages
 				// return messages.sort((a, b) => (a.persian_date_added > b.persian_date_added) ? 1 : -1)
+			},
+			send_message: function (channel_event_id) {
+				console.log(app.new_message)
+				text = app.new_message
+				message = {
+					text: text,
+					profile: {
+						name: "{{profile.name}}",
+						image: "{{profile.image}}",
+						persian_date_added: "1399/08/24 09:36:21",
+					}
+				}
+				app.channels.forEach(channel => {
+					if (channel.channel_event.id == channel_event_id) {
+						channel.channel_event.messages.reverse()
+						channel.channel_event.messages.push(message)
+						channel.channel_event.messages.reverse()
+					}
+				});
+				app.new_message = ''
+
 			},
 			get_messages: function (last_id) {
 				console.log(last_id)
@@ -117,7 +171,7 @@
 					if (data.result === 'SUCCEED') {
 						app.channels.forEach(channel => {
 							if (channel.channel_event.id == data.messages[0].channel_event_id) {
-								channel.channel_event.messages=data.messages
+								channel.channel_event.messages = data.messages
 								app.has_more = data.has_more
 							}
 						});

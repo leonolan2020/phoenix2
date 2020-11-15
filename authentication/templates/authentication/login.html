@@ -6,6 +6,7 @@
 <div class="col-lg-4 col-md-6 col-sm-8 ml-auto mr-auto">
     <form class="form" method="POST" action="{% url 'authentication:login' %}">
         {% csrf_token %}
+        <input type="hidden" name="back_url" value="{{back_url}}">
         <div class="card card-login card-hidden">
             <div class="card-header card-header-rose text-center">
                 <h4 class="card-title farsi">ورود</h4>
