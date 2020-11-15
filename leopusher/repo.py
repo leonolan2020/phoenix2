@@ -94,6 +94,15 @@ class PusherChannelEventRepo:
         channel_events=[]
         channel_events=self.objects.filter(id__in=ProfileChannelEvent.objects.filter(profile=self.profile).values('channel_event_id'))
         return channel_events
+    
+    def add_message(self,text,channelevent_id):
+        channelevent=self.get(channel_event_id=channelevent_id)
+        profile=ProfileRepo(user=self.user).me
+        if profile is None or channelevent is None:
+            return None
+        message=Message(profile=profile,text=text,channelevent=channelevent)
+        message.save()
+        return message
     def get_last_messages(self,last_id):
         has_more=False
         try:

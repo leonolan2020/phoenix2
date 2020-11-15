@@ -63,6 +63,8 @@ class IndexView(View):
         context['channel_events_s']=json.dumps(PusherChannelEventSerializer(channel_events,many=True).data)
         return render(request,TEMPLATE_ROOT+'pusher.html',context)
 class ChannelView(View):
+    
+
     def chat(self,request,*args, **kwargs):
         context=getContext(request=request)
         context['get_messages_form']=GetMessagesForm()

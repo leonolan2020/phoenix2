@@ -119,6 +119,7 @@
 <script src="{% static 'vendor/js/vue.min.js' %}"></script>
 <script>
 	let channels = JSON.parse(`{{channels_s|escapejs}}`)
+	let url_send_messages = "{% url 'pusher:send_message' %}"
 	let url_get_messages = "{% url 'pusher:get_messages' %}"
 	let profile_id = parseInt(`{{profile.id}}`)
 	let app = new Vue({
@@ -136,24 +137,29 @@
 			},
 			send_message: function (channel_event_id) {
 				console.log(app.new_message)
-				text = app.new_message
-				message = {
-					text: text,
-					profile: {
-						name: "{{profile.name}}",
-						image: "{{profile.image}}",
-						persian_date_added: "1399/08/24 09:36:21",
+				var posting = $.post(url_send_messages,
+					{
+						text: app.new_message,
+						channelevent_id: channel_event_id,
+						csrfmiddlewaretoken: csrfmiddlewaretoken
 					}
-				}
-				app.channels.forEach(channel => {
-					if (channel.channel_event.id == channel_event_id) {
-						channel.channel_event.messages.reverse()
-						channel.channel_event.messages.push(message)
-						channel.channel_event.messages.reverse()
-					}
-				});
-				app.new_message = ''
+				);
 
+				// Put the results in a div
+				posting.done(function (data) {
+					console.log(data)
+
+					if (data.result === 'SUCCEED') {
+						app.channels.forEach(channel => {
+							if (channel.channel_event.id == channel_event_id) {
+								channel.channel_event.messages.reverse()
+								channel.channel_event.messages.push(message)
+								channel.channel_event.messages.reverse()
+							}
+						});
+						app.new_message = ''
+					}
+				})	
 			},
 			get_messages: function (last_id) {
 				console.log(last_id)
