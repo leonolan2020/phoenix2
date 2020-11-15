@@ -11,6 +11,10 @@ class SendPusherChannelForm(forms.Form):
 class GetMessagesForm(forms.Form):
     last_id=forms.IntegerField(required=True)
 
+class SendMessageForm(forms.Form):
+    channelevent_id=forms.IntegerField(required=True)
+    text=forms.CharField( max_length=200, required=True)
+
 class SendPusherBeamForm(forms.Form):
     interests=forms.CharField( max_length=50, required=True)
     title=forms.CharField( max_length=200, required=True)
