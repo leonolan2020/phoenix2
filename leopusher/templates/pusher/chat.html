@@ -7,21 +7,16 @@
 {% endblock  %}
 {% block content %}
 <div class="row" id="app">
-
-
 	<div class="col-12">
 		<div class="page-categories">
-
 			<ul class="nav nav-pills nav-pills-warning nav-pills-icons justify-content-center" role="tablist">
-				<li class="nav-item" v-for="channel in channels">
+				<li class="nav-item channel_li"  v-for="channel in channels">
 					<a class="nav-link google-drive-opener" data-toggle="tab" href="#link7" role="tablist">
 						<i class="material-icons">info</i>
-						{% verbatim %}
-						{{channel.channel_event.channel.channel_name}}
-						{% endverbatim %}
-						<p class="card-category">
+						
+						<p class="card-category text-center">
 							{% verbatim %}
-							{{channel.channel_event.event_name}}
+							{{channel.channel_event.title}}
 							{% endverbatim %}
 						</p>
 					</a>
@@ -239,6 +234,14 @@
 			});
 
 	});
+
+
+	$(document).ready(function () {
+		$(".channel_li:first").addClass("active")
+
+		$(".tab-pane:first").addClass("active")
+      // $('.sidebar .sidebar-wrapper, .main-panel').perfectScrollbar();
+    });
 
 </script>
 {% endblock  %}
